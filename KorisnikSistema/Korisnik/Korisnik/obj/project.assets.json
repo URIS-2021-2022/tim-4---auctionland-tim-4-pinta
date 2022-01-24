@@ -199,11 +199,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\fax\\4.god\\PrviSemestar\\Katin\\projekatKorisnik\\Korisnik\\Korisnik\\Korisnik.csproj",
+      "projectUniqueName": "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
       "projectName": "Korisnik",
-      "projectPath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\projekatKorisnik\\Korisnik\\Korisnik\\Korisnik.csproj",
+      "projectPath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
       "packagesPath": "C:\\Users\\Dusan\\.nuget\\packages\\",
-      "outputPath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\projekatKorisnik\\Korisnik\\Korisnik\\obj\\",
+      "outputPath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

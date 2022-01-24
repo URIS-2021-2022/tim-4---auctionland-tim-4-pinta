@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "G2/JgbgEg1G3QBx9Tm8LGX+CsNI3WCoUXjQ8fTdK5dDTgVB1jPQxaPv2ZcRzhc+/Mfc3qm8yz/RQsLM6DAH3QQ==",
+  "dgSpecHash": "ChO6wbdBINCZVk+uct0w6i/6Rh2N/blNf10LmLf4wHqbfaIIlg/Ck01uZQo+Kn8T2F1dmp1Ij2hZXU9VIC4mKA==",
   "success": true,
-  "projectFilePath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\projekatKorisnik\\Korisnik\\Korisnik\\Korisnik.csproj",
+  "projectFilePath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dusan\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\Dusan\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
