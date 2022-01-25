@@ -46,7 +46,7 @@ namespace Parcela.Data
             DeloviParcela.Remove(DeloviParcela.FirstOrDefault(dp => dp.DeoParceleID == deoParceleID));
         }
 
-        public List<DeoParceleModel> GetDeloviParcele()
+        public List<DeoParceleModel> GetDeloviParcela()
         {
             return (from dp in DeloviParcela select dp).ToList();
         }

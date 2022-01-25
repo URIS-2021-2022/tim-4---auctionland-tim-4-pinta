@@ -8,7 +8,7 @@ namespace Parcela.Data
 {
     interface IDeoParceleRepository
     {
-        List<DeoParceleModel> GetDeloviParcele();
+        List<DeoParceleModel> GetDeloviParcela();
 
         DeoParceleModel GetDeoParceleById(Guid deoParceleID);
 

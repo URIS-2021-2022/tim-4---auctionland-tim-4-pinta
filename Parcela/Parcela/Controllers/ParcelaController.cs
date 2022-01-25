@@ -15,7 +15,7 @@ namespace Parcela.Controllers
     public class ParcelaController : ControllerBase
     {
         private readonly IParcelaRepository parcelaRepository;
-        private readonly LinkGenerator linkGenerator; //Služi za generisanje putanje do neke akcije (videti primer u metodu CreateExamRegistration)
+        private readonly LinkGenerator linkGenerator; 
 
         public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator)
         {
@@ -79,5 +79,11 @@ namespace Parcela.Controllers
             }
         }
 
+        [HttpOptions]
+        public IActionResult GetParcelaOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
+        }
     }
 }

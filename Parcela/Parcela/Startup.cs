@@ -30,6 +30,13 @@ namespace Parcela
 
             services.AddControllers();
             services.AddSingleton<IParcelaRepository, ParcelaRepository>();
+            services.AddSingleton<IDeoParceleRepository, DeoParceleRepository>();
+            services.AddSingleton<IKlasaRepository, KlasaRepository>();
+            services.AddSingleton<IKulturaRepository, KulturaRepository>();
+            services.AddSingleton<IOblikSvojineRepository, OblikSvojineRepository>();
+            services.AddSingleton<IObradivostRepository, ObradivostRepository>();
+            services.AddSingleton<IOdvodnjavanjeRepository, OdvodnjavanjeRepository>();
+            services.AddSingleton<IZasticenaZonaRepository, ZasticenaZonaRepository>();
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Parcela", Version = "v1" });
