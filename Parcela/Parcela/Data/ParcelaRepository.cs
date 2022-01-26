@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Parcela.Data
 {
     public class ParcelaRepository : IParcelaRepository
     {
-        public static List<ParcelaModel> Parcele { get; set; } = new List<ParcelaModel>();
+        public static List<ParcelaEntity> Parcele { get; set; } = new List<ParcelaEntity>();
 
         public ParcelaRepository()
         {
@@ -17,9 +18,9 @@ namespace Parcela.Data
 
         private void FillData()
         {
-            Parcele.AddRange(new List<ParcelaModel>
+            Parcele.AddRange(new List<ParcelaEntity>
             {
-                new ParcelaModel
+                new ParcelaEntity
                 {
                     ParcelaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                     Povrsina = 1000,
@@ -31,7 +32,7 @@ namespace Parcela.Data
                     ZasticenaZonaStvarnoStanje = "ZasticenaZona1",
                     OdvodnjavanjeStvarnoStanje = "Odvodnjavanje1"
                 },
-                new ParcelaModel
+                new ParcelaEntity
                 {
                     ParcelaID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                     Povrsina = 2000,
@@ -46,27 +47,27 @@ namespace Parcela.Data
             });
         }
 
-        public List<ParcelaModel> GetParcele()
+        public List<ParcelaEntity> GetParcele()
         {
             return (from p in Parcele select p).ToList();
         }
 
-        public ParcelaModel GetParcelaById(Guid parcelaID)
+        public ParcelaEntity GetParcelaById(Guid parcelaID)
         {
             return Parcele.FirstOrDefault(p => p.ParcelaID == parcelaID);
         }
 
-        public ParcelaModel CreateParcela(ParcelaModel parcela)
+        public ParcelaEntity CreateParcela(ParcelaEntity parcela)
         {
             parcela.ParcelaID = Guid.NewGuid();
             Parcele.Add(parcela);
-            ParcelaModel p = GetParcelaById(parcela.ParcelaID);
+            ParcelaEntity p = GetParcelaById(parcela.ParcelaID);
             return p;
         }
 
-        public ParcelaModel UpdateParcela(ParcelaModel parcela)
+        public ParcelaEntity UpdateParcela(ParcelaEntity parcela)
         {
-            ParcelaModel p = GetParcelaById(parcela.ParcelaID);
+            ParcelaEntity p = GetParcelaById(parcela.ParcelaID);
 
             p.Povrsina = parcela.Povrsina;
             p.BrojParcele = parcela.BrojParcele;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Parcela.Models
+namespace Parcela.Entities
 {
-    public class DeoParceleModel
+    public class DeoParceleEntity
     {
         public Guid DeoParceleID { get; set; }
 

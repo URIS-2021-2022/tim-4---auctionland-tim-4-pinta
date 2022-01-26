@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Parcela.Models;
 using Microsoft.AspNetCore.Http;
+using AutoMapper;
+using Parcela.Entities;
 
 namespace Parcela.Controllers
 {
@@ -15,44 +17,48 @@ namespace Parcela.Controllers
     public class ParcelaController : ControllerBase
     {
         private readonly IParcelaRepository parcelaRepository;
-        private readonly LinkGenerator linkGenerator; 
+        private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator)
+        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.parcelaRepository = parcelaRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<ParcelaModel>> GetParcele()
+        [HttpHead]
+        public ActionResult<List<ParcelaDto>> GetParcele()
         {
-            List<ParcelaModel> parcele = parcelaRepository.GetParcele();
+            List<ParcelaEntity> parcele = parcelaRepository.GetParcele();
             if (parcele == null || parcele.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(parcele);
+            return Ok(mapper.Map<List<ParcelaDto>>(parcele));
         }
 
         [HttpGet("{parcelaID}")]
-        public ActionResult<ParcelaModel> GetParcela(Guid parcelaID)
+        public ActionResult<ParcelaDto> GetParcela(Guid parcelaID)
         {
-            ParcelaModel parcela = parcelaRepository.GetParcelaById(parcelaID);
+            ParcelaEntity parcela = parcelaRepository.GetParcelaById(parcelaID);
             if(parcela == null)
             {
                 return NotFound();
             }
-            return Ok(parcela);
+            return Ok(mapper.Map<ParcelaDto>(parcela));
         }
 
         [HttpPost]
-        public ActionResult<ParcelaModel> CreateParcela([FromBody] ParcelaModel parcela)
+        public ActionResult<ParcelaDto> CreateParcela([FromBody] ParcelaDto parcela)
         {
             try
             {
-                ParcelaModel p = parcelaRepository.CreateParcela(parcela);
+                ParcelaEntity par = mapper.Map<ParcelaEntity>(parcela);
+                ParcelaEntity p = parcelaRepository.CreateParcela(par);
                 string location = linkGenerator.GetPathByAction("GetParcela", "Parcela", new { parcelaID = p.ParcelaID });
-                return Created(location, p);
+                return Created(location, mapper.Map<ParcelaDto>(p));
             }
             catch
             {
@@ -65,7 +71,7 @@ namespace Parcela.Controllers
         {
             try
             {
-                ParcelaModel parcela = parcelaRepository.GetParcelaById(parcelaID);               
+                ParcelaEntity parcela = parcelaRepository.GetParcelaById(parcelaID);               
                 if(parcela == null)
                 {
                     return NotFound();
@@ -76,6 +82,23 @@ namespace Parcela.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
+            }
+        }
+
+        public ActionResult<ParcelaDto> UpdateParcela(ParcelaEntity parcela)
+        {
+            try
+            {
+                if (parcelaRepository.GetParcelaById(parcela.ParcelaID) == null)
+                {
+                    return NotFound(); 
+                }
+                ParcelaEntity p = parcelaRepository.UpdateParcela(parcela);
+                return Ok(mapper.Map<ParcelaDto>(p));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

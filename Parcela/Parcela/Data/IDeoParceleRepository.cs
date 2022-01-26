@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace Parcela.Data
 {
     interface IDeoParceleRepository
     {
-        List<DeoParceleModel> GetDeloviParcela();
+        List<DeoParceleEntity> GetDeloviParcela();
 
-        DeoParceleModel GetDeoParceleById(Guid deoParceleID);
+        DeoParceleEntity GetDeoParceleById(Guid deoParceleID);
 
-        DeoParceleModel CreateDeoParcele(DeoParceleModel deoParcele);
+        DeoParceleEntity CreateDeoParcele(DeoParceleEntity deoParcele);
 
-        DeoParceleModel UpdateDeoParcele(DeoParceleModel deoParcele);
+        DeoParceleEntity UpdateDeoParcele(DeoParceleEntity deoParcele);
 
         void DeleteDeoParcele(Guid deoParceleID);
     }

@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
+using Parcela.Entities;
 using Parcela.Models;
 using System;
 using System.Collections.Generic;
@@ -16,43 +18,47 @@ namespace Parcela.Controllers
     {
         private readonly IOdvodnjavanjeRepository odvodnjavanjeRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-        public OdvodnjavanjeController(IOdvodnjavanjeRepository odvodnjavanjeRepository, LinkGenerator linkGenerator)
+        public OdvodnjavanjeController(IOdvodnjavanjeRepository odvodnjavanjeRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.odvodnjavanjeRepository = odvodnjavanjeRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<OdvodnjavanjeModel>> GetOdvodnjavanja()
+        [HttpHead]
+        public ActionResult<List<OdvodnjavanjeDto>> GetOdvodnjavanja()
         {
-            List<OdvodnjavanjeModel> odvodnjavanja = odvodnjavanjeRepository.GetOdvodnjavanja();
+            List<OdvodnjavanjeEntity> odvodnjavanja = odvodnjavanjeRepository.GetOdvodnjavanja();
             if (odvodnjavanja == null || odvodnjavanja.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(odvodnjavanja);
+            return Ok(mapper.Map<List<OdvodnjavanjeDto>>(odvodnjavanja));
         }
 
         [HttpGet("{odvodnjavanjeID}")]
-        public ActionResult<OdvodnjavanjeModel> GetOdvodnjavanje(Guid odvodnjavanjeID)
+        public ActionResult<OdvodnjavanjeDto> GetOdvodnjavanje(Guid odvodnjavanjeID)
         {
-            OdvodnjavanjeModel odvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanjeID);
+            OdvodnjavanjeEntity odvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanjeID);
             if (odvodnjavanje == null)
             {
                 return NotFound();
             }
-            return Ok(odvodnjavanje);
+            return Ok(mapper.Map<OdvodnjavanjeDto>(odvodnjavanje));
         }
 
         [HttpPost]
-        public ActionResult<OdvodnjavanjeModel> CreateOdvodnjavanje([FromBody] OdvodnjavanjeModel odvodnjavanje)
+        public ActionResult<OdvodnjavanjeDto> CreateOdvodnjavanje([FromBody] OdvodnjavanjeDto odvodnjavanje)
         {
             try
             {
-                OdvodnjavanjeModel o = odvodnjavanjeRepository.CreateOdvodnjavanje(odvodnjavanje);
+                OdvodnjavanjeEntity odv = mapper.Map<OdvodnjavanjeEntity>(odvodnjavanje);
+                OdvodnjavanjeEntity o = odvodnjavanjeRepository.CreateOdvodnjavanje(odv);
                 string location = linkGenerator.GetPathByAction("GetOdvodnjavanje", "Odvodnjavanje", new { odvodnjavanjeID = o.OdvodnjavanjeID });
-                return Created(location, o);
+                return Created(location, mapper.Map<OdvodnjavanjeDto>(o));
             }
             catch
             {
@@ -65,17 +71,34 @@ namespace Parcela.Controllers
         {
             try
             {
-                OdvodnjavanjeModel odvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanjeID);
+                OdvodnjavanjeEntity odvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanjeID);
                 if (odvodnjavanje == null)
                 {
                     return NotFound();
                 }
-                odvodnjavanjeRepository.DeleteOdvodnjavanje(odvodnjavanje);
+                odvodnjavanjeRepository.DeleteOdvodnjavanje(odvodnjavanjeID);
                 return NoContent();
             }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
+            }
+        }
+
+        public ActionResult<OdvodnjavanjeDto> UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje)
+        {
+            try
+            {
+                if (odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanje.OdvodnjavanjeID) == null)
+                {
+                    return NotFound();
+                }
+                OdvodnjavanjeEntity o = odvodnjavanjeRepository.UpdateOdvodnjavanje(odvodnjavanje);
+                return Ok(mapper.Map<OdvodnjavanjeDto>(o));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

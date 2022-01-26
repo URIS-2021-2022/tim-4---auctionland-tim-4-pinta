@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
+using Parcela.Entities;
 using Parcela.Models;
 using System;
 using System.Collections.Generic;
@@ -16,43 +18,47 @@ namespace Parcela.Controllers
     {
         private readonly IKulturaRepository kulturaRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-        public KulturaController(IKulturaRepository kulturaRepository, LinkGenerator linkGenerator)
+        public KulturaController(IKulturaRepository kulturaRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.kulturaRepository = kulturaRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<KulturaModel>> GetKulture()
+        [HttpHead]
+        public ActionResult<List<KulturaDto>> GetKulture()
         {
-            List<KulturaModel> kulture = kulturaRepository.GetKulture();
+            List<KulturaEntity> kulture = kulturaRepository.GetKulture();
             if (kulture == null || kulture.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(kulture);
+            return Ok(mapper.Map<List<KulturaDto>>(kulture));
         }
 
         [HttpGet("{kulturaID}")]
-        public ActionResult<KulturaModel> GetKultura(Guid kulturaID)
+        public ActionResult<KulturaDto> GetKultura(Guid kulturaID)
         {
-            KulturaModel kultura = kulturaRepository.GetKulturaById(kulturaID);
+            KulturaEntity kultura = kulturaRepository.GetKulturaById(kulturaID);
             if (kultura == null)
             {
                 return NotFound();
             }
-            return Ok(kultura);
+            return Ok(mapper.Map<KulturaDto>(kultura));
         }
 
         [HttpPost]
-        public ActionResult<KulturaModel> CreateKultura([FromBody] KulturaModel kultura)
+        public ActionResult<KulturaDto> CreateKultura([FromBody] KulturaDto kultura)
         {
             try
             {
-                KulturaModel k = kulturaRepository.CreateKultura(kultura);
+                KulturaEntity kul = mapper.Map<KulturaEntity>(kultura);
+                KulturaEntity k = kulturaRepository.CreateKultura(kul);
                 string location = linkGenerator.GetPathByAction("GetKultura", "Kultura", new { kulturaID = k.KulturaID });
-                return Created(location, k);
+                return Created(location, mapper.Map<KulturaDto>(k));
             }
             catch
             {
@@ -65,7 +71,7 @@ namespace Parcela.Controllers
         {
             try
             {
-                KulturaModel kultura = kulturaRepository.GetKulturaById(kulturaID);
+                KulturaEntity kultura = kulturaRepository.GetKulturaById(kulturaID);
                 if (kultura == null)
                 {
                     return NotFound();
@@ -76,6 +82,23 @@ namespace Parcela.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
+            }
+        }
+
+        public ActionResult<KulturaDto> UpdateKultura(KulturaEntity kultura)
+        {
+            try
+            {
+                if (kulturaRepository.GetKulturaById(kultura.KulturaID) == null)
+                {
+                    return NotFound();
+                }
+                KulturaEntity k = kulturaRepository.UpdateKultura(kultura);
+                return Ok(mapper.Map<KulturaDto>(k));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

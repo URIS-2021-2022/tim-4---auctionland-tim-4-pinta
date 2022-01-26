@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Parcela.Data
 {
     public class KlasaRepository : IKlasaRepository
     {
-        public static List<KlasaModel> Klase { get; set; } = new List<KlasaModel>();
+        public static List<KlasaEntity> Klase { get; set; } = new List<KlasaEntity>();
 
         public KlasaRepository()
         {
@@ -17,25 +18,25 @@ namespace Parcela.Data
 
         private void FillData()
         {
-            Klase.AddRange(new List<KlasaModel>
+            Klase.AddRange(new List<KlasaEntity>
             {
-                new KlasaModel
+                new KlasaEntity
                 {
                     KlasaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                     KlasaOznaka = 1
                 },
-                new KlasaModel
+                new KlasaEntity
                 {
                     KlasaID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                     KlasaOznaka = 2
                 }
             });
         }
-        public KlasaModel CreateKlasa(KlasaModel klasa)
+        public KlasaEntity CreateKlasa(KlasaEntity klasa)
         {
             klasa.KlasaID = Guid.NewGuid();
             Klase.Add(klasa);
-            KlasaModel k = GetKlasaById(klasa.KlasaID);
+            KlasaEntity k = GetKlasaById(klasa.KlasaID);
             return k;
         }
 
@@ -44,19 +45,19 @@ namespace Parcela.Data
             Klase.Remove(Klase.FirstOrDefault(k => k.KlasaID == klasaID));
         }
 
-        public KlasaModel GetKlasaById(Guid klasaID)
+        public KlasaEntity GetKlasaById(Guid klasaID)
         {
             return Klase.FirstOrDefault(k => k.KlasaID == klasaID);
         }
 
-        public List<KlasaModel> GetKlase()
+        public List<KlasaEntity> GetKlase()
         {
             return (from k in Klase select k).ToList();
         }
 
-        public KlasaModel UpdateKlasa(KlasaModel klasa)
+        public KlasaEntity UpdateKlasa(KlasaEntity klasa)
         {
-            KlasaModel k = GetKlasaById(klasa.KlasaID);
+            KlasaEntity k = GetKlasaById(klasa.KlasaID);
 
             k.KlasaOznaka = klasa.KlasaOznaka;
 

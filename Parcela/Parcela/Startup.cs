@@ -28,7 +28,9 @@ namespace Parcela
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(setup =>
+                setup.ReturnHttpNotAcceptable = true
+            ).AddXmlDataContractSerializerFormatters();
             services.AddSingleton<IParcelaRepository, ParcelaRepository>();
             services.AddSingleton<IDeoParceleRepository, DeoParceleRepository>();
             services.AddSingleton<IKlasaRepository, KlasaRepository>();
@@ -37,6 +39,8 @@ namespace Parcela
             services.AddSingleton<IObradivostRepository, ObradivostRepository>();
             services.AddSingleton<IOdvodnjavanjeRepository, OdvodnjavanjeRepository>();
             services.AddSingleton<IZasticenaZonaRepository, ZasticenaZonaRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Parcela", Version = "v1" });

@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace Parcela.Data
 {
     interface IOblikSvojineRepository
     {
-        List<OblikSvojineModel> GetObliciSvojine();
+        List<OblikSvojineEntity> GetObliciSvojine();
 
-        OblikSvojineModel GetOblikSvojineById(Guid oblikSvojineID);
+        OblikSvojineEntity GetOblikSvojineById(Guid oblikSvojineID);
 
-        OblikSvojineModel CreateOblikSvojine(OblikSvojineModel oblikSvojine);
+        OblikSvojineEntity CreateOblikSvojine(OblikSvojineEntity oblikSvojine);
 
-        OblikSvojineModel UpdateOblikSvojine(OblikSvojineModel oblikSvojine);
+        OblikSvojineEntity UpdateOblikSvojine(OblikSvojineEntity oblikSvojine);
 
         void DeleteOblikSvojine(Guid oblikSvojineID);
     }

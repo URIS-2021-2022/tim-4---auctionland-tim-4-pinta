@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace Parcela.Data
 {
     interface IZasticenaZonaRepository
     {
-        List<ZasticenaZonaModel> GetZasticeneZone();
+        List<ZasticenaZonaEntity> GetZasticeneZone();
 
-        ZasticenaZonaModel GetZasticenaZonaById(Guid zasticenaZonaID);
+        ZasticenaZonaEntity GetZasticenaZonaById(Guid zasticenaZonaID);
 
-        ZasticenaZonaModel CreateZasticenaZona(ZasticenaZonaModel zasticenaZona);
+        ZasticenaZonaEntity CreateZasticenaZona(ZasticenaZonaEntity zasticenaZona);
 
-        ZasticenaZonaModel UpdateZasticenaZona(ZasticenaZonaModel zasticenaZona);
+        ZasticenaZonaEntity UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona);
 
         void DeleteZasticenaZona(Guid zasticenaZonaID);
     }

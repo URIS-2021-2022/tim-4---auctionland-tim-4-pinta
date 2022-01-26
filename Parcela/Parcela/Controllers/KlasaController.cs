@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
+using Parcela.Entities;
 using Parcela.Models;
 using System;
 using System.Collections.Generic;
@@ -16,43 +18,47 @@ namespace Parcela.Controllers
     {
         private readonly IKlasaRepository klasaRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-        public KlasaController(IKlasaRepository klasaRepository, LinkGenerator linkGenerator)
+        public KlasaController(IKlasaRepository klasaRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.klasaRepository = klasaRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<KlasaModel>> GetKlase()
+        [HttpHead]
+        public ActionResult<List<KlasaDto>> GetKlase()
         {
-            List<KlasaModel> klase = klasaRepository.GetKlase();
+            List<KlasaEntity> klase = klasaRepository.GetKlase();
             if (klase == null || klase.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(klase);
+            return Ok(mapper.Map<List<KlasaDto>>(klase));
         }
 
         [HttpGet("{klasaID}")]
-        public ActionResult<KlasaModel> GetKlasa(Guid klasaID)
+        public ActionResult<KlasaDto> GetKlasa(Guid klasaID)
         {
-            KlasaModel klasa = klasaRepository.GetKlasaById(klasaID);
+            KlasaEntity klasa = klasaRepository.GetKlasaById(klasaID);
             if (klasa == null)
             {
                 return NotFound();
             }
-            return Ok(klasa);
+            return Ok(mapper.Map<KlasaDto>(klasa));
         }
 
         [HttpPost]
-        public ActionResult<KlasaModel> CreateKlasa([FromBody] KlasaModel klasa)
+        public ActionResult<KlasaDto> CreateKlasa([FromBody] KlasaDto klasa)
         {
             try
             {
-                KlasaModel k = klasaRepository.CreateKlasa(klasa);
+                KlasaEntity kla = mapper.Map<KlasaEntity>(klasa);
+                KlasaEntity k = klasaRepository.CreateKlasa(kla);
                 string location = linkGenerator.GetPathByAction("GetKlasa", "Klasa", new { klasaID = k.KlasaID });
-                return Created(location, k);
+                return Created(location, mapper.Map<KlasaDto>(klasa));
             }
             catch
             {
@@ -65,7 +71,7 @@ namespace Parcela.Controllers
         {
             try
             {
-                KlasaModel klasa = klasaRepository.GetKlasaById(klasaID);
+                KlasaEntity klasa = klasaRepository.GetKlasaById(klasaID);
                 if (klasa == null)
                 {
                     return NotFound();
@@ -76,6 +82,23 @@ namespace Parcela.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
+            }
+        }
+
+        public ActionResult<KlasaDto> UpdateKlasa(KlasaEntity klasa)
+        {
+            try
+            {
+                if (klasaRepository.GetKlasaById(klasa.KlasaID) == null)
+                {
+                    return NotFound();
+                }
+                KlasaEntity k = klasaRepository.UpdateKlasa(klasa);
+                return Ok(mapper.Map<KlasaDto>(k));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

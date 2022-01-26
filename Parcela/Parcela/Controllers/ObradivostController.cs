@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
+using Parcela.Entities;
 using Parcela.Models;
 using System;
 using System.Collections.Generic;
@@ -16,43 +18,46 @@ namespace Parcela.Controllers
     {
         private readonly IObradivostRepository obradivostRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-        public ObradivostController(IObradivostRepository obradivostRepository, LinkGenerator linkGenerator)
+        public ObradivostController(IObradivostRepository obradivostRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.obradivostRepository = obradivostRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<ObradivostModel>> GetObradivosti()
+        public ActionResult<List<ObradivostDto>> GetObradivosti()
         {
-            List<ObradivostModel> obradivosti = obradivostRepository.GetObradivosti();
+            List<ObradivostEntity> obradivosti = obradivostRepository.GetObradivosti();
             if (obradivosti == null || obradivosti.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(obradivosti);
+            return Ok(mapper.Map<List<ObradivostDto>>(obradivosti));
         }
 
         [HttpGet("{obradivostID}")]
-        public ActionResult<ObradivostModel> GetObradivost(Guid obradivostID)
+        public ActionResult<ObradivostDto> GetObradivost(Guid obradivostID)
         {
-            ObradivostModel obradivost = obradivostRepository.GetObradivostById(obradivostID);
+            ObradivostEntity obradivost = obradivostRepository.GetObradivostById(obradivostID);
             if (obradivost == null)
             {
                 return NotFound();
             }
-            return Ok(obradivost);
+            return Ok(mapper.Map<ObradivostDto>(obradivost));
         }
 
         [HttpPost]
-        public ActionResult<ObradivostModel> CreateObradivost([FromBody] ObradivostModel obradivost)
+        public ActionResult<ObradivostDto> CreateObradivost([FromBody] ObradivostDto obradivost)
         {
             try
             {
-                ObradivostModel o = obradivostRepository.CreateObradivost(obradivost);
+                ObradivostEntity obr = mapper.Map<ObradivostEntity>(obradivost);
+                ObradivostEntity o = obradivostRepository.CreateObradivost(obr);
                 string location = linkGenerator.GetPathByAction("GetObradivost", "Obradivost", new { obradivostID = o.ObradivostID });
-                return Created(location, o);
+                return Created(location, mapper.Map<ObradivostDto>(o));
             }
             catch
             {
@@ -65,7 +70,7 @@ namespace Parcela.Controllers
         {
             try
             {
-                ObradivostModel obradivost = obradivostRepository.GetObradivostById(obradivostID);
+                ObradivostEntity obradivost = obradivostRepository.GetObradivostById(obradivostID);
                 if (obradivost == null)
                 {
                     return NotFound();
@@ -76,6 +81,23 @@ namespace Parcela.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
+            }
+        }
+
+        public ActionResult<ObradivostDto> UpdateObradivost(ObradivostEntity obradivost)
+        {
+            try
+            {
+                if (obradivostRepository.GetObradivostById(obradivost.ObradivostID) == null)
+                {
+                    return NotFound();
+                }
+                ObradivostEntity o = obradivostRepository.UpdateObradivost(obradivost);
+                return Ok(mapper.Map<ObradivostDto>(o));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Parcela.Models
 {
-    public class KlasaModel
+    public class ObradivostDto
     {
-        public Guid KlasaID { get; set; }
+        public Guid ObradivostID { get; set; }
 
-        public int KlasaOznaka { get; set; }
+        public String ObradivostNaziv { get; set; }
     }
 }

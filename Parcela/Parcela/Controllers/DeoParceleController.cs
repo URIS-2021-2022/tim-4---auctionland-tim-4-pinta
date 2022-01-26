@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
+using Parcela.Entities;
 using Parcela.Models;
 using System;
 using System.Collections.Generic;
@@ -16,43 +18,47 @@ namespace Parcela.Controllers
     {
         private readonly IDeoParceleRepository deoParceleRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-        public DeoParceleController(IDeoParceleRepository deoParceleRepository, LinkGenerator linkGenerator)
+        public DeoParceleController(IDeoParceleRepository deoParceleRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.deoParceleRepository = deoParceleRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<DeoParceleModel>> GetDeloviParcela ()
+        [HttpHead]
+        public ActionResult<List<DeoParceleDto>> GetDeloviParcela ()
         {
-            List<DeoParceleModel> deloviParcela = deoParceleRepository.GetDeloviParcela();
+            List<DeoParceleEntity> deloviParcela = deoParceleRepository.GetDeloviParcela();
             if (deloviParcela == null || deloviParcela.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(deloviParcela);
+            return Ok(mapper.Map<List<DeoParceleDto>>(deloviParcela));
         }
 
         [HttpGet("{deoParceleID}")]
-        public ActionResult<DeoParceleModel> GetDeoParcele(Guid deoParceleID)
+        public ActionResult<DeoParceleDto> GetDeoParcele(Guid deoParceleID)
         {
-            DeoParceleModel deoParcele = deoParceleRepository.GetDeoParceleById(deoParceleID);
+            DeoParceleEntity deoParcele = deoParceleRepository.GetDeoParceleById(deoParceleID);
             if (deoParcele == null)
             {
                 return NotFound();
             }
-            return Ok(deoParcele);
+            return Ok(mapper.Map<DeoParceleDto>(deoParcele));
         }
 
         [HttpPost]
-        public ActionResult<DeoParceleModel> CreateDeoParcele([FromBody] DeoParceleModel deoParcele)
+        public ActionResult<DeoParceleDto> CreateDeoParcele([FromBody] DeoParceleDto deoParcele)
         {
             try
             {
-                DeoParceleModel dp = deoParceleRepository.CreateDeoParcele(deoParcele);
+                DeoParceleEntity deop = mapper.Map<DeoParceleEntity>(deoParcele);
+                DeoParceleEntity dp = deoParceleRepository.CreateDeoParcele(deop);
                 string location = linkGenerator.GetPathByAction("GetDeoParcele", "DeoParcele", new { deoParceleID = dp.DeoParceleID });
-                return Created(location, dp);
+                return Created(location, mapper.Map<DeoParceleDto>(dp));
             }
             catch
             {
@@ -65,7 +71,7 @@ namespace Parcela.Controllers
         {
             try
             {
-                DeoParceleModel deoParcele = deoParceleRepository.GetDeoParceleById(deoParceleID);
+                DeoParceleEntity deoParcele = deoParceleRepository.GetDeoParceleById(deoParceleID);
                 if (deoParcele == null)
                 {
                     return NotFound();
@@ -76,6 +82,23 @@ namespace Parcela.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
+            }
+        }
+
+        public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleEntity deoParcele)
+        {
+            try
+            {
+                if (deoParceleRepository.GetDeoParceleById(deoParcele.DeoParceleID) == null)
+                {
+                    return NotFound();
+                }
+                DeoParceleEntity dp = deoParceleRepository.UpdateDeoParcele(deoParcele);
+                return Ok(mapper.Map<DeoParceleDto>(dp));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

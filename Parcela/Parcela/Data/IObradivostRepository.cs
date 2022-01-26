@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace Parcela.Data
 {
     interface IObradivostRepository
     {
-        List<ObradivostModel> GetObradivosti();
+        List<ObradivostEntity> GetObradivosti();
 
-        ObradivostModel GetObradivostById(Guid obradivostID);
+        ObradivostEntity GetObradivostById(Guid obradivostID);
 
-        ObradivostModel CreateObradivost(ObradivostModel obradivost);
+        ObradivostEntity CreateObradivost(ObradivostEntity obradivost);
 
-        ObradivostModel UpdateObradivost(ObradivostModel obradivost);
+        ObradivostEntity UpdateObradivost(ObradivostEntity obradivost);
 
         void DeleteObradivost(Guid obradivostID);
     }

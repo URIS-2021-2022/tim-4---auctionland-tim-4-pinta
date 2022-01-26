@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
+using Parcela.Entities;
 using Parcela.Models;
 using System;
 using System.Collections.Generic;
@@ -16,43 +18,47 @@ namespace Parcela.Controllers
     {
         private readonly IZasticenaZonaRepository zasticenaZonaRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-        public ZasticenaZonaController(IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator)
+        public ZasticenaZonaController(IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.zasticenaZonaRepository = zasticenaZonaRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<ZasticenaZonaModel>> GetZasticeneZone()
+        [HttpHead]
+        public ActionResult<List<ZasticenaZonaDto>> GetZasticeneZone()
         {
-            List<ZasticenaZonaModel> zasticeneZone = zasticenaZonaRepository.GetZasticeneZone();
+            List<ZasticenaZonaEntity> zasticeneZone = zasticenaZonaRepository.GetZasticeneZone();
             if (zasticeneZone == null || zasticeneZone.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(zasticeneZone);
+            return Ok(mapper.Map<List<ZasticenaZonaDto>>(zasticeneZone));
         }
 
         [HttpGet("{zasticenaZonaID}")]
-        public ActionResult<ZasticenaZonaModel> GetZasticenaZona(Guid zasticenaZonaID)
+        public ActionResult<ZasticenaZonaDto> GetZasticenaZona(Guid zasticenaZonaID)
         {
-            ZasticenaZonaModel zasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZonaID);
+            ZasticenaZonaEntity zasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZonaID);
             if (zasticenaZona == null)
             {
                 return NotFound();
             }
-            return Ok(zasticenaZona);
+            return Ok(mapper.Map<ZasticenaZonaDto>(zasticenaZona));
         }
 
         [HttpPost]
-        public ActionResult<ZasticenaZonaModel> CreateZasticenaZona([FromBody] ZasticenaZonaModel zasticenaZona)
+        public ActionResult<ZasticenaZonaDto> CreateZasticenaZona([FromBody] ZasticenaZonaDto zasticenaZona)
         {
             try
             {
-                ZasticenaZonaModel z = zasticenaZonaRepository.CreateZasticenaZona(zasticenaZona);
+                ZasticenaZonaEntity zaz = mapper.Map<ZasticenaZonaEntity>(zasticenaZona);
+                ZasticenaZonaEntity z = zasticenaZonaRepository.CreateZasticenaZona(zaz);
                 string location = linkGenerator.GetPathByAction("GetZasticenaZona", "ZasticenaZona", new { zasticenaZonaID = z.ZasticenaZonaID });
-                return Created(location, z);
+                return Created(location, mapper.Map<ZasticenaZonaDto>(z));
             }
             catch
             {
@@ -65,7 +71,7 @@ namespace Parcela.Controllers
         {
             try
             {
-                ZasticenaZonaModel zasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZonaID);
+                ZasticenaZonaEntity zasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZonaID);
                 if (zasticenaZona == null)
                 {
                     return NotFound();
@@ -76,6 +82,23 @@ namespace Parcela.Controllers
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
+            }
+        }
+
+        public ActionResult<ZasticenaZonaDto> UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
+        {
+            try
+            {
+                if (zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID) == null)
+                {
+                    return NotFound();
+                }
+                ZasticenaZonaEntity z = zasticenaZonaRepository.UpdateZasticenaZona(zasticenaZona);
+                return Ok(mapper.Map<ZasticenaZonaDto>(z));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
 

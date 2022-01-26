@@ -1,4 +1,4 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +8,13 @@ namespace Parcela.Data
 {
     interface IParcelaRepository
     {
-        List<ParcelaModel> GetParcele();
+        List<ParcelaEntity> GetParcele();
 
-        ParcelaModel GetParcelaById(Guid parcelaID);
+        ParcelaEntity GetParcelaById(Guid parcelaID);
 
-        ParcelaModel CreateParcela(ParcelaModel parcela);
+        ParcelaEntity CreateParcela(ParcelaEntity parcela);
 
-        ParcelaModel UpdateParcela(ParcelaModel parcela);
+        ParcelaEntity UpdateParcela(ParcelaEntity parcela);
 
         void DeleteParcela(Guid parcelaID);
     }

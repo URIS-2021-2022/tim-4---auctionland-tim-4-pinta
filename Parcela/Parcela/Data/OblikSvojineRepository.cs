@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace Parcela.Data
 {
     public class OblikSvojineRepository : IOblikSvojineRepository
     {
-        public static List<OblikSvojineModel> ObliciSvojine { get; set; } = new List<OblikSvojineModel>();
+        public static List<OblikSvojineEntity> ObliciSvojine { get; set; } = new List<OblikSvojineEntity>();
 
         public OblikSvojineRepository()
         {
@@ -17,14 +18,14 @@ namespace Parcela.Data
 
         private void FillData()
         {
-            ObliciSvojine.AddRange(new List<OblikSvojineModel>
+            ObliciSvojine.AddRange(new List<OblikSvojineEntity>
             {
-                new OblikSvojineModel
+                new OblikSvojineEntity
                 {
                     OblikSvojineID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                     OblikSvojineNaziv = "Oblik svojine 1"
                 },
-                new OblikSvojineModel
+                new OblikSvojineEntity
                 {
                     OblikSvojineID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                     OblikSvojineNaziv = "Oblik svojine 2"
@@ -32,11 +33,11 @@ namespace Parcela.Data
             });
         }
 
-        public OblikSvojineModel CreateOblikSvojine(OblikSvojineModel oblikSvojine)
+        public OblikSvojineEntity CreateOblikSvojine(OblikSvojineEntity oblikSvojine)
         {
             oblikSvojine.OblikSvojineID = Guid.NewGuid();
             ObliciSvojine.Add(oblikSvojine);
-            OblikSvojineModel os = GetOblikSvojineById(oblikSvojine.OblikSvojineID);
+            OblikSvojineEntity os = GetOblikSvojineById(oblikSvojine.OblikSvojineID);
             return os;
         }
 
@@ -45,19 +46,19 @@ namespace Parcela.Data
             ObliciSvojine.Remove(ObliciSvojine.FirstOrDefault(os => os.OblikSvojineID == oblikSvojineID));
         }
 
-        public List<OblikSvojineModel> GetObliciSvojine()
+        public List<OblikSvojineEntity> GetObliciSvojine()
         {
             return (from os in ObliciSvojine select os).ToList();
         }
 
-        public OblikSvojineModel GetOblikSvojineById(Guid oblikSvojineID)
+        public OblikSvojineEntity GetOblikSvojineById(Guid oblikSvojineID)
         {
             return ObliciSvojine.FirstOrDefault(os => os.OblikSvojineID == oblikSvojineID);
         }
 
-        public OblikSvojineModel UpdateOblikSvojine(OblikSvojineModel oblikSvojine)
+        public OblikSvojineEntity UpdateOblikSvojine(OblikSvojineEntity oblikSvojine)
         {
-            OblikSvojineModel os = GetOblikSvojineById(oblikSvojine.OblikSvojineID);
+            OblikSvojineEntity os = GetOblikSvojineById(oblikSvojine.OblikSvojineID);
 
             os.OblikSvojineNaziv = oblikSvojine.OblikSvojineNaziv;
 
