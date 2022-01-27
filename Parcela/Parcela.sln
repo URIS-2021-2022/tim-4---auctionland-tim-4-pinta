@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parcela", "Parcela\Parcela.csproj", "{1BBE41A5-97C0-4B18-8684-034A3022FCAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BBE41A5-97C0-4B18-8684-034A3022FCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BBE41A5-97C0-4B18-8684-034A3022FCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BBE41A5-97C0-4B18-8684-034A3022FCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BBE41A5-97C0-4B18-8684-034A3022FCAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6BDAA05-FA44-42ED-973E-15DB2BE617D9}
+	EndGlobalSection
+EndGlobal
