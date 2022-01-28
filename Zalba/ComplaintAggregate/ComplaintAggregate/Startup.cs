@@ -1,4 +1,6 @@
 ﻿using ComplaintAggregate.Data;
+using ComplaintAggregate.Helpers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,10 +12,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ComplaintAggregate
@@ -31,7 +35,8 @@ namespace ComplaintAggregate
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddXmlDataContractSerializerFormatters() //Dodajemo podršku za XML tako da ukoliko klijent to traži u Accept header-u zahteva možemo da serializujemo payload u XML u odgovoru.
+            services.AddControllers(setup =>
+                setup.ReturnHttpNotAcceptable = true).AddXmlDataContractSerializerFormatters() //Dodajemo podršku za XML tako da ukoliko klijent to traži u Accept header-u zahteva možemo da serializujemo payload u XML u odgovoru.
             .ConfigureApiBehaviorOptions(setupAction => //Deo koji se odnosi na podržavanje Problem Details for HTTP APIs
             {
                 setupAction.InvalidModelStateResponseFactory = context =>
@@ -77,17 +82,36 @@ namespace ComplaintAggregate
                         ContentTypes = { "application/problem+json" }
                     };
                 };
-            }); ;
+            });
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
             services.AddSingleton<IComplaintRepository, ComplaintRepository>();
             services.AddSingleton<IStatusOfComplaintRepository, StatusOfComplaintRepository>();
             services.AddSingleton<IActionBasedOnComplaintRepository, ActionBasedOnComplaintRepository>();
             services.AddSingleton<ITypeOfComplaintRepository, TypeOfComplaintRepository>();
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-           // services.AddSwaggerGen(c =>
+            services.AddSingleton<IUserRepository, UserRepository>();
+
+            services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+
+            // services.AddSwaggerGen(c =>
             //{
-             //   c.SwaggerDoc("v1", new OpenApiInfo { Title = "ComplaintAggregate", Version = "v1" });
+            //   c.SwaggerDoc("v1", new OpenApiInfo { Title = "ComplaintAggregate", Version = "v1" });
             //});
         }
 
