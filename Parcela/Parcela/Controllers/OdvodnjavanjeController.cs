@@ -66,7 +66,7 @@ namespace Parcela.Controllers
             }
         }
 
-        [HttpDelete("{odvodnjavanjeID")]
+        [HttpDelete("{odvodnjavanjeID}")]
         public IActionResult DeleteOdvodnjavanje(Guid odvodnjavanjeID)
         {
             try

@@ -66,7 +66,7 @@ namespace Parcela.Controllers
             }
         }
 
-        [HttpDelete("{kulturaID")]
+        [HttpDelete("{kulturaID}")]
         public IActionResult DeleteKultura(Guid kulturaID)
         {
             try

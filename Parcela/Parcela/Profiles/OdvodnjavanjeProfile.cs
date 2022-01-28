@@ -13,6 +13,7 @@ namespace Parcela.Profiles
         public OdvodnjavanjeProfile()
         {
             CreateMap<OdvodnjavanjeEntity, OdvodnjavanjeDto>();
+            CreateMap<OdvodnjavanjeDto, OdvodnjavanjeEntity>();
         }
     }
 }

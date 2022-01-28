@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IKlasaRepository
+    public interface IKlasaRepository
     {
         List<KlasaEntity> GetKlase();
 

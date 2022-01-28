@@ -7,8 +7,6 @@ namespace Parcela.Models
 {
     public class OdvodnjavanjeDto
     {
-        public Guid OdvodnjavanjeID { get; set; }
-    
         public String OdvodnjavanjeNaziv { get; set; }
     }
 }

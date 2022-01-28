@@ -36,7 +36,7 @@ namespace Parcela.Controllers
             {
                 return NoContent();
             }
-            return Ok(mapper.Map<List<ObradivostDto>>(obliciSvojine));
+            return Ok(mapper.Map<List<OblikSvojineDto>>(obliciSvojine));
         }
 
         [HttpGet("{oblikSvojineID}")]
@@ -66,7 +66,7 @@ namespace Parcela.Controllers
             }
         }
 
-        [HttpDelete("{oblikSvoijneID")]
+        [HttpDelete("{oblikSvoijneID}")]
         public IActionResult DeleteOblikSvojine(Guid oblikSvojineID)
         {
             try

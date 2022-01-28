@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IOblikSvojineRepository
+    public interface IOblikSvojineRepository
     {
         List<OblikSvojineEntity> GetObliciSvojine();
 

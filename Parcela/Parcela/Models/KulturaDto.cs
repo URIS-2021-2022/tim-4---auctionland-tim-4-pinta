@@ -7,8 +7,6 @@ namespace Parcela.Models
 {
     public class KulturaDto
     {
-        public Guid KulturaID { get; set; }
-
         public String KulturaNaziv { get; set; }
     }
 }

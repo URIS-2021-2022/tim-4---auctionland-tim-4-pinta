@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IOdvodnjavanjeRepository
+    public interface IOdvodnjavanjeRepository
     {
         List<OdvodnjavanjeEntity> GetOdvodnjavanja();
 

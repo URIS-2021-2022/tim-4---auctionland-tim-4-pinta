@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IParcelaRepository
+    public interface IParcelaRepository
     {
         List<ParcelaEntity> GetParcele();
 

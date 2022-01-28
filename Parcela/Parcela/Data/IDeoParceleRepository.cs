@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IDeoParceleRepository
+    public interface IDeoParceleRepository
     {
         List<DeoParceleEntity> GetDeloviParcela();
 

@@ -66,7 +66,7 @@ namespace Parcela.Controllers
             }
         }
 
-        [HttpDelete("{zasticenaZonaID")]
+        [HttpDelete("{zasticenaZonaID}")]
         public IActionResult DeleteZasticenaZona(Guid zasticenaZonaID)
         {
             try
