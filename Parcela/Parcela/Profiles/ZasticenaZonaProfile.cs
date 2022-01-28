@@ -13,6 +13,7 @@ namespace Parcela.Profiles
         public ZasticenaZonaProfile()
         {
             CreateMap<ZasticenaZonaEntity, ZasticenaZonaDto>();
+            CreateMap<ZasticenaZonaDto, ZasticenaZonaEntity>();
         }
     }
 }

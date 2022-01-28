@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IObradivostRepository
+    public interface IObradivostRepository
     {
         List<ObradivostEntity> GetObradivosti();
 

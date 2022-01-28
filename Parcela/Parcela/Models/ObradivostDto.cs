@@ -7,8 +7,6 @@ namespace Parcela.Models
 {
     public class ObradivostDto
     {
-        public Guid ObradivostID { get; set; }
-
         public String ObradivostNaziv { get; set; }
     }
 }

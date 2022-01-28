@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IKulturaRepository
+    public interface IKulturaRepository
     {
         List<KulturaEntity> GetKulture();
 

@@ -13,6 +13,7 @@ namespace Parcela.Profiles
         public OblikSvojineProfile()
         {
             CreateMap<OblikSvojineEntity, OblikSvojineDto>();
+            CreateMap<OblikSvojineDto, OblikSvojineEntity>();
         }
     }
 }

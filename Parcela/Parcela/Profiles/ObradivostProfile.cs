@@ -13,6 +13,7 @@ namespace Parcela.Profiles
         public ObradivostProfile()
         {
             CreateMap<ObradivostEntity, ObradivostDto>();
+            CreateMap<ObradivostDto, ObradivostEntity>();
         }
     }
 }

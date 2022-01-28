@@ -66,7 +66,7 @@ namespace Parcela.Controllers
             }
         }
 
-        [HttpDelete("{deoParceleID")]
+        [HttpDelete("{deoParceleID}")]
         public IActionResult DeleteDeoParcele(Guid deoParceleID)
         {
             try
