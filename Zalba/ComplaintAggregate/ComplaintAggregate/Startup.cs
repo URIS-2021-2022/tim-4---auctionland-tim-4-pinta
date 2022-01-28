@@ -16,7 +16,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -109,10 +111,38 @@ namespace ComplaintAggregate
 
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
 
-            // services.AddSwaggerGen(c =>
-            //{
-            //   c.SwaggerDoc("v1", new OpenApiInfo { Title = "ComplaintAggregate", Version = "v1" });
-            //});
+             services.AddSwaggerGen(setupAction =>
+             {
+                 setupAction.SwaggerDoc("ComplaintAggregateOpenApiSpecification",
+                     new Microsoft.OpenApi.Models.OpenApiInfo()
+                     {
+                         Title = "Complaint aggregate API",
+                         Version = "1",
+                        //Često treba da dodamo neke dodatne informacije
+                        Description = "Pomoću ovog API-ja može da se vrši kreiranje žalbi,kao i pregled kreiranih žalbi korisnika sistema.",
+                         Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                         {
+                             Name = "Marko Marković",
+                             Email = "marko@mail.com",
+                             Url = new Uri("http://www.ftn.uns.ac.rs/")
+                         },
+                         License = new Microsoft.OpenApi.Models.OpenApiLicense
+                         {
+                             Name = "FTN licence",
+                             Url = new Uri("http://www.ftn.uns.ac.rs/")
+                         },
+                         TermsOfService = new Uri("http://www.ftn.uns.ac.rs/complaintAggregateTermsOfService")
+                     });
+
+                 //Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
+                 var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+
+                 //Pravimo putanju do XML fajla sa komentarima
+                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+
+                 //Govorimo swagger-u gde se nalazi dati xml fajl sa komentarima
+                 setupAction.IncludeXmlComments(xmlCommentsPath);
+             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,9 +151,19 @@ namespace ComplaintAggregate
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-           //     app.UseSwagger();
-             //   app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ComplaintAggregate v1"));
             }
+            else
+            {
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("Došlo je do neočekivane greške. Molimo pokušajte kasnije.");
+                    });
+                });
+            }
+
 
             app.UseHttpsRedirection();
 
@@ -131,7 +171,16 @@ namespace ComplaintAggregate
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+            {
+                //Podesavamo endpoint gde Swagger UI moze da pronadje OpenAPI specifikaciju
+                setupAction.SwaggerEndpoint("/swagger/complaintAggregateOpenApiSpecification/swagger.json", "ComplaintAggregate API");
+                setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
+
+            });
+                app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
