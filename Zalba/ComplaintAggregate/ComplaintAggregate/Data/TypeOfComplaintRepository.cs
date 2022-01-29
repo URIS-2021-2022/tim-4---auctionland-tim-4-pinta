@@ -30,9 +30,9 @@ namespace ComplaintAggregate.Data
                 new TypeOfComplaint
                 {
                     Tip_id = Guid.NewGuid(),
-                    Zalba_na_tok_javnog_nadmetanja= "tok javnog nadmetanja",
-                    Zalba_na_odluku_o_davanju_na_koriscenje="davanje na koriscenje",
-                    Zalba_na_odluku_o_davanju_na_zakup="davanje na zakup"
+                    Zalba_na_tok_javnog_nadmetanja= "tok javnog nadmetanja1",
+                    Zalba_na_odluku_o_davanju_na_koriscenje="davanje na koriscenje1",
+                    Zalba_na_odluku_o_davanju_na_zakup="davanje na zakup1"
                 }
             });
         }
