@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za deo parcele
+    /// Predstavlja model za autentifikaciju
     /// </summary>
-    public class DeoParceleDto
+    public class Principal
     {
         /// <summary>
-        /// Redni broj dela parcele
+        /// Korisnicko ime
         /// </summary>
-        public int RedniBroj { get; set; }
+        public string Username { get; set; }
 
         /// <summary>
-        /// Povrsina dela parcele
+        /// Lozinka korisnika
         /// </summary>
-        public int PovrsinaDelaParcele { get; set; }
+        public string Password { get; set; }
     }
 }

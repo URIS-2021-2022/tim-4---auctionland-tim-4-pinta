@@ -12,8 +12,12 @@ using System.Threading.Tasks;
 
 namespace Parcela.Controllers
 {
+    /// <summary>
+    /// Sadzi CRUD operacije za oblike svojine
+    /// </summary>
     [ApiController]
     [Route("api/obliciSvojine")]
+    [Produces("application/json", "application/xml")]
     public class OblikSvojineController : ControllerBase
     {
         private readonly IOblikSvojineRepository oblikSvojineRepository;
@@ -27,8 +31,16 @@ namespace Parcela.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Vraca sve oblike svojine
+        /// </summary>
+        /// <returns>Lista oblika svojine</returns>
+        /// <response code = "200">Vraca listu oblika svojine</response>
+        /// <response code = "404">Nije pronadjen nijedan oblik svojine</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<OblikSvojineDto>> GetObradivosti()
         {
             List<OblikSvojineEntity> obliciSvojine = oblikSvojineRepository.GetObliciSvojine();
@@ -39,7 +51,16 @@ namespace Parcela.Controllers
             return Ok(mapper.Map<List<OblikSvojineDto>>(obliciSvojine));
         }
 
+        /// <summary>
+        /// Vraca jedan oblik svojien na osnovu ID-ja
+        /// </summary>
+        /// <param name="oblikSvojineID">ID oblika svojine</param>
+        /// <returns>Trazen oblik svojine</returns>
+        /// <response code = "200">Vraca trazen oblik svojine</response>
+        /// <response code = "404">Trazen oblik svojine nije pronadjen</response>
         [HttpGet("{oblikSvojineID}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<OblikSvojineDto> GetOblikSvojine(Guid oblikSvojineID)
         {
             OblikSvojineEntity oblikSvojine = oblikSvojineRepository.GetOblikSvojineById(oblikSvojineID);
@@ -50,7 +71,24 @@ namespace Parcela.Controllers
             return Ok(mapper.Map<ObradivostDto>(oblikSvojine));
         }
 
+        /// <summary>
+        /// Kreira novi oblik svojine
+        /// </summary>
+        /// <param name="oblikSvojine">oblik svojine</param>
+        /// <returns>Potvrda o kreiranom obliku svojine</returns>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog oblika svojine \
+        /// POST /api/obliciSvojine \
+        /// { \
+        /// "oblikSvoijenNazvi": "Oblik svojine 1", \
+        /// } 
+        /// </remarks>
+        /// <response code = "201">Vraca kreiran oblik svojine</response>
+        /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja oblika svojine</response>
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OblikSvojineDto> CreateOblikSvojine([FromBody] OblikSvojineDto oblikSvojine)
         {
             try
@@ -66,7 +104,18 @@ namespace Parcela.Controllers
             }
         }
 
+        /// <summary>
+        /// Vrsi brisanje jednog oblika svojine na osnovu ID-ja
+        /// </summary>
+        /// <param name="oblikSvojineID">ID oblika svojine</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Oblik svojine uspesno obrisan</response>
+        /// <response code="404">Nije pronadjen oblik svojine za brisanje</response>
+        /// <response code="500">Doslo je do greske na serveru prilikom brisanja oblika svojine</response>
         [HttpDelete("{oblikSvoijneID}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteOblikSvojine(Guid oblikSvojineID)
         {
             try
@@ -85,6 +134,19 @@ namespace Parcela.Controllers
             }
         }
 
+        /// <summary>
+        /// Azurira jedan oblik svojine
+        /// </summary>
+        /// <param name="oblikSvojine">Model oblika svojine za azuriranje</param>
+        /// <returns>Potvrda o modifikovanom obliku svojine</returns>
+        /// <response code="200">Vraca azuriran oblik svojine</response>
+        /// <response code="400">Oblik svojine koji se azurira nije pronadjen</response>
+        /// <response code="500">Doslo je do greske prilikom azuriranja oblika svojine</response>
+        [HttpPut]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OblikSvojineDto> UpdateOblikSvojine(OblikSvojineEntity oblikSvojine)
         {
             try
@@ -102,6 +164,10 @@ namespace Parcela.Controllers
             }
         }
 
+        /// <summary>
+        /// Vraca opcije za rad sa oblicima svojine
+        /// </summary>
+        /// <returns></returns>
         [HttpOptions]
         public IActionResult GetOblikSvojineOptions()
         {
