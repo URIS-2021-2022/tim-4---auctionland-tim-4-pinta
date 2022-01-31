@@ -551,6 +551,11 @@
             Povrsina dela parcele
             </summary>
         </member>
+        <member name="P:Parcela.Entities.DeoParceleEntity.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Entities.KlasaEntity">
             <summary>
             Predstavlja model klase
@@ -674,6 +679,36 @@
         <member name="P:Parcela.Entities.ParcelaEntity.OdvodnjavanjeStvarnoStanje">
             <summary>
             Stvarno stanje odvodnjavanja za parcelu
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.ZasticenaZonaID">
+            <summary>
+            ID zasticene zone
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.OdvodnjavanjeID">
+            <summary>
+            ID odvodnjavanja
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.ObradivostID">
+            <summary>
+            ID obradivosti
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.OblikSvojineID">
+            <summary>
+            ID oblika svojine
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.KulturaID">
+            <summary>
+            ID kulture
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.KlasaID">
+            <summary>
+            ID klase
             </summary>
         </member>
         <member name="T:Parcela.Entities.UserEntity">
