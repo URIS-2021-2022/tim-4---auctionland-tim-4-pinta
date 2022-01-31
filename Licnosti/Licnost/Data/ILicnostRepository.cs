@@ -1,4 +1,5 @@
-﻿using Licnost.Models;
+﻿using Licnost.Entities;
+using Licnost.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace Licnost.Data
 {
     public interface ILicnostRepository
     {
-        List<LicnostModel> GetLicnosti(string licnostIme = null, string licnostPrezime = null);
+        List<LicnostEntity> GetLicnosti(string licnostIme = null, string licnostPrezime = null);
 
-        LicnostModel GetLicnostById(Guid licnostId);
+        LicnostEntity GetLicnostById(Guid licnostId);
 
-        LicnostModel CreateLicnost(LicnostModel licnostModel);
+        LicnostEntity CreateLicnost(LicnostEntity licnostModel);
 
-        LicnostModel UpdateLicnost(LicnostModel licnostModel);
+        LicnostEntity UpdateLicnost(LicnostEntity licnostModel);
 
         void DeleteLicnost(Guid licnostId);
     }

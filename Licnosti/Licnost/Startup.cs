@@ -28,14 +28,23 @@ namespace Licnost
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(setup =>
+            {
+                setup.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<ILicnostRepository, LicnostRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-           
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                
+            }
 
             app.UseHttpsRedirection();
 
