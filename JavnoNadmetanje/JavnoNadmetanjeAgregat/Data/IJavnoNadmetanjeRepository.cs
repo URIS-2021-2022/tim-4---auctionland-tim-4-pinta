@@ -1,4 +1,4 @@
-﻿using JavnoNadmetanjeAgregat.Models;
+﻿using JavnoNadmetanjeAgregat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +9,13 @@ namespace JavnoNadmetanjeAgregat.Data
      //potpise metoda koje se koriste za manipulacije podacima, klasa ce implementirati interfejs
     public interface IJavnoNadmetanjeRepository
     {
-        List<JavnoNadmetanjeModel> GetJavnoNadmetanje(); //moze da vrati javna nadmetanja sa filterima
+        List<JavnoNadmetanjeEntity> GetJavnoNadmetanje(); //moze da vrati javna nadmetanja sa filterima
 
-        JavnoNadmetanjeModel GetJavnoNadmetanjeById(Guid javnoNadmetanjeID); 
+        JavnoNadmetanjeEntity GetJavnoNadmetanjeById(Guid javnoNadmetanjeID); 
 
-        JavnoNadmetanjeModel CreateJavnoNadmetanje(JavnoNadmetanjeModel javnoNadmetanje); 
+        JavnoNadmetanjeEntity CreateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje); 
 
-        JavnoNadmetanjeModel UpdateJavnoNadmetanje(JavnoNadmetanjeModel javnoNadmetanje);
+        JavnoNadmetanjeEntity UpdateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje);
 
         void DeleteJavnoNadmetanje(Guid javnoNadmetanjeID);
     }

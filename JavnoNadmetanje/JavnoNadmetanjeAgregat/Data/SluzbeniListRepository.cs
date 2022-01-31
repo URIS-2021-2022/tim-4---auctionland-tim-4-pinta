@@ -1,4 +1,5 @@
-﻿using JavnoNadmetanjeAgregat.Models;
+﻿
+using JavnoNadmetanjeAgregat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace JavnoNadmetanjeAgregat.Data
 {
     public class SluzbeniListRepository : ISluzbeniListRepository
     {
-        public static List<SluzbeniListModel> SluzbeniListovi { get; set; } = new List<SluzbeniListModel>();
+        public static List<SluzbeniListEntity> SluzbeniListovi { get; set; } = new List<SluzbeniListEntity>();
 
         public SluzbeniListRepository()
         {
@@ -17,16 +18,16 @@ namespace JavnoNadmetanjeAgregat.Data
 
         private void FillData()
         {
-            SluzbeniListovi.AddRange(new List<SluzbeniListModel>
+            SluzbeniListovi.AddRange(new List<SluzbeniListEntity>
             {
-                new SluzbeniListModel
+                new SluzbeniListEntity
                 {
                   SluzbeniListID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                   Opstina= "Beograd",
                   BrojSluzbenogLista= 12,
                   DatumIzdavanjaSluzbenogLista= DateTime.Parse("27-01-2021")
                 },
-                new SluzbeniListModel
+                new SluzbeniListEntity
                 {
                     SluzbeniListID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                     Opstina= "Novi Sad",
@@ -37,27 +38,27 @@ namespace JavnoNadmetanjeAgregat.Data
             });
         }
 
-        public List<SluzbeniListModel> GetSluzbeniList()
+        public List<SluzbeniListEntity> GetSluzbeniList()
         {
             return (from sl in SluzbeniListovi select sl).ToList();
         }
 
-        public SluzbeniListModel GetSluzbeniListById(Guid sluzbeniListID)
+        public SluzbeniListEntity GetSluzbeniListById(Guid sluzbeniListID)
         {
             return SluzbeniListovi.FirstOrDefault(sl => sl.SluzbeniListID == sluzbeniListID);
         }
 
-        public SluzbeniListModel CreateSluzbeniList(SluzbeniListModel sluzbeniList)
+        public SluzbeniListEntity CreateSluzbeniList(SluzbeniListEntity sluzbeniList)
         {
             sluzbeniList.SluzbeniListID = Guid.NewGuid();
             SluzbeniListovi.Add(sluzbeniList);
-            SluzbeniListModel sl = GetSluzbeniListById(sluzbeniList.SluzbeniListID);
+            SluzbeniListEntity sl = GetSluzbeniListById(sluzbeniList.SluzbeniListID);
             return sl;
         }
 
-        public SluzbeniListModel UpdateSluzbeniList(SluzbeniListModel sluzbeniList)
+        public SluzbeniListEntity UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)
         {
-            SluzbeniListModel sl = GetSluzbeniListById(sluzbeniList.SluzbeniListID);
+            SluzbeniListEntity sl = GetSluzbeniListById(sluzbeniList.SluzbeniListID);
 
             sl.Opstina = sluzbeniList.Opstina;
             sl.BrojSluzbenogLista = sluzbeniList.BrojSluzbenogLista;

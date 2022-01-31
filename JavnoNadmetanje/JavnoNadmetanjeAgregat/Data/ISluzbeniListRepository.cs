@@ -1,4 +1,5 @@
-﻿using JavnoNadmetanjeAgregat.Models;
+﻿
+using JavnoNadmetanjeAgregat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace JavnoNadmetanjeAgregat.Data
 {
     public interface ISluzbeniListRepository
     {
-        List<SluzbeniListModel> GetSluzbeniList();
+        List<SluzbeniListEntity> GetSluzbeniList();
 
-        SluzbeniListModel GetSluzbeniListById(Guid javnoNadmetanjeID);
+        SluzbeniListEntity GetSluzbeniListById(Guid javnoNadmetanjeID);
 
-        SluzbeniListModel CreateSluzbeniList(SluzbeniListModel sluzbeniList);
+        SluzbeniListEntity CreateSluzbeniList(SluzbeniListEntity sluzbeniList);
 
-        SluzbeniListModel UpdateSluzbeniList(SluzbeniListModel sluzbeniList);
+        SluzbeniListEntity UpdateSluzbeniList(SluzbeniListEntity sluzbeniList);
 
         void DeleteSluzbeniList(Guid sluzbeniListID);
     }
