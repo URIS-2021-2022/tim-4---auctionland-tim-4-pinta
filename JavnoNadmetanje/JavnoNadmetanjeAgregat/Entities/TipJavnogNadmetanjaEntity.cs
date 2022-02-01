@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JavnoNadmetanjeAgregat.Models
+namespace JavnoNadmetanjeAgregat.Entities
 {
-    public class TipJavnogNadmetanjaModel
+    public class TipJavnogNadmetanjaEntity
     {
         public Guid TipJavnogNadmetanjaID { get; set; }
         public String NazivTipaJavnogNadmetanja { get; set; }

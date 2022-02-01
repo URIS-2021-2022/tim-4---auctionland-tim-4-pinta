@@ -1,4 +1,5 @@
-﻿using JavnoNadmetanjeAgregat.Models;
+﻿
+using JavnoNadmetanjeAgregat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace JavnoNadmetanjeAgregat.Data
 {
     public interface IStatusJavnogNadmetanjaRepository
     {
-        List<StatusJavnogNadmetanjaModel> GetStatusJavnogNadmetanja();
+        List<StatusJavnogNadmetanjaEntity> GetStatusJavnogNadmetanja();
 
-        StatusJavnogNadmetanjaModel GetStatusJavnogNadmetanjaById(Guid statusJavnogNadmetanjaID);
+        StatusJavnogNadmetanjaEntity GetStatusJavnogNadmetanjaById(Guid statusJavnogNadmetanjaID);
 
-        StatusJavnogNadmetanjaModel CreateStatusJavnogNadmetanja(StatusJavnogNadmetanjaModel statusJavnogNadmetanja);
+        StatusJavnogNadmetanjaEntity CreateStatusJavnogNadmetanja(StatusJavnogNadmetanjaEntity statusJavnogNadmetanja);
 
-        StatusJavnogNadmetanjaModel UpdateStatusJavnogNadmetanja(StatusJavnogNadmetanjaModel statusJavnogNadmetanja);
+        StatusJavnogNadmetanjaEntity UpdateStatusJavnogNadmetanja(StatusJavnogNadmetanjaEntity statusJavnogNadmetanja);
 
         void DeleteStatusJavnogNadmetanja(Guid statusJavnogNadmetanjaID);
     }

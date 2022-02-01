@@ -1,4 +1,6 @@
-﻿using JavnoNadmetanjeAgregat.Data;
+﻿using AutoMapper;
+using JavnoNadmetanjeAgregat.Data;
+using JavnoNadmetanjeAgregat.Entities;
 using JavnoNadmetanjeAgregat.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,42 +18,45 @@ namespace JavnoNadmetanjeAgregat.Controllers
     {
         private readonly ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository;
         private readonly LinkGenerator linkGenerator;
-        public TipJavnogNadmetanjaController(ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository, LinkGenerator linkGenerator)
+        private readonly IMapper mapper;
+        public TipJavnogNadmetanjaController(ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.tipJavnogNadmetanjaRepository = tipJavnogNadmetanjaRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<TipJavnogNadmetanjaModel>> GetTipoveJavnogNadmetanja()
+        public ActionResult<List<TipJavnogNadmetanjaDto>> GetTipoveJavnogNadmetanja()
         {
-            List<TipJavnogNadmetanjaModel> tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanja();
+            List<TipJavnogNadmetanjaEntity> tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanja();
             if (tipJavnogNadmetanja == null || tipJavnogNadmetanja.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(tipJavnogNadmetanja);
+            return Ok(mapper.Map<List<TipJavnogNadmetanjaDto>>(tipJavnogNadmetanja));
         }
 
         [HttpGet("{tipJavnogNadmetanjaID}")]
-        public ActionResult<TipJavnogNadmetanjaModel> GetTipJavnogNadmetanja(Guid tipJavnogNadmetanjaID)
+        public ActionResult<TipJavnogNadmetanjaDto> GetTipJavnogNadmetanja(Guid tipJavnogNadmetanjaID)
         {
-            TipJavnogNadmetanjaModel tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanjaID);
+            TipJavnogNadmetanjaEntity tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanjaID);
             if (tipJavnogNadmetanja == null)
             {
                 return NotFound();
             }
-            return Ok(tipJavnogNadmetanja);
+            return Ok(mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanja));
         }
 
         [HttpPost]
-        public ActionResult<TipJavnogNadmetanjaModel> CreateTipJavnogNadmetanja([FromBody] TipJavnogNadmetanjaModel tipJavnogNadmetanja)
+        public ActionResult<TipJavnogNadmetanjaDto> CreateTipJavnogNadmetanja([FromBody] TipJavnogNadmetanjaDto tipJavnogNadmetanja)
         {
             try
             {
-                TipJavnogNadmetanjaModel t = tipJavnogNadmetanjaRepository.CreateTipJavnogNadmetanja(tipJavnogNadmetanja);
-                string location = linkGenerator.GetPathByAction("GetTipJavnogNadmetanja", "TipJavnogNadmetanja", new { tipJavnogNadmetanjaID = t.TipJavnogNadmetanjaID });
-                return Created(location, t);
+                TipJavnogNadmetanjaEntity obj = mapper.Map<TipJavnogNadmetanjaEntity>(tipJavnogNadmetanja);
+                TipJavnogNadmetanjaEntity t = tipJavnogNadmetanjaRepository.CreateTipJavnogNadmetanja(obj);
+                string location = linkGenerator.GetPathByAction("GetTipJavnogNadmetanja", "TipJavnogNadmetanja", new { tipJavnogNadmetanjaID =t.TipJavnogNadmetanjaID });
+                return Created(location, mapper.Map<TipJavnogNadmetanjaDto>(t));
             }
             catch
             {
@@ -64,7 +69,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             try
             {
-                TipJavnogNadmetanjaModel tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanjaID);
+                TipJavnogNadmetanjaEntity tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanjaID);
                 if (tipJavnogNadmetanja == null)
                 {
                     return NotFound();
@@ -76,6 +81,29 @@ namespace JavnoNadmetanjeAgregat.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
+        }
+        public ActionResult<TipJavnogNadmetanjaDto> TipJavnogNadmetanjaObradivost(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)
+        {
+            try
+            {
+                if (tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID) == null)
+                {
+                    return NotFound();
+                }
+                TipJavnogNadmetanjaEntity o = tipJavnogNadmetanjaRepository.UpdateTipJavnogNadmetanja(tipJavnogNadmetanja);
+                return Ok(mapper.Map<TipJavnogNadmetanjaDto>(o));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+            }
+        }
+
+        [HttpOptions]
+        public IActionResult GetTipJavnogNadmetanjaOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
         }
 
     }

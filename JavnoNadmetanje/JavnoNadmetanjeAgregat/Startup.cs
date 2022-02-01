@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace JavnoNadmetanjeAgregat
 {
@@ -28,7 +30,10 @@ namespace JavnoNadmetanjeAgregat
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(setup =>
+                setup.ReturnHttpNotAcceptable = true
+            ).AddXmlDataContractSerializerFormatters();
+            
             //svaki put kad vidis IjavnoNadmetanjeR napravi instancu ove klase JavnoNadmetanjeR i koristi je
             services.AddSingleton<IJavnoNadmetanjeRepository, JavnoNadmetanjeRepository>();
             services.AddSingleton<ITipJavnogNadmetanjaRepository, TipJavnogNadmetanjaRepository>();
@@ -38,6 +43,9 @@ namespace JavnoNadmetanjeAgregat
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "JavnoNadmetanjeAgregat", Version = "v1" });
             //});
+            //konfiguracije za automaper- za svako mapiranje se definise profil u tom profilu iz tog objekta mi mapiraj taj objekat na takav nacin
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +57,20 @@ namespace JavnoNadmetanjeAgregat
                 //app.UseSwagger();
                 //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "JavnoNadmetanjeAgregat v1"));
             }
+            else
+            {
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("Doslo je do greske. Molim Vas pokusajte kasnije");
+                    });
+                });
+            }
+        
+        
+                 
 
             app.UseHttpsRedirection();
 

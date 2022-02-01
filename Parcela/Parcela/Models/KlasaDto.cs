@@ -5,8 +5,14 @@ using System.Threading.Tasks;
 
 namespace Parcela.Models
 {
+    /// <summary>
+    /// DTO za klasu
+    /// </summary>
     public class KlasaDto
     {
+        /// <summary>
+        /// Naziv klase
+        /// </summary>
         public int KlasaOznaka { get; set; }
     }
 }

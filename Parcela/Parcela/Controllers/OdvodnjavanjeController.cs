@@ -12,8 +12,12 @@ using System.Threading.Tasks;
 
 namespace Parcela.Controllers
 {
+    /// <summary>
+    /// Sadrzi CRUD operacije za rad sa odvodnjavanjima
+    /// </summary>
     [ApiController]
     [Route("api/odvodnjavanja")]
+    [Produces("application/json", "application/xml")]
     public class OdvodnjavanjeController : ControllerBase
     {
         private readonly IOdvodnjavanjeRepository odvodnjavanjeRepository;
@@ -27,8 +31,16 @@ namespace Parcela.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Vraca sva odvodnjavanja
+        /// </summary>
+        /// <returns>Lista odvodnjavanja</returns>
+        /// <response code = "200">Vraca listu odvodnjavanja</response>
+        /// <response code = "404">Nije prondadjeno nijedno odvodnjavanje</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<OdvodnjavanjeDto>> GetOdvodnjavanja()
         {
             List<OdvodnjavanjeEntity> odvodnjavanja = odvodnjavanjeRepository.GetOdvodnjavanja();
@@ -39,7 +51,16 @@ namespace Parcela.Controllers
             return Ok(mapper.Map<List<OdvodnjavanjeDto>>(odvodnjavanja));
         }
 
+        /// <summary>
+        /// Vraca jedno odvodnjavanje na osnovu ID-ja
+        /// </summary>
+        /// <param name="odvodnjavanjeID">ID odvodnjavanja</param>
+        /// <returns>Trazeno odvodnjavanje</returns>
+        /// <response code = "200">Vraca trazeno odvodnjvanje</response>
+        /// <response code = "404">Trazeno odvodnjavanje nije prondjeno</response>
         [HttpGet("{odvodnjavanjeID}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<OdvodnjavanjeDto> GetOdvodnjavanje(Guid odvodnjavanjeID)
         {
             OdvodnjavanjeEntity odvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanjeID);
@@ -50,7 +71,23 @@ namespace Parcela.Controllers
             return Ok(mapper.Map<OdvodnjavanjeDto>(odvodnjavanje));
         }
 
+        /// <summary>
+        /// Kreira novo odvodnjavanje
+        /// </summary>
+        /// <param name="odvodnjavanje">Model odvodnjavanja</param>
+        /// <returns>Potvrdu o kreiranom odvodnjavanju</returns>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog odvodnjavanja \
+        /// POST /api/odvodnjavanja \
+        /// { \
+        /// "odvodnjavanjeNaziv": "Odvodnjavanje1", \
+        /// } 
+        /// </remarks>
+        /// <response code = "201">Vraca kreirano odvodnjavanje</response>
+        /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja odvodnjavanja</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OdvodnjavanjeDto> CreateOdvodnjavanje([FromBody] OdvodnjavanjeDto odvodnjavanje)
         {
             try
@@ -66,6 +103,14 @@ namespace Parcela.Controllers
             }
         }
 
+        /// <summary>
+        /// Vrsi brisanje jednog odvodnajvanja na odnovu ID-ja
+        /// </summary>
+        /// <param name="odvodnjavanjeID">ID odvodnjavanja</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Odvodnjavanje uspesno obrisano</response>
+        /// <response code="404">Nije pronadjeno odvodnjavanje za brisanje</response>
+        /// <response code="500">Doslo je do greske na serveru prilikom brisanja odvodnjvanja</response>
         [HttpDelete("{odvodnjavanjeID}")]
         public IActionResult DeleteOdvodnjavanje(Guid odvodnjavanjeID)
         {
@@ -85,6 +130,19 @@ namespace Parcela.Controllers
             }
         }
 
+        /// <summary>
+        /// Azurira jedno odvodnjavanje
+        /// </summary>
+        /// <param name="odvodnjavanje">Model odvodnjavanja koje se azurira</param>
+        /// <returns>Potvrda o modifikovanom azuriranju</returns>
+        /// <response code="200">Vraca azurirano odvodnajvanje</response>
+        /// <response code="400">Odvodnjavanje koje se azurira nije pronadjeno</response>
+        /// <response code="500">Doslo je do greske prilikom azuriranja odvodnjavanja</response>
+        [HttpPut]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OdvodnjavanjeDto> UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje)
         {
             try
@@ -102,6 +160,10 @@ namespace Parcela.Controllers
             }
         }
 
+        /// <summary>
+        /// Vraca opcije za rad sa odvodnajvanjima
+        /// </summary>
+        /// <returns></returns>
         [HttpOptions]
         public IActionResult GetOdvodnjavanjeOptions()
         {

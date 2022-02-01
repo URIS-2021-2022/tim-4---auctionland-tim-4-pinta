@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace JavnoNadmetanjeAgregat.Models
 {
-    public class StatusJavnogNadmetanjaModel
+    public class StatusJavnogNadmetanjaDto
     {
-        public Guid StatusJavnogNadmetanjaID { get; set; }
         public String NazivStatusaJavnogNadmetanja { get; set; }
 
     }

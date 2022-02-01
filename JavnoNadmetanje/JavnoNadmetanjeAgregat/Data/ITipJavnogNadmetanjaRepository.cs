@@ -1,4 +1,5 @@
-﻿using JavnoNadmetanjeAgregat.Models;
+﻿
+using JavnoNadmetanjeAgregat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,13 @@ namespace JavnoNadmetanjeAgregat.Data
 {
     public interface ITipJavnogNadmetanjaRepository
     {
-        List<TipJavnogNadmetanjaModel> GetTipJavnogNadmetanja();
+        List<TipJavnogNadmetanjaEntity> GetTipJavnogNadmetanja();
 
-        TipJavnogNadmetanjaModel GetTipJavnogNadmetanjaById(Guid TipJavnogNadmetanjaID);
+        TipJavnogNadmetanjaEntity GetTipJavnogNadmetanjaById(Guid TipJavnogNadmetanjaID);
 
-        TipJavnogNadmetanjaModel CreateTipJavnogNadmetanja(TipJavnogNadmetanjaModel tipJavnogNadmetanja);
+        TipJavnogNadmetanjaEntity CreateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja);
 
-        TipJavnogNadmetanjaModel UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaModel tipJavnogNadmetanja);
+        TipJavnogNadmetanjaEntity UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja);
 
         void DeleteTipJavnogNadmetanja(Guid tipJavnogNadmetanjaID);
     }
