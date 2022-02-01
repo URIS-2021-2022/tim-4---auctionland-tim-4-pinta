@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
+using ComplaintAggregate.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -29,39 +30,39 @@ namespace ComplaintAggregate.Controllers
 
         [HttpGet]
         [HttpHead]
-        public ActionResult<List<TypeOfComplaint>> GetTypeOfComplaints()
+        public ActionResult<List<TypeOfComplaintDTO>> GetTypeOfComplaints()
         {
             List<TypeOfComplaint> ListOfComplaints = typeOfComplaintRepository.GetTypesOfComplaints();
             if (ListOfComplaints == null || ListOfComplaints.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(mapper.Map<List<TypeOfComplaint>>(ListOfComplaints));
+            return Ok(mapper.Map<List<TypeOfComplaintDTO>>(ListOfComplaints));
         }
 
 
         [HttpGet("{statusId}")]
-        public ActionResult<TypeOfComplaint> GetTypeOfComplaintsById(Guid Tip_id)
+        public ActionResult<TypeOfComplaintDTO> GetTypeOfComplaintsById(Guid Tip_id)
         {
             TypeOfComplaint complainAggregate = typeOfComplaintRepository.GetTypesOfComplaintsById(Tip_id);
             if (complainAggregate == null)
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<TypeOfComplaint>(complainAggregate));
+            return Ok(mapper.Map<TypeOfComplaintDTO>(complainAggregate));
         }
 
         [HttpPost]
-        public ActionResult<TypeOfComplaint> CreateTypeOfComplaint([FromBody] TypeOfComplaint complain)
+        public ActionResult<TypeOfComplaintDTO> CreateTypeOfComplaint([FromBody] TypeOfComplaintDTO complain)
         {
             try
             {
                 TypeOfComplaint comp = mapper.Map<TypeOfComplaint>(complain);
 
-                TypeOfComplaint confirmation = typeOfComplaintRepository.CreateTypeOfComplaint(complain);
+                TypeOfComplaint confirmation = typeOfComplaintRepository.CreateTypeOfComplaint(comp);
 
                 string location = linkGenerator.GetPathByAction("GetTypeOfComplaint", "TypesOfComplaints", new { Tip_id = confirmation.Tip_id });
-                return Created(location, mapper.Map<TypeOfComplaint>(confirmation));
+                return Created(location, mapper.Map<TypeOfComplaintDTO>(confirmation));
             }
             catch
             {
@@ -90,7 +91,7 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPut]
-        public ActionResult<TypeOfComplaint> UpdateTypeOfComplaint(TypeOfComplaint type)
+        public ActionResult<TypeOfComplaintDTO> UpdateTypeOfComplaint(TypeOfComplaint type)
         {
             try
             {
@@ -101,7 +102,7 @@ namespace ComplaintAggregate.Controllers
                 }
                 TypeOfComplaint cmp = mapper.Map<TypeOfComplaint>(type);
                 TypeOfComplaint complaint = typeOfComplaintRepository.UpdateTypeOfComplaint(cmp);
-                return Ok(mapper.Map<TypeOfComplaint>(complaint));
+                return Ok(mapper.Map<TypeOfComplaintDTO>(complaint));
             }
             catch (Exception)
             {

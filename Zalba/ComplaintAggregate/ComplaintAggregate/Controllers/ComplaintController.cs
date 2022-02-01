@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
+using ComplaintAggregate.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -31,38 +32,38 @@ namespace ComplaintAggregate.Controllers
 
         [HttpGet]
         [HttpHead]
-        public ActionResult<List<Complaint>> GetComplaints()
+        public ActionResult<List<ComplaintDTO>> GetComplaints()
         {
             List<Complaint> ListOfComplaints = complainAggregateRepository.GetComplaint();
             if (ListOfComplaints == null || ListOfComplaints.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(mapper.Map<List<Complaint>>(ListOfComplaints));
+            return Ok(mapper.Map<List<ComplaintDTO>>(ListOfComplaints));
         }
 
         [HttpGet("{complaintId}")]
-        public ActionResult<Complaint> GetComplaint(Guid ZalbaID)
+        public ActionResult<ComplaintDTO> GetComplaint(Guid ZalbaID)
         {
             Complaint complainAggregate = complainAggregateRepository.GetComplaintById(ZalbaID);
             if (complainAggregate == null)
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<Complaint>(complainAggregate));
+            return Ok(mapper.Map<ComplaintDTO>(complainAggregate));
         }
 
         [HttpPost]
-        public ActionResult<Complaint> CreateExamRegistration([FromBody] Complaint complain)
+        public ActionResult<ComplaintDTO> CreateExamRegistration([FromBody] ComplaintDTO complain)
         {
             try
             {
                 Complaint comp = mapper.Map<Complaint>(complain);
 
-                Complaint confirmation = complainAggregateRepository.CreateComplaint(complain);
+                Complaint confirmation = complainAggregateRepository.CreateComplaint(comp);
                 // Dobar API treba da vrati lokator gde se taj resurs nalazi
                 string location = linkGenerator.GetPathByAction("GetComplaint", "Complaint", new { ZalbaID = confirmation.ZalbaID });
-                return Created(location, mapper.Map<Complaint>(confirmation));
+                return Created(location, mapper.Map<ComplaintDTO>(confirmation));
             }
             catch
             {
@@ -91,7 +92,7 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Complaint> UpdateComplaint(Complaint complain)
+        public ActionResult<ComplaintDTO> UpdateComplaint(Complaint complain)
         {
             try
             {
@@ -102,7 +103,7 @@ namespace ComplaintAggregate.Controllers
                 }
                 Complaint cmp = mapper.Map<Complaint>(complain);
                 Complaint complaint = complainAggregateRepository.UpdateComplaint(cmp);
-                return Ok(mapper.Map<Complaint>(complaint));
+                return Ok(mapper.Map<ComplaintDTO>(complaint));
             }
             catch (Exception)
             {

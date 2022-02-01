@@ -1,6 +1,7 @@
 ﻿using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
 using ComplaintAggregate.Helpers;
+using ComplaintAggregate.ServiceCalls;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -112,8 +113,9 @@ namespace ComplaintAggregate
             services.AddSingleton<IUserRepository, UserRepository>();
 
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            services.AddScoped<IFileAComplaintService, FileAComplaintService>();
 
-             services.AddSwaggerGen(setupAction =>
+            services.AddSwaggerGen(setupAction =>
              {
                  setupAction.SwaggerDoc("ComplaintAggregateOpenApiSpecification",
                      new Microsoft.OpenApi.Models.OpenApiInfo()

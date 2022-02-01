@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
+using ComplaintAggregate.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -29,39 +30,39 @@ namespace ComplaintAggregate.Controllers
 
             [HttpGet]
             [HttpHead]
-            public ActionResult<List<ActionBasedOnComplaint>> GetActions()
+            public ActionResult<List<ActionBasedOnComplaintDTO>> GetActions()
             {
                 List<ActionBasedOnComplaint> ListOfComplaints = actionBasedOnComplaintRepository.GetActions();
                 if (ListOfComplaints == null || ListOfComplaints.Count == 0)
                 {
                     return NoContent();
                 }
-                return Ok(mapper.Map<List<ActionBasedOnComplaint>>(ListOfComplaints));
+                return Ok(mapper.Map<List<ActionBasedOnComplaintDTO>>(ListOfComplaints));
             }
 
 
             [HttpGet("{statusId}")]
-            public ActionResult<ActionBasedOnComplaint> GetActionById(Guid action)
+            public ActionResult<ActionBasedOnComplaintDTO> GetActionById(Guid action)
             {
                 ActionBasedOnComplaint complainAggregate = actionBasedOnComplaintRepository.GetActionById(action);
                 if (complainAggregate == null)
                 {
                     return NotFound();
                 }
-                return Ok(mapper.Map<ActionBasedOnComplaint>(complainAggregate));
+                return Ok(mapper.Map<ActionBasedOnComplaintDTO>(complainAggregate));
             }
 
             [HttpPost]
-            public ActionResult<ActionBasedOnComplaint> CreateAction([FromBody] ActionBasedOnComplaint complain)
+            public ActionResult<ActionBasedOnComplaintDTO> CreateAction([FromBody] ActionBasedOnComplaintDTO complain)
             {
                 try
                 {
                     ActionBasedOnComplaint comp = mapper.Map<ActionBasedOnComplaint>(complain);
 
-                    ActionBasedOnComplaint confirmation = actionBasedOnComplaintRepository.CreateAction(complain);
+                    ActionBasedOnComplaint confirmation = actionBasedOnComplaintRepository.CreateAction(comp);
 
                     string location = linkGenerator.GetPathByAction("GetTypeOfComplaint", "TypesOfComplaints", new { Radnja_id = confirmation.Radnja_na_osnovu_zalbe_ID });
-                    return Created(location, mapper.Map<ActionBasedOnComplaint>(confirmation));
+                    return Created(location, mapper.Map<ActionBasedOnComplaintDTO>(confirmation));
                 }
                 catch
                 {
@@ -90,7 +91,7 @@ namespace ComplaintAggregate.Controllers
             }
 
             [HttpPut]
-            public ActionResult<ActionBasedOnComplaint> UpdateTypeOfComplaint(ActionBasedOnComplaint action)
+            public ActionResult<ActionBasedOnComplaintDTO> UpdateTypeOfComplaint(ActionBasedOnComplaint action)
             {
                 try
                 {
@@ -101,7 +102,7 @@ namespace ComplaintAggregate.Controllers
                     }
                     ActionBasedOnComplaint cmp = mapper.Map<ActionBasedOnComplaint>(action);
                     ActionBasedOnComplaint complaint = actionBasedOnComplaintRepository.UpdateAction(cmp);
-                    return Ok(mapper.Map<ActionBasedOnComplaint>(complaint));
+                    return Ok(mapper.Map<ActionBasedOnComplaintDTO>(complaint));
                 }
                 catch (Exception)
                 {

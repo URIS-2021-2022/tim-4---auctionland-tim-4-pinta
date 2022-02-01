@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
+using ComplaintAggregate.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -29,39 +30,39 @@ namespace ComplaintAggregate.Controllers
 
         [HttpGet]
         [HttpHead]
-        public ActionResult<List<StatusOfComplaint>> GetStatus()
+        public ActionResult<List<StatusOfComplaintDTO>> GetStatus()
         {
             List<StatusOfComplaint> ListOfComplaints = complainStatusRepository.GetStatus();
             if (ListOfComplaints == null || ListOfComplaints.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(mapper.Map<List<StatusOfComplaint>>(ListOfComplaints));
+            return Ok(mapper.Map<List<StatusOfComplaintDTO>>(ListOfComplaints));
         }
 
 
         [HttpGet("{statusId}")]
-        public ActionResult<StatusOfComplaint> GetStatusById(Guid Status_zalbe)
+        public ActionResult<StatusOfComplaintDTO> GetStatusById(Guid Status_zalbe)
         {
             StatusOfComplaint complainAggregate = complainStatusRepository.GetStatusById(Status_zalbe);
             if (complainAggregate == null)
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<StatusOfComplaint>(complainAggregate));
+            return Ok(mapper.Map<StatusOfComplaintDTO>(complainAggregate));
         }
 
         [HttpPost]
-        public ActionResult<StatusOfComplaint> CreateStatus([FromBody] StatusOfComplaint complain)
+        public ActionResult<StatusOfComplaintDTO> CreateStatus([FromBody] StatusOfComplaintDTO complain)
         {
             try
             {
                 StatusOfComplaint comp = mapper.Map<StatusOfComplaint>(complain);
 
-                StatusOfComplaint confirmation = complainStatusRepository.CreateStatus(complain);
+                StatusOfComplaint confirmation = complainStatusRepository.CreateStatus(comp);
                 // Dobar API treba da vrati lokator gde se taj resurs nalazi
                 string location = linkGenerator.GetPathByAction("GetStatus", "StatusOfComplaint", new { Status_zalbe = confirmation.Status_zalbe });
-                return Created(location, mapper.Map<StatusOfComplaint>(confirmation));
+                return Created(location, mapper.Map<StatusOfComplaintDTO>(confirmation));
             }
             catch
             {
@@ -90,7 +91,7 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPut]
-        public ActionResult<StatusOfComplaint> UpdateStatus(StatusOfComplaint status)
+        public ActionResult<StatusOfComplaintDTO> UpdateStatus(StatusOfComplaint status)
         {
             try
             {
@@ -101,7 +102,7 @@ namespace ComplaintAggregate.Controllers
                 }
                 StatusOfComplaint cmp = mapper.Map<StatusOfComplaint>(status);
                 StatusOfComplaint complaint = complainStatusRepository.UpdateStatus(cmp);
-                return Ok(mapper.Map<StatusOfComplaint>(complaint));
+                return Ok(mapper.Map<StatusOfComplaintDTO>(complaint));
             }
             catch (Exception)
             {
