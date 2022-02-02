@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IKlasaRepository
+    public interface IKlasaRepository
     {
-        List<KlasaModel> GetKlase();
+        List<KlasaEntity> GetKlase();
 
-        KlasaModel GetKlasaById(Guid klasaID);
+        KlasaEntity GetKlasaById(Guid klasaID);
 
-        KlasaModel CreateKlasa(KlasaModel klasa);
+        KlasaEntity CreateKlasa(KlasaEntity klasa);
 
-        KlasaModel UpdateKlasa(KlasaModel klasa);
+        KlasaEntity UpdateKlasa(KlasaEntity klasa);
 
         void DeleteKlasa(Guid klasaID);
     }

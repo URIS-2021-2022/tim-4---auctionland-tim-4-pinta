@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using AutoMapper;
+using Parcela.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,59 +9,46 @@ namespace Parcela.Data
 {
     public class KlasaRepository : IKlasaRepository
     {
-        public static List<KlasaModel> Klase { get; set; } = new List<KlasaModel>();
+        private readonly ParcelaContext context;
+        private readonly IMapper mapper;
 
-        public KlasaRepository()
+        public KlasaRepository(ParcelaContext context, IMapper mapper)
         {
-            FillData();
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        private void FillData()
+        public bool SaveChanges()
         {
-            Klase.AddRange(new List<KlasaModel>
-            {
-                new KlasaModel
-                {
-                    KlasaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                    KlasaOznaka = 1
-                },
-                new KlasaModel
-                {
-                    KlasaID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
-                    KlasaOznaka = 2
-                }
-            });
+            return context.SaveChanges() > 0;
         }
-        public KlasaModel CreateKlasa(KlasaModel klasa)
+
+        public KlasaEntity CreateKlasa(KlasaEntity klasa)
         {
             klasa.KlasaID = Guid.NewGuid();
-            Klase.Add(klasa);
-            KlasaModel k = GetKlasaById(klasa.KlasaID);
+            context.Klase.Add(klasa);
+            KlasaEntity k = GetKlasaById(klasa.KlasaID);
             return k;
         }
 
         public void DeleteKlasa(Guid klasaID)
         {
-            Klase.Remove(Klase.FirstOrDefault(k => k.KlasaID == klasaID));
+            context.Klase.Remove(context.Klase.FirstOrDefault(k => k.KlasaID == klasaID));
         }
 
-        public KlasaModel GetKlasaById(Guid klasaID)
+        public KlasaEntity GetKlasaById(Guid klasaID)
         {
-            return Klase.FirstOrDefault(k => k.KlasaID == klasaID);
+            return context.Klase.FirstOrDefault(k => k.KlasaID == klasaID);
         }
 
-        public List<KlasaModel> GetKlase()
+        public List<KlasaEntity> GetKlase()
         {
-            return (from k in Klase select k).ToList();
+            return (from k in context.Klase select k).ToList();
         }
 
-        public KlasaModel UpdateKlasa(KlasaModel klasa)
+        public KlasaEntity UpdateKlasa(KlasaEntity klasa)
         {
-            KlasaModel k = GetKlasaById(klasa.KlasaID);
-
-            k.KlasaOznaka = klasa.KlasaOznaka;
-
-            return k;
+            throw new NotImplementedException();
         }
     }
 }

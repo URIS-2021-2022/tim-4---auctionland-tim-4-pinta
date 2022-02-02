@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using AutoMapper;
+using Parcela.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,60 +9,46 @@ namespace Parcela.Data
 {
     public class ZasticenaZonaRepository : IZasticenaZonaRepository
     {
-        public static List<ZasticenaZonaModel> ZasticeneZone { get; set; } = new List<ZasticenaZonaModel>();
+        private readonly ParcelaContext context;
+        private readonly IMapper mapper;
 
-        public ZasticenaZonaRepository()
+        public ZasticenaZonaRepository(ParcelaContext context, IMapper mapper)
         {
-            FillData();
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        private void FillData()
+        public bool SaveChanges()
         {
-            ZasticeneZone.AddRange(new List<ZasticenaZonaModel>
-            {
-                new ZasticenaZonaModel
-                {
-                    ZasticenaZonaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                    ZasticenaZonaOznaka = 1
-                },
-                new ZasticenaZonaModel
-                {
-                    ZasticenaZonaID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
-                    ZasticenaZonaOznaka = 2
-                }
-            });
+            return context.SaveChanges() > 0;
         }
 
-        public ZasticenaZonaModel CreateZasticenaZona(ZasticenaZonaModel zasticenaZona)
+        public ZasticenaZonaEntity CreateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
         {
             zasticenaZona.ZasticenaZonaID = Guid.NewGuid();
-            ZasticeneZone.Add(zasticenaZona);
-            ZasticenaZonaModel z = GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID);
+            context.ZasticeneZone.Add(zasticenaZona);
+            ZasticenaZonaEntity z = GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID);
             return z;
         }
 
         public void DeleteZasticenaZona(Guid zasticenaZonaID)
         {
-            ZasticeneZone.Remove(ZasticeneZone.FirstOrDefault(z => z.ZasticenaZonaID == zasticenaZonaID));
+            context.ZasticeneZone.Remove(context.ZasticeneZone.FirstOrDefault(z => z.ZasticenaZonaID == zasticenaZonaID));
         }
 
-        public ZasticenaZonaModel GetZasticenaZonaById(Guid zasticenaZonaID)
+        public ZasticenaZonaEntity GetZasticenaZonaById(Guid zasticenaZonaID)
         {
-            return ZasticeneZone.FirstOrDefault(z => z.ZasticenaZonaID == zasticenaZonaID);
+            return context.ZasticeneZone.FirstOrDefault(z => z.ZasticenaZonaID == zasticenaZonaID);
         }
 
-        public List<ZasticenaZonaModel> GetZasticeneZone()
+        public List<ZasticenaZonaEntity> GetZasticeneZone()
         {
-            return (from z in ZasticeneZone select z).ToList();
+            return (from z in context.ZasticeneZone select z).ToList();
         }
 
-        public ZasticenaZonaModel UpdateZasticenaZona(ZasticenaZonaModel zasticenaZona)
+        public ZasticenaZonaEntity UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
         {
-            ZasticenaZonaModel z = GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID);
-
-            z.ZasticenaZonaOznaka = zasticenaZona.ZasticenaZonaOznaka;
-
-            return z;
+            throw new NotImplementedException();
         }
     }
 }

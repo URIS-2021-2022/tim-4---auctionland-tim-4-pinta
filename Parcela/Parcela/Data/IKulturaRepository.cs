@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IKulturaRepository
+    public interface IKulturaRepository
     {
-        List<KulturaModel> GetKulture();
+        List<KulturaEntity> GetKulture();
 
-        KulturaModel GetKulturaById(Guid kulturaID);
+        KulturaEntity GetKulturaById(Guid kulturaID);
 
-        KulturaModel CreateKultura(KulturaModel kultura);
+        KulturaEntity CreateKultura(KulturaEntity kultura);
 
-        KulturaModel UpdateKultura(KulturaModel kultura);
+        KulturaEntity UpdateKultura(KulturaEntity kultura);
 
         void DeleteKultura(Guid kulturaID);
     }

@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using AutoMapper;
+using Parcela.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,60 +9,46 @@ namespace Parcela.Data
 {
     public class ObradivostRepository : IObradivostRepository
     {
-        public static List<ObradivostModel> Obradivosti { get; set; } = new List<ObradivostModel>();
+        private readonly ParcelaContext context;
+        private readonly IMapper mapper;
 
-        public ObradivostRepository()
+        public ObradivostRepository(ParcelaContext context, IMapper mapper)
         {
-            FillData();
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        private void FillData()
+        public bool SaveChanges()
         {
-            Obradivosti.AddRange(new List<ObradivostModel>
-            {
-                new ObradivostModel
-                {
-                    ObradivostID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                    ObradivostNaziv = "Obradivost1"
-                },
-                new ObradivostModel
-                {
-                    ObradivostID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
-                    ObradivostNaziv = "Obradivost2"
-                }
-            });
+            return context.SaveChanges() > 0;
         }
 
-        public ObradivostModel CreateObradivost(ObradivostModel obradivost)
+        public ObradivostEntity CreateObradivost(ObradivostEntity obradivost)
         {
             obradivost.ObradivostID = Guid.NewGuid();
-            Obradivosti.Add(obradivost);
-            ObradivostModel o = GetObradivostById(obradivost.ObradivostID);
+            context.Obradivosti.Add(obradivost);
+            ObradivostEntity o = GetObradivostById(obradivost.ObradivostID);
             return o;
         }
 
         public void DeleteObradivost(Guid obradivostID)
         {
-            Obradivosti.Remove(Obradivosti.FirstOrDefault(o => o.ObradivostID == obradivostID));
+            context.Obradivosti.Remove(context.Obradivosti.FirstOrDefault(o => o.ObradivostID == obradivostID));
         }
 
-        public ObradivostModel GetObradivostById(Guid obradivostID)
+        public ObradivostEntity GetObradivostById(Guid obradivostID)
         {
-            return Obradivosti.FirstOrDefault(o => o.ObradivostID == obradivostID);
+            return context.Obradivosti.FirstOrDefault(o => o.ObradivostID == obradivostID);
         }
 
-        public List<ObradivostModel> GetObradivosti()
+        public List<ObradivostEntity> GetObradivosti()
         {
-            return (from o in Obradivosti select o).ToList();
+            return (from o in context.Obradivosti select o).ToList();
         }
 
-        public ObradivostModel UpdateObradivost(ObradivostModel obradivost)
+        public ObradivostEntity UpdateObradivost(ObradivostEntity obradivost)
         {
-            ObradivostModel o = GetObradivostById(obradivost.ObradivostID);
-
-            o.ObradivostNaziv = obradivost.ObradivostNaziv;
-
-            return o;
+            throw new NotImplementedException();
         }
     }
 }

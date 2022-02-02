@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using Parcela.Entities;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Parcela.Data
 {
-    interface IOdvodnjavanjeRepository
+    public interface IOdvodnjavanjeRepository
     {
-        List<OdvodnjavanjeModel> GetOdvodnjavanja();
+        List<OdvodnjavanjeEntity> GetOdvodnjavanja();
 
-        OdvodnjavanjeModel GetOdvodnjavanjeById(Guid odvodnjavanjeID);
+        OdvodnjavanjeEntity GetOdvodnjavanjeById(Guid odvodnjavanjeID);
 
-        OdvodnjavanjeModel CreateOdvodnjavanje(OdvodnjavanjeModel odvodnjavanje);
+        OdvodnjavanjeEntity CreateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje);
 
-        OdvodnjavanjeModel UpdateOdvodnjavanje(OdvodnjavanjeModel odvodnjavanje);
+        OdvodnjavanjeEntity UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje);
 
         void DeleteOdvodnjavanje(Guid odvodnjavanjeID);
     }

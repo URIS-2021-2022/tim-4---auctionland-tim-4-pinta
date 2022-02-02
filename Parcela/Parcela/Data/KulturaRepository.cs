@@ -1,4 +1,5 @@
-﻿using Parcela.Models;
+﻿using AutoMapper;
+using Parcela.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,60 +9,46 @@ namespace Parcela.Data
 {
     public class KulturaRepository : IKulturaRepository
     {
-        public static List<KulturaModel> Kulture { get; set; } = new List<KulturaModel>();
+        private readonly ParcelaContext context;
+        private readonly IMapper mapper;
 
-        public KulturaRepository()
+        public KulturaRepository(ParcelaContext context, IMapper mapper)
         {
-            FillData();
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        private void FillData()
+        public bool SaveChanges()
         {
-            Kulture.AddRange(new List<KulturaModel>
-            {
-                new KulturaModel
-                {
-                    KulturaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                    KulturaNaziv = "Kukuruz"
-                },
-                new KulturaModel
-                {
-                    KulturaID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
-                    KulturaNaziv = "Soja"
-                }
-            });
+            return context.SaveChanges() > 0;
         }
 
-        public KulturaModel CreateKultura(KulturaModel kultura)
+        public KulturaEntity CreateKultura(KulturaEntity kultura)
         {
             kultura.KulturaID = Guid.NewGuid();
-            Kulture.Add(kultura);
-            KulturaModel k = GetKulturaById(kultura.KulturaID);
+            context.Kulture.Add(kultura);
+            KulturaEntity k = GetKulturaById(kultura.KulturaID);
             return k;
         }
 
         public void DeleteKultura(Guid kulturaID)
         {
-            Kulture.Remove(Kulture.FirstOrDefault(k => k.KulturaID == kulturaID));
+            context.Kulture.Remove(context.Kulture.FirstOrDefault(k => k.KulturaID == kulturaID));
         }
 
-        public KulturaModel GetKulturaById(Guid kulturaID)
+        public KulturaEntity GetKulturaById(Guid kulturaID)
         {
-            return Kulture.FirstOrDefault(k => k.KulturaID == kulturaID);
+            return context.Kulture.FirstOrDefault(k => k.KulturaID == kulturaID);
         }
 
-        public List<KulturaModel> GetKulture()
+        public List<KulturaEntity> GetKulture()
         {
-            return (from k in Kulture select k).ToList();
+            return (from k in context.Kulture select k).ToList();
         }
 
-        public KulturaModel UpdateKultura(KulturaModel kultura)
+        public KulturaEntity UpdateKultura(KulturaEntity kultura)
         {
-            KulturaModel k = GetKulturaById(kultura.KulturaID);
-
-            k.KulturaNaziv = kultura.KulturaNaziv;
-
-            return k;
+            throw new NotImplementedException();
         }
     }
 }
