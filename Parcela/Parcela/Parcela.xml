@@ -801,6 +801,61 @@
             Naziv kulture
             </summary>
         </member>
+        <member name="T:Parcela.Models.KupacParcele">
+            <summary>
+            DTO za kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.Naziv">
+            <summary>
+            Naziv kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.BrojTelefona1">
+            <summary>
+            Prvi broj telefona kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.BrojTelefona2">
+            <summary>
+            Drugi broj telefona kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.Email">
+            <summary>
+            Email kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.OstvarenaPovrsina">
+            <summary>
+            Ostvarena povrsina kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.BrojRacuna">
+            <summary>
+            Broj racuna kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.ImaZabranu">
+            <summary>
+            Da li kupac parcele ima zabranu
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.DatumPocetkaZabrane">
+            <summary>
+            Datum pocetka zabrane kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.DuzinaTrajanjaZabraneUGodinama">
+            <summary>
+            Duzina trajanja zabrane u godinama
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParcele.DatumPrestankaZabrane">
+            <summary>
+            Datum prestanka zabrane kupca parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Models.OblikSvojineDto">
             <summary>
             DTO za oblik svojine
@@ -829,6 +884,16 @@
         <member name="P:Parcela.Models.OdvodnjavanjeDto.OdvodnjavanjeNaziv">
             <summary>
             Naziv tipa odvodnjavanja
+            </summary>
+        </member>
+        <member name="T:Parcela.Models.OpstinaParceleDto">
+            <summary>
+            DTO za opstinu parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.OpstinaParceleDto.KatastarskaOpstinaNaziv">
+            <summary>
+            Naziv katastarske opstine
             </summary>
         </member>
         <member name="T:Parcela.Models.ParcelaDto">

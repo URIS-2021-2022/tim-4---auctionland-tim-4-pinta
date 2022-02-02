@@ -49,5 +49,15 @@ namespace Parcela.Models
         /// Stvarno stanje odvodnjavanja za parcelu
         /// </summary>
         public String OdvodnjavanjeStvarnoStanje { get; set; }
+
+        /// <summary>
+        /// ID katastarske opstine
+        /// </summary>
+        public Guid KatastarskaOpstinaID { get; set; }
+
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
     }
 }
