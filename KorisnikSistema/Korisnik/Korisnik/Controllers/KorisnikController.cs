@@ -49,7 +49,7 @@ namespace Korisnik.Controllers
             {
                 return NotFound();
             }
-            return Ok(mapper.Map<List<KorisnikDto>>(korisnik));
+            return Ok(mapper.Map<KorisnikDto>(korisnik));
         }
 
         [HttpPost]
