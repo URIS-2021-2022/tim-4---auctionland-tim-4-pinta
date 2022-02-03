@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace Korisnik.Data
 {
-    public class AuthenticateRepository
+    public interface IUserRepository
     {
+        public bool UserWithCredentialsExists(string username, string password);
     }
 }

@@ -16,5 +16,7 @@ namespace Korisnik.Models
         public string KorisnickoIme { get; set; }
 
         public string Lozinka { get; set; }
+
+        public string Salt { get; set; }
     }
 }
