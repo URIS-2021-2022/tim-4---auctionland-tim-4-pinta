@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 
 namespace JavnoNadmetanjeAgregat.Models
 {
-    public class StatusJavnogNadmetanjaModel
+    /// <summary>
+    /// DTO za status javnog nadmetanja
+    /// </summary>
+    public class StatusJavnogNadmetanjaDto
     {
-        public Guid StatusJavnogNadmetanjaID { get; set; }
+        /// <summary>
+        /// Naziv statusa javnog nadmetanja
+        /// </summary>
         public String NazivStatusaJavnogNadmetanja { get; set; }
 
     }

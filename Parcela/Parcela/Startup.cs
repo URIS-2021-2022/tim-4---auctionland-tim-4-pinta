@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +11,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Parcela.Data;
+using Parcela.Entities;
 using Parcela.Helpers;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,16 +41,26 @@ namespace Parcela
                 setup.ReturnHttpNotAcceptable = true
             ).AddXmlDataContractSerializerFormatters();
 
-            services.AddSingleton<IParcelaRepository, ParcelaRepository>();
-            services.AddSingleton<IDeoParceleRepository, DeoParceleRepository>();
-            services.AddSingleton<IKlasaRepository, KlasaRepository>();
-            services.AddSingleton<IKulturaRepository, KulturaRepository>();
-            services.AddSingleton<IOblikSvojineRepository, OblikSvojineRepository>();
-            services.AddSingleton<IObradivostRepository, ObradivostRepository>();
-            services.AddSingleton<IOdvodnjavanjeRepository, OdvodnjavanjeRepository>();
-            services.AddSingleton<IZasticenaZonaRepository, ZasticenaZonaRepository>();
+            //services.AddSingleton<IParcelaRepository, ParcelaMockRepository>();
+            //services.AddSingleton<IDeoParceleRepository, DeoParceleMockRepository>();
+            //services.AddSingleton<IKlasaRepository, KlasaMockRepository>();
+            //services.AddSingleton<IKulturaRepository, KulturaMockRepository>();
+            //services.AddSingleton<IOblikSvojineRepository, OblikSvojineMockRepository>();
+            //services.AddSingleton<IObradivostRepository, ObradivostMockRepository>();
+            //services.AddSingleton<IOdvodnjavanjeRepository, OdvodnjavanjeMockRepository>();
+            //services.AddSingleton<IZasticenaZonaRepository, ZasticenaZonaMockRepository>();
             services.AddSingleton<IUserRepository, UserMockRepository>();
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            services.AddScoped<IParcelaRepository, ParcelaRepository>();
+            services.AddScoped<IDeoParceleRepository, DeoParceleRepository>();
+            services.AddScoped<IKlasaRepository, KlasaRepository>();
+            services.AddScoped<IKulturaRepository, KulturaRepository>();
+            services.AddScoped<IOblikSvojineRepository, OblikSvojineRepository>();
+            services.AddScoped<IObradivostRepository, ObradivostRepository>();
+            services.AddScoped<IOdvodnjavanjeRepository, OdvodnjavanjeRepository>();
+            services.AddScoped<IZasticenaZonaRepository, ZasticenaZonaRepository>();
+            services.AddScoped<IKatastarskaOpstinaService, KatastarskaOpstinaService>();
+            services.AddScoped<IKupacService, KupacService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -88,18 +101,20 @@ namespace Parcela
                     });
 
                 ////Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
-                //var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
 
                 ////Pravimo putanju do XML fajla sa komentarima
-                //var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
 
                 ////Govorimo swagger-u gde se nalazi dati xml fajl sa komentarima
-                //setupAction.IncludeXmlComments(xmlCommentsPath);
+                setupAction.IncludeXmlComments(xmlCommentsPath);
             });
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Parcela", Version = "v1" });
             //});
+
+            services.AddDbContextPool<ParcelaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ParcelaDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,7 +136,7 @@ namespace Parcela
             app.UseSwaggerUI(setupAction =>
             {
                 setupAction.SwaggerEndpoint("/swagger/ParcelaOpenApiSpecification/swagger.json", "Parcela Agregat API");
-                setupAction.RoutePrefix = ""; 
+                setupAction.RoutePrefix = "swagger"; 
             });
 
             app.UseAuthorization();

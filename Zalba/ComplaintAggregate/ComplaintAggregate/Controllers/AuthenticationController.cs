@@ -1,5 +1,6 @@
 ﻿using ComplaintAggregate.Helpers;
 using ComplaintAggregate.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace ComplaintAggregate.Controllers
 {
     [ApiController]
     [Route("api/zalba")]
+    [Produces("application/json", "application/xml")]
     public class AuthenticationController :ControllerBase
     {
         private readonly IAuthenticationHelper authenticationHelper;
@@ -25,6 +27,9 @@ namespace ComplaintAggregate.Controllers
         /// <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
         /// <returns></returns>
           [HttpPost("authenticate")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult Authenticate(Principal principal)
         {
             //Pokušaj autentifikacije

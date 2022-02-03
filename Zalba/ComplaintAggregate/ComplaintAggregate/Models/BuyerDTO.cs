@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Korisnik.Data
+namespace ComplaintAggregate.Models
 {
-    public class AuthenticateRepository
+    public class BuyerDTO
     {
+        public string nazivKupca { get; set; }
     }
 }

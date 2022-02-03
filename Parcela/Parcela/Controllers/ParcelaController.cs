@@ -9,6 +9,7 @@ using Parcela.Models;
 using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using Parcela.Entities;
+using Parcela.ServiceCals;
 
 namespace Parcela.Controllers
 {
@@ -21,12 +22,16 @@ namespace Parcela.Controllers
     public class ParcelaController : ControllerBase
     {
         private readonly IParcelaRepository parcelaRepository;
+        private readonly IKatastarskaOpstinaService katastarskaOpstinaService;
+        private readonly IKupacService kupacService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
-        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService)
         {
             this.parcelaRepository = parcelaRepository;
+            this.katastarskaOpstinaService = katastarskaOpstinaService;
+            this.kupacService = kupacService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }

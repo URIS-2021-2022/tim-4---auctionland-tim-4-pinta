@@ -1,4 +1,4 @@
-﻿using Licnost.Models;
+﻿using Licnost.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace Licnost.Data
 {
     public class LicnostRepository : ILicnostRepository
     {
-        public static List<LicnostModel> Licnosti { get; set; } = new List<LicnostModel>();
+        public static List<LicnostEntity> Licnosti { get; set; } = new List<LicnostEntity>();
 
         public LicnostRepository()
         {
@@ -17,9 +17,9 @@ namespace Licnost.Data
 
         private void FillData()
         {
-            Licnosti.AddRange(new List<LicnostModel>
+            Licnosti.AddRange(new List<LicnostEntity>
             {
-                new LicnostModel
+                new LicnostEntity
                 {
                    LicnostId =Guid.Parse("E91B29CC-79A5-4DE8-8030-77DF6E514DEF"),
                    LicnostIme="Simona",
@@ -32,7 +32,7 @@ namespace Licnost.Data
             });
         }
 
-        public List<LicnostModel> GetLicnosti(string licnostIme = null, string licnostPrezime = null)
+        public List<LicnostEntity> GetLicnosti(string licnostIme = null, string licnostPrezime = null)
         {
             return (from l in Licnosti
                     where string.IsNullOrEmpty(licnostIme) || l.LicnostIme == licnostIme &&
@@ -40,38 +40,37 @@ namespace Licnost.Data
                     select l).ToList();
         }
 
-        public LicnostModel GetLicnostById(Guid licnostId)
+        public LicnostEntity GetLicnostById(Guid licnostId)
         {
             return Licnosti.FirstOrDefault(l => l.LicnostId == licnostId);
         }
 
-        public LicnostModel CreateLicnost(LicnostModel licnost)
+        public LicnostEntity CreateLicnost(LicnostEntity licnost)
         {
+            licnost.LicnostId = Guid.NewGuid();
             Licnosti.Add(licnost);
             var l = GetLicnostById(licnost.LicnostId);
-            return new LicnostModel
+            return new LicnostEntity
             {
                 LicnostId = l.LicnostId,
                 LicnostIme = l.LicnostIme,
                 LicnostPrezime = l.LicnostPrezime,
                 LicnostFunkcija = l.LicnostFunkcija
-            };
-            //licnost.LicnostId = Guid.NewGuid();
-            //Parcele.Add(parcela);
-            //ParcelaEntity p = GetParcelaById(parcela.ParcelaID);
-            //return p;
+
+        };
+            
         }
 
-        public LicnostModel UpdateLicnost(LicnostModel licnost)
+        public LicnostEntity UpdateLicnost(LicnostEntity licnost)
         {
-            LicnostModel l = GetLicnostById(licnost.LicnostId);
+            LicnostEntity l = GetLicnostById(licnost.LicnostId);
 
             l.LicnostId = licnost.LicnostId;
             l.LicnostIme = licnost.LicnostIme;
             l.LicnostPrezime = licnost.LicnostPrezime;
             l.LicnostFunkcija = licnost.LicnostFunkcija;
 
-            return new LicnostModel
+            return new LicnostEntity
             {
                 LicnostId = l.LicnostId,
                 LicnostIme = l.LicnostIme,

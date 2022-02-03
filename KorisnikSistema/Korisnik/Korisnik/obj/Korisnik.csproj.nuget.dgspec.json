@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {}
+    "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {
+    "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
+        "projectUniqueName": "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
         "projectName": "Korisnik",
-        "projectPath": "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
-        "packagesPath": "C:\\Users\\Stefan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\obj\\",
+        "projectPath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
+        "packagesPath": "C:\\Users\\Dusan\\.nuget\\packages\\",
+        "outputPath": "E:\\fax\\4.god\\PrviSemestar\\Katin\\klonirank\\KorisnikSistema\\Korisnik\\Korisnik\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Stefan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dusan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -43,9 +43,21 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.15.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.15.1, )"
             }
           },
           "imports": [
@@ -66,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

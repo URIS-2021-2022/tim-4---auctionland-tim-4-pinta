@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +15,7 @@ namespace Parcela.Entities
         /// <summary>
         /// ID parcele
         /// </summary>
+        [Key]
         public Guid ParcelaID { get; set; }
 
         /// <summary>
@@ -54,5 +57,61 @@ namespace Parcela.Entities
         /// Stvarno stanje odvodnjavanja za parcelu
         /// </summary>
         public String OdvodnjavanjeStvarnoStanje { get; set; }
+
+        /// <summary>
+        /// ID zasticene zone
+        /// </summary>
+        [ForeignKey("ZasticenaZona")]
+        public Guid ZasticenaZonaID { get; set; }
+        public ZasticenaZonaEntity ZasticenaZona { get; set; }
+
+        /// <summary>
+        /// ID odvodnjavanja
+        /// </summary>
+        [ForeignKey("Odvodnjavanje")]
+        public Guid OdvodnjavanjeID { get; set; }
+        public OdvodnjavanjeEntity Odvodnjavanje { get; set; }
+
+        /// <summary>
+        /// ID obradivosti
+        /// </summary>
+        [ForeignKey("Obradivost")]
+        public Guid ObradivostID { get; set; }
+        public ObradivostEntity Obradivost { get; set; }
+
+        /// <summary>
+        /// ID oblika svojine
+        /// </summary>
+        [ForeignKey("OblikSvojine")]
+        public Guid OblikSvojineID { get; set; }
+        public OblikSvojineEntity OblikSvojine { get; set; }
+
+
+        /// <summary>
+        /// ID kulture
+        /// </summary>
+        [ForeignKey("Kultura")]
+        public Guid KulturaID { get; set; }
+        public KulturaEntity Kultura { get; set; }
+
+
+        /// <summary>
+        /// ID klase
+        /// </summary>
+        [ForeignKey("Klasa")]
+        public Guid KlasaID { get; set; }
+        public KlasaEntity Klasa { get; set; }
+
+        public List<DeoParceleEntity> DeloviParcele { get; set; }
+
+        /// <summary>
+        /// ID katastarske opstine
+        /// </summary>
+        public Guid KatastarskaOpstinaID { get; set; }
+
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
     }
 }

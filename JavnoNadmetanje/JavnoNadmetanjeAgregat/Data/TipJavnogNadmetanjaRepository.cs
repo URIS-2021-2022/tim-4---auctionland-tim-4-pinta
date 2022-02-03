@@ -1,4 +1,5 @@
-﻿using JavnoNadmetanjeAgregat.Models;
+﻿
+using JavnoNadmetanjeAgregat.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace JavnoNadmetanjeAgregat.Data
 {
     public class TipJavnogNadmetanjaRepository : ITipJavnogNadmetanjaRepository
     {
-        public static List<TipJavnogNadmetanjaModel> TipoviJavnogNadmetanja { get; set; } = new List<TipJavnogNadmetanjaModel>();
+        public static List<TipJavnogNadmetanjaEntity> TipoviJavnogNadmetanja { get; set; } = new List<TipJavnogNadmetanjaEntity>();
 
         public TipJavnogNadmetanjaRepository()
         {
@@ -17,26 +18,26 @@ namespace JavnoNadmetanjeAgregat.Data
 
         private void FillData()
         {
-            TipoviJavnogNadmetanja.AddRange(new List<TipJavnogNadmetanjaModel>
+            TipoviJavnogNadmetanja.AddRange(new List<TipJavnogNadmetanjaEntity>
             {
-                new TipJavnogNadmetanjaModel
+                new TipJavnogNadmetanjaEntity
                 {
                     TipJavnogNadmetanjaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                     NazivTipaJavnogNadmetanja= "Status1"
 
                 },
-                new TipJavnogNadmetanjaModel
+                new TipJavnogNadmetanjaEntity
                 {
                     TipJavnogNadmetanjaID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                     NazivTipaJavnogNadmetanja="Status2"
                 }
             });
         }
-        public TipJavnogNadmetanjaModel CreateTipJavnogNadmetanja(TipJavnogNadmetanjaModel tipJavnogNadmetanja)
+        public TipJavnogNadmetanjaEntity CreateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)
         {
             tipJavnogNadmetanja.TipJavnogNadmetanjaID = Guid.NewGuid();
             TipoviJavnogNadmetanja.Add(tipJavnogNadmetanja);
-            TipJavnogNadmetanjaModel t= GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
+            TipJavnogNadmetanjaEntity t= GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
             return t;
         }
 
@@ -45,19 +46,19 @@ namespace JavnoNadmetanjeAgregat.Data
             TipoviJavnogNadmetanja.Remove(TipoviJavnogNadmetanja.FirstOrDefault(t => t.TipJavnogNadmetanjaID == tipJavnogNadmetanjaID));
         }
 
-        public List<TipJavnogNadmetanjaModel> GetTipJavnogNadmetanja()
+        public List<TipJavnogNadmetanjaEntity> GetTipJavnogNadmetanja()
         {
             return (from t in TipoviJavnogNadmetanja select t).ToList();
         }
 
-        public TipJavnogNadmetanjaModel GetTipJavnogNadmetanjaById(Guid tipJavnogNadmetanjaID)
+        public TipJavnogNadmetanjaEntity GetTipJavnogNadmetanjaById(Guid tipJavnogNadmetanjaID)
         {
             return TipoviJavnogNadmetanja.FirstOrDefault(t => t.TipJavnogNadmetanjaID == tipJavnogNadmetanjaID);
         }
 
-        public TipJavnogNadmetanjaModel UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaModel tipJavnogNadmetanja)
+        public TipJavnogNadmetanjaEntity UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)
         {
-            TipJavnogNadmetanjaModel t = GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
+            TipJavnogNadmetanjaEntity t = GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
 
             t.NazivTipaJavnogNadmetanja = tipJavnogNadmetanja.NazivTipaJavnogNadmetanja;
             return t;
