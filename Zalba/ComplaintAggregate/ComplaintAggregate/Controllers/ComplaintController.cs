@@ -54,7 +54,7 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ComplaintDTO> CreateExamRegistration([FromBody] ComplaintDTO complain)
+        public ActionResult<ComplaintDTO> CreateComplaint([FromBody] ComplaintDTO complain)
         {
             try
             {

@@ -22,11 +22,11 @@ namespace ComplaintAggregate.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:KupacAgregat"];
-                Uri url = new Uri($"{ configuration["Services:KupacAgregat"] }api/kupac");
+                var x = configuration["Services:KupacMikroservis"];
+                Uri url = new Uri($"{ configuration["Services:KupacMikroservis"] }api/kupac");
 
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(buyer));
-                content.Headers.ContentType.MediaType = "application/json";
+            //    HttpContent content = new StringContent(JsonConvert.SerializeObject(buyer));
+              //  content.Headers.ContentType.MediaType = "application/json";
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
                 
