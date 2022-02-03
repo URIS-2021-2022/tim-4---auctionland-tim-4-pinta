@@ -17,7 +17,7 @@ namespace Licnost.Profiles
                     dest => dest.LicnostImePrezime,
                     opt => opt.MapFrom(src => $"{ src.LicnostIme } {src.LicnostPrezime}"));
 
-            CreateMap<LicnostEntity,LicnostCreateDto>();
+            CreateMap<LicnostEntity, LicnostCreateDto>();
             CreateMap<LicnostEntity, LicnostUpdateDto>();
 
            

@@ -11,13 +11,15 @@ namespace Licnost.Data
     {
         List<LicnostEntity> GetLicnosti(string licnostIme = null, string licnostPrezime = null);
 
-        LicnostEntity GetLicnostById(Guid licnostId);
+       LicnostEntity GetLicnostById(Guid licnostId);
 
         LicnostEntity CreateLicnost(LicnostEntity licnostModel);
 
-        LicnostEntity UpdateLicnost(LicnostEntity licnostModel);
+        void UpdateLicnost(LicnostEntity licnostModel);
 
         void DeleteLicnost(Guid licnostId);
+
+        bool SaveChanges();
     }
 
 
