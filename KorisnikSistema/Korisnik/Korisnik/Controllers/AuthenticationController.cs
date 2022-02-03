@@ -1,5 +1,6 @@
 ﻿using Korisnik.Helpers;
 using Korisnik.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 namespace Korisnik.Controllers
 {
     [ApiController]
+    [Route("api/examRegistrations")]
+    [Produces("application/json", "application/xml")]
     [Route("api/examRegistrations")]
     public class AuthenticationController : ControllerBase
     {
@@ -25,6 +28,9 @@ namespace Korisnik.Controllers
         /// <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
         /// <returns></returns>
         [HttpPost("authenticate")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult Authenticate(Principal principal)
         {
             //Pokušaj autentifikacije
