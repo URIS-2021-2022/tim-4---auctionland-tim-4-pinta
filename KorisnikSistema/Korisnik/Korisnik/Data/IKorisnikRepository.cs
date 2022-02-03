@@ -8,7 +8,7 @@ namespace Korisnik.Data
 {
     public interface IKorisnikRepository
     {
-        List<KorisnikModel> GetKorisniks(string ime = null);
+        List<KorisnikModel> GetKorisniks();
 
         KorisnikModel GetKorisniksById(int korisnikId);
 
