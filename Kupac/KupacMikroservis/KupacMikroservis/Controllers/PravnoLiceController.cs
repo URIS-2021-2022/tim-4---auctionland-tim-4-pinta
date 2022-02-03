@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+/*using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -26,9 +26,9 @@ namespace KupacMikroservis.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<PravnoLiceModel>> GetPravnaLica()
+        public ActionResult<List<PravnoLiceDTO>> GetPravnaLica()
         {
-            List<PravnoLiceModel> prLica = prLiceRepository.GetPravnaLica();
+            List<PravnoLiceDTO> prLica = prLiceRepository.GetPravnaLica();
             if (prLica == null || prLica.Count == 0)
             {
                 return NoContent();
@@ -37,9 +37,9 @@ namespace KupacMikroservis.Controllers
         }
 
         [HttpGet("{PravnoLiceId}")]
-        public ActionResult<FizickoLiceModel> GetPrLice(Guid prLiceID)
+        public ActionResult<FizickoLiceDTO> GetPrLice(Guid prLiceID)
         {
-            PravnoLiceModel prLiceModel = prLiceRepository.GetPravnoLiceById(prLiceID);
+            PravnoLiceDTO prLiceModel = prLiceRepository.GetPravnoLiceById(prLiceID);
             if (prLiceModel == null)
             {
                 return NotFound();
@@ -48,11 +48,11 @@ namespace KupacMikroservis.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PravnoLiceModel> CreatePravnoLice([FromBody] PravnoLiceModel prLice)    //confirmation implementirati
+        public ActionResult<PravnoLiceDTO> CreatePravnoLice([FromBody] PravnoLiceDTO prLice)    //confirmation implementirati
         {
             try
             {
-                PravnoLiceModel pLice = prLiceRepository.CreatePravnoLice(prLice);
+                PravnoLiceDTO pLice = prLiceRepository.CreatePravnoLice(prLice);
 
                 string location = linkGenerator.GetPathByAction("GetPravnoLice", "PravnoLice", new { KupacId = pLice.KupacId });
                 return Created(location, pLice);
@@ -71,7 +71,7 @@ namespace KupacMikroservis.Controllers
         {
             try
             {
-                PravnoLiceModel prLiceModel = prLiceRepository.GetPravnoLiceById(prLiceID);
+                PravnoLiceDTO prLiceModel = prLiceRepository.GetPravnoLiceById(prLiceID);
                 if (prLiceModel == null)
                 {
                     return NotFound();
@@ -86,6 +86,11 @@ namespace KupacMikroservis.Controllers
             }
         }
 
-
+        [HttpOptions]
+        public IActionResult GetPravnoLiceOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
+        }
     }
-}
+}*/

@@ -6,7 +6,7 @@ using System.Linq;
 
 public class FizickoLiceRepository : IFizickoLiceRepository
 {
-    public static List<FizickoLiceModel> FizickaLica { get; set; } = new List<FizickoLiceModel>();
+    public static List<FizickoLiceEntity> FizickaLica { get; set; } = new List<FizickoLiceEntity>();
 
     public FizickoLiceRepository()
     {
@@ -15,11 +15,11 @@ public class FizickoLiceRepository : IFizickoLiceRepository
 
     private void FillData()
     {
-        FizickaLica.AddRange(new List<FizickoLiceModel>
+        FizickaLica.AddRange(new List<FizickoLiceEntity>
                {
-                   new FizickoLiceModel
+                   new FizickoLiceEntity
                    {
-                       KupacId = Guid.Parse("6a411c13-a195-58f7-8dbd-67596c3974c0"),
+                       KupacId = Guid.Parse("6a411c13-a195-58f7-8dbd-67576c3974c0"),
                        Naziv = "Pera Peric",
                        BrojTelefona1 = "021445566",
                        BrojTelefona2 = "021445576",
@@ -32,9 +32,9 @@ public class FizickoLiceRepository : IFizickoLiceRepository
                        JMBG = "349238138"
 
                    },
-                   new FizickoLiceModel
+                   new FizickoLiceEntity
                    {
-                       KupacId = Guid.Parse("6a411c13-b195-58f7-8dbd-67596c3974c0"),
+                       KupacId = Guid.Parse("6a421c13-b195-58f7-8dbd-37596c3974c0"),
                        Naziv = "Djura Djuric",
                        BrojTelefona1 = "021445563",
                        BrojTelefona2 = "021445571",
@@ -49,11 +49,11 @@ public class FizickoLiceRepository : IFizickoLiceRepository
                });
     }
     
-    public FizickoLiceModel CreateFizickoLice(FizickoLiceModel fizlice)
+    public FizickoLiceEntity CreateFizickoLice(FizickoLiceEntity fizlice)
     {
         fizlice.KupacId = Guid.NewGuid();
         FizickaLica.Add(fizlice);
-       FizickoLiceModel fl = GetFizickoLiceById(fizlice.KupacId);
+       FizickoLiceEntity fl = GetFizickoLiceById(fizlice.KupacId);
         return fl;
     }
 
@@ -62,19 +62,19 @@ public class FizickoLiceRepository : IFizickoLiceRepository
         FizickaLica.Remove(FizickaLica.FirstOrDefault(fl => fl.KupacId == fizliceID));
     }
 
-    public List<FizickoLiceModel> GetFizickaLica()
+    public List<FizickoLiceEntity> GetFizickaLica()
     {
         return (from fl in FizickaLica select fl).ToList();
     }
 
-    public FizickoLiceModel GetFizickoLiceById(Guid fizliceID)
+    public FizickoLiceEntity GetFizickoLiceById(Guid fizliceID)
     {
         return FizickaLica.FirstOrDefault(fl => fl.KupacId == fizliceID);
     }
 
-    public FizickoLiceModel UpdateFizickoLice(FizickoLiceModel fizlice)
+    public FizickoLiceEntity UpdateFizickoLice(FizickoLiceEntity fizlice)
     {
-        FizickoLiceModel fl = GetFizickoLiceById(fizlice.KupacId);
+        FizickoLiceEntity fl = GetFizickoLiceById(fizlice.KupacId);
 
          fl.Naziv = fizlice.Naziv;
         fl.BrojTelefona1 = fizlice.BrojTelefona1;

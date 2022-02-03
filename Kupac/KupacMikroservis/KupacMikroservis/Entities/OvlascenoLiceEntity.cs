@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class OvlascenoLiceModel
+    public class OvlascenoLiceEntity
     {
 
         public Guid OvlascenoLiceId { get; set; }
@@ -16,7 +16,7 @@ namespace KupacMikroservis.Models
 
         public string BrojLicnogDokumenta { get; set; }
 
-        public ArrayList BrojTable = new ArrayList();
+        public string BrojTable { get; set; }
 
     }
 }

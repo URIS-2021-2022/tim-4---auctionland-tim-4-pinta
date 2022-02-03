@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KupacMikroservis.Data;
 using KupacMikroservis.Models;
+using AutoMapper;
 
 namespace KupacMikroservis.Controllers
 {
@@ -17,45 +18,49 @@ namespace KupacMikroservis.Controllers
     {
         private readonly IOvlascenoLiceRepository oLiceRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
 
-        public OvlascenoLiceController(IOvlascenoLiceRepository oLiceRepository, LinkGenerator linkGenerator)
+        public OvlascenoLiceController(IOvlascenoLiceRepository oLiceRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.oLiceRepository = oLiceRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<OvlascenoLiceModel>> GetOvlascenaLica()
+        public ActionResult<List<OvlascenoLiceDTO>> GetOvlascenaLica()
         {
-            List<OvlascenoLiceModel> ovlascenaLica = oLiceRepository.GetOvlascenaLica();
+            List<OvlascenoLiceEntity> ovlascenaLica = oLiceRepository.GetOvlascenaLica();
             if (ovlascenaLica == null || ovlascenaLica.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(ovlascenaLica);
+            return Ok(mapper.Map<List<OvlascenoLiceDTO>>(ovlascenaLica));
         }
 
         [HttpGet("{OvlascenoLiceId}")]
-        public ActionResult<OvlascenoLiceModel> GetOvlascenoLice(Guid oLiceID)
+        public ActionResult<OvlascenoLiceDTO> GetOvlascenoLice(Guid oLiceID)
         {
-            OvlascenoLiceModel oLiceModel = oLiceRepository.GetOvlascenoLiceById(oLiceID);
+            OvlascenoLiceEntity oLiceModel = oLiceRepository.GetOvlascenoLiceById(oLiceID);
             if (oLiceModel == null)
             {
                 return NotFound();
             }
-            return Ok(oLiceModel);
+            return Ok(mapper.Map<List<OvlascenoLiceDTO>>(oLiceModel));
         }
 
         [HttpPost]
-        public ActionResult<OvlascenoLiceModel> CreateOvlascenoLice([FromBody] OvlascenoLiceModel oLice)    //confirmation implementirati
+        public ActionResult<OvlascenoLiceDTO> CreateOvlascenoLice([FromBody] OvlascenoLiceCreateDTO oLice)    //confirmation implementirati
         {
             try
             {
-                OvlascenoLiceModel ol = oLiceRepository.CreateOvlascenoLice(oLice);
+                OvlascenoLiceEntity ol = mapper.Map<OvlascenoLiceEntity>(oLice);
+
+                OvlascenoLiceEntity olCreated = oLiceRepository.CreateOvlascenoLice(ol);
 
                 string location = linkGenerator.GetPathByAction("GetOvlascenoLice", "OvlascenoLice", new { OvlascenoLiceId = ol.OvlascenoLiceId });
-                return Created(location, ol);
+                return Created(location, mapper.Map<OvlascenoLiceDTO>(olCreated));
             }
             catch
             {
@@ -70,7 +75,7 @@ namespace KupacMikroservis.Controllers
         {
             try
             {
-                OvlascenoLiceModel oLiceModel =oLiceRepository.GetOvlascenoLiceById(oLiceID);
+                OvlascenoLiceEntity oLiceModel =oLiceRepository.GetOvlascenoLiceById(oLiceID);
                 if (oLiceModel == null)
                 {
                     return NotFound();
@@ -85,6 +90,32 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+        [HttpPut]
+        public ActionResult<OvlascenoLiceDTO> UpdateOvlascenoLice(OvlascenoLiceUpdateDTO ol)
+        {
+            try
+            {
 
+                if (oLiceRepository.GetOvlascenoLiceById(ol.OvlascenoLiceId) == null)
+                {
+                    return NotFound();
+                }
+                OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
+                OvlascenoLiceEntity olUpdated = oLiceRepository.CreateOvlascenoLice(olEntity);
+
+                return Ok(mapper.Map<OvlascenoLiceDTO>(olUpdated));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+            }
+        }
+
+        [HttpOptions]
+        public IActionResult GetOvlascenoLiceOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace KupacMikroservis.Data
 {
     public class PrioritetRepository : IPrioritetRepository
     {
-        public static List<PrioritetModel> Prioriteti { get; set; } = new List<PrioritetModel>();
+        public static List<PrioritetEntity> Prioriteti { get; set; } = new List<PrioritetEntity>();
 
         public PrioritetRepository()
         {
@@ -17,25 +17,25 @@ namespace KupacMikroservis.Data
 
         private void FillData()
         {
-            Prioriteti.AddRange(new List<PrioritetModel>
+            Prioriteti.AddRange(new List<PrioritetEntity>
             {
-                new PrioritetModel
+                new PrioritetEntity
                 {
-                    PrioritetId = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
+                    PrioritetId = Guid.Parse("6a411c13-b195-48f7-8dbd-67116c3974c0"),
                     PrioritetOpis = "Visok"
                 },
-                new PrioritetModel
+                new PrioritetEntity
                 {
-                    PrioritetId = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c8"),
+                    PrioritetId = Guid.Parse("6a411c13-a195-48f7-8dbd-62296c3974c8"),
                     PrioritetOpis = "Nizak"
                 }
             });
         }
-        public PrioritetModel CreatePrioritet(PrioritetModel prioritet)
+        public PrioritetEntity CreatePrioritet(PrioritetEntity prioritet)
         {
             prioritet.PrioritetId = Guid.NewGuid();
             Prioriteti.Add(prioritet);
-            PrioritetModel p = GetPrioritetById(prioritet.PrioritetId);
+            PrioritetEntity p = GetPrioritetById(prioritet.PrioritetId);
             return p;
         }
 
@@ -44,19 +44,19 @@ namespace KupacMikroservis.Data
             Prioriteti.Remove(Prioriteti.FirstOrDefault(p => p.PrioritetId == prioritetID));
         }
 
-        public List<PrioritetModel> GetPrioriteti()
+        public List<PrioritetEntity> GetPrioriteti()
         {
             return (from p in Prioriteti select p).ToList();
         }
 
-        public PrioritetModel GetPrioritetById(Guid prioritetID)
+        public PrioritetEntity GetPrioritetById(Guid prioritetID)
         {
             return Prioriteti.FirstOrDefault(p => p.PrioritetId == prioritetID);
         }
 
-        public PrioritetModel UpdatePrioritet(PrioritetModel prioritet)
+        public PrioritetEntity UpdatePrioritet(PrioritetEntity prioritet)
         {
-            PrioritetModel p = GetPrioritetById(prioritet.PrioritetId);
+            PrioritetEntity p = GetPrioritetById(prioritet.PrioritetId);
 
             p.PrioritetOpis = prioritet.PrioritetOpis;
             

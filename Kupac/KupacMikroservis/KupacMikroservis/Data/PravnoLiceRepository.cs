@@ -6,7 +6,7 @@ using System.Linq;
 
 public class PravnoLiceRepository : IPravnoLiceRepository
 {
-    public static List<PravnoLiceModel> PravnaLica { get; set; } = new List<PravnoLiceModel>();
+    public static List<PravnoLiceEntity> PravnaLica { get; set; } = new List<PravnoLiceEntity>();
 
     public PravnoLiceRepository()
     {
@@ -15,11 +15,11 @@ public class PravnoLiceRepository : IPravnoLiceRepository
 
     private void FillData()
     {
-        PravnaLica.AddRange(new List<PravnoLiceModel>
+        PravnaLica.AddRange(new List<PravnoLiceEntity>
                {
-                   new PravnoLiceModel
+                   new PravnoLiceEntity
                    {
-                       KupacId = Guid.Parse("6a412c13-a195-58f7-8dbd-67596c3974c0"),
+                       KupacId = Guid.Parse("6a413c13-a195-58f7-8dkd-67596c3984c0"),
                        Naziv = "Firma DOO",
                        BrojTelefona1 = "021415566",
                        BrojTelefona2 = "021425576",
@@ -33,9 +33,9 @@ public class PravnoLiceRepository : IPravnoLiceRepository
                        MaticniBroj = "34923023"
 
                    },
-                   new PravnoLiceModel
+                   new PravnoLiceEntity
                    {
-                       KupacId = Guid.Parse("6a413c13-b195-58f7-8dbd-67596c3974c0"),
+                       KupacId = Guid.Parse("6a463c13-b195-58f7-8lbd-67596c3674c0"),
                        Naziv = "Kompanija DOO",
                        BrojTelefona1 = "021145563",
                        BrojTelefona2 = "021945571",
@@ -50,11 +50,11 @@ public class PravnoLiceRepository : IPravnoLiceRepository
                    }
                });
     }
-    public PravnoLiceModel CreatePravnoLice(PravnoLiceModel pravnolice)
+    public PravnoLiceEntity CreatePravnoLice(PravnoLiceEntity pravnolice)
     {
         pravnolice.KupacId = Guid.NewGuid();
         PravnaLica.Add(pravnolice);
-        PravnoLiceModel pl = GetPravnoLiceById(pravnolice.KupacId);
+        PravnoLiceEntity pl = GetPravnoLiceById(pravnolice.KupacId);
         return pl;
     }
 
@@ -63,19 +63,19 @@ public class PravnoLiceRepository : IPravnoLiceRepository
        PravnaLica.Remove(PravnaLica.FirstOrDefault(pl => pl.KupacId == pravnoliceID));
     }
 
-    public List<PravnoLiceModel> GetPravnaLica()
+    public List<PravnoLiceEntity> GetPravnaLica()
     {
         return (from pl in PravnaLica select pl).ToList();
     }
 
-    public PravnoLiceModel GetPravnoLiceById(Guid pravnoliceID)
+    public PravnoLiceEntity GetPravnoLiceById(Guid pravnoliceID)
     {
         return PravnaLica.FirstOrDefault(pl => pl.KupacId == pravnoliceID);
     }
 
-    public PravnoLiceModel UpdatePravnoLice(PravnoLiceModel pravnolice)
+    public PravnoLiceEntity UpdatePravnoLice(PravnoLiceEntity pravnolice)
     {
-        PravnoLiceModel pl = GetPravnoLiceById(pravnolice.KupacId);
+        PravnoLiceEntity pl = GetPravnoLiceById(pravnolice.KupacId);
 
          pl.Naziv = pravnolice.Naziv;
         pl.BrojTelefona1 = pravnolice.BrojTelefona1;

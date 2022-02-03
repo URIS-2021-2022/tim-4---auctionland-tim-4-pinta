@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KupacMikroservis.Data;
 using KupacMikroservis.Models;
+using AutoMapper;
 
 namespace KupacMikroservis.Controllers
 {
@@ -17,45 +18,48 @@ namespace KupacMikroservis.Controllers
     {
         private readonly IKupacRepository kupacRepository;
         private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-
-        public KupacController(IKupacRepository kupacRepository, LinkGenerator linkGenerator)
+        public KupacController(IKupacRepository kupacRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.kupacRepository = kupacRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<KupacModel>> GetKupci()
+        public ActionResult<List<KupacDTO>> GetKupci()
         {
-            List<KupacModel> kupci = kupacRepository.GetKupci();
+            List<KupacEntity> kupci = kupacRepository.GetKupci();
             if (kupci == null || kupci.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(kupci);
+            return Ok(mapper.Map<List<KupacDTO>>(kupci));
         }
 
         [HttpGet("{KupacId}")]
-        public ActionResult<KupacModel> GetKupac(Guid kupacID)
+        public ActionResult<KupacDTO> GetKupac(Guid kupacID)
         {
-            KupacModel kupacModel = kupacRepository.GetKupacById(kupacID);
+            KupacEntity kupacModel = kupacRepository.GetKupacById(kupacID);
             if (kupacModel == null)
             {
                 return NotFound();
             }
-            return Ok(kupacModel);
+            return Ok(mapper.Map<KupacDTO>(kupacModel));
         }
 
         [HttpPost]
-        public ActionResult<KupacModel> CreateKupac([FromBody] KupacModel kupac)    //confirmation implementirati
+        public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)    //confirmation implementirati
         {
             try
             {
-               KupacModel kp = kupacRepository.CreateKupac(kupac);
+               KupacEntity kp = mapper.Map<KupacEntity>(kupac);
+
+                KupacEntity kpCreated = kupacRepository.CreateKupac(kp);
 
                 string location = linkGenerator.GetPathByAction("GetKupac", "Kupac", new { KupacId = kp.KupacId });
-                return Created(location,kp);
+                return Created(location, mapper.Map<KupacDTO>(kpCreated));
             }
             catch
             {
@@ -70,7 +74,7 @@ namespace KupacMikroservis.Controllers
         {
             try
             {
-                KupacModel kupacModel = kupacRepository.GetKupacById(kupacID);
+                KupacEntity kupacModel = kupacRepository.GetKupacById(kupacID);
                 if (kupacModel == null)
                 {
                     return NotFound();
@@ -83,6 +87,34 @@ namespace KupacMikroservis.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
+        }
+
+        [HttpPut]
+        public ActionResult<KupacDTO> UpdateKupac(KupacUpdateDTO kupac)
+        {
+            try
+            {
+
+                if (kupacRepository.GetKupacById(kupac.KupacId) == null)
+                {
+                    return NotFound();
+                }
+                KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
+                KupacEntity kpUpdated = kupacRepository.CreateKupac(kpEntity);
+
+                return Ok(mapper.Map<KupacDTO>(kpUpdated));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+            }
+        }
+
+        [HttpOptions]
+        public IActionResult GetKupacOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
         }
 
 

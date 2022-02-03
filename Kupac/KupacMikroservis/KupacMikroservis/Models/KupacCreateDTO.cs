@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class KupacModel
+    public class KupacCreateDTO
     {
-        
+
         public Guid KupacId { get; set; }
 
         public string Naziv { get; set; }

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+/*using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -26,9 +26,9 @@ namespace KupacMikroservis.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<FizickoLiceModel>> GetFizickaLica()
+        public ActionResult<List<FizickoLiceDTO>> GetFizickaLica()
         {
-            List<FizickoLiceModel> fizLica = fizLiceRepository.GetFizickaLica();
+            List<FizickoLiceDTO> fizLica = fizLiceRepository.GetFizickaLica();
             if (fizLica == null || fizLica.Count == 0)
             {
                 return NoContent();
@@ -37,9 +37,9 @@ namespace KupacMikroservis.Controllers
         }
 
         [HttpGet("{FizickoLiceId}")]
-        public ActionResult<FizickoLiceModel> GetFizLice(Guid fizLiceID)
+        public ActionResult<FizickoLiceDTO> GetFizLice(Guid fizLiceID)
         {
-            FizickoLiceModel fizLiceModel = fizLiceRepository.GetFizickoLiceById(fizLiceID);
+            FizickoLiceDTO fizLiceModel = fizLiceRepository.GetFizickoLiceById(fizLiceID);
             if (fizLiceModel == null)
             {
                 return NotFound();
@@ -48,11 +48,11 @@ namespace KupacMikroservis.Controllers
         }
 
         [HttpPost]
-        public ActionResult<FizickoLiceModel> CreateFizickoLice([FromBody] FizickoLiceModel fLice)    //confirmation implementirati
+        public ActionResult<FizickoLiceDTO> CreateFizickoLice([FromBody] FizickoLiceDTO fLice)    //confirmation implementirati
         {
             try
             {
-                FizickoLiceModel fl = fizLiceRepository.CreateFizickoLice(fLice);
+                FizickoLiceDTO fl = fizLiceRepository.CreateFizickoLice(fLice);
 
                 string location = linkGenerator.GetPathByAction("GetFizickoLice", "FizickoLice", new { KupacId = fl.KupacId });
                 return Created(location, fl);
@@ -70,7 +70,7 @@ namespace KupacMikroservis.Controllers
         {
             try
             {
-                FizickoLiceModel fizLiceModel = fizLiceRepository.GetFizickoLiceById(fizLiceID);
+                FizickoLiceDTO fizLiceModel = fizLiceRepository.GetFizickoLiceById(fizLiceID);
                 if (fizLiceModel == null)
                 {
                     return NotFound();
@@ -85,6 +85,11 @@ namespace KupacMikroservis.Controllers
             }
         }
 
-
+        [HttpOptions]
+        public IActionResult GetFizickoLiceOptions()
+        {
+            Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            return Ok();
+        }
     }
-}
+}*/
