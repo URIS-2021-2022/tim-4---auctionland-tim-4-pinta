@@ -27,9 +27,11 @@ namespace Parcela.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
-        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService)
         {
             this.parcelaRepository = parcelaRepository;
+            this.katastarskaOpstinaService = katastarskaOpstinaService;
+            this.kupacService = kupacService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }

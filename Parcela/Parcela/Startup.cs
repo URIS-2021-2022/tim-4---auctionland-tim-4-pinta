@@ -136,7 +136,7 @@ namespace Parcela
             app.UseSwaggerUI(setupAction =>
             {
                 setupAction.SwaggerEndpoint("/swagger/ParcelaOpenApiSpecification/swagger.json", "Parcela Agregat API");
-                setupAction.RoutePrefix = ""; 
+                setupAction.RoutePrefix = "swagger"; 
             });
 
             app.UseAuthorization();
