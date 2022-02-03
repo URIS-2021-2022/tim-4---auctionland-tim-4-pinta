@@ -5,9 +5,18 @@ using System.Threading.Tasks;
 
 namespace JavnoNadmetanjeAgregat.Entities
 {
+    /// <summary>
+    ///Entitet tipa javnog nadmetanja
+    /// </summary>
     public class TipJavnogNadmetanjaEntity
     {
+        /// <summary>
+        ///ID tipa javnog nadmetanja
+        /// </summary>
         public Guid TipJavnogNadmetanjaID { get; set; }
+        /// <summary>
+        ///Naziv tipa javnog nadmetanja
+        /// </summary>
         public String NazivTipaJavnogNadmetanja { get; set; }
     }
 }

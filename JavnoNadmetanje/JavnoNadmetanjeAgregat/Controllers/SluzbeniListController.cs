@@ -12,8 +12,12 @@ using JavnoNadmetanjeAgregat.Entities;
 
 namespace JavnoNadmetanjeAgregat.Controllers
 {
+    /// <summary>
+    /// Sadrzi CRUD operacije za sluzbeni list
+    /// </summary>
     [ApiController]
     [Route("api/sluzbeniListovi")]
+    [Produces("application/json", "application/xml")]
     public class SluzbeniListController : ControllerBase
     {
         private readonly ISluzbeniListRepository sluzbeniListRepository;
@@ -27,7 +31,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
             this.mapper = mapper;
         }
 
+
+        /// <summary>
+        /// Vraca sve sluzbene listove na osnovu odredjenih filtera
+        /// </summary>
+        /// <returns>Lista sluzbenih listova</returns>
+        /// <response code = "200">Vraca listu sluzbenih listova</response>
+        /// <response code = "404">Nije pronadjen nijedn sluzbeni list</response>
         [HttpGet]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<SluzbeniListDto>> GetSluzbeneListove()
         {
             List<SluzbeniListEntity> sluzbeniList = sluzbeniListRepository.GetSluzbeniList();
@@ -38,7 +52,16 @@ namespace JavnoNadmetanjeAgregat.Controllers
             return Ok(mapper.Map<List<SluzbeniListDto>>(sluzbeniList));
         }
 
+        /// <summary>
+        /// Vraca jednan sluzbeni list na osnovu ID-ja
+        /// </summary>
+        /// <param name="sluzbeniListID">ID sluzbeni list</param>
+        /// <returns>Trazeni sluzbeni list</returns>
+        /// <response code = "200">Vraca trazen sluzbeni list</response>
+        /// <response code = "404">Trazen sluzbeni list nije pronadjen</response>
         [HttpGet("{sluzbeniListID}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<SluzbeniListDto> GetSluzbeniList(Guid sluzbeniListID)
         {
             SluzbeniListEntity sluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniListID);
@@ -49,7 +72,26 @@ namespace JavnoNadmetanjeAgregat.Controllers
             return Ok(mapper.Map<SluzbeniListDto>(sluzbeniList));
         }
 
+        /// <summary>
+        /// Kreira nov sluzbeni list
+        /// </summary>
+        /// <param name="sluzbeniList">Model sluzbeni list</param>
+        /// <returns>Potvrda o kreiranom sluzbenom listu</returns>
+        /// <remarks>
+        /// Primer zahteva za kreiranje novog sluzbenog lista \
+        /// POST /api/sluzbeniList \
+        /// { \
+        /// "Opstina": "Beograd", \
+        /// "BrojSluzbenogLista": 12, \
+        /// "DatumIzdavanjaSluzbenogLista": "27-01-2021", \
+        /// } 
+        /// </remarks>
+        /// <response code = "201">Vraca kreirano javno nadmetanje</response>
+        /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja javnog nadmetanja</response>
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<SluzbeniListDto> CreateSluzbeniList([FromBody] SluzbeniListDto sluzbeniList)
         {
             try
@@ -65,7 +107,18 @@ namespace JavnoNadmetanjeAgregat.Controllers
             }
         }
 
+        /// <summary>
+        /// Vrsi brisanje jednog sluzbenog lista na osnovu ID-ja
+        /// </summary>
+        /// <param name="sluzbeniListID">ID sluzbeniList</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Sluzbeni list uspesno obrisano</response>
+        /// <response code="404">Nije pronadjen sluzbeni list za brisanje</response>
+        /// <response code="500">Doslo je do greske na serveru prilikom brisanja sluzbenog lista</response>
         [HttpDelete("{sluzbeniListID}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteSluzbeniList(Guid sluzbeniListID)
         {
             try
@@ -83,6 +136,19 @@ namespace JavnoNadmetanjeAgregat.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
+        /// <summary>
+        /// Azurira jedan sluzbeni list
+        /// </summary>
+        /// <param name="sluzbeniList">Model sluzbenog lista koja se azurira</param>
+        /// <returns>Potvrdu o modifikovanom sluzbenom listu</returns>
+        /// <response code="200">Vraca azuriran sluzbeni list</response>
+        /// <response code="400">Sluzbeni list koji se azurira nije pronadjen</response>
+        /// <response code="500">Doslo je do greske prilikom azuriranja sluzbenog lista</response>
+        [HttpPut]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<SluzbeniListDto> UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)
         {
             try
@@ -100,6 +166,10 @@ namespace JavnoNadmetanjeAgregat.Controllers
             }
         }
 
+        /// <summary>
+        /// Vraca opcije za rad sa javnim nadmetanjima
+        /// </summary>
+        /// <returns></returns>
         [HttpOptions]
         public IActionResult GetSluzbeniListOptions()
         {
