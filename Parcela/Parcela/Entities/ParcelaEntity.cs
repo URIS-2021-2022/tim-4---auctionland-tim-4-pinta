@@ -103,5 +103,15 @@ namespace Parcela.Entities
         public KlasaEntity Klasa { get; set; }
 
         public List<DeoParceleEntity> DeloviParcele { get; set; }
+
+        /// <summary>
+        /// ID katastarske opstine
+        /// </summary>
+        public Guid KatastarskaOpstinaID { get; set; }
+
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
     }
 }
