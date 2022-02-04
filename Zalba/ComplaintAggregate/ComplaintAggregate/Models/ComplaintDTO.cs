@@ -7,6 +7,7 @@ namespace ComplaintAggregate.Models
 {
     public class ComplaintDTO
     {
+        public Guid ZalbaID { get; set; }
         public DateTime Datum_podnosenja_zalbe { get; set; }
         public string Razlog_zalbe { get; set; }
         public string Obrazlozenje { get; set; }

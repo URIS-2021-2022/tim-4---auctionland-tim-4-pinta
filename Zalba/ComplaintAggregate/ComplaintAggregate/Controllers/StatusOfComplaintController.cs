@@ -30,6 +30,9 @@ namespace ComplaintAggregate.Controllers
 
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public ActionResult<List<StatusOfComplaintDTO>> GetStatus()
         {
             List<StatusOfComplaint> ListOfComplaints = complainStatusRepository.GetStatus();
@@ -42,6 +45,9 @@ namespace ComplaintAggregate.Controllers
 
 
         [HttpGet("{statusId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public ActionResult<StatusOfComplaintDTO> GetStatusById(Guid Status_zalbe)
         {
             StatusOfComplaint complainAggregate = complainStatusRepository.GetStatusById(Status_zalbe);
@@ -53,6 +59,9 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
         public ActionResult<StatusOfComplaintDTO> CreateStatus([FromBody] StatusOfComplaintDTO complain)
         {
             try
@@ -70,7 +79,11 @@ namespace ComplaintAggregate.Controllers
             }
         }
 
-        [HttpDelete("{DComplaintId}")]
+        [HttpDelete("{DStatusId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
         public IActionResult DeleteStatus(Guid Status_zalbe)
         {
             try
@@ -91,6 +104,10 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
         public ActionResult<StatusOfComplaintDTO> UpdateStatus(StatusOfComplaint status)
         {
             try

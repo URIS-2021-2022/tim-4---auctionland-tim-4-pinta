@@ -185,8 +185,8 @@ namespace ComplaintAggregate
             app.UseSwaggerUI(setupAction =>
             {
                 //Podesavamo endpoint gde Swagger UI moze da pronadje OpenAPI specifikaciju
-                setupAction.SwaggerEndpoint("/swagger/complaintAggregateOpenApiSpecification/swagger.json", "ComplaintAggregate API");
-                setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
+                setupAction.SwaggerEndpoint("/swagger/ComplaintAggregateOpenApiSpecification/swagger.json", "Complaint aggregate API");
+             //  setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
 
             });
                 app.UseEndpoints(endpoints =>

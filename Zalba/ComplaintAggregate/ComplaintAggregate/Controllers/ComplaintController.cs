@@ -32,6 +32,9 @@ namespace ComplaintAggregate.Controllers
 
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public ActionResult<List<ComplaintDTO>> GetComplaints()
         {
             List<Complaint> ListOfComplaints = complainAggregateRepository.GetComplaint();
@@ -43,6 +46,9 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpGet("{complaintId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
         public ActionResult<ComplaintDTO> GetComplaint(Guid ZalbaID)
         {
             Complaint complainAggregate = complainAggregateRepository.GetComplaintById(ZalbaID);
@@ -54,6 +60,9 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
         public ActionResult<ComplaintDTO> CreateComplaint([FromBody] ComplaintDTO complain)
         {
             try
@@ -72,6 +81,10 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpDelete("{DComplaintId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
         public IActionResult DeleteExamRegistration(Guid ZalbaId)
         {
             try
@@ -92,6 +105,10 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
         public ActionResult<ComplaintDTO> UpdateComplaint(Complaint complain)
         {
             try
