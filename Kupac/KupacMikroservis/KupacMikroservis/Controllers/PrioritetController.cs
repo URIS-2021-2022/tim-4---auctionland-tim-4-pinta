@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using KupacMikroservis.Data;
 using KupacMikroservis.Models;
+using AutoMapper;
 
 namespace KupacMikroservis.Controllers
 {
@@ -16,52 +17,56 @@ namespace KupacMikroservis.Controllers
     public class PrioritetController : ControllerBase
     {
         private readonly IPrioritetRepository prioritetRepository;
-        private readonly LinkGenerator linkGenerator; 
+        private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-       
-        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator)
+
+        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.prioritetRepository = prioritetRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<List<PrioritetModel>> GetPrioriteti()
+        public ActionResult<List<PrioritetDTO>> GetPrioriteti()
         {
-            List<PrioritetModel> prioriteti = prioritetRepository.GetPrioriteti();
+            List<PrioritetEntity> prioriteti = prioritetRepository.GetPrioriteti();
             if (prioriteti == null || prioriteti.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(prioriteti);
+            return Ok(mapper.Map<List<PrioritetDTO>>(prioriteti));
         }
 
         [HttpGet("{PrioritetId}")]
-        public ActionResult<PrioritetModel> GetPrioritet(Guid PrioritetId)
+        public ActionResult<PrioritetDTO> GetPrioritet(Guid PrioritetId)
         {
-            PrioritetModel prioritetModel = prioritetRepository.GetPrioritetById(PrioritetId);
+            PrioritetEntity prioritetModel = prioritetRepository.GetPrioritetById(PrioritetId);
             if (prioritetModel == null)
             {
                 return NotFound();
             }
-            return Ok(prioritetModel);
+            return Ok(mapper.Map<PrioritetDTO>(prioritetModel));
         }
 
         [HttpPost]
-        public ActionResult<PrioritetModel> CreatePrioritet([FromBody] PrioritetModel prioritet)    //confirmation implementirati
+        public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)    //confirmation implementirati
         {
-            try
+           try
             {
-                PrioritetModel pr = prioritetRepository.CreatePrioritet(prioritet);
+                PrioritetEntity pr = mapper.Map<PrioritetEntity>(prioritet);
+
+                PrioritetEntity prCreated = prioritetRepository.CreatePrioritet(pr);
 
                 string location = linkGenerator.GetPathByAction("GetPrioritet", "Prioritet", new { PrioritetId = pr.PrioritetId });
-                return Created(location, pr);
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
+                return Created(location, mapper.Map<PrioritetDTO>(prCreated));
+           }
+           catch
+           {
+               return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
 
-            }
+           }
                
         } 
 
@@ -70,7 +75,7 @@ namespace KupacMikroservis.Controllers
         {
             try
             {
-                PrioritetModel prioritetModel = prioritetRepository.GetPrioritetById(prioritetID);
+                PrioritetEntity prioritetModel = prioritetRepository.GetPrioritetById(prioritetID);
                 if (prioritetModel == null)
                 {
                     return NotFound();
@@ -85,6 +90,32 @@ namespace KupacMikroservis.Controllers
             }
         }
 
-       
+        [HttpPut]
+        public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
+        {
+            try
+            {
+              
+                if (prioritetRepository.GetPrioritetById(prioritet.PrioritetId) == null)
+                {
+                    return NotFound(); 
+                }
+                PrioritetEntity prEntity = mapper.Map<PrioritetEntity>(prioritet);
+                PrioritetEntity prUpdated = prioritetRepository.CreatePrioritet(prEntity);
+
+                return Ok(mapper.Map<PrioritetDTO>(prUpdated));
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+            }
+        }
+
+        [HttpOptions]
+        public IActionResult GetPrioritetOptions()
+       {
+           Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+           return Ok();
+       }
     }
 }

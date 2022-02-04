@@ -8,6 +8,6 @@ namespace Parcela.ServiceCals
 {
     public interface IKatastarskaOpstinaService
     {
-        OpstinaParceleDto GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID);
+        Task<OpstinaParceleDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID);
     }
 }

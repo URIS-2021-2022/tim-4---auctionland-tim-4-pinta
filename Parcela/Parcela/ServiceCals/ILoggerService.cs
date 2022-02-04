@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Korisnik.Data
+namespace Parcela.ServiceCals
 {
-    public class AuthenticateRepository
+    public interface ILoggerService
     {
+        //void CreateLog(LogDto log);
     }
 }

@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Korisnik.Controllers
+namespace AdresaServis.Models
 {
-    public class Authenticate
+    public class DrzavaDto
     {
+        public string NazivDrzave { get; set; }
     }
 }

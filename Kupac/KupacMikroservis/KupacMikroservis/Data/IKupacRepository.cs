@@ -6,13 +6,13 @@ namespace KupacMikroservis.Data
 {
     public interface IKupacRepository
     {
-        List<KupacModel> GetKupci();
+        List<KupacEntity> GetKupci();
 
-        KupacModel GetKupacById(Guid kupacID);
+        KupacEntity GetKupacById(Guid kupacID);
 
-        KupacModel CreateKupac(KupacModel kupac);
+        KupacEntity CreateKupac(KupacEntity kupac);
 
-        KupacModel UpdateKupac(KupacModel kupac);
+        KupacEntity UpdateKupac(KupacEntity kupac);
 
         void DeleteKupac(Guid kupacID);
     }

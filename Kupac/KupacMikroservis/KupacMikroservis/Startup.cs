@@ -35,8 +35,9 @@ namespace KupacMikroservis
             services.AddSingleton<IFizickoLiceRepository, FizickoLiceRepository>();
             services.AddSingleton<IPravnoLiceRepository, PravnoLiceRepository>();
             services.AddSingleton<IOvlascenoLiceRepository, OvlascenoLiceRepository>();
-            
+            services.AddSingleton<IKontaktOsobaRepository, KontaktOsobaRepository>();
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             //    services.AddSwaggerGen(c =>
             //   {
             //        c.SwaggerDoc("v1", new OpenApiInfo { Title = "KupacMikroservis", Version = "v1" });

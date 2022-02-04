@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Korisnik.Data;
 using Korisnik.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -13,6 +14,8 @@ namespace Korisnik.Controllers
 {
     [ApiController]
     [Route("api/korisnik")]
+    [Produces("application/json", "application/xml")] 
+    [Authorize]
     public class KorisnikController : ControllerBase
     {
         private readonly IKorisnikRepository korisnikRepository;
@@ -31,6 +34,8 @@ namespace Korisnik.Controllers
 
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)] 
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KorisnikDto>> GetKorisniks()
         {
             List<KorisnikModel> korisniks = korisnikRepository.GetKorisniks();
@@ -41,6 +46,8 @@ namespace Korisnik.Controllers
             return Ok(mapper.Map<List<KorisnikDto>>(korisniks));
         }
 
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("{KorisnikId}")]
         public ActionResult<KorisnikDto> GetKorisnik(int korisnikId)
         {
@@ -53,6 +60,9 @@ namespace Korisnik.Controllers
         }
 
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KorisnikModel> CreateKorisnik([FromBody] KorisnikModel korisnik)
         {
             try
@@ -67,7 +77,9 @@ namespace Korisnik.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
-
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("{KorisnikId}")]
         public IActionResult DeleteKorisnik(int korisnikId)
         {
@@ -108,14 +120,15 @@ namespace Korisnik.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
-
+        */
         [HttpOptions]
+        [AllowAnonymous]
         public IActionResult GetExamRegistrationOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
             return Ok();
         }
-
+        /*
         // Validira da student ne moze da prijavi ispit u visoj godini nego sto je prijavljen
         private bool ValidateExamRegistration(ExamRegistrationCreationDto examRegistration)
         {
@@ -129,7 +142,7 @@ namespace Korisnik.Controllers
             }
             return true;
         }
-
         */
+        
     }
 }

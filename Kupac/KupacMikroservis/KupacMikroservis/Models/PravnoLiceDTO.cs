@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class PravnoLiceModel : KupacModel
+    public class PravnoLiceDTO : KupacDTO
     {
 
         public string MaticniBroj { get; set; }

@@ -7,7 +7,7 @@ using System.Linq;
 
 public class OvlascenoLiceRepository : IOvlascenoLiceRepository
 {
-    public static List<OvlascenoLiceModel> OvlascenaLica { get; set; } = new List<OvlascenoLiceModel>();
+    public static List<OvlascenoLiceEntity> OvlascenaLica { get; set; } = new List<OvlascenoLiceEntity>();
 
     public OvlascenoLiceRepository()
     {
@@ -16,33 +16,33 @@ public class OvlascenoLiceRepository : IOvlascenoLiceRepository
 
     private void FillData()
     {
-        OvlascenaLica.AddRange(new List<OvlascenoLiceModel>
+        OvlascenaLica.AddRange(new List<OvlascenoLiceEntity>
                {
-                   new OvlascenoLiceModel
+                   new OvlascenoLiceEntity
                    {
-                       OvlascenoLiceId = Guid.Parse("6a412c13-a185-58f7-8dbd-67596c3974c0"),
+                       OvlascenoLiceId = Guid.Parse("6a412c12-a185-58f7-8dbd-65596c3974c0"),
                        Ime = "Marko",
                        Prezime = "Markovic",
                        BrojLicnogDokumenta ="2435213345",
-                       BrojTable = new ArrayList{453423,654,213}
+                       BrojTable = "245234551"
                        
 
                    },
-                   new OvlascenoLiceModel
+                   new OvlascenoLiceEntity
                    {
-                       OvlascenoLiceId = Guid.Parse("6a412c13-a185-58f7-8dcd-67596c3974c0"),
+                       OvlascenoLiceId = Guid.Parse("6a412c19-a185-58f7-8dcd-67496c3974c5"),
                        Ime = "Luka",
                        Prezime = "Lukovic",
                        BrojLicnogDokumenta ="352467865",
-                       BrojTable = new ArrayList{64342,1324,676}
+                       BrojTable = "246857432"
                    }
                });
     }
-    public OvlascenoLiceModel CreateOvlascenoLice(OvlascenoLiceModel ovlascenolice)
+    public OvlascenoLiceEntity CreateOvlascenoLice(OvlascenoLiceEntity ovlascenolice)
     {
         ovlascenolice.OvlascenoLiceId = Guid.NewGuid();
         OvlascenaLica.Add(ovlascenolice);
-        OvlascenoLiceModel ol = GetOvlascenoLiceById(ovlascenolice.OvlascenoLiceId);
+        OvlascenoLiceEntity ol = GetOvlascenoLiceById(ovlascenolice.OvlascenoLiceId);
         return ol;
     }
 
@@ -51,22 +51,25 @@ public class OvlascenoLiceRepository : IOvlascenoLiceRepository
         OvlascenaLica.Remove(OvlascenaLica.FirstOrDefault(ol => ol.OvlascenoLiceId == ovlascenoliceID));
     }
 
-    public List<OvlascenoLiceModel> GetOvlascenaLica()
+    public List<OvlascenoLiceEntity> GetOvlascenaLica()
     {
         return (from ol in OvlascenaLica select ol).ToList();
     }
 
-    public OvlascenoLiceModel GetOvlascenoLiceById(Guid ovlascenoliceID)
+    public OvlascenoLiceEntity GetOvlascenoLiceById(Guid ovlascenoliceID)
     {
         return OvlascenaLica.FirstOrDefault(ol => ol.OvlascenoLiceId == ovlascenoliceID);
     }
 
-    public OvlascenoLiceModel UpdateOvlascenoLice(OvlascenoLiceModel ovlascenolice)
+    public OvlascenoLiceEntity UpdateOvlascenoLice(OvlascenoLiceEntity ovlascenolice)
     {
-        OvlascenoLiceModel ol = GetOvlascenoLiceById(ovlascenolice.OvlascenoLiceId);
+        OvlascenoLiceEntity ol = GetOvlascenoLiceById(ovlascenolice.OvlascenoLiceId);
 
-        // dp.RedniBroj = deoParcele.RedniBroj;
-        // dp.PovrsinaDelaParcele = deoParcele.PovrsinaDelaParcele;
+        ol.Ime = ovlascenolice.Ime;
+        ol.Prezime = ovlascenolice.Prezime;
+        ol.BrojLicnogDokumenta = ovlascenolice.BrojLicnogDokumenta;
+        ol.BrojTable = ovlascenolice.BrojTable;
+
 
         return ol;
     }

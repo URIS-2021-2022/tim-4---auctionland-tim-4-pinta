@@ -8,6 +8,6 @@ namespace Parcela.ServiceCals
 {
     public interface IKupacService
     {
-        KupacParceleDto GetKupacByIdAsync(Guid kupacID);
+        Task<KupacParceleDto> GetKupacByIdAsync(Guid kupacID);
     }
 }
