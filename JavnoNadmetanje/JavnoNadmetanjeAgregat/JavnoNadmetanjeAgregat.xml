@@ -49,8 +49,6 @@
             "PocetnaCenaPoHektaru": 100, \
             "PeriodZakupa": 2, \
             "Izuzeto": true, \
-            "Tip": [1,2], \
-            "Status": {}, \
             "Krug": 1, \
             "VisinaDopunePoreza": 10, \
             } 
@@ -307,14 +305,14 @@
             <param name="savedSalt">Sačuvan salt</param>
             <returns></returns>
         </member>
+        <member name="M:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Popunjava bazu podataka inicijalnim podacima
+            </summary>
+        </member>
         <member name="T:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity">
             <summary>
             Entitet javnog nadmetanja
-            </summary>
-        </member>
-        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.JavnoNadmetanjeID">
-            <summary>
-            ID javnog nadmetanja
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.Datum">
@@ -347,12 +345,12 @@
             Izuzetos javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.Tip">
+        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.TipID">
             <summary>
             Tip javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.Status">
+        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.StatusID">
             <summary>
             Status javnog nadmetanja
             </summary>
@@ -370,11 +368,6 @@
         <member name="T:JavnoNadmetanjeAgregat.Entities.SluzbeniListEntity">
             <summary>
             Entitet sluzbenog lista
-            </summary>
-        </member>
-        <member name="P:JavnoNadmetanjeAgregat.Entities.SluzbeniListEntity.SluzbeniListID">
-            <summary>
-            ID sluzbeni list 
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Entities.SluzbeniListEntity.Opstina">
@@ -397,11 +390,6 @@
             Entitet statusa javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Entities.StatusJavnogNadmetanjaEntity.StatusJavnogNadmetanjaID">
-            <summary>
-            ID statusa javnog nadmetanja
-            </summary>
-        </member>
         <member name="P:JavnoNadmetanjeAgregat.Entities.StatusJavnogNadmetanjaEntity.NazivStatusaJavnogNadmetanja">
              <summary>
             Naziv statusa javnog nadmetanja
@@ -410,11 +398,6 @@
         <member name="T:JavnoNadmetanjeAgregat.Entities.TipJavnogNadmetanjaEntity">
              <summary>
             Entitet tipa javnog nadmetanja
-             </summary>
-        </member>
-        <member name="P:JavnoNadmetanjeAgregat.Entities.TipJavnogNadmetanjaEntity.TipJavnogNadmetanjaID">
-             <summary>
-            ID tipa javnog nadmetanja
              </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Entities.TipJavnogNadmetanjaEntity.NazivTipaJavnogNadmetanja">
@@ -457,12 +440,12 @@
             Izuzetos javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Tip">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.TipID">
             <summary>
             Tip javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Status">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.StatusID">
             <summary>
             Status javnog nadmetanja
             </summary>
