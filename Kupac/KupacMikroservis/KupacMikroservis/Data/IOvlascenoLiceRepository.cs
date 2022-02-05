@@ -12,8 +12,10 @@ namespace KupacMikroservis.Data
 
         OvlascenoLiceEntity CreateOvlascenoLice(OvlascenoLiceEntity ovlascenoLice);
 
-        OvlascenoLiceEntity UpdateOvlascenoLice(OvlascenoLiceEntity ovlascenoLice);
+        void UpdateOvlascenoLice(OvlascenoLiceEntity ovlascenoLice);
 
         void DeleteOvlascenoLice(Guid ovlascenoLiceID);
+
+        bool SaveChanges();
     }
 }

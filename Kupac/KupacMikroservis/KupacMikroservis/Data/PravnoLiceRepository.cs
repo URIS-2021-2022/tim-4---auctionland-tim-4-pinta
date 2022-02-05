@@ -1,4 +1,6 @@
+using AutoMapper;
 using KupacMikroservis.Data;
+using KupacMikroservis.Entities;
 using KupacMikroservis.Models;
 using System;
 using System.Collections.Generic;
@@ -6,76 +8,57 @@ using System.Linq;
 
 public class PravnoLiceRepository : IPravnoLiceRepository
 {
-    public static List<PravnoLiceEntity> PravnaLica { get; set; } = new List<PravnoLiceEntity>();
+    //   public static List<PravnoLiceEntity> PravnaLica { get; set; } = new List<PravnoLiceEntity>();
 
-    public PravnoLiceRepository()
+
+    private readonly KupacContext context;
+
+    private readonly IMapper mapper;
+
+
+    public bool SaveChanges()
     {
-        FillData();
+        return context.SaveChanges() > 0;
     }
 
-    private void FillData()
-    {
-        PravnaLica.AddRange(new List<PravnoLiceEntity>
-               {
-                   new PravnoLiceEntity
-                   {
-                       KupacId = Guid.Parse("6a413c13-a195-58f7-8dkd-67596c3984c0"),
-                       Naziv = "Firma DOO",
-                       BrojTelefona1 = "021415566",
-                       BrojTelefona2 = "021425576",
-                       Email = "fdoo@gmail.com",
-                       BrojRacuna = "23189843223",
-                       ImaZabranu = false,
-                       DatumPocetkaZabrane = DateTime.Now,
-                       DuzinaTrajanjaZabraneUGodinama = 0,
-                       DatumPrestankaZabrane = DateTime.Now,
-                       Faks = "45231423",
-                       MaticniBroj = "34923023"
 
-                   },
-                   new PravnoLiceEntity
-                   {
-                       KupacId = Guid.Parse("6a463c13-b195-58f7-8lbd-67596c3674c0"),
-                       Naziv = "Kompanija DOO",
-                       BrojTelefona1 = "021145563",
-                       BrojTelefona2 = "021945571",
-                       Email = "kdoo@gmail.com",
-                       BrojRacuna = "23624242423",
-                       ImaZabranu = false,
-                       DatumPocetkaZabrane = DateTime.Now,
-                       DuzinaTrajanjaZabraneUGodinama = 0,
-                       DatumPrestankaZabrane = DateTime.Now,
-                        Faks = "4535322",
-                       MaticniBroj = "2113454465"
-                   }
-               });
-    }
     public PravnoLiceEntity CreatePravnoLice(PravnoLiceEntity pravnolice)
     {
-        pravnolice.KupacId = Guid.NewGuid();
+        var createdEntity = context.Add(pravnolice);
+        return mapper.Map<PravnoLiceEntity>(createdEntity.Entity);
+
+
+    /*    pravnolice.KupacId = Guid.NewGuid();
         PravnaLica.Add(pravnolice);
         PravnoLiceEntity pl = GetPravnoLiceById(pravnolice.KupacId);
-        return pl;
+        return pl;*/
     }
 
     public void DeletePravnoLice(Guid pravnoliceID)
     {
-       PravnaLica.Remove(PravnaLica.FirstOrDefault(pl => pl.KupacId == pravnoliceID));
+        var pravnolice = GetPravnoLiceById(pravnoliceID);
+        context.Remove(pravnolice);
+
+      //  PravnaLica.Remove(PravnaLica.FirstOrDefault(pl => pl.KupacId == pravnoliceID));
     }
 
     public List<PravnoLiceEntity> GetPravnaLica()
     {
-        return (from pl in PravnaLica select pl).ToList();
+        return context.pLica.ToList();
+
+        //  return (from pl in PravnaLica select pl).ToList();
     }
 
     public PravnoLiceEntity GetPravnoLiceById(Guid pravnoliceID)
     {
-        return PravnaLica.FirstOrDefault(pl => pl.KupacId == pravnoliceID);
+        return context.pLica.FirstOrDefault(pl => pl.KupacId == pravnoliceID);
+
+        //  return PravnaLica.FirstOrDefault(pl => pl.KupacId == pravnoliceID);
     }
 
-    public PravnoLiceEntity UpdatePravnoLice(PravnoLiceEntity pravnolice)
+    public void UpdatePravnoLice(PravnoLiceEntity pravnolice)
     {
-        PravnoLiceEntity pl = GetPravnoLiceById(pravnolice.KupacId);
+     /*   PravnoLiceEntity pl = GetPravnoLiceById(pravnolice.KupacId);
 
          pl.Naziv = pravnolice.Naziv;
         pl.BrojTelefona1 = pravnolice.BrojTelefona1;
@@ -90,7 +73,7 @@ public class PravnoLiceRepository : IPravnoLiceRepository
         pl.MaticniBroj = pravnolice.MaticniBroj;
 
 
-        return pl;
+        return pl;*/
     }
 }
 

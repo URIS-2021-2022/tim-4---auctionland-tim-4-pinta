@@ -12,8 +12,10 @@ namespace KupacMikroservis.Data
 
         KontaktOsobaEntity CreateKontaktOsoba(KontaktOsobaEntity kontaktOsoba);
 
-        KontaktOsobaEntity UpdateKontaktOsoba(KontaktOsobaEntity kontaktOsoba);
+        void UpdateKontaktOsoba(KontaktOsobaEntity kontaktOsoba);
 
         void DeleteKontaktOsoba(Guid kontaktOsobaID);
+
+        bool SaveChanges();
     }
 }

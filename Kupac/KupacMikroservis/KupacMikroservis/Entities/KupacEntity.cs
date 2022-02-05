@@ -25,17 +25,17 @@ namespace KupacMikroservis.Models
 
         public bool ImaZabranu { get; set; }
 
-        public DateTime DatumPocetkaZabrane { get; set; }
+        public DateTime? DatumPocetkaZabrane { get; set; }
 
         public int DuzinaTrajanjaZabraneUGodinama { get; set; }
 
-        public DateTime DatumPrestankaZabrane { get; set; }
-        
-   
-        public int Prioritet { get; set; }
+        public DateTime? DatumPrestankaZabrane { get; set; }
 
-     
-        public int OvlascenoLice { get; set; }
+        [ForeignKey("PrioritetEntity")]
+        public Guid Prioritet { get; set; }
+
+     [ForeignKey("OvlascenoLicEntity")]
+        public Guid OvlascenoLice { get; set; }
 
     }
 }
