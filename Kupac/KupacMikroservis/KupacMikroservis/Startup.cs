@@ -1,4 +1,4 @@
-using KupacMikroservis.Data;
+﻿using KupacMikroservis.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +12,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Http;
+using KupacMikroservis.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace KupacMikroservis
 {
@@ -38,10 +47,25 @@ namespace KupacMikroservis
             services.AddSingleton<IKontaktOsobaRepository, KontaktOsobaRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
             //    services.AddSwaggerGen(c =>
             //   {
             //        c.SwaggerDoc("v1", new OpenApiInfo { Title = "KupacMikroservis", Version = "v1" });
             //   });
+
+            services.AddDbContextPool<KupacContext>(options => options.UseSqlServer(Configuration.GetConnectionString("KupacDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,10 +74,24 @@ namespace KupacMikroservis
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-              //  app.UseSwagger();
-               // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KupacMikroservis v1"));
-            }
 
+
+                //  app.UseSwagger();
+                // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KupacMikroservis v1"));
+            }
+            else //Ukoliko se nalazimo u Production modu postavljamo default poruku za greške koje nastaju na servisu
+            {
+                app.UseExceptionHandler(appBuilder =>
+                {
+                    appBuilder.Run(async context =>
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("Došlo je do neočekivane greške. Molimo pokušajte kasnije.");
+                    });
+                });
+            }
+            app.UseAuthentication();
+          
             app.UseHttpsRedirection();
 
             app.UseRouting();

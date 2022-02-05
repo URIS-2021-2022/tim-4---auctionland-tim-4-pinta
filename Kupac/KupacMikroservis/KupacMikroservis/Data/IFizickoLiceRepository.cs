@@ -12,8 +12,10 @@ namespace KupacMikroservis.Data
 
         FizickoLiceEntity CreateFizickoLice(FizickoLiceEntity fizickoLice);
 
-        FizickoLiceEntity UpdateFizickoLice(FizickoLiceEntity fizickoLice);
+        void UpdateFizickoLice(FizickoLiceEntity fizickoLice);
 
         void DeleteFizickoLice(Guid fizickoLiceID);
+
+        bool SaveChanges();
     }
 }

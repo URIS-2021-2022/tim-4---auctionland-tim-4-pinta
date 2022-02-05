@@ -12,8 +12,10 @@ namespace KupacMikroservis.Data
 
         KupacEntity CreateKupac(KupacEntity kupac);
 
-        KupacEntity UpdateKupac(KupacEntity kupac);
+        void UpdateKupac(KupacEntity kupac);
 
         void DeleteKupac(Guid kupacID);
+
+        bool SaveChanges();
     }
 }

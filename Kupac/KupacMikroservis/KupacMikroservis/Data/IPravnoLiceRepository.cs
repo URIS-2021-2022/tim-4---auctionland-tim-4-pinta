@@ -12,8 +12,10 @@ namespace KupacMikroservis.Data
 
         PravnoLiceEntity CreatePravnoLice(PravnoLiceEntity pravnoLice);
 
-        PravnoLiceEntity UpdatePravnoLice(PravnoLiceEntity pravnoLice);
+        void UpdatePravnoLice(PravnoLiceEntity pravnoLice);
 
         void DeletePravnoLice(Guid pravnoLiceID);
+
+        bool SaveChanges();
     }
 }

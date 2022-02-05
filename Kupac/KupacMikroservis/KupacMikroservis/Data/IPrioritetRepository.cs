@@ -12,8 +12,10 @@ namespace KupacMikroservis.Data
 
         PrioritetEntity CreatePrioritet(PrioritetEntity prioritet);
 
-        PrioritetEntity UpdatePrioritet(PrioritetEntity prioritet);
+        void UpdatePrioritet(PrioritetEntity prioritet);
 
         void DeletePrioritet(Guid prioritetID);
+
+        bool SaveChanges();
     }
 }
