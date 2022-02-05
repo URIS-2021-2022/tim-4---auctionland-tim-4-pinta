@@ -22,7 +22,7 @@ namespace ComplaintAggregate.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:LoggerAggregate"];
+              
                 Uri url = new ($"{ configuration["Services:LoggerAggregate"] }api/logger");
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(model));
@@ -42,11 +42,8 @@ namespace ComplaintAggregate.ServiceCalls
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var x = configuration["Services:KupacMikroservis"];
+                  
                     Uri url = new Uri($"{ configuration["Services:KupacMikroservis"] }api/kupac/{kupacId}");
-
-                    //    HttpContent content = new StringContent(JsonConvert.SerializeObject(buyer));
-                    //  content.Headers.ContentType.MediaType = "application/json";
 
                     HttpResponseMessage response = client.GetAsync(url).Result;
 

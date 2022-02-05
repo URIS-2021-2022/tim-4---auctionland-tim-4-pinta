@@ -16,7 +16,7 @@ namespace ComplaintAggregate.Helpers
         private readonly IConfiguration configuration;
         private readonly IUserRepository userRepository;
 
-        public AuthenticationHelper(IConfiguration configuration, IUserRepository userRepository)
+        public AuthenticationHelper(IConfiguration configuration,IUserRepository userRepository)
         {
             this.configuration = configuration;
             this.userRepository = userRepository;

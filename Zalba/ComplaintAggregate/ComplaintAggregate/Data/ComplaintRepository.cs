@@ -15,7 +15,7 @@ namespace ComplaintAggregate.Data
             FillData();
         }
 
-        private void FillData()
+        private static void FillData()
         {
             ListOfComplainations.AddRange(new List<Complaint>
             {

@@ -19,9 +19,9 @@ namespace ComplaintAggregate.Entities
         public DbSet<TypeOfComplaint> Types { get; set; }
       
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<Complaint>().HasData(new
+            modelBuilder.Entity<Complaint>().HasData(new
             {
                 ZalbaID = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                 Datum_podnosenja_zalbe = DateTime.Parse("1-1-2011"),
@@ -33,7 +33,7 @@ namespace ComplaintAggregate.Entities
             }
 
                 );
-            builder.Entity<Complaint>().HasData(new
+            modelBuilder.Entity<Complaint>().HasData(new
             {
                 ZalbaID = Guid.Parse("ec2e5d91-de9f-4af0-8fae-d8150e338c51"),
                 Datum_podnosenja_zalbe = DateTime.Parse("1-1-2012"),
@@ -44,7 +44,7 @@ namespace ComplaintAggregate.Entities
                 Broj_nadmetanja = 32
             });
 
-            builder.Entity<ActionBasedOnComplaint>().HasData(new
+            modelBuilder.Entity<ActionBasedOnComplaint>().HasData(new
             {
                 Radnja_na_osnovu_zalbe_ID = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd"),
                 JN_ide_u_krug_sa_novim_uslovima = false,
@@ -52,7 +52,7 @@ namespace ComplaintAggregate.Entities
                 JN_ne_ide_u_drugi_krug = false
             });
 
-            builder.Entity<ActionBasedOnComplaint>().HasData(new
+            modelBuilder.Entity<ActionBasedOnComplaint>().HasData(new
             {
                 Radnja_na_osnovu_zalbe_ID = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                 JN_ide_u_krug_sa_novim_uslovima = true,
@@ -60,7 +60,7 @@ namespace ComplaintAggregate.Entities
                 JN_ne_ide_u_drugi_krug = true
             });
 
-            builder.Entity<StatusOfComplaint>().HasData(new
+            modelBuilder.Entity<StatusOfComplaint>().HasData(new
             {
                 Status_zalbe = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                 Usvojena = false,
@@ -68,7 +68,7 @@ namespace ComplaintAggregate.Entities
                 Otvorena = false
             });
 
-            builder.Entity<StatusOfComplaint>().HasData(new
+            modelBuilder.Entity<StatusOfComplaint>().HasData(new
             {
                 Status_zalbe = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd"),
                 Usvojena = true,
@@ -76,7 +76,7 @@ namespace ComplaintAggregate.Entities
                 Otvorena = true
             });
 
-            builder.Entity<TypeOfComplaint>().HasData(new
+            modelBuilder.Entity<TypeOfComplaint>().HasData(new
             {
                 Tip_id = Guid.Parse("ec2e5d91-de9f-4af0-8fae-d8150e338c51"),
                 Zalba_na_tok_javnog_nadmetanja = "tok javnog nadmetanja",
@@ -84,7 +84,7 @@ namespace ComplaintAggregate.Entities
                 Zalba_na_odluku_o_davanju_na_zakup = "davanje na zakup"
             });
 
-            builder.Entity<TypeOfComplaint>().HasData(new
+            modelBuilder.Entity<TypeOfComplaint>().HasData(new
             {
                 Tip_id = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd"),
                 Zalba_na_tok_javnog_nadmetanja = "tok javnog nadmetanja1",
