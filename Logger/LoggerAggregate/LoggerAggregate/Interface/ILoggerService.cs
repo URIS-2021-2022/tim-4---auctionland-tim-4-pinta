@@ -10,10 +10,8 @@ namespace LoggerAggregate.Interface
 {
     public interface ILoggerService
     {
-        string CheckHttpLevel(ILogger http);
-        string CheckHttpMethod(HttpContext http);
-       string CheckHttpStatus(HttpContext http);
-      
+       
+       string CheckHttpStatus(HttpContext http);    
 
     }
 }

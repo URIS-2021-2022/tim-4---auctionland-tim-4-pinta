@@ -18,14 +18,14 @@ namespace ComplaintAggregate.ServiceCalls
             this.configuration = configuration;
         }
 
-        public bool ConnectLogger()
+        public bool ConnectLogger(LogModel model)
         {
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:LoggerAggregate"];
-                Uri url = new Uri($"{ configuration["Services:LoggerAggregate"] }api/logger");
+                Uri url = new ($"{ configuration["Services:LoggerAggregate"] }api/logger");
 
-                HttpContent content = new StringContent(JsonConvert.SerializeObject(""));
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(model));
                 content.Headers.ContentType.MediaType = "application/json";
 
                 HttpResponseMessage response = client.PostAsync(url, content).Result;

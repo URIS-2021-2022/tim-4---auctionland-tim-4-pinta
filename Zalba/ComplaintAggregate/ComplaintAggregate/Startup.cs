@@ -104,10 +104,13 @@ namespace ComplaintAggregate
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
-            services.AddScoped<IComplaintRepository, ComplaintRepository>();
-            services.AddScoped<IStatusOfComplaintRepository, StatusOfComplaintRepository>();
-            services.AddScoped<IActionBasedOnComplaintRepository, ActionBasedOnComplaintRepository>();
-            services.AddScoped<ITypeOfComplaintRepository, TypeOfComplaintRepository>();
+
+            services.AddScoped<IComplaintRepository, ComplaintContextRepository>();
+            services.AddScoped<IStatusOfComplaintRepository, StatusOfComplaintContextRepository>();
+            services.AddScoped<IActionBasedOnComplaintRepository, ActionBasedOnComplaintContextRepository>();
+            services.AddScoped<ITypeOfComplaintRepository, TypeOfComplaintContextRepository>();
+
+            
 
 
             services.AddSingleton<IUserRepository, UserRepository>();

@@ -11,51 +11,9 @@ namespace LoggerAggregate.Interface
 {
     public class LoggerService : ILoggerService
     {
+
         private static ILogger logger = LogManager.GetCurrentClassLogger();
-
-        public string CheckHttpLevel(ILogger http)
-        {
-           
-            if(http.IsDebugEnabled)
-            {
-                return "Debug level";
-            }
-          else  if (http.IsInfoEnabled)
-            {
-                return "Info level";
-            }
-            else if(http.IsTraceEnabled)
-            {
-                return "Trace level";
-            }
-            else if(http.IsErrorEnabled)
-            {
-                
-                return "Error level";
-            }
-            else
-            return "Warn level";
-        }
-
-        public string CheckHttpMethod(HttpContext http)
-        {
-            if (http.Request.Method == "POST")
-            {
-                return "POST metoda";
-            }
-            else if (http.Request.Method == "GET")
-            {
-                return "GET metoda";
-            }
-            else if (http.Request.Method == "PUT")
-            {
-                return "PUT metoda";
-            }
-            else
-            {
-                return "DELETE metoda";
-            }
-        }
+       
 
         public string CheckHttpStatus(HttpContext http)
         {
@@ -77,5 +35,7 @@ namespace LoggerAggregate.Interface
             }
             else return "Server error response";
         }
+
+       
     }
 }

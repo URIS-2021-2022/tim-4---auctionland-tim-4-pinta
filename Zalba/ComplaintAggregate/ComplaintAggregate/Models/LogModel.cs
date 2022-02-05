@@ -1,24 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
-using NLog;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LoggerAggregate.Models
+namespace ComplaintAggregate.Models
 {
     public class LogModel
     {
        
-        
         public string HttpMethod { get; set; }
 
         public string NameOfTheService { get; set; }
 
         //status Http zahtjeva tj.nivo
-      //  public ILogger HttpLevel;
+     //   public ILogger HttpLevel;
 
         //odredjuje tip greske
-       // public HttpContext HttpStatus;
+      //  public HttpContext HttpStatus;
     }
 }
