@@ -21,7 +21,7 @@ namespace ComplaintAggregate.Data
             {
                 new ActionBasedOnComplaint
                 {
-                    Radnja_na_osnovu_zalbe_ID = Guid.NewGuid(),
+                    Radnja_na_osnovu_zalbe_ID = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd"),
                     JN_ide_u_krug_sa_novim_uslovima= false,
                     JN_ide_u_krug_sa_starim_uslovima=true,
                     JN_ne_ide_u_drugi_krug=false
@@ -29,7 +29,7 @@ namespace ComplaintAggregate.Data
                 },
                 new ActionBasedOnComplaint
                 {
-                    Radnja_na_osnovu_zalbe_ID = Guid.NewGuid(),
+                    Radnja_na_osnovu_zalbe_ID = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                     JN_ide_u_krug_sa_novim_uslovima= true,
                     JN_ide_u_krug_sa_starim_uslovima=false,
                     JN_ne_ide_u_drugi_krug=true

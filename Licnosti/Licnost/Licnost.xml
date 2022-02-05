@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Licnost</name>
+    </assembly>
+    <members>
+        <member name="M:Licnost.Controllers.LicnostController.GetLicnosti(System.String,System.String)">
+            <summary>
+            Vraća sve ličnosti na osnovu prosleđenih filtera
+            </summary>
+            <param name="licnostIme"> Ime ličnosti</param>
+            <param name="licnostPrezime"> Prezime ličnosti</param>
+            <returns>Listu licnosti</returns>
+            <response code="200">Vraća listu ličnosti</response>
+            <response code="404">Nije pronađena ni jedna jedina ličnost</response>
+        </member>
+        <member name="M:Licnost.Controllers.LicnostController.GetLicnost(System.Guid)">
+            <summary>
+            Vraća jednu ličnost na osnovu ID-ja ličnosti.
+            </summary>
+            <param name="licnostId">ID ličnosti</param>
+            <returns></returns>
+            <response code="200">Vraća traženu ličnost</response>
+        </member>
+        <member name="M:Licnost.Controllers.LicnostController.CreateLicnost(Licnost.Models.LicnostCreateDto)">
+             <summary>
+             Kreira novu ličnost
+             </summary>
+             <param name="licnost">Model ličnosti</param>
+             <returns>Potvrdu o kreiranoj novoj ličnosti</returns>
+             <remarks>
+             Primer zahteva za kreiranje nove ličnosti \
+             POST /api/Licnost \
+             {     \
+                 "licnostIme": "Marko", \
+                 "licnostPrezime": "Marković", \
+                 "funkcija": "Direktor" \
+            }
+             </remarks>
+              <response code="200">Vraća kreiranu ličnost</response>
+             <response code="500">Došlo je do greške na serveru prilikom kreiranja ličnosti</response>
+        </member>
+        <member name="M:Licnost.Controllers.LicnostController.DeleteLicnost(System.Guid)">
+            <summary>
+            Vrši brisanje jedne ličnosti na osnovu ID-ja ličnosti.
+            </summary>
+            <param name="licnostId">ID ličnosti</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Ličnost uspešno obrisana</response>
+            <response code="404">Nije pronađena ličnost za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja ličnosti</response>
+        </member>
+        <member name="M:Licnost.Controllers.LicnostController.UpdateLicnost(Licnost.Models.LicnostUpdateDto)">
+            <summary>
+            Ažurira jednu ličnost.
+            </summary>
+            <param name="licnost">Model ličnosti koja se ažurira</param>
+            <returns>Potvrdu o modifikovanoj ličnosti.</returns>
+            <response code="200">Vraća ažuriranu ličnost</response>
+            <response code="400">Ličnost koja se ažurira nije pronađena</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja ličnosti</response>
+        </member>
+        <member name="M:Licnost.Controllers.LicnostController.GetLicnostOptions">
+            <summary>
+            Vraća opcije za rad sa ličnostima
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Licnost.Data.UserMockRepository.FillData">
+            <summary>
+            Metoda koja upisuje testne podatke
+            </summary>
+        </member>
+        <member name="M:Licnost.Data.UserMockRepository.UserWithCredentialsExists(System.String,System.String)">
+            <summary>
+            Proverava da li postoji korisnik sa prosleđenim kredencijalima
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Licnost.Data.UserMockRepository.HashPassword(System.String)">
+            <summary>
+            Vrši hash-ovanje korisničke lozinke
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <returns>Generisan hash i salt</returns>
+        </member>
+        <member name="M:Licnost.Data.UserMockRepository.VerifyPassword(System.String,System.String,System.String)">
+            <summary>
+            Proverava validnost prosleđene lozinke sa prosleđenim hash-om
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <param name="savedHash">Sačuvan hash</param>
+            <param name="savedSalt">Sačuvan salt</param>
+            <returns></returns>
+        </member>
+        <member name="M:Licnost.Entities.LicnostContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Popunjava bazu sa nekim inicijalnim podacima
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.LicnostCreateDto">
+            <summary>
+            Model za kreiranje licnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostCreateDto.LicnostIme">
+            <summary>
+            Ime ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostCreateDto.LicnostPrezime">
+            <summary>
+            Prezime ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostCreateDto.LicnostFunkcija">
+            <summary>
+            Funkcija ličnosti
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.LicnostDto">
+            <summary>
+            Predstavlja model jedne licnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostDto.LicnostImePrezime">
+            <summary>
+            Ime i prezime ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostDto.LicnostFunkcija">
+            <summary>
+            Funkcija ličnosti
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.LicnostUpdateDto">
+            <summary>
+            Model za ažuriranje ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostUpdateDto.LicnostId">
+            <summary>
+            ID ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostUpdateDto.LicnostIme">
+            <summary>
+            Ime ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostUpdateDto.LicnostPrezime">
+            <summary>
+            Prezime ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.LicnostUpdateDto.LicnostFunkcija">
+            <summary>
+            Funkcija ličnosti
+            </summary>
+        </member>
+    </members>
+</doc>

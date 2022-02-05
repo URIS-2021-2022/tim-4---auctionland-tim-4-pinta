@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace JavnoNadmetanjeAgregat.Entities
     /// </summary>
     public class SluzbeniListEntity
     {
+        [Key]
         /// <summary>
         /// ID sluzbeni list 
         /// </summary>

@@ -104,10 +104,13 @@ namespace ComplaintAggregate
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
-            services.AddScoped<IComplaintRepository, ComplaintRepository>();
-            services.AddScoped<IStatusOfComplaintRepository, StatusOfComplaintRepository>();
-            services.AddScoped<IActionBasedOnComplaintRepository, ActionBasedOnComplaintRepository>();
-            services.AddScoped<ITypeOfComplaintRepository, TypeOfComplaintRepository>();
+
+            services.AddScoped<IComplaintRepository, ComplaintContextRepository>();
+            services.AddScoped<IStatusOfComplaintRepository, StatusOfComplaintContextRepository>();
+            services.AddScoped<IActionBasedOnComplaintRepository, ActionBasedOnComplaintContextRepository>();
+            services.AddScoped<ITypeOfComplaintRepository, TypeOfComplaintContextRepository>();
+
+            
 
 
             services.AddSingleton<IUserRepository, UserRepository>();
@@ -185,8 +188,8 @@ namespace ComplaintAggregate
             app.UseSwaggerUI(setupAction =>
             {
                 //Podesavamo endpoint gde Swagger UI moze da pronadje OpenAPI specifikaciju
-                setupAction.SwaggerEndpoint("/swagger/complaintAggregateOpenApiSpecification/swagger.json", "ComplaintAggregate API");
-                setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
+                setupAction.SwaggerEndpoint("/swagger/ComplaintAggregateOpenApiSpecification/swagger.json", "Complaint aggregate API");
+             //  setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
 
             });
                 app.UseEndpoints(endpoints =>

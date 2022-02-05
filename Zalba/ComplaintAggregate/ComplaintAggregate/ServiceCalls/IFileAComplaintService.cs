@@ -8,6 +8,7 @@ namespace ComplaintAggregate.ServiceCalls
 {
     public interface IFileAComplaintService
     {
-        public bool FileAComplaint(BuyerDTO buyer);
+        public bool FileAComplaint(Guid kupacId);
+        public bool ConnectLogger(LogModel model);
     }
 }

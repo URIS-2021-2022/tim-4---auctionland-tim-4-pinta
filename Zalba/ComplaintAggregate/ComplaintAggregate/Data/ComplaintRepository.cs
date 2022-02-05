@@ -21,7 +21,7 @@ namespace ComplaintAggregate.Data
             {
                 new Complaint
                 {
-                    ZalbaID = Guid.NewGuid(),
+                    ZalbaID = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                     Datum_podnosenja_zalbe= DateTime.Parse("1-1-2011"),
                     Razlog_zalbe = "razlog",
                     Obrazlozenje = "obrazlozenje",
@@ -32,7 +32,7 @@ namespace ComplaintAggregate.Data
                 },
                 new Complaint
                 {
-                    ZalbaID = Guid.NewGuid(),
+                    ZalbaID = Guid.Parse("ec2e5d91-de9f-4af0-8fae-d8150e338c51"),
                     Datum_podnosenja_zalbe= DateTime.Parse("1-1-2012"),
                     Razlog_zalbe = "razlog2",
                     Obrazlozenje = "obrazlozenje2",

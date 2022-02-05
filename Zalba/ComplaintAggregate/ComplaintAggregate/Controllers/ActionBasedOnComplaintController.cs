@@ -30,7 +30,10 @@ namespace ComplaintAggregate.Controllers
 
             [HttpGet]
             [HttpHead]
-            public ActionResult<List<ActionBasedOnComplaintDTO>> GetActions()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public ActionResult<List<ActionBasedOnComplaintDTO>> GetActions()
             {
                 List<ActionBasedOnComplaint> ListOfComplaints = actionBasedOnComplaintRepository.GetActions();
                 if (ListOfComplaints == null || ListOfComplaints.Count == 0)
@@ -41,8 +44,11 @@ namespace ComplaintAggregate.Controllers
             }
 
 
-            [HttpGet("{statusId}")]
-            public ActionResult<ActionBasedOnComplaintDTO> GetActionById(Guid action)
+            [HttpGet("{radnjaId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public ActionResult<ActionBasedOnComplaintDTO> GetActionById(Guid action)
             {
                 ActionBasedOnComplaint complainAggregate = actionBasedOnComplaintRepository.GetActionById(action);
                 if (complainAggregate == null)
@@ -53,7 +59,10 @@ namespace ComplaintAggregate.Controllers
             }
 
             [HttpPost]
-            public ActionResult<ActionBasedOnComplaintDTO> CreateAction([FromBody] ActionBasedOnComplaintDTO complain)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
+        public ActionResult<ActionBasedOnComplaintDTO> CreateAction([FromBody] ActionBasedOnComplaintDTO complain)
             {
                 try
                 {
@@ -70,8 +79,12 @@ namespace ComplaintAggregate.Controllers
                 }
             }
 
-            [HttpDelete("{DComplaintId}")]
-            public IActionResult DeleteTypeOfComplaint(Guid action)
+            [HttpDelete("{DradnjaId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
+        public IActionResult DeleteTypeOfComplaint(Guid action)
             {
                 try
                 {
@@ -91,7 +104,11 @@ namespace ComplaintAggregate.Controllers
             }
 
             [HttpPut]
-            public ActionResult<ActionBasedOnComplaintDTO> UpdateTypeOfComplaint(ActionBasedOnComplaint action)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
+        public ActionResult<ActionBasedOnComplaintDTO> UpdateTypeOfComplaint(ActionBasedOnComplaint action)
             {
                 try
                 {

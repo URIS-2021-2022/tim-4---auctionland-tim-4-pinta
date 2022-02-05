@@ -1,3 +1,4 @@
+using AdresaServis.Data;
 using AdresaServis.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,7 +30,15 @@ namespace AdresaServis
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(setup =>
+                setup.ReturnHttpNotAcceptable = true
+            ).AddXmlDataContractSerializerFormatters();
+
+            services.AddScoped<IAdresaRepository, AdresaRepository>();
+            services.AddScoped<IDrzavaRepository, DrzavaRepository>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdresaServis", Version = "v1" });

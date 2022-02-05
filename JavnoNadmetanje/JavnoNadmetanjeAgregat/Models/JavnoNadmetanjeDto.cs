@@ -40,11 +40,11 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// Tip javnog nadmetanja
         /// </summary>
-        public int[] Tip { get; set; }
+        public Guid TipID { get; set; }
         /// <summary>
         /// Status javnog nadmetanja
         /// </summary>
-        public Enum Status { get; set; }
+        public  Guid StatusID { get; set; }
         /// <summary>
         /// Krug javnog nadmetanja
         /// </summary>

@@ -93,8 +93,6 @@ namespace JavnoNadmetanjeAgregat.Controllers
         /// "PocetnaCenaPoHektaru": 100, \
         /// "PeriodZakupa": 2, \
         /// "Izuzeto": true, \
-        /// "Tip": [1,2], \
-        /// "Status": {}, \
         /// "Krug": 1, \
         /// "VisinaDopunePoreza": 10, \
         /// } 

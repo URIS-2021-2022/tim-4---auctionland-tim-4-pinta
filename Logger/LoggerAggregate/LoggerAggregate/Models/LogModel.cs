@@ -10,14 +10,15 @@ namespace LoggerAggregate.Models
     public class LogModel
     {
        
+        
+        public string HttpMethod { get; set; }
 
-        //odredjuje koja je HTTP metoda u pitanju
-        public HttpContext HttpMethodIdentifier;
+        public string NameOfTheService { get; set; }
 
         //status Http zahtjeva tj.nivo
-        public ILogger HttpLevel;
+      //  public ILogger HttpLevel;
 
         //odredjuje tip greske
-        public HttpContext Error;
+       // public HttpContext HttpStatus;
     }
 }

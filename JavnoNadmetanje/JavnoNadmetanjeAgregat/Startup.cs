@@ -21,6 +21,8 @@ using System.Text;
 using System.Threading.Tasks;
 using JavnoNadmetanjeAgregat.Data;
 using JavnoNadmetanjeAgregat.Helpers;
+using JavnoNadmetanjeAgregat.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace JavnoNadmetanjeAgregat
 {
@@ -111,10 +113,10 @@ namespace JavnoNadmetanjeAgregat
             });
 
             //svaki put kad vidis IjavnoNadmetanjeR napravi instancu ove klase JavnoNadmetanjeR i koristi je
-            services.AddSingleton<IJavnoNadmetanjeRepository, JavnoNadmetanjeRepository>();
-            services.AddSingleton<ITipJavnogNadmetanjaRepository, TipJavnogNadmetanjaRepository>();
-            services.AddSingleton<IStatusJavnogNadmetanjaRepository, StatusJavnogNadmetanjaRepository>();
-            services.AddSingleton<ISluzbeniListRepository, SluzbeniListRepository>();
+            services.AddScoped<IJavnoNadmetanjeRepository, JavnoNadmetanjeRepository>();
+            services.AddScoped<ITipJavnogNadmetanjaRepository, TipJavnogNadmetanjaRepository>();
+            services.AddScoped<IStatusJavnogNadmetanjaRepository, StatusJavnogNadmetanjaRepository>();
+            services.AddScoped<ISluzbeniListRepository, SluzbeniListRepository>();
             services.AddSingleton<IUserRepository, UserMockRepository>();
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
 
@@ -144,7 +146,8 @@ namespace JavnoNadmetanjeAgregat
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
-            }
+            services.AddDbContextPool<JavnoNadmetanjeContext>(options => options.UseSqlServer(Configuration.GetConnectionString("JavnoNadmetanjeDB")));
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
