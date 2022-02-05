@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +13,7 @@ namespace JavnoNadmetanjeAgregat.Entities
     /// </summary>
     public class JavnoNadmetanjeEntity
     {
+        [Key]
         /// <summary>
         /// ID javnog nadmetanja
         /// </summary>
@@ -42,11 +45,17 @@ namespace JavnoNadmetanjeAgregat.Entities
         /// <summary>
         /// Tip javnog nadmetanja
         /// </summary>
-        public int[] Tip { get; set; }
+         
+        [ForeignKey("Tip")]
+        public Guid TipID { get; set; }
+        public TipJavnogNadmetanjaEntity Tip { get; set; }
         /// <summary>
         /// Status javnog nadmetanja
         /// </summary>
-        public Enum Status { get; set; }
+        [ForeignKey("Status")]
+        public Guid StatusID { get; set; }
+        public StatusJavnogNadmetanjaEntity Status { get; set; }
+
         /// <summary>
         /// Krug javnog nadmetanja
         /// </summary>
@@ -57,3 +66,4 @@ namespace JavnoNadmetanjeAgregat.Entities
         public int VisinaDopuneDepozita { get; set; }
     }
 }
+
