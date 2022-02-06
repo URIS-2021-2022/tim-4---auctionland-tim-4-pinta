@@ -15,7 +15,7 @@ namespace ComplaintAggregate.Data
             FillData();
         }
 
-        private void FillData()
+        private static void FillData()
         {
             ListOfComplainations.AddRange(new List<TypeOfComplaint>
             {
@@ -89,6 +89,11 @@ namespace ComplaintAggregate.Data
                 Zalba_na_odluku_o_davanju_na_koriscenje = action.Zalba_na_odluku_o_davanju_na_koriscenje,
 
             };
+        }
+
+        public bool SaveChanges()
+        {
+            return true;
         }
     }
 }

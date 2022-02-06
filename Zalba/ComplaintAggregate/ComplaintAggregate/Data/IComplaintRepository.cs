@@ -13,5 +13,7 @@ namespace ComplaintAggregate.Data
         Complaint CreateComplaint(Complaint complainAggregate);
         Complaint UpdateComplaint(Complaint complainAggregate);
         void DeleteComplaint(Guid ZalbaID);
+
+        bool SaveChanges();
     }
 }

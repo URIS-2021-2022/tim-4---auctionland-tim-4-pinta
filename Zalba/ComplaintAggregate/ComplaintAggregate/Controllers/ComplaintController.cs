@@ -6,6 +6,7 @@ using ComplaintAggregate.ServiceCalls;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,13 +44,19 @@ namespace ComplaintAggregate.Controllers
         {
             model.HttpMethod = "GET metoda";
             model.NameOfTheService = "Zalba mikroservis";
-            fileService.ConnectLogger(model);
+                      
             List<Complaint> ListOfComplaints = complainAggregateRepository.GetComplaint();
             if (ListOfComplaints == null || ListOfComplaints.Count == 0)
             {
+                model.Level = "Warn";
+                model.Message = "Nema sadrzaja";
+                fileService.ConnectLogger(model);
                 return NoContent();
+                
             }
-            
+            model.Level = "Info";
+            model.Message = "Uspijesan zahtjev";
+            fileService.ConnectLogger(model);
             return Ok(mapper.Map<List<ComplaintDTO>>(ListOfComplaints));
         }
 
@@ -61,12 +68,18 @@ namespace ComplaintAggregate.Controllers
         {
             model.HttpMethod = "GET/id metoda";
             model.NameOfTheService = "Zalba mikroservis";
-            fileService.ConnectLogger(model);
+           
             Complaint complainAggregate = complainAggregateRepository.GetComplaintById(ZalbaID);
             if (complainAggregate == null)
             {
+                model.Level = "Warn";
+                model.Message = "Nije pronadjeno";
+                fileService.ConnectLogger(model);
                 return NotFound();
             }
+            model.Level = "Info";
+            model.Message = "Uspijesan zahtjev";
+            fileService.ConnectLogger(model);
             return Ok(mapper.Map<ComplaintDTO>(complainAggregate));
         }
 
@@ -78,7 +91,7 @@ namespace ComplaintAggregate.Controllers
         {
             model.HttpMethod = "POST metoda";
             model.NameOfTheService = "Zalba mikroservis";
-            fileService.ConnectLogger(model);
+            
             try
             {
                 Complaint comp = mapper.Map<Complaint>(complain);
@@ -86,10 +99,16 @@ namespace ComplaintAggregate.Controllers
                 Complaint confirmation = complainAggregateRepository.CreateComplaint(comp);
                 // Dobar API treba da vrati lokator gde se taj resurs nalazi
                 string location = linkGenerator.GetPathByAction("CreateComplaint", "Complaint", new { ZalbaID = confirmation.ZalbaID });
+                model.Level = "Info";
+                model.Message = "Uspijesan zahtjev";
+                fileService.ConnectLogger(model);
                 return Created(location, mapper.Map<ComplaintDTO>(confirmation));
             }
             catch
             {
+                model.Level = "Error";
+                model.Message = "Greska";
+                fileService.ConnectLogger(model);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -99,7 +118,7 @@ namespace ComplaintAggregate.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
-        public IActionResult DeleteExamRegistration(Guid ZalbaId)
+        public IActionResult DeleteComplaint(Guid ZalbaId)
         {
             model.HttpMethod = "DELETE metoda";
             model.NameOfTheService = "Zalba mikroservis";
@@ -109,14 +128,24 @@ namespace ComplaintAggregate.Controllers
                 Complaint complaintModel = complainAggregateRepository.GetComplaintById(ZalbaId);
                 if (complaintModel == null)
                 {
+                    model.Level = "Warn";
+                    model.Message = "Nije pronadjeno";
+                    fileService.ConnectLogger(model);
                     return NotFound();
                 }
+                model.Level = "Info";
+                model.Message = "Uspijesan zahtjev"; 
+                fileService.ConnectLogger(model);
                 complainAggregateRepository.DeleteComplaint(ZalbaId);
                 // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
+
                 return NoContent();
             }
             catch
             {
+                model.Level = "Error";
+                model.Message = "Greska";
+                fileService.ConnectLogger(model);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -126,24 +155,33 @@ namespace ComplaintAggregate.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
-        public ActionResult<ComplaintDTO> UpdateComplaint(Complaint complain)
+        public ActionResult<ComplaintDTO> UpdateComplaint(ComplaintDTO complain)
         {
             model.HttpMethod = "UPDATE metoda";
             model.NameOfTheService = "Zalba mikroservis";
-            fileService.ConnectLogger(model);
+           
             try
             {
                 //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
                 if (complainAggregateRepository.GetComplaintById(complain.ZalbaID) == null)
                 {
+                    model.Level = "Warn";
+                    model.Message = "Nije pronadjeno";
+                    fileService.ConnectLogger(model);
                     return NotFound();
                 }
                 Complaint cmp = mapper.Map<Complaint>(complain);
                 Complaint complaint = complainAggregateRepository.UpdateComplaint(cmp);
+                model.Level = "Info";
+                model.Message = "Uspijesan zahtjev";
+                fileService.ConnectLogger(model);
                 return Ok(mapper.Map<ComplaintDTO>(complaint));
             }
             catch (Exception)
             {
+                model.Level = "Error";
+                model.Message = "Greska";
+                fileService.ConnectLogger(model);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }

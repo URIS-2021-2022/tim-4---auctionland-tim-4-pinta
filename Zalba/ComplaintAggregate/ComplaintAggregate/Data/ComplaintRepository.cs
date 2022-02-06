@@ -15,7 +15,7 @@ namespace ComplaintAggregate.Data
             FillData();
         }
 
-        private void FillData()
+        private static void FillData()
         {
             ListOfComplainations.AddRange(new List<Complaint>
             {
@@ -103,6 +103,11 @@ namespace ComplaintAggregate.Data
         {
             ListOfComplainations.Remove
                 (ListOfComplainations.FirstOrDefault(e => e.ZalbaID == ZalbaID));
+        }
+
+        public bool SaveChanges()
+        {
+            return true;
         }
     }
 }
