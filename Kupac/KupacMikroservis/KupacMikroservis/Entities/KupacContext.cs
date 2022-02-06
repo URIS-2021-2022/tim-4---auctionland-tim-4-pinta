@@ -10,14 +10,14 @@ namespace KupacMikroservis.Entities
 {
     public class KupacContext : DbContext
     {
-        private readonly IConfiguration configuration;
+ 
 
         public KupacContext(DbContextOptions<KupacContext> options) : base(options)
         {
 
         }
 
-        public DbSet<KupacEntity> kupci{ get; set; }
+    //    public DbSet<KupacEntity> kupci{ get; set; }
         public DbSet<PravnoLiceEntity> pLica { get; set; }
         public DbSet<FizickoLiceEntity> fLica { get; set; }
 
@@ -26,86 +26,14 @@ namespace KupacMikroservis.Entities
         public DbSet<OvlascenoLiceEntity> oLica { get; set; }
         public DbSet<PrioritetEntity> prioriteti { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("KupacDB"));
-        }
+       
 
         /// <summary>
         /// Popunjava bazu sa nekim inicijalnim podacima
         /// </summary>
         protected override void OnModelCreating(ModelBuilder builder)
         {
-             builder.Entity<KupacEntity>()
-                .HasData(new
-                {
-                    KupacId = Guid.Parse("1a411c13-a195-48f7-8dbd-67596c3974c0"),
-                    Naziv = "Pera Peric",
-                    BrojTelefona1 = "062665511",
-                    BrojTelefona2 = "061553311",
-                    Email = "pera@gmail.com",
-                    BrojRacuna = "2532431234534",
-                    ImaZabranu = false,
-                    DatumPocetkaZabrane = 0,
-                    DuzinaTrajanjaZabraneUGodinama = 0,
-                    DatumPrestankaZabrane = 0,
-                    Prioritet= "1a411c13-a195-1117-8dbd-67596c3974c0",
-                    OvlascenoLice= "1a411c13-a185-48f7-8dbd-67596c3974c8"
-
-
-
-                });
-
-            builder.Entity<KupacEntity>()
-                .HasData(new
-                {
-                    KupacId = Guid.Parse("2a411c13-a195-48f7-8dbd-67596c3974c0"),
-                    Naziv = "Jova Jovic",
-                    BrojTelefona1 = "062665521",
-                    BrojTelefona2 = "061553331",
-                    Email = "jova@gmail.com",
-                    BrojRacuna = "253425254534",
-                    ImaZabranu = false,
-                    DatumPocetkaZabrane = 0,
-                    DuzinaTrajanjaZabraneUGodinama = 0,
-                    DatumPrestankaZabrane = 0,
-                    Prioritet = "1a411c13-a195-1117-8dbd-67596c3974c0",
-                    OvlascenoLice = "1a411c13-a185-48f7-8dbd-67596c3975c8"
-                });
-
-            builder.Entity<KupacEntity>()
-              .HasData(new
-              {
-                  KupacId = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0"),
-                  Naziv = "NS DOO",
-                  BrojTelefona1 = "062665231",
-                  BrojTelefona2 = "0615573331",
-                  Email = "ivaa@gmail.com",
-                  BrojRacuna= "2536565534",
-                  ImaZabranu = false,
-                  DatumPocetkaZabrane = 0,
-                  DuzinaTrajanjaZabraneUGodinama = 0,
-                  DatumPrestankaZabrane = 0,
-                  Prioritet = "1a411c13-a195-1117-8dbd-67596c3974c0",
-                  OvlascenoLice = "1a411c13-a185-48f7-8dbd-67596c3975c8"
-              });
-
-            builder.Entity<KupacEntity>()
-              .HasData(new
-              {
-                  KupacId = Guid.Parse("2a421c13-a195-46f7-8dbd-67596c4974c0"),
-                  Naziv = "SN AD",
-                  BrojTelefona1 = "062635321",
-                  BrojTelefona2 = "0615535651",
-                  Email = "mikaa@gmail.com",
-                  BrojRacuna = "253456533534",
-                  ImaZabranu = false,
-                  DatumPocetkaZabrane = 0,
-                  DuzinaTrajanjaZabraneUGodinama = 0,
-                  DatumPrestankaZabrane = 0,
-                  Prioritet = "1a411c13-a195-1117-8dbd-67596c3974c0",
-                  OvlascenoLice = "1a411c13-a185-48f7-8dbd-67596c3975c8"
-              });
+            
 
             builder.Entity<PrioritetEntity>()
                 .HasData(new
@@ -190,6 +118,17 @@ namespace KupacMikroservis.Entities
              .HasData(new
              {
                  KupacId = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0"),
+                 Naziv = "NS DOO",
+                 BrojTelefona1 = "062665231",
+                 BrojTelefona2 = "0615573331",
+                 Email = "ivaa@gmail.com",
+                 BrojRacuna = "2536565534",
+                 ImaZabranu = false,
+                 DatumPocetkaZabrane = (DateTime?)null,
+                 DuzinaTrajanjaZabraneUGodinama = 0,
+                 DatumPrestankaZabrane = (DateTime?)null,
+                 Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
+                 OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3975c8"),
                  MaticniBroj="455643231",
                  Faks="654322345"
 
@@ -201,6 +140,17 @@ namespace KupacMikroservis.Entities
            .HasData(new
            {
                KupacId = Guid.Parse("2a421c13-a195-46f7-8dbd-67596c4974c0"),
+               Naziv = "SN AD",
+               BrojTelefona1 = "062635321",
+               BrojTelefona2 = "0615535651",
+               Email = "mikaa@gmail.com",
+               BrojRacuna = "253456533534",
+               ImaZabranu = false,
+               DatumPocetkaZabrane = (DateTime?)null,
+               DuzinaTrajanjaZabraneUGodinama = 0,
+               DatumPrestankaZabrane = (DateTime?)null,
+               Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
+               OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3975c8"),
                MaticniBroj = "455643231",
                Faks = "654322345"
 
@@ -213,8 +163,19 @@ namespace KupacMikroservis.Entities
          .HasData(new
          {
              KupacId = Guid.Parse("1a411c13-a195-48f7-8dbd-67596c3974c0"),
-             MaticniBroj = "455643231",
-             Faks = "654322345"
+             Naziv = "Pera Peric",
+             BrojTelefona1 = "062665511",
+             BrojTelefona2 = "061553311",
+             Email = "pera@gmail.com",
+             BrojRacuna = "2532431234534",
+             ImaZabranu = false,
+             DatumPocetkaZabrane = (DateTime?)null,
+             DuzinaTrajanjaZabraneUGodinama = 0,
+             DatumPrestankaZabrane = (DateTime?)null,
+             Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0") ,
+             OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3974c8"),
+             JMBG = "6765432484",
+             KontaktOsoba = Guid.Parse("1a411c13-a195-3337-8dbd-44444c3974c0")
 
 
 
@@ -224,23 +185,25 @@ namespace KupacMikroservis.Entities
          .HasData(new
          {
              KupacId = Guid.Parse("2a411c13-a195-48f7-8dbd-67596c3974c0"),
+             Naziv = "Jova Jovic",
+             BrojTelefona1 = "062665521",
+             BrojTelefona2 = "061553331",
+             Email = "jova@gmail.com",
+             BrojRacuna = "253425254534",
+             ImaZabranu = false,
+             DatumPocetkaZabrane = (DateTime?)null,
+             DuzinaTrajanjaZabraneUGodinama = 0,
+             DatumPrestankaZabrane = (DateTime?)null,
+             Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
+             OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3975c8"),
              JMBG = "7654321234",
-             KontaktOsoba= "1a411c13-a195-3337-8dbd-33333c3974c0"
+             KontaktOsoba= Guid.Parse("1a411c13-a195-3337-8dbd-33333c3974c0") 
 
 
 
          });
 
-            builder.Entity<FizickoLiceEntity>()
-     .HasData(new
-     {
-         KupacId = Guid.Parse("2a411c13-a195-48f7-8dbd-67596c3974c0"),
-         JMBG = "0987654543",
-         KontaktOsoba = "1a411c13-a195-3337-8dbd-44444c3974c0"
-
-
-
-     });
+         
 
         }
     }
