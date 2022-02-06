@@ -13,5 +13,6 @@ namespace ComplaintAggregate.Data
         TypeOfComplaint CreateTypeOfComplaint(TypeOfComplaint typeOfComplaint);
         TypeOfComplaint UpdateTypeOfComplaint(TypeOfComplaint typeOfComplaint);
         void DeleteTypeOfComplaint(Guid Tip_id);
+        bool SaveChanges();
     }
 }

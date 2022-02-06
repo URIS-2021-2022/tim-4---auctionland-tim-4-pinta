@@ -95,5 +95,10 @@ namespace ComplaintAggregate.Data
                 (ListOfComplainations.FirstOrDefault(e => e.Radnja_na_osnovu_zalbe_ID == Radnja_na_osnovu_zalbe_ID));
 
         }
+
+        public bool SaveChanges()
+        {
+            return true;
+        }
     }
 }

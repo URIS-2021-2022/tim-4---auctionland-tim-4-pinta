@@ -104,5 +104,10 @@ namespace ComplaintAggregate.Data
             ListOfComplainations.Remove
                 (ListOfComplainations.FirstOrDefault(e => e.ZalbaID == ZalbaID));
         }
+
+        public bool SaveChanges()
+        {
+            return true;
+        }
     }
 }

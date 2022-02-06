@@ -90,5 +90,10 @@ namespace ComplaintAggregate.Data
 
             };
         }
+
+        public bool SaveChanges()
+        {
+            return true;
+        }
     }
 }

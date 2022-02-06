@@ -15,10 +15,9 @@ namespace LoggerAggregate.Models
 
         public string NameOfTheService { get; set; }
 
-        //status Http zahtjeva tj.nivo
-      //  public ILogger HttpLevel;
+        public string Level { get; set; }
 
-        //odredjuje tip greske
-       // public HttpContext HttpStatus;
+        public string Message { get; set; }
+
     }
 }
