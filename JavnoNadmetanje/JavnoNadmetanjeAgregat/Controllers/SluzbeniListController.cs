@@ -98,8 +98,9 @@ namespace JavnoNadmetanjeAgregat.Controllers
             {
                 SluzbeniListEntity obj = mapper.Map<SluzbeniListEntity>(sluzbeniList);
                 SluzbeniListEntity s = sluzbeniListRepository.CreateSluzbeniList(obj);
-                string location = linkGenerator.GetPathByAction("GetSluzbeniList", "SluzbeniList", new { sluzbeniListID = s.SluzbeniListID });
-                return Created(location, mapper.Map<SluzbeniListDto>(s));
+                // string location = linkGenerator.GetPathByAction("GetSluzbeniList", "SluzbeniList", new { sluzbeniListID = s.SluzbeniListID });
+                // return Created(location, mapper.Map<SluzbeniListDto>(s));
+                return Created("", mapper.Map<SluzbeniListDto>(s));
             }
             catch
             {
@@ -153,24 +154,30 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             try
             {
-                if (sluzbeniListRepository.GetSluzbeniListById(sluzbeniList.SluzbeniListID) == null)
+                var oldSluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniList.SluzbeniListID);
+                if (oldSluzbeniList == null)
                 {
                     return NotFound();
                 }
-                SluzbeniListEntity s = sluzbeniListRepository.UpdateSluzbeniList(sluzbeniList);
-                return Ok(mapper.Map<SluzbeniListDto>(s));
+                SluzbeniListEntity sluzbeniListEntity = mapper.Map<SluzbeniListEntity>(sluzbeniList);
+                mapper.Map(sluzbeniListEntity, oldSluzbeniList); //Update objekta koji treba da sačuvamo u bazi                
+
+                sluzbeniListRepository.SaveChanges(); //Perzistiramo promene
+                return Ok(mapper.Map<SluzbeniListDto>(sluzbeniListEntity));
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+
+
             }
         }
 
-        /// <summary>
-        /// Vraca opcije za rad sa javnim nadmetanjima
-        /// </summary>
-        /// <returns></returns>
-        [HttpOptions]
+            /// <summary>
+            /// Vraca opcije za rad sa javnim nadmetanjima
+            /// </summary>
+            /// <returns></returns>
+            [HttpOptions]
         public IActionResult GetSluzbeniListOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");

@@ -47,7 +47,7 @@ namespace JavnoNadmetanjeAgregat.Data
             return context.StatusiJavnihNadmetanja.FirstOrDefault(s => s.StatusJavnogNadmetanjaID == statusJavnogNadmetanjaID);
         }
 
-        public StatusJavnogNadmetanjaEntity UpdateStatusJavnogNadmetanja(StatusJavnogNadmetanjaEntity statusJavnogNadmetanja)
+        public void UpdateStatusJavnogNadmetanja(StatusJavnogNadmetanjaEntity statusJavnogNadmetanja)
         {
             throw new NotImplementedException();
         }

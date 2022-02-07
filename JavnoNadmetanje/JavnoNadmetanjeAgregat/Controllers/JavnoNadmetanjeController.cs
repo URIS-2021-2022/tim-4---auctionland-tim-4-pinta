@@ -10,6 +10,7 @@ using JavnoNadmetanjeAgregat.Entities;
 using JavnoNadmetanjeAgregat.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using JavnoNadmetanjeAgregat.ServiceCalls;
 
 namespace JavnoNadmetanjeAgregat.Controllers
 {
@@ -27,15 +28,24 @@ namespace JavnoNadmetanjeAgregat.Controllers
     public class JavnoNadmetanjeController : ControllerBase
 
     {
+        private readonly IKatastarskaOpstinaService katastarskaOpstinaService;
+        private readonly IKupacService kupacService;
+        private readonly IAdresaService adresaService;
+        private readonly IParcelaService parcelaService;
+
         private readonly IJavnoNadmetanjeRepository javnoNadmetanjeRepository;
         private readonly LinkGenerator linkGenerator; //Služi za generisanje putanje do neke akcije (videti primer u metodu CreateExamRegistration)
         private readonly IMapper mapper;
         //injektovanje zavisnosti- kad se kreira obj kontrolera mora da se prosledi nesto sto implementira interfejs tj confirmation
 
-        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService)
         {
             this.javnoNadmetanjeRepository = javnoNadmetanjeRepository;
             this.linkGenerator = linkGenerator;
+            this.katastarskaOpstinaService = katastarskaOpstinaService;
+            this.kupacService = kupacService;
+            this.parcelaService = parcelaService;
+            this.adresaService = adresaService;
             this.mapper = mapper;
         }
 
@@ -109,8 +119,9 @@ namespace JavnoNadmetanjeAgregat.Controllers
             {
                 JavnoNadmetanjeEntity obj = mapper.Map<JavnoNadmetanjeEntity>(javnoNadmetanje);
                 JavnoNadmetanjeEntity j = javnoNadmetanjeRepository.CreateJavnoNadmetanje(obj);
-                string location = linkGenerator.GetPathByAction("GetJavnoNadmetanje", "JavnoNadmetanje", new { javnoNadmetanjeID = j.JavnoNadmetanjeID });
-                return Created(location, mapper.Map<JavnoNadmetanjeDto>(j));
+                //string location = linkGenerator.GetPathByAction("GetJavnoNadmetanje", "JavnoNadmetanje", new { javnoNadmetanjeID = j.JavnoNadmetanjeID });
+                //return Created(location, mapper.Map<JavnoNadmetanjeDto>(j));
+                return Created("", mapper.Map<JavnoNadmetanjeDto>(j));
             }
             catch
             {
@@ -165,20 +176,22 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             try
             {
-                if (javnoNadmetanjeRepository.GetJavnoNadmetanjeById(javnoNadmetanje.JavnoNadmetanjeID ) == null)
+                var oldJavnoNadmetanje = javnoNadmetanjeRepository.GetJavnoNadmetanjeById(javnoNadmetanje.JavnoNadmetanjeID);
+                if (oldJavnoNadmetanje == null)
                 {
                     return NotFound();
                 }
-                
-                
-                JavnoNadmetanjeEntity jn = mapper.Map<JavnoNadmetanjeEntity>(javnoNadmetanje);
-                JavnoNadmetanjeEntity jnUpdate = javnoNadmetanjeRepository.UpdateJavnoNadmetanje(jn);
-                return Ok(mapper.Map<JavnoNadmetanjeDto>(jnUpdate));
+                JavnoNadmetanjeEntity javnoNadmetanjeEntity = mapper.Map<JavnoNadmetanjeEntity>(javnoNadmetanje);
+                mapper.Map(javnoNadmetanjeEntity, oldJavnoNadmetanje); //Update objekta koji treba da sačuvamo u bazi                
+
+                javnoNadmetanjeRepository.SaveChanges(); //Perzistiramo promene
+                return Ok(mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanjeEntity));
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
+
         }
 
         /// <summary>

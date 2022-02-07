@@ -48,7 +48,7 @@ namespace JavnoNadmetanjeAgregat.Data
             return context.TipoviJavnihNadmetanja.FirstOrDefault(t => t.TipJavnogNadmetanjaID == tipJavnogNadmetanjaID);
         }
 
-        public TipJavnogNadmetanjaEntity UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)
+        public void UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)
         {
             throw new NotImplementedException();
         }

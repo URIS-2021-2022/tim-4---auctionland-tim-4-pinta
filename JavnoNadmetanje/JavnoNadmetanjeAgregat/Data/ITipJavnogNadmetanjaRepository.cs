@@ -15,8 +15,9 @@ namespace JavnoNadmetanjeAgregat.Data
 
         TipJavnogNadmetanjaEntity CreateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja);
 
-        TipJavnogNadmetanjaEntity UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja);
+        void UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja);
 
         void DeleteTipJavnogNadmetanja(Guid tipJavnogNadmetanjaID);
+        bool SaveChanges();
     }
 }

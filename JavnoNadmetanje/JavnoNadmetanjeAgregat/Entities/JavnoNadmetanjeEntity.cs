@@ -64,6 +64,26 @@ namespace JavnoNadmetanjeAgregat.Entities
         /// Visina dopune depozita javnog nadmetanja
         /// </summary>
         public int VisinaDopuneDepozita { get; set; }
+
+        /// <summary>
+        /// ID katastarske opstine
+        /// </summary>
+        public Guid KatastarskaOpstinaID { get; set; }
+
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
+
+        /// <summary>
+        /// ID parcele
+        /// </summary>
+        public Guid ParcelaID { get; set; }
+
+        /// <summary>
+        /// ID adrese
+        /// </summary>
+        public Guid AdresaID { get; set; }
     }
 }
 
