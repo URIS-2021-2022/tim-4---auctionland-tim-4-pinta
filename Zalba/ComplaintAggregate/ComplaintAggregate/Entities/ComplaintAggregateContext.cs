@@ -29,7 +29,10 @@ namespace ComplaintAggregate.Entities
                 Obrazlozenje = "obrazlozenje",
                 Datum_rijesenja = DateTime.Parse("5-1-2011"),
                 Broj_rijesenja = 23,
-                Broj_nadmetanja = 32
+                Broj_nadmetanja = 32,
+                Status_zalbe = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd"),
+                Tip_id = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd"),
+                Radnja_na_osnovu_zalbe_ID = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6")
             }
 
                 );
@@ -41,7 +44,10 @@ namespace ComplaintAggregate.Entities
                 Obrazlozenje = "obrazlozenje2",
                 Datum_rijesenja = DateTime.Parse("5-1-2012"),
                 Broj_rijesenja = 23,
-                Broj_nadmetanja = 32
+                Broj_nadmetanja = 32,
+                Status_zalbe= Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
+                Tip_id= Guid.Parse("ec2e5d91-de9f-4af0-8fae-d8150e338c51"),
+                Radnja_na_osnovu_zalbe_ID = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd")
             });
 
             modelBuilder.Entity<ActionBasedOnComplaint>().HasData(new
