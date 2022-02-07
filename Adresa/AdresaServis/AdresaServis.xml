@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AdresaServis</name>
+    </assembly>
+    <members>
+        <member name="F:AdresaServis.Controllers.AdresaController.adresaRepository">
+            <summary>
+            Sadrzi CRUD operacije za adrese
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Controllers.AdresaController.GetAdrese">
+            <summary>
+            Vraca sve adrese
+            </summary>
+            <returns>Lista adresa</returns>
+            <response code = "200">Vraca listu adresa</response>
+            <response code = "404">Nije pronadjena nijedna adresa</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.AdresaController.GetAdresa(System.Guid)">
+            <summary>
+            Vraca jednu adresu na osnovu ID-ja
+            </summary>
+            <param name="adresaID">ID adrese</param>
+            <returns>Trazena adresa</returns>
+            <response code = "200">Vraca trazenu adresu</response>
+            <response code = "404">Trazena adresa nije pronadjena</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.AdresaController.CreateAdresa(AdresaServis.Models.AdresaDto)">
+            <summary>
+            Kreira novu adresu
+            </summary>
+            <param name="adresa">Model adrese</param>
+            <returns>Potvrdu o kreiranoj adresi</returns>
+            <remarks>
+            Primer zahteva za kreiranje nove adrese \
+            POST /api/adrese \
+            { \
+            "ulica": "Fruskogorska", \
+            "broj": "20", \
+            "mesto": "Beograd", \
+            "postanskiBroj": "11000", \
+            "drzavaID": "fd5e46de-290f-4844-a004-4a94ae24f654" \
+            } 
+            </remarks>
+            <response code = "201">Vraca kreiranu adresu</response>
+            <response code = "500">Doslo je do greske na serveru prilikom kreiranja adrese</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.AdresaController.DeleteAdresa(System.Guid)">
+            <summary>
+            Vrsi brisanje jedne adrese na osnovu ID-ja
+            </summary>
+            <param name="adresaID">ID adrese</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Adresa uspesno obrisana</response>
+            <response code="404">Nije pronadjena adresa za brisanje</response>
+            <response code="500">Doslo je do greske na serveru prilikom brisanja adrese</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.AdresaController.UpdateAdresa(AdresaServis.Entities.AdresaEntity)">
+            <summary>
+            Azurira jednu adresu
+            </summary>
+            <param name="adresa">Model adrese koja se azurira</param>
+            <returns>Potvrdu o modifikovanoj adresi</returns>
+            <response code="200">Vraca azuriranu adresu</response>
+            <response code="400">Adresa koja se azurira nije pronadjena</response>
+            <response code="500">Doslo je do greske prilikom azuriranja adrese</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.AdresaController.GetAdresaOptions">
+            <summary>
+            Vraca opcije za rad sa adresama
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:AdresaServis.Controllers.DrzavaController">
+            <summary>
+            Sadrzi CRUD operacije za drzave
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Controllers.DrzavaController.GetDrzave">
+            <summary>
+            Vraca sve drzave
+            </summary>
+            <returns>Lista drzava</returns>
+            <response code = "200">Vraca listu drzava</response>
+            <response code = "404">Nije pronadjena nijedna drzava</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.DrzavaController.GetDrzava(System.Guid)">
+            <summary>
+            Vraca jednu drzavu na osnovu ID-ja
+            </summary>
+            <param name="drzavaID">ID drzave</param>
+            <returns>Trazena drzava</returns>
+            <response code = "200">Vraca trazenu drzavu</response>
+            <response code = "404">Trazena drzava nije pronadjena</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.DrzavaController.CreateAdresa(AdresaServis.Models.DrzavaDto)">
+            <summary>
+            Kreira novu drzavu
+            </summary>
+            <param name="drzava">Model drzave</param>
+            <returns>Potvrdu o kreiranoj drzavi</returns>
+            <remarks>
+            Primer zahteva za kreiranje nove drzave \
+            POST /api/drzave \
+            { \
+            "nazivDrzave": "Srbija" \
+            } 
+            </remarks>
+            <response code = "201">Vraca kreiranu drzavu</response>
+            <response code = "500">Doslo je do greske na serveru prilikom kreiranja drzave</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.DrzavaController.DeleteDrzava(System.Guid)">
+            <summary>
+            Vrsi brisanje jedne drzave na osnovu ID-ja
+            </summary>
+            <param name="drzavaID">ID drzave</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Drzava uspesno obrisana</response>
+            <response code="404">Nije pronadjena drzava za brisanje</response>
+            <response code="500">Doslo je do greske na serveru prilikom brisanja drzave</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.DrzavaController.UpdateDrzava(AdresaServis.Entities.DrzavaEntity)">
+            <summary>
+            Azurira jednu drzavu
+            </summary>
+            <param name="drzava">Model drzave koja se azurira</param>
+            <returns>Potvrdu o modifikovanoj drzavi</returns>
+            <response code="200">Vraca azuriranu drzavu</response>
+            <response code="400">Drzava koja se azurira nije pronadjena</response>
+            <response code="500">Doslo je do greske prilikom azuriranja drzave</response>
+        </member>
+        <member name="M:AdresaServis.Controllers.DrzavaController.GetDrzavaOptions">
+            <summary>
+            Vraca opcije za rad sa drzavama
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:AdresaServis.Data.AdresaRepository">
+            <summary>
+            Repozitorijum za adrese
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Data.AdresaRepository.#ctor(AdresaServis.Entities.AdresaContext,AutoMapper.IMapper)">
+            <summary>
+            Kontruktor
+            </summary>
+            <param name="context"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:AdresaServis.Data.AdresaRepository.SaveChanges">
+            <summary>
+            Cuvanje promena
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.AdresaRepository.CreateAdresa(AdresaServis.Entities.AdresaEntity)">
+            <summary>
+            Kreiranje adrese
+            </summary>
+            <param name="adresa"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.AdresaRepository.DeleteAdresa(System.Guid)">
+            <summary>
+            Brisanje adrese
+            </summary>
+            <param name="adresaID"></param>
+        </member>
+        <member name="M:AdresaServis.Data.AdresaRepository.GetAdresaById(System.Guid)">
+            <summary>
+            Vracanje adrese po ID-ju
+            </summary>
+            <param name="adresaID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.AdresaRepository.GetAdrese">
+            <summary>
+            Vracanje svih adresa
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.AdresaRepository.UpdateAdresa(AdresaServis.Entities.AdresaEntity)">
+            <summary>
+            Modifikovanje adrese
+            </summary>
+            <param name="adresa"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AdresaServis.Data.DrzavaRepository">
+            <summary>
+            Repozitorijum za drzave
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Data.DrzavaRepository.#ctor(AdresaServis.Entities.AdresaContext,AutoMapper.IMapper)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="context"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:AdresaServis.Data.DrzavaRepository.SaveChanges">
+            <summary>
+            Cuvanje promena
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.DrzavaRepository.CreateDrzava(AdresaServis.Entities.DrzavaEntity)">
+            <summary>
+            Kreiranje drzave
+            </summary>
+            <param name="drzava"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.DrzavaRepository.DeleteDrzava(System.Guid)">
+            <summary>
+            Brisanje drzave
+            </summary>
+            <param name="drzavaID"></param>
+        </member>
+        <member name="M:AdresaServis.Data.DrzavaRepository.GetDrzave">
+            <summary>
+            Vracanje svih drzava
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.DrzavaRepository.GetDrzavaById(System.Guid)">
+            <summary>
+            Vracanje drzave po ID-ju
+            </summary>
+            <param name="drzavaID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdresaServis.Data.DrzavaRepository.UpdateDrzava(AdresaServis.Entities.DrzavaEntity)">
+            <summary>
+            Modifikovanje drzave
+            </summary>
+            <param name="drzava"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AdresaServis.Entities.AdresaContext">
+            <summary>
+            Context za bazu podataka
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Entities.AdresaContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{AdresaServis.Entities.AdresaContext})">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaContext.Adrese">
+            <summary>
+            DbSet Adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaContext.Drzave">
+            <summary>
+            DbSet Drzave
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Entities.AdresaContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Kreiranje modela
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="T:AdresaServis.Entities.AdresaEntity">
+            <summary>
+            Model adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaEntity.AdresaID">
+            <summary>
+            ID adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaEntity.Ulica">
+            <summary>
+            Ulica adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaEntity.Broj">
+            <summary>
+            Broj adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaEntity.Mesto">
+            <summary>
+            Mesto adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaEntity.PostanskiBroj">
+            <summary>
+            Postanski broj adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaEntity.DrzavaID">
+            <summary>
+            ID drzave
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.AdresaEntity.Drzava">
+            <summary>
+            Drzava adrese
+            </summary>
+        </member>
+        <member name="T:AdresaServis.Entities.DrzavaEntity">
+            <summary>
+            Model drzave
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.DrzavaEntity.DrzavaID">
+            <summary>
+            ID drzave
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.DrzavaEntity.NazivDrzave">
+            <summary>
+            Naziv drzave
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Entities.DrzavaEntity.Adrese">
+            <summary>
+            Adrese u drzavi
+            </summary>
+        </member>
+    </members>
+</doc>

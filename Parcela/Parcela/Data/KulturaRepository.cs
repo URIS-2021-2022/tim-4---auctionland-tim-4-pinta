@@ -46,9 +46,9 @@ namespace Parcela.Data
             return (from k in context.Kulture select k).ToList();
         }
 
-        public KulturaEntity UpdateKultura(KulturaEntity kultura)
+        public void UpdateKultura(KulturaEntity kultura)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

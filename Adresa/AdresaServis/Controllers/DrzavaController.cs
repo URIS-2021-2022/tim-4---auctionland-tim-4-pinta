@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace AdresaServis.Controllers
 {
+    /// <summary>
+    /// Sadrzi CRUD operacije za drzave
+    /// </summary>
     [ApiController]
     [Route("api/drzave")]
     [Produces("application/json", "application/xml")]
@@ -68,6 +71,20 @@ namespace AdresaServis.Controllers
             return Ok(mapper.Map<DrzavaDto>(drzava));
         }
 
+        /// <summary>
+        /// Kreira novu drzavu
+        /// </summary>
+        /// <param name="drzava">Model drzave</param>
+        /// <returns>Potvrdu o kreiranoj drzavi</returns>
+        /// <remarks>
+        /// Primer zahteva za kreiranje nove drzave \
+        /// POST /api/drzave \
+        /// { \
+        /// "nazivDrzave": "Srbija" \
+        /// } 
+        /// </remarks>
+        /// <response code = "201">Vraca kreiranu drzavu</response>
+        /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja drzave</response>
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]

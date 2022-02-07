@@ -10,7 +10,7 @@ using Parcela.Entities;
 namespace Parcela.Migrations
 {
     [DbContext(typeof(ParcelaContext))]
-    [Migration("20220131204457_InitialCreate")]
+    [Migration("20220206214140_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,6 +201,9 @@ namespace Parcela.Migrations
                     b.Property<string>("BrojParcele")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("KatastarskaOpstinaID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("KlasaID")
                         .HasColumnType("uniqueidentifier");
 
@@ -212,6 +215,9 @@ namespace Parcela.Migrations
 
                     b.Property<string>("KulturaStvarnoStanje")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("KupacID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("OblikSvojineID")
                         .HasColumnType("uniqueidentifier");
@@ -259,10 +265,12 @@ namespace Parcela.Migrations
                             ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                             BrojListaNepokretnosti = "12345",
                             BrojParcele = "12345",
+                            KatastarskaOpstinaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             KlasaStvarnoStanje = "Klasa1",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                             KulturaStvarnoStanje = "Kukuruz",
+                            KupacID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                             ObradivostStvarnoStanje = "Obradivost1",
@@ -277,10 +285,12 @@ namespace Parcela.Migrations
                             ParcelaID = new Guid("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                             BrojListaNepokretnosti = "54321",
                             BrojParcele = "54321",
+                            KatastarskaOpstinaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             KlasaStvarnoStanje = "Klasa2",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                             KulturaStvarnoStanje = "Soja",
+                            KupacID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                             ObradivostStvarnoStanje = "Obradivost2",

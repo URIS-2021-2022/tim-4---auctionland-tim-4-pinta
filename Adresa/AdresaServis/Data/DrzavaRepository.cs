@@ -7,22 +7,39 @@ using System.Threading.Tasks;
 
 namespace AdresaServis.Data
 {
+    /// <summary>
+    /// Repozitorijum za drzave
+    /// </summary>
     public class DrzavaRepository : IDrzavaRepository
     {
         private readonly AdresaContext context;
         private readonly IMapper mapper;
 
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
         public DrzavaRepository(AdresaContext context, IMapper mapper)
         {
             this.context = context;
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Cuvanje promena
+        /// </summary>
+        /// <returns></returns>
         public bool SaveChanges()
         {
             return context.SaveChanges() > 0;
         }
 
+        /// <summary>
+        /// Kreiranje drzave
+        /// </summary>
+        /// <param name="drzava"></param>
+        /// <returns></returns>
         public DrzavaEntity CreateDrzava(DrzavaEntity drzava)
         {
             drzava.DrzavaID = Guid.NewGuid();
@@ -31,21 +48,39 @@ namespace AdresaServis.Data
             return d;
         }
 
+        /// <summary>
+        /// Brisanje drzave
+        /// </summary>
+        /// <param name="drzavaID"></param>
         public void DeleteDrzava(Guid drzavaID)
         {
             context.Drzave.Remove(context.Drzave.FirstOrDefault(d => d.DrzavaID == drzavaID));
         }
 
+        /// <summary>
+        /// Vracanje svih drzava
+        /// </summary>
+        /// <returns></returns>
         public List<DrzavaEntity> GetDrzave()
         {
             return (from d in context.Drzave select d).ToList();
         }
 
+        /// <summary>
+        /// Vracanje drzave po ID-ju
+        /// </summary>
+        /// <param name="drzavaID"></param>
+        /// <returns></returns>
         public DrzavaEntity GetDrzavaById(Guid drzavaID)
         {
             return context.Drzave.FirstOrDefault(d => d.DrzavaID == drzavaID);
         }
 
+        /// <summary>
+        /// Modifikovanje drzave
+        /// </summary>
+        /// <param name="drzava"></param>
+        /// <returns></returns>
         public DrzavaEntity UpdateDrzava(DrzavaEntity drzava)
         {
             throw new NotImplementedException();

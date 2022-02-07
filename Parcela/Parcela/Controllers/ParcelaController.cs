@@ -107,8 +107,9 @@ namespace Parcela.Controllers
             {
                 ParcelaEntity par = mapper.Map<ParcelaEntity>(parcela);
                 ParcelaEntity p = parcelaRepository.CreateParcela(par);
-                string location = linkGenerator.GetPathByAction("GetParcela", "Parcela", new { parcelaID = p.ParcelaID });
-                return Created(location, mapper.Map<ParcelaDto>(p));
+                //string location = linkGenerator.GetPathByAction("GetParcela", "Parcela", new { parcelaID = p.ParcelaID });
+                //return Created(location, mapper.Map<ParcelaDto>(p));
+                return Created("", mapper.Map<ParcelaDto>(p));
             }
             catch
             {

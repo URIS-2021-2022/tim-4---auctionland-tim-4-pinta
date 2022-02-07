@@ -17,6 +17,9 @@ namespace AdresaServis.Controllers
     [Produces("application/json", "application/xml")]
     public class AdresaController : ControllerBase
     {
+        /// <summary>
+        /// Sadrzi CRUD operacije za adrese
+        /// </summary>
         private readonly IAdresaRepository adresaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
@@ -68,6 +71,24 @@ namespace AdresaServis.Controllers
             return Ok(mapper.Map<AdresaDto>(adresa));
         }
 
+        /// <summary>
+        /// Kreira novu adresu
+        /// </summary>
+        /// <param name="adresa">Model adrese</param>
+        /// <returns>Potvrdu o kreiranoj adresi</returns>
+        /// <remarks>
+        /// Primer zahteva za kreiranje nove adrese \
+        /// POST /api/adrese \
+        /// { \
+        /// "ulica": "Fruskogorska", \
+        /// "broj": "20", \
+        /// "mesto": "Beograd", \
+        /// "postanskiBroj": "11000", \
+        /// "drzavaID": "fd5e46de-290f-4844-a004-4a94ae24f654" \
+        /// } 
+        /// </remarks>
+        /// <response code = "201">Vraca kreiranu adresu</response>
+        /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja adrese</response>
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]

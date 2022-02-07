@@ -61,6 +61,8 @@ namespace Parcela
             services.AddScoped<IZasticenaZonaRepository, ZasticenaZonaRepository>();
             services.AddScoped<IKatastarskaOpstinaService, KatastarskaOpstinaService>();
             services.AddScoped<IKupacService, KupacService>();
+            services.AddScoped<IGatewayService, GatewayService>();
+            services.AddScoped<ILoggerService, LoggerService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
