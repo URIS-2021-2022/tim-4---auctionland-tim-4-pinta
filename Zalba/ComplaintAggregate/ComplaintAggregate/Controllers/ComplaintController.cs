@@ -98,7 +98,7 @@ namespace ComplaintAggregate.Controllers
 
                 Complaint confirmation = complainAggregateRepository.CreateComplaint(comp);
                 // Dobar API treba da vrati lokator gde se taj resurs nalazi
-                string location = linkGenerator.GetPathByAction("CreateComplaint", "Complaint", new { ZalbaID = confirmation.ZalbaID });
+                string location = linkGenerator.GetPathByAction("GetComplaint", "Complaint", new { ZalbaID = confirmation.ZalbaID });
                 model.Level = "Info";
                 model.Message = "Uspijesan zahtjev";
                 fileService.ConnectLogger(model);

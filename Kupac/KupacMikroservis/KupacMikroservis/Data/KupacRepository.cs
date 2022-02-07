@@ -3,6 +3,7 @@ using KupacMikroservis.Data;
 using KupacMikroservis.Entities;
 using KupacMikroservis.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -43,8 +44,8 @@ public class KupacRepository : IKupacRepository
 
     public List<KupacEntity> GetKupci()
     {
-
-        return context.kupci.ToList();
+        List<KupacEntity> list = new List<KupacEntity>();
+        return list;
 
         /*     PravnaLica = (from pl in PravnaLica select pl).ToList();
              FizLica = (from fl in FizLica select fl).ToList();
@@ -59,9 +60,11 @@ public class KupacRepository : IKupacRepository
 
     public KupacEntity GetKupacById(Guid kupacID)
     {
-        return context.kupci.FirstOrDefault(k => k.KupacId == kupacID);
+        //  return context.kupci.FirstOrDefault(k => k.KupacId == kupacID);
 
         // return Kupci.FirstOrDefault(k => k.KupacId == kupacID);
+
+        return new KupacEntity();
     }
 
     public void UpdateKupac(KupacEntity kupac)

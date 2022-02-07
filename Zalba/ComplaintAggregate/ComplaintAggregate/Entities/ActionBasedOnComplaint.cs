@@ -13,6 +13,8 @@ namespace ComplaintAggregate.Entities
         public bool JN_ide_u_krug_sa_novim_uslovima { get; set; }
         public bool JN_ide_u_krug_sa_starim_uslovima { get; set; }
         public bool JN_ne_ide_u_drugi_krug { get; set; }
+
+        public List<Complaint> Complaints { get; set; }
     
 }
 }
