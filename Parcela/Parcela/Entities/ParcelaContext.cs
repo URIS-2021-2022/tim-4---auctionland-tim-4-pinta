@@ -55,7 +55,9 @@ namespace Parcela.Entities
                     ObradivostID = Guid.Parse("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                     OblikSvojineID = Guid.Parse("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                     KulturaID = Guid.Parse("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
-                    KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
+                    KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                    KatastarskaOpstinaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                    KupacID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
                 });
 
             builder.Entity<ParcelaEntity>()
@@ -75,7 +77,9 @@ namespace Parcela.Entities
                     ObradivostID = Guid.Parse("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                     OblikSvojineID = Guid.Parse("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                     KulturaID = Guid.Parse("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
-                    KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
+                    KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                    KatastarskaOpstinaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                    KupacID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
                 });
 
             builder.Entity<ZasticenaZonaEntity>()

@@ -17,5 +17,7 @@ namespace AdresaServis.Data
         AdresaEntity UpdateAdresa(AdresaEntity adresa);
 
         void DeleteAdresa(Guid adresaID);
+
+        bool SaveChanges();
     }
 }

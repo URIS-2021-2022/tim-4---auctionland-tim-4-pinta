@@ -97,7 +97,9 @@ namespace Parcela.Migrations
                     ObradivostID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OblikSvojineID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     KulturaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    KlasaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    KlasaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    KatastarskaOpstinaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    KupacID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,13 +218,13 @@ namespace Parcela.Migrations
 
             migrationBuilder.InsertData(
                 table: "Parcele",
-                columns: new[] { "ParcelaID", "BrojListaNepokretnosti", "BrojParcele", "KlasaID", "KlasaStvarnoStanje", "KulturaID", "KulturaStvarnoStanje", "OblikSvojineID", "ObradivostID", "ObradivostStvarnoStanje", "OdvodnjavanjeID", "OdvodnjavanjeStvarnoStanje", "Povrsina", "ZasticenaZonaID", "ZasticenaZonaStvarnoStanje" },
-                values: new object[] { new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"), "12345", "12345", new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), "Klasa1", new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"), "Kukuruz", new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"), new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"), "Obradivost1", new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"), "Odvodnjavanje1", 1000, new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"), "ZasticenaZona1" });
+                columns: new[] { "ParcelaID", "BrojListaNepokretnosti", "BrojParcele", "KatastarskaOpstinaID", "KlasaID", "KlasaStvarnoStanje", "KulturaID", "KulturaStvarnoStanje", "KupacID", "OblikSvojineID", "ObradivostID", "ObradivostStvarnoStanje", "OdvodnjavanjeID", "OdvodnjavanjeStvarnoStanje", "Povrsina", "ZasticenaZonaID", "ZasticenaZonaStvarnoStanje" },
+                values: new object[] { new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"), "12345", "12345", new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), "Klasa1", new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"), "Kukuruz", new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"), new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"), "Obradivost1", new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"), "Odvodnjavanje1", 1000, new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"), "ZasticenaZona1" });
 
             migrationBuilder.InsertData(
                 table: "Parcele",
-                columns: new[] { "ParcelaID", "BrojListaNepokretnosti", "BrojParcele", "KlasaID", "KlasaStvarnoStanje", "KulturaID", "KulturaStvarnoStanje", "OblikSvojineID", "ObradivostID", "ObradivostStvarnoStanje", "OdvodnjavanjeID", "OdvodnjavanjeStvarnoStanje", "Povrsina", "ZasticenaZonaID", "ZasticenaZonaStvarnoStanje" },
-                values: new object[] { new Guid("1c7ea607-8ddb-493a-87fa-4bf5893e965b"), "54321", "54321", new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), "Klasa2", new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"), "Soja", new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"), new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"), "Obradivost2", new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"), "Odvodnjavanje2", 2000, new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"), "ZasticenaZona2" });
+                columns: new[] { "ParcelaID", "BrojListaNepokretnosti", "BrojParcele", "KatastarskaOpstinaID", "KlasaID", "KlasaStvarnoStanje", "KulturaID", "KulturaStvarnoStanje", "KupacID", "OblikSvojineID", "ObradivostID", "ObradivostStvarnoStanje", "OdvodnjavanjeID", "OdvodnjavanjeStvarnoStanje", "Povrsina", "ZasticenaZonaID", "ZasticenaZonaStvarnoStanje" },
+                values: new object[] { new Guid("1c7ea607-8ddb-493a-87fa-4bf5893e965b"), "54321", "54321", new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), "Klasa2", new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"), "Soja", new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"), new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"), new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"), "Obradivost2", new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"), "Odvodnjavanje2", 2000, new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"), "ZasticenaZona2" });
 
             migrationBuilder.InsertData(
                 table: "DeloviParcela",

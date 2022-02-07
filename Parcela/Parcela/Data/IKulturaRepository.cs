@@ -15,8 +15,10 @@ namespace Parcela.Data
 
         KulturaEntity CreateKultura(KulturaEntity kultura);
 
-        KulturaEntity UpdateKultura(KulturaEntity kultura);
+        void UpdateKultura(KulturaEntity kultura);
 
         void DeleteKultura(Guid kulturaID);
+
+        bool SaveChanges();
     }
 }

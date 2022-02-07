@@ -17,5 +17,7 @@ namespace AdresaServis.Data
         DrzavaEntity UpdateDrzava(DrzavaEntity drzava);
 
         void DeleteDrzava(Guid drzavaID);
+
+        bool SaveChanges();
     }
 }

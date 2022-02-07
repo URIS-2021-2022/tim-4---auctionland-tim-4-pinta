@@ -95,8 +95,9 @@ namespace Parcela.Controllers
             {
                 KulturaEntity kul = mapper.Map<KulturaEntity>(kultura);
                 KulturaEntity k = kulturaRepository.CreateKultura(kul);
-                string location = linkGenerator.GetPathByAction("GetKultura", "Kultura", new { kulturaID = k.KulturaID });
-                return Created(location, mapper.Map<KulturaDto>(k));
+                kulturaRepository.SaveChanges();
+                //string location = linkGenerator.GetPathByAction("GetKultura", "Kultura", new { kulturaID = k.KulturaID });
+                return Created("", mapper.Map<KulturaDto>(k));
             }
             catch
             {
@@ -151,12 +152,25 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (kulturaRepository.GetKulturaById(kultura.KulturaID) == null)
+                //if (kulturaRepository.GetKulturaById(kultura.KulturaID) == null)
+                //{
+                //    return NotFound();
+                //}
+                //KulturaEntity k = kulturaRepository.UpdateKultura(kultura);
+                //return Ok(mapper.Map<KulturaDto>(k));
+
+                //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
+                var oldKultura = kulturaRepository.GetKulturaById(kultura.KulturaID);
+                if (oldKultura == null)
                 {
-                    return NotFound();
+                    return NotFound(); //Ukoliko ne postoji vratiti status 404 (NotFound).
                 }
-                KulturaEntity k = kulturaRepository.UpdateKultura(kultura);
-                return Ok(mapper.Map<KulturaDto>(k));
+                KulturaEntity kulturaEntity = mapper.Map<KulturaEntity>(kultura);
+
+                mapper.Map(kulturaEntity, oldKultura); //Update objekta koji treba da sačuvamo u bazi                
+
+                kulturaRepository.SaveChanges(); //Perzistiramo promene
+                return Ok(mapper.Map<KulturaDto>(kulturaEntity));
             }
             catch (Exception)
             {

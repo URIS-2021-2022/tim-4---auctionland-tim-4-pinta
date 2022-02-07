@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Parcela.ServiceCals
 {
-    public interface ILoggerService
+    public interface IGatewayService
     {
-        void CreateLog(LogDto log);
+        Task<GatewayDto> GetUrl(string servis);
     }
 }
