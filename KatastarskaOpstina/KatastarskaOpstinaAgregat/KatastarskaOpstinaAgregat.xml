@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KatastarskaOpstinaAgregat</name>
+    </assembly>
+    <members>
+        <member name="T:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController">
+            <summary>
+            Sadrzi CRUD operacije za adresu
+            </summary>
+        </member>
+        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.GetSluzbeneListove">
+            <summary>
+            Vraca sve katastarske opstine na osnovu odredjenih filtera
+            </summary>
+            <returns>Lista katastarskih opstina</returns>
+            <response code = "200">Vraca listu katastarskih opstina</response>
+            <response code = "404">Nije pronadjena nijedna katastarska opstina</response>
+        </member>
+        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.GetKatastarskaOpstina(System.Guid)">
+            <summary>
+            Vraca jednan sluzbeni list na osnovu ID-ja
+            </summary>
+            <param name="katastarskaOpstinaID">ID sluzbeni list</param>
+            <returns>Trazeni sluzbeni list</returns>
+            <response code = "200">Vraca trazen sluzbeni list</response>
+            <response code = "404">Trazen sluzbeni list nije pronadjen</response>
+        </member>
+        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.CreateKatastarskaOpstina(KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaDto)">
+            <summary>
+            Kreira nov sluzbeni list
+            </summary>
+            <param name="katastarskaOpstina">Model sluzbeni list</param>
+            <returns>Potvrda o kreiranom sluzbenom listu</returns>
+            <remarks>
+            Primer zahteva za kreiranje novog sluzbenog lista \
+            POST /api/katastarskaOpstina \
+            { \
+            "Opstina": "Beograd", \
+            "BrojSluzbenogLista": 12, \
+            "DatumIzdavanjaSluzbenogLista": "27-01-2021", \
+            } 
+            </remarks>
+            <response code = "201">Vraca kreirano javno nadmetanje</response>
+            <response code = "500">Doslo je do greske na serveru prilikom kreiranja javnog nadmetanja</response>
+        </member>
+        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.DeleteKatastarskaOpstina(System.Guid)">
+            <summary>
+            Vrsi brisanje jednog sluzbenog lista na osnovu ID-ja
+            </summary>
+            <param name="katastarskaOpstinaID">ID katastarskaOpstina</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Sluzbeni list uspesno obrisano</response>
+            <response code="404">Nije pronadjen sluzbeni list za brisanje</response>
+            <response code="500">Doslo je do greske na serveru prilikom brisanja sluzbenog lista</response>
+        </member>
+        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.UpdateKatastarskaOpstina(KatastarskaOpstinaAgregat.Entities.KatastarskaOpstinaEntity)">
+            <summary>
+            Azurira jedan sluzbeni list
+            </summary>
+            <param name="katastarskaOpstina">Model sluzbenog lista koja se azurira</param>
+            <returns>Potvrdu o modifikovanom sluzbenom listu</returns>
+            <response code="200">Vraca azuriran sluzbeni list</response>
+            <response code="400">Sluzbeni list koji se azurira nije pronadjen</response>
+            <response code="500">Doslo je do greske prilikom azuriranja sluzbenog lista</response>
+        </member>
+        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.GetKatastarskaOpstinaOptions">
+            <summary>
+            Vraca opcije za rad sa javnim nadmetanjima
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:KatastarskaOpstinaAgregat.Entities.KatastarskaOpstinaContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Popunjava bazu podataka inicijalnim podacima
+            </summary>
+        </member>
+        <member name="T:KatastarskaOpstinaAgregat.Entities.KatastarskaOpstinaEntity">
+            <summary>
+            Entity za katastarsku opstinu
+            </summary>
+        </member>
+        <member name="P:KatastarskaOpstinaAgregat.Entities.KatastarskaOpstinaEntity.NazivKatastarskeOpstine">
+            <summary>
+            Nazvi katastarske opstine
+            </summary>
+        </member>
+        <member name="T:KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaDto">
+            <summary>
+            Dto za katastarsku opstinu
+            </summary>
+        </member>
+        <member name="P:KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaDto.NazivKatastarskeOpstine">
+            <summary>
+            Nazvi katastarske opstine
+            </summary>
+        </member>
+    </members>
+</doc>
