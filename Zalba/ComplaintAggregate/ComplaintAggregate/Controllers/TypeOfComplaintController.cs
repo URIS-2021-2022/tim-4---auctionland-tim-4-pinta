@@ -2,6 +2,7 @@
 using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
 using ComplaintAggregate.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -35,12 +36,12 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<List<TypeOfComplaintDTO>> GetTypeOfComplaints()
         {
-            List<TypeOfComplaint> ListOfComplaints = typeOfComplaintRepository.GetTypesOfComplaints();
-            if (ListOfComplaints == null || ListOfComplaints.Count == 0)
+            var types = typeOfComplaintRepository.GetTypesOfComplaints();
+            if (types == null || types.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(mapper.Map<List<TypeOfComplaintDTO>>(ListOfComplaints));
+            return Ok(mapper.Map<List<TypeOfComplaintDTO>>(types));
         }
 
 
@@ -50,7 +51,7 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<TypeOfComplaintDTO> GetTypeOfComplaintsById(Guid Tip_id)
         {
-            TypeOfComplaint complainAggregate = typeOfComplaintRepository.GetTypesOfComplaintsById(Tip_id);
+            var complainAggregate = typeOfComplaintRepository.GetTypesOfComplaintsById(Tip_id);
             if (complainAggregate == null)
             {
                 return NotFound();
@@ -62,15 +63,17 @@ namespace ComplaintAggregate.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
-        public ActionResult<TypeOfComplaintDTO> CreateTypeOfComplaint([FromBody] TypeOfComplaintDTO complain)
+        public ActionResult<TypeOfComplaintDTO> CreateTypeOfComplaint([FromBody] TypeOfComplaintDTO types)
         {
             try
             {
-                TypeOfComplaint comp = mapper.Map<TypeOfComplaint>(complain);
+                TypeOfComplaint comp = mapper.Map<TypeOfComplaint>(types);
 
                 TypeOfComplaint confirmation = typeOfComplaintRepository.CreateTypeOfComplaint(comp);
 
-                string location = linkGenerator.GetPathByAction("GetTypeOfComplaint", "TypesOfComplaints", new { Tip_id = confirmation.Tip_id });
+                typeOfComplaintRepository.SaveChanges();
+
+                string location = linkGenerator.GetPathByAction("GetTypeOfComplaintsById", "TypeOfComplaint", new { Tip_id = confirmation.Tip_id });
                 return Created(location, mapper.Map<TypeOfComplaintDTO>(confirmation));
             }
             catch
@@ -88,12 +91,13 @@ namespace ComplaintAggregate.Controllers
         {
             try
             {
-                TypeOfComplaint complaintModel = typeOfComplaintRepository.GetTypesOfComplaintsById(Tip_id);
+                var complaintModel = typeOfComplaintRepository.GetTypesOfComplaintsById(Tip_id);
                 if (complaintModel == null)
                 {
                     return NotFound();
                 }
                 typeOfComplaintRepository.DeleteTypeOfComplaint(Tip_id);
+                typeOfComplaintRepository.SaveChanges();
                 // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
                 return NoContent();
             }
@@ -108,18 +112,20 @@ namespace ComplaintAggregate.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
-        public ActionResult<TypeOfComplaintDTO> UpdateTypeOfComplaint(TypeOfComplaint type)
+        public ActionResult<TypeOfComplaintDTO> UpdateTypeOfComplaint(TypeOfComplaintDTO type)
         {
             try
             {
                 //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
-                if (typeOfComplaintRepository.GetTypesOfComplaintsById(type.Tip_id) == null)
+                var types = typeOfComplaintRepository.GetTypesOfComplaintsById(type.Tip_id);
+                if ( types == null)
                 {
                     return NotFound();
                 }
                 TypeOfComplaint cmp = mapper.Map<TypeOfComplaint>(type);
-                TypeOfComplaint complaint = typeOfComplaintRepository.UpdateTypeOfComplaint(cmp);
-                return Ok(mapper.Map<TypeOfComplaintDTO>(complaint));
+                mapper.Map(cmp, types);
+                typeOfComplaintRepository.SaveChanges();
+                return Ok(mapper.Map<TypeOfComplaintDTO>(types));
             }
             catch (Exception)
             {
@@ -128,6 +134,7 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpOptions]
+        [AllowAnonymous]
         public IActionResult GetTypeOfComplaintOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");

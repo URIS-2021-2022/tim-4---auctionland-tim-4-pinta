@@ -35,12 +35,12 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<List<StatusOfComplaintDTO>> GetStatus()
         {
-            List<StatusOfComplaint> ListOfComplaints = complainStatusRepository.GetStatus();
-            if (ListOfComplaints == null || ListOfComplaints.Count == 0)
+            var status = complainStatusRepository.GetStatus();
+            if (status == null || status.Count == 0)
             {
                 return NoContent();
             }
-            return Ok(mapper.Map<List<StatusOfComplaintDTO>>(ListOfComplaints));
+            return Ok(mapper.Map<List<StatusOfComplaintDTO>>(status));
         }
 
 
@@ -50,7 +50,7 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<StatusOfComplaintDTO> GetStatusById(Guid Status_zalbe)
         {
-            StatusOfComplaint complainAggregate = complainStatusRepository.GetStatusById(Status_zalbe);
+            var complainAggregate = complainStatusRepository.GetStatusById(Status_zalbe);
             if (complainAggregate == null)
             {
                 return NotFound();
@@ -69,6 +69,7 @@ namespace ComplaintAggregate.Controllers
                 StatusOfComplaint comp = mapper.Map<StatusOfComplaint>(complain);
 
                 StatusOfComplaint confirmation = complainStatusRepository.CreateStatus(comp);
+                complainStatusRepository.SaveChanges();
                 // Dobar API treba da vrati lokator gde se taj resurs nalazi
                 string location = linkGenerator.GetPathByAction("GetStatus", "StatusOfComplaint", new { Status_zalbe = confirmation.Status_zalbe });
                 return Created(location, mapper.Map<StatusOfComplaintDTO>(confirmation));
@@ -88,12 +89,13 @@ namespace ComplaintAggregate.Controllers
         {
             try
             {
-                StatusOfComplaint complaintModel = complainStatusRepository.GetStatusById(Status_zalbe);
+                var complaintModel = complainStatusRepository.GetStatusById(Status_zalbe);
                 if (complaintModel == null)
                 {
                     return NotFound();
                 }
                 complainStatusRepository.DeleteStatus(Status_zalbe);
+                complainStatusRepository.SaveChanges();
                 // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
                 return NoContent();
             }
@@ -108,18 +110,20 @@ namespace ComplaintAggregate.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
-        public ActionResult<StatusOfComplaintDTO> UpdateStatus(StatusOfComplaint status)
+        public ActionResult<StatusOfComplaintDTO> UpdateStatus(StatusOfComplaintDTO status)
         {
             try
             {
                 //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
-                if (complainStatusRepository.GetStatusById(status.Status_zalbe) == null)
+                var updateStatus = complainStatusRepository.GetStatusById(status.Status_zalbe);
+                if ( updateStatus== null)
                 {
                     return NotFound();
                 }
                 StatusOfComplaint cmp = mapper.Map<StatusOfComplaint>(status);
-                StatusOfComplaint complaint = complainStatusRepository.UpdateStatus(cmp);
-                return Ok(mapper.Map<StatusOfComplaintDTO>(complaint));
+                mapper.Map(cmp, updateStatus); //update objekta nad kojim su izvrsene promjene
+                complainStatusRepository.SaveChanges();
+                return Ok(mapper.Map<StatusOfComplaintDTO>(updateStatus));
             }
             catch (Exception)
             {

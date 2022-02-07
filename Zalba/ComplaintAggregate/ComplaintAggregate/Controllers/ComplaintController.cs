@@ -3,6 +3,7 @@ using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
 using ComplaintAggregate.Models;
 using ComplaintAggregate.ServiceCalls;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -45,8 +46,8 @@ namespace ComplaintAggregate.Controllers
             model.HttpMethod = "GET metoda";
             model.NameOfTheService = "Zalba mikroservis";
                       
-            List<Complaint> ListOfComplaints = complainAggregateRepository.GetComplaint();
-            if (ListOfComplaints == null || ListOfComplaints.Count == 0)
+            var complaints = complainAggregateRepository.GetComplaint();
+            if (complaints == null || complaints.Count == 0)
             {
                 model.Level = "Warn";
                 model.Message = "Nema sadrzaja";
@@ -57,7 +58,7 @@ namespace ComplaintAggregate.Controllers
             model.Level = "Info";
             model.Message = "Uspijesan zahtjev";
             fileService.ConnectLogger(model);
-            return Ok(mapper.Map<List<ComplaintDTO>>(ListOfComplaints));
+            return Ok(mapper.Map<List<ComplaintDTO>>(complaints));
         }
 
         [HttpGet("{complaintId}")]
@@ -68,8 +69,8 @@ namespace ComplaintAggregate.Controllers
         {
             model.HttpMethod = "GET/id metoda";
             model.NameOfTheService = "Zalba mikroservis";
-           
-            Complaint complainAggregate = complainAggregateRepository.GetComplaintById(ZalbaID);
+
+            var complainAggregate = complainAggregateRepository.GetComplaintById(ZalbaID);
             if (complainAggregate == null)
             {
                 model.Level = "Warn";
@@ -97,6 +98,7 @@ namespace ComplaintAggregate.Controllers
                 Complaint comp = mapper.Map<Complaint>(complain);
 
                 Complaint confirmation = complainAggregateRepository.CreateComplaint(comp);
+                complainAggregateRepository.SaveChanges();
                 // Dobar API treba da vrati lokator gde se taj resurs nalazi
                 string location = linkGenerator.GetPathByAction("GetComplaint", "Complaint", new { ZalbaID = confirmation.ZalbaID });
                 model.Level = "Info";
@@ -125,7 +127,7 @@ namespace ComplaintAggregate.Controllers
             fileService.ConnectLogger(model);
             try
             {
-                Complaint complaintModel = complainAggregateRepository.GetComplaintById(ZalbaId);
+                var complaintModel = complainAggregateRepository.GetComplaintById(ZalbaId);
                 if (complaintModel == null)
                 {
                     model.Level = "Warn";
@@ -137,6 +139,7 @@ namespace ComplaintAggregate.Controllers
                 model.Message = "Uspijesan zahtjev"; 
                 fileService.ConnectLogger(model);
                 complainAggregateRepository.DeleteComplaint(ZalbaId);
+                complainAggregateRepository.SaveChanges();
                 // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
 
                 return NoContent();
@@ -162,8 +165,9 @@ namespace ComplaintAggregate.Controllers
            
             try
             {
+                var complaintCheck = complainAggregateRepository.GetComplaintById(complain.ZalbaID);
                 //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
-                if (complainAggregateRepository.GetComplaintById(complain.ZalbaID) == null)
+                if (complaintCheck == null)
                 {
                     model.Level = "Warn";
                     model.Message = "Nije pronadjeno";
@@ -171,11 +175,12 @@ namespace ComplaintAggregate.Controllers
                     return NotFound();
                 }
                 Complaint cmp = mapper.Map<Complaint>(complain);
-                Complaint complaint = complainAggregateRepository.UpdateComplaint(cmp);
+                mapper.Map(cmp,complaintCheck);
                 model.Level = "Info";
                 model.Message = "Uspijesan zahtjev";
                 fileService.ConnectLogger(model);
-                return Ok(mapper.Map<ComplaintDTO>(complaint));
+                complainAggregateRepository.SaveChanges();
+                return Ok(mapper.Map<ComplaintDTO>(complaintCheck));
             }
             catch (Exception)
             {
@@ -186,7 +191,10 @@ namespace ComplaintAggregate.Controllers
             }
         }
 
+      
+
         [HttpOptions]
+        [AllowAnonymous]
         public IActionResult GetComplaintOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
