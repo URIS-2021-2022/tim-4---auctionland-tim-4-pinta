@@ -43,6 +43,7 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<List<ComplaintDTO>> GetComplaints()
         {
+          //  fileService.FileAComplaint(Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0")); //pozivanje Mikroservisa kupac
             model.HttpMethod = "GET metoda";
             model.NameOfTheService = "Zalba mikroservis";
                       

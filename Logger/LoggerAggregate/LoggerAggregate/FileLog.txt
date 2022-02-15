@@ -16,3 +16,7 @@
 2022-02-07 14:28:03.6938 WARN Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
 2022-02-07 14:34:30.6111 ERROR Naziv metode: POST metoda,Naziv servisa: Zalba mikroservis,poruka: Greska
 2022-02-07 14:34:45.6560 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-11 22:29:14.3770 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-11 22:31:06.0022 ERROR Naziv metode: POST metoda,Naziv servisa: Zalba mikroservis,poruka: Greska
+2022-02-11 22:32:28.5522 ERROR Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: 
+2022-02-11 22:32:31.1296 WARN Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
