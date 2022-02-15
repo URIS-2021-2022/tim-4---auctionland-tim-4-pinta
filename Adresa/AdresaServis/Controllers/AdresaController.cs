@@ -99,6 +99,7 @@ namespace AdresaServis.Controllers
             {
                 AdresaEntity adr = mapper.Map<AdresaEntity>(adresa);
                 AdresaEntity a = adresaRepository.CreateAdresa(adr);
+                adresaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetAdresa", "Adresa", new { adresaID = a.AdresaID });
                 return Created(location, mapper.Map<AdresaDto>(a));
             }
@@ -130,6 +131,7 @@ namespace AdresaServis.Controllers
                     return NotFound();
                 }
                 adresaRepository.DeleteAdresa(adresaID);
+                adresaRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -155,12 +157,17 @@ namespace AdresaServis.Controllers
         {
             try
             {
-                if (adresaRepository.GetAdresaById(adresa.AdresaID) == null)
+                var oldAdresa = adresaRepository.GetAdresaById(adresa.AdresaID);
+                if (oldAdresa == null)
                 {
                     return NotFound();
                 }
-                AdresaEntity a = adresaRepository.UpdateAdresa(adresa);
-                return Ok(mapper.Map<AdresaDto>(a));
+                AdresaEntity adresaEntity = mapper.Map<AdresaEntity>(adresa);
+
+                mapper.Map(adresaEntity, oldAdresa);
+
+                adresaRepository.SaveChanges();
+                return Ok(mapper.Map<AdresaDto>(adresaEntity));
             }
             catch (Exception)
             {

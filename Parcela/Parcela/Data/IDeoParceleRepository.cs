@@ -15,8 +15,10 @@ namespace Parcela.Data
 
         DeoParceleEntity CreateDeoParcele(DeoParceleEntity deoParcele);
 
-        DeoParceleEntity UpdateDeoParcele(DeoParceleEntity deoParcele);
+        void UpdateDeoParcele(DeoParceleEntity deoParcele);
 
         void DeleteDeoParcele(Guid deoParceleID);
+
+        bool SaveChanges();
     }
 }

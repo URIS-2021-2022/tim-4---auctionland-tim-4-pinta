@@ -94,6 +94,7 @@ namespace Parcela.Controllers
             {
                 ZasticenaZonaEntity zaz = mapper.Map<ZasticenaZonaEntity>(zasticenaZona);
                 ZasticenaZonaEntity z = zasticenaZonaRepository.CreateZasticenaZona(zaz);
+                zasticenaZonaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetZasticenaZona", "ZasticenaZona", new { zasticenaZonaID = z.ZasticenaZonaID });
                 return Created(location, mapper.Map<ZasticenaZonaDto>(z));
             }
@@ -122,6 +123,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 zasticenaZonaRepository.DeleteZasticenaZona(zasticenaZonaID);
+                zasticenaZonaRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -147,12 +149,17 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID) == null)
+                var oldZasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID);
+                if (oldZasticenaZona == null)
                 {
                     return NotFound();
                 }
-                ZasticenaZonaEntity z = zasticenaZonaRepository.UpdateZasticenaZona(zasticenaZona);
-                return Ok(mapper.Map<ZasticenaZonaDto>(z));
+                ZasticenaZonaEntity zasticenaZonaEntity = mapper.Map<ZasticenaZonaEntity>(zasticenaZona);
+
+                mapper.Map(zasticenaZonaEntity, oldZasticenaZona);
+
+                zasticenaZonaRepository.SaveChanges();
+                return Ok(mapper.Map<ZasticenaZonaDto>(zasticenaZonaEntity));
             }
             catch (Exception)
             {

@@ -27,8 +27,7 @@ namespace Parcela.Data
         {
             odvodnjavanje.OdvodnjavanjeID = Guid.NewGuid();
             context.Odvodnjavanja.Add(odvodnjavanje);
-            OdvodnjavanjeEntity o = GetOdvodnjavanjeById(odvodnjavanje.OdvodnjavanjeID);
-            return o;
+            return odvodnjavanje;
         }
 
         public void DeleteOdvodnjavanje(Guid odvodnjavanjeID)
@@ -46,9 +45,9 @@ namespace Parcela.Data
             return context.Odvodnjavanja.FirstOrDefault(o => o.OdvodnjavanjeID == odvodnjavanjeID);
         }
 
-        public OdvodnjavanjeEntity UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje)
+        public void UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

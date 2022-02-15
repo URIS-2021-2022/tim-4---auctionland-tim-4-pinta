@@ -107,9 +107,9 @@ namespace Parcela.Controllers
             {
                 ParcelaEntity par = mapper.Map<ParcelaEntity>(parcela);
                 ParcelaEntity p = parcelaRepository.CreateParcela(par);
-                //string location = linkGenerator.GetPathByAction("GetParcela", "Parcela", new { parcelaID = p.ParcelaID });
-                //return Created(location, mapper.Map<ParcelaDto>(p));
-                return Created("", mapper.Map<ParcelaDto>(p));
+                parcelaRepository.SaveChanges();
+                string location = linkGenerator.GetPathByAction("GetParcela", "Parcela", new { parcelaID = p.ParcelaID });
+                return Created(location, mapper.Map<ParcelaDto>(p));
             }
             catch
             {
@@ -139,6 +139,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 parcelaRepository.DeleteParcela(parcelaID);
+                parcelaRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -164,12 +165,17 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (parcelaRepository.GetParcelaById(parcela.ParcelaID) == null)
+                var oldParcela = parcelaRepository.GetParcelaById(parcela.ParcelaID);
+                if (oldParcela == null)
                 {
-                    return NotFound(); 
+                    return NotFound();
                 }
-                ParcelaEntity p = parcelaRepository.UpdateParcela(parcela);
-                return Ok(mapper.Map<ParcelaDto>(p));
+                ParcelaEntity parcelaEntity = mapper.Map<ParcelaEntity>(parcela);
+
+                mapper.Map(parcelaEntity, oldParcela);
+
+                parcelaRepository.SaveChanges();
+                return Ok(mapper.Map<ParcelaDto>(parcelaEntity));
             }
             catch (Exception)
             {

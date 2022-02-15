@@ -95,6 +95,7 @@ namespace Parcela.Controllers
             {
                 ObradivostEntity obr = mapper.Map<ObradivostEntity>(obradivost);
                 ObradivostEntity o = obradivostRepository.CreateObradivost(obr);
+                obradivostRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetObradivost", "Obradivost", new { obradivostID = o.ObradivostID });
                 return Created(location, mapper.Map<ObradivostDto>(o));
             }
@@ -126,6 +127,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 obradivostRepository.DeleteObradivost(obradivostID);
+                obradivostRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -151,12 +153,17 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (obradivostRepository.GetObradivostById(obradivost.ObradivostID) == null)
+                var oldObradivost = obradivostRepository.GetObradivostById(obradivost.ObradivostID);
+                if (oldObradivost == null)
                 {
                     return NotFound();
                 }
-                ObradivostEntity o = obradivostRepository.UpdateObradivost(obradivost);
-                return Ok(mapper.Map<ObradivostDto>(o));
+                ObradivostEntity obradivostEntity = mapper.Map<ObradivostEntity>(obradivost);
+
+                mapper.Map(obradivostEntity, oldObradivost);
+
+                obradivostRepository.SaveChanges();
+                return Ok(mapper.Map<ObradivostDto>(obradivostEntity));
             }
             catch (Exception)
             {

@@ -791,6 +791,11 @@
             Povrsina dela parcele
             </summary>
         </member>
+        <member name="P:Parcela.Models.DeoParceleDto.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Models.KlasaDto">
             <summary>
             DTO za klasu

@@ -94,6 +94,7 @@ namespace Parcela.Controllers
             {
                 OdvodnjavanjeEntity odv = mapper.Map<OdvodnjavanjeEntity>(odvodnjavanje);
                 OdvodnjavanjeEntity o = odvodnjavanjeRepository.CreateOdvodnjavanje(odv);
+                odvodnjavanjeRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetOdvodnjavanje", "Odvodnjavanje", new { odvodnjavanjeID = o.OdvodnjavanjeID });
                 return Created(location, mapper.Map<OdvodnjavanjeDto>(o));
             }
@@ -122,6 +123,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 odvodnjavanjeRepository.DeleteOdvodnjavanje(odvodnjavanjeID);
+                odvodnjavanjeRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -147,12 +149,17 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanje.OdvodnjavanjeID) == null)
+                var oldOdvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanje.OdvodnjavanjeID);
+                if (oldOdvodnjavanje == null)
                 {
                     return NotFound();
                 }
-                OdvodnjavanjeEntity o = odvodnjavanjeRepository.UpdateOdvodnjavanje(odvodnjavanje);
-                return Ok(mapper.Map<OdvodnjavanjeDto>(o));
+                OdvodnjavanjeEntity odvodnjavanjeEntity = mapper.Map<OdvodnjavanjeEntity>(odvodnjavanje);
+
+                mapper.Map(odvodnjavanjeEntity, oldOdvodnjavanje);
+
+                odvodnjavanjeRepository.SaveChanges();
+                return Ok(mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeEntity));
             }
             catch (Exception)
             {

@@ -95,6 +95,7 @@ namespace Parcela.Controllers
             {
                 OblikSvojineEntity obl = mapper.Map<OblikSvojineEntity>(oblikSvojine);
                 OblikSvojineEntity os = oblikSvojineRepository.CreateOblikSvojine(obl);
+                oblikSvojineRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetOblikSvojine", "OblikSvojine", new { oblikSvojineID = os.OblikSvojineID });
                 return Created(location, mapper.Map<OblikSvojineDto>(os));
             }
@@ -126,6 +127,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 oblikSvojineRepository.DeleteOblikSvojine(oblikSvojineID);
+                oblikSvojineRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -151,12 +153,17 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (oblikSvojineRepository.GetOblikSvojineById(oblikSvojine.OblikSvojineID) == null)
+                var oldOblikSvojine = oblikSvojineRepository.GetOblikSvojineById(oblikSvojine.OblikSvojineID);
+                if (oldOblikSvojine == null)
                 {
                     return NotFound();
                 }
-                OblikSvojineEntity os = oblikSvojineRepository.UpdateOblikSvojine(oblikSvojine);
-                return Ok(mapper.Map<OblikSvojineDto>(os));
+                OblikSvojineEntity oblikSvojineEntity = mapper.Map<OblikSvojineEntity>(oblikSvojine);
+
+                mapper.Map(oblikSvojineEntity, oldOblikSvojine);
+
+                oblikSvojineRepository.SaveChanges();
+                return Ok(mapper.Map<OblikSvojineDto>(oblikSvojineEntity));
             }
             catch (Exception)
             {

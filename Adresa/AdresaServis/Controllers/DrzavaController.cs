@@ -95,6 +95,7 @@ namespace AdresaServis.Controllers
             {
                 DrzavaEntity drz = mapper.Map<DrzavaEntity>(drzava);
                 DrzavaEntity d = drzavaRepository.CreateDrzava(drz);
+                drzavaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetDrzava", "Drzava", new { drzavaID = d.DrzavaID });
                 return Created(location, mapper.Map<DrzavaDto>(d));
             }
@@ -126,6 +127,7 @@ namespace AdresaServis.Controllers
                     return NotFound();
                 }
                 drzavaRepository.DeleteDrzava(drzavaID);
+                drzavaRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -151,12 +153,17 @@ namespace AdresaServis.Controllers
         {
             try
             {
-                if (drzavaRepository.GetDrzavaById(drzava.DrzavaID) == null)
+                var oldDrzava = drzavaRepository.GetDrzavaById(drzava.DrzavaID);
+                if (oldDrzava == null)
                 {
                     return NotFound();
                 }
-                DrzavaEntity d = drzavaRepository.UpdateDrzava(drzava);
-                return Ok(mapper.Map<DrzavaDto>(d));
+                DrzavaEntity drzavaEntity = mapper.Map<DrzavaEntity>(drzava);
+
+                mapper.Map(drzavaEntity, oldDrzava);
+
+                drzavaRepository.SaveChanges();
+                return Ok(mapper.Map<DrzavaDto>(drzavaEntity));
             }
             catch (Exception)
             {

@@ -15,8 +15,10 @@ namespace Parcela.Data
 
         OdvodnjavanjeEntity CreateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje);
 
-        OdvodnjavanjeEntity UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje);
+        void UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje);
 
         void DeleteOdvodnjavanje(Guid odvodnjavanjeID);
+
+        bool SaveChanges();
     }
 }

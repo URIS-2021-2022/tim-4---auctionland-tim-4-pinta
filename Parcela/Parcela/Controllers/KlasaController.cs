@@ -95,6 +95,7 @@ namespace Parcela.Controllers
             {
                 KlasaEntity kla = mapper.Map<KlasaEntity>(klasa);
                 KlasaEntity k = klasaRepository.CreateKlasa(kla);
+                klasaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetKlasa", "Klasa", new { klasaID = k.KlasaID });
                 return Created(location, mapper.Map<KlasaDto>(klasa));
             }
@@ -126,6 +127,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 klasaRepository.DeleteKlasa(klasaID);
+                klasaRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -151,12 +153,17 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (klasaRepository.GetKlasaById(klasa.KlasaID) == null)
+                var oldKlasa = klasaRepository.GetKlasaById(klasa.KlasaID);
+                if (oldKlasa == null)
                 {
                     return NotFound();
                 }
-                KlasaEntity k = klasaRepository.UpdateKlasa(klasa);
-                return Ok(mapper.Map<KlasaDto>(k));
+                KlasaEntity klasaEntity = mapper.Map<KlasaEntity>(klasa);
+
+                mapper.Map(klasaEntity, oldKlasa);
+
+                klasaRepository.SaveChanges();
+                return Ok(mapper.Map<KlasaDto>(klasaEntity));
             }
             catch (Exception)
             {

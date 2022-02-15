@@ -44,8 +44,7 @@ namespace AdresaServis.Data
         {
             drzava.DrzavaID = Guid.NewGuid();
             context.Drzave.Add(drzava);
-            DrzavaEntity d = GetDrzavaById(drzava.DrzavaID);
-            return d;
+            return drzava;
         }
 
         /// <summary>
@@ -81,9 +80,9 @@ namespace AdresaServis.Data
         /// </summary>
         /// <param name="drzava"></param>
         /// <returns></returns>
-        public DrzavaEntity UpdateDrzava(DrzavaEntity drzava)
+        public void UpdateDrzava(DrzavaEntity drzava)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }

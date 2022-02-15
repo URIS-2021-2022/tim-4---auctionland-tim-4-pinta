@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
 using Parcela.Entities;
 using Parcela.Models;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,16 @@ namespace Parcela.Controllers
     public class KulturaController : ControllerBase
     {
         private readonly IKulturaRepository kulturaRepository;
+        private readonly IGatewayService gatewayService;
+        private readonly ILoggerService loggerService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
-        public KulturaController(IKulturaRepository kulturaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public KulturaController(IKulturaRepository kulturaRepository, IGatewayService gatewayService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.kulturaRepository = kulturaRepository;
+            this.gatewayService = gatewayService;
+            this.loggerService = loggerService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }
@@ -48,6 +53,8 @@ namespace Parcela.Controllers
             {
                 return NoContent();
             }
+            LogModel log = new LogModel("GET", "Parcela", "Info", "Vracanje svi kultura");
+            loggerService.CreateLog(log);
             return Ok(mapper.Map<List<KulturaDto>>(kulture));
         }
 
@@ -68,6 +75,8 @@ namespace Parcela.Controllers
             {
                 return NotFound();
             }
+            //Task<GatewayDto> gat = gatewayService.GetUrl("korisnik");
+            //kultura.KulturaNaziv = gat.Result.Url; 
             return Ok(mapper.Map<KulturaDto>(kultura));
         }
 
@@ -95,9 +104,9 @@ namespace Parcela.Controllers
             {
                 KulturaEntity kul = mapper.Map<KulturaEntity>(kultura);
                 KulturaEntity k = kulturaRepository.CreateKultura(kul);
-                kulturaRepository.SaveChanges();
-                //string location = linkGenerator.GetPathByAction("GetKultura", "Kultura", new { kulturaID = k.KulturaID });
-                return Created("", mapper.Map<KulturaDto>(k));
+                kulturaRepository.SaveChanges();                    
+                string location = linkGenerator.GetPathByAction("GetKultura", "Kultura", new { kulturaID = k.KulturaID });
+                return Created(location, mapper.Map<KulturaDto>(k));
             }
             catch
             {
@@ -127,6 +136,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 kulturaRepository.DeleteKultura(kulturaID);
+                kulturaRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -152,24 +162,16 @@ namespace Parcela.Controllers
         {
             try
             {
-                //if (kulturaRepository.GetKulturaById(kultura.KulturaID) == null)
-                //{
-                //    return NotFound();
-                //}
-                //KulturaEntity k = kulturaRepository.UpdateKultura(kultura);
-                //return Ok(mapper.Map<KulturaDto>(k));
-
-                //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
                 var oldKultura = kulturaRepository.GetKulturaById(kultura.KulturaID);
                 if (oldKultura == null)
                 {
-                    return NotFound(); //Ukoliko ne postoji vratiti status 404 (NotFound).
+                    return NotFound(); 
                 }
                 KulturaEntity kulturaEntity = mapper.Map<KulturaEntity>(kultura);
 
-                mapper.Map(kulturaEntity, oldKultura); //Update objekta koji treba da sačuvamo u bazi                
+                mapper.Map(kulturaEntity, oldKultura);                
 
-                kulturaRepository.SaveChanges(); //Perzistiramo promene
+                kulturaRepository.SaveChanges();
                 return Ok(mapper.Map<KulturaDto>(kulturaEntity));
             }
             catch (Exception)

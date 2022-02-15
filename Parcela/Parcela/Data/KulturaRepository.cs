@@ -27,8 +27,7 @@ namespace Parcela.Data
         {
             kultura.KulturaID = Guid.NewGuid();
             context.Kulture.Add(kultura);
-            KulturaEntity k = GetKulturaById(kultura.KulturaID);
-            return k;
+            return kultura;
         }
 
         public void DeleteKultura(Guid kulturaID)

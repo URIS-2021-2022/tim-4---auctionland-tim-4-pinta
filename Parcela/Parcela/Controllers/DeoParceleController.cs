@@ -96,6 +96,7 @@ namespace Parcela.Controllers
             {
                 DeoParceleEntity deop = mapper.Map<DeoParceleEntity>(deoParcele);
                 DeoParceleEntity dp = deoParceleRepository.CreateDeoParcele(deop);
+                deoParceleRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetDeoParcele", "DeoParcele", new { deoParceleID = dp.DeoParceleID });
                 return Created(location, mapper.Map<DeoParceleDto>(dp));
             }
@@ -127,6 +128,7 @@ namespace Parcela.Controllers
                     return NotFound();
                 }
                 deoParceleRepository.DeleteDeoParcele(deoParceleID);
+                deoParceleRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -152,12 +154,17 @@ namespace Parcela.Controllers
         {
             try
             {
-                if (deoParceleRepository.GetDeoParceleById(deoParcele.DeoParceleID) == null)
+                var oldDeoParcele = deoParceleRepository.GetDeoParceleById(deoParcele.DeoParceleID);
+                if (oldDeoParcele == null)
                 {
                     return NotFound();
                 }
-                DeoParceleEntity dp = deoParceleRepository.UpdateDeoParcele(deoParcele);
-                return Ok(mapper.Map<DeoParceleDto>(dp));
+                DeoParceleEntity deoParceleEntity = mapper.Map<DeoParceleEntity>(deoParcele);
+
+                mapper.Map(deoParceleEntity, oldDeoParcele);
+
+                deoParceleRepository.SaveChanges();
+                return Ok(mapper.Map<DeoParceleDto>(deoParceleEntity));
             }
             catch (Exception)
             {

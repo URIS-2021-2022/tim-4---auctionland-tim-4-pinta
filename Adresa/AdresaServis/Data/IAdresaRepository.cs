@@ -14,7 +14,7 @@ namespace AdresaServis.Data
 
         AdresaEntity CreateAdresa(AdresaEntity adresa);
 
-        AdresaEntity UpdateAdresa(AdresaEntity adresa);
+        void UpdateAdresa(AdresaEntity adresa);
 
         void DeleteAdresa(Guid adresaID);
 

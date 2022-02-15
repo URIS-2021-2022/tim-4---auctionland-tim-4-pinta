@@ -8,6 +8,6 @@ namespace Parcela.ServiceCals
 {
     public interface ILoggerService
     {
-        void CreateLog(LogDto log);
+        void CreateLog(LogModel log);
     }
 }

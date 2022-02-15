@@ -44,8 +44,7 @@ namespace AdresaServis.Data
         {
             adresa.AdresaID = Guid.NewGuid();
             context.Adrese.Add(adresa);
-            AdresaEntity a = GetAdresaById(adresa.AdresaID);
-            return a;
+            return adresa;
         }
 
         /// <summary>
@@ -81,9 +80,9 @@ namespace AdresaServis.Data
         /// </summary>
         /// <param name="adresa"></param>
         /// <returns></returns>
-        public AdresaEntity UpdateAdresa(AdresaEntity adresa)
+        public void UpdateAdresa(AdresaEntity adresa)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }
