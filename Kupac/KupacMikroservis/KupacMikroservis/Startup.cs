@@ -21,6 +21,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using KupacMikroservis.Entities;
 using Microsoft.EntityFrameworkCore;
+using KupacMikroservis.ServiceCalls;
 
 namespace KupacMikroservis
 {
@@ -39,14 +40,17 @@ namespace KupacMikroservis
 
             services.AddControllers();
 
-            services.AddSingleton<IPrioritetRepository, PrioritetRepository>();
-            services.AddSingleton<IKupacRepository, KupacRepository>();
-            services.AddSingleton<IFizickoLiceRepository, FizickoLiceRepository>();
-            services.AddSingleton<IPravnoLiceRepository, PravnoLiceRepository>();
-            services.AddSingleton<IOvlascenoLiceRepository, OvlascenoLiceRepository>();
-            services.AddSingleton<IKontaktOsobaRepository, KontaktOsobaRepository>();
+            services.AddScoped<IPrioritetRepository, PrioritetRepository>();
+            services.AddScoped<IKupacRepository, KupacRepository>();
+            services.AddScoped<IFizickoLiceRepository, FizickoLiceRepository>();
+            services.AddScoped<IPravnoLiceRepository, PravnoLiceRepository>();
+            services.AddScoped<IOvlascenoLiceRepository, OvlascenoLiceRepository>();
+            services.AddScoped<IKontaktOsobaRepository, KontaktOsobaRepository>();
+            services.AddScoped<IAdresaService,AdresaService>();
+            services.AddScoped<IUplataService, UplataService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -59,6 +63,37 @@ namespace KupacMikroservis
                     ValidAudience = Configuration["Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
+            });
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc("KupacMikroservisOpenApiSpecification",
+                    new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "KupacMikroservis API",
+                        Version = "1",
+                        Description = "API sluzi za rad sa objektima tipa Kupac",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "Stefan Fink",
+                            Email = "stefan.fink123@gmail.com",
+                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                        },
+                        License = new Microsoft.OpenApi.Models.OpenApiLicense
+                        {
+                            Name = "FTN licence",
+                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                        },
+                        TermsOfService = new Uri("http://www.ftn.uns.ac.rs/")
+                    });
+
+               
+                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+
+        
+                var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
+
+               
+            //    setupAction.IncludeXmlComments(xmlCommentsPath);
             });
             //    services.AddSwaggerGen(c =>
             //   {
@@ -86,7 +121,7 @@ namespace KupacMikroservis
                     appBuilder.Run(async context =>
                     {
                         context.Response.StatusCode = 500;
-                        await context.Response.WriteAsync("Došlo je do neočekivane greške. Molimo pokušajte kasnije.");
+                        await context.Response.WriteAsync("Došlo je do greške.");
                     });
                 });
             }
@@ -95,6 +130,14 @@ namespace KupacMikroservis
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/KupacMikroservisOpenApiSpecification/swagger.json", "Kupac Mikroservis API");
+                setupAction.RoutePrefix = "swagger";
+            });
 
             app.UseAuthorization();
 

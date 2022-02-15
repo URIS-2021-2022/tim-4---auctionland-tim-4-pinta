@@ -59,6 +59,12 @@ public class OvlascenoLiceRepository : IOvlascenoLiceRepository
         //  return OvlascenaLica.FirstOrDefault(ol => ol.OvlascenoLiceId == ovlascenoliceID);
     }
 
+
+    public OvlascenoLiceRepository(KupacContext context, IMapper mapper)
+    {
+        this.context = context;
+        this.mapper = mapper;
+    }
     public void UpdateOvlascenoLice(OvlascenoLiceEntity ovlascenolice)
     {
       /*  OvlascenoLiceEntity ol = GetOvlascenoLiceById(ovlascenolice.OvlascenoLiceId);

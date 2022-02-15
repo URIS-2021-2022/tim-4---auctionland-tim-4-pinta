@@ -15,7 +15,11 @@ public class FizickoLiceRepository : IFizickoLiceRepository
 
     private readonly IMapper mapper;
 
-
+    public FizickoLiceRepository(KupacContext context, IMapper mapper)
+    {
+        this.context = context;
+        this.mapper = mapper;
+    }
     public bool SaveChanges()
     {
         return context.SaveChanges() > 0;
@@ -60,18 +64,20 @@ public class FizickoLiceRepository : IFizickoLiceRepository
 
     public void UpdateFizickoLice(FizickoLiceEntity fizlice)
     {
-       /* FizickoLiceEntity fl = GetFizickoLiceById(fizlice.KupacId);
+        /* FizickoLiceEntity fl = GetFizickoLiceById(fizlice.KupacId);
 
-         fl.Naziv = fizlice.Naziv;
-        fl.BrojTelefona1 = fizlice.BrojTelefona1;
-        fl.BrojTelefona2 = fizlice.BrojTelefona2;
-        fl.Email = fizlice.Email;
-        fl.BrojRacuna = fizlice.BrojRacuna;
-        fl.ImaZabranu = fizlice.ImaZabranu;
-        fl.DatumPocetkaZabrane = fizlice.DatumPocetkaZabrane;
-        fl.DuzinaTrajanjaZabraneUGodinama = fizlice.DuzinaTrajanjaZabraneUGodinama;
-        fl.DatumPrestankaZabrane = fizlice.DatumPrestankaZabrane;
-        fl.JMBG = fizlice.JMBG;
-        return fl;*/
+          fl.Naziv = fizlice.Naziv;
+         fl.BrojTelefona1 = fizlice.BrojTelefona1;
+         fl.BrojTelefona2 = fizlice.BrojTelefona2;
+         fl.Email = fizlice.Email;
+         fl.BrojRacuna = fizlice.BrojRacuna;
+         fl.ImaZabranu = fizlice.ImaZabranu;
+         fl.DatumPocetkaZabrane = fizlice.DatumPocetkaZabrane;
+         fl.DuzinaTrajanjaZabraneUGodinama = fizlice.DuzinaTrajanjaZabraneUGodinama;
+         fl.DatumPrestankaZabrane = fizlice.DatumPrestankaZabrane;
+         fl.JMBG = fizlice.JMBG;
+         return fl;*/
+
+        
     }
 }

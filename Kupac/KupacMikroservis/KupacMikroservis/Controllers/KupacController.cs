@@ -8,55 +8,111 @@ using System.Threading.Tasks;
 using KupacMikroservis.Data;
 using KupacMikroservis.Models;
 using AutoMapper;
+using KupacMikroservis.ServiceCalls;
 
 namespace KupacMikroservis.Controllers
 {
-
+    /// <summary>
+    /// Sadrzi CRUD operacije za kupce
+    /// </summary>
     [ApiController]
     [Route("api/kupac")]
     public class KupacController : ControllerBase
     {
-        private readonly IKupacRepository kupacRepository;
+        // private readonly IKupacRepository kupacRepository;
+        private readonly IPravnoLiceRepository pLiceRepository;
+        private readonly IFizickoLiceRepository fLiceRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
-        public KupacController(IKupacRepository kupacRepository, LinkGenerator linkGenerator, IMapper mapper)
+        private readonly IAdresaService adresaService;
+        private readonly IUplataService uplataService;
+
+        public KupacController(IPravnoLiceRepository pLiceRepository, IFizickoLiceRepository fLiceRepository, IAdresaService adresaService, IUplataService uplataService, LinkGenerator linkGenerator, IMapper mapper)
         {
-            this.kupacRepository = kupacRepository;
+            this.pLiceRepository = pLiceRepository;
+            this.fLiceRepository = fLiceRepository;
+            this.adresaService = adresaService;
+            this.uplataService = uplataService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }
 
+
+        /// <summary>
+        /// Vraca kupce
+        /// </summary>
         [HttpGet]
         public ActionResult<List<KupacDTO>> GetKupci()
         {
-            List<KupacEntity> kupci = kupacRepository.GetKupci();
+
+            List<PravnoLiceEntity> plica = pLiceRepository.GetPravnaLica();
+            List<FizickoLiceEntity> flica = fLiceRepository.GetFizickaLica();
+
+            List<KupacEntity> kupci = plica.ConvertAll(x => (KupacEntity)x);
+
+            List<KupacEntity> kupciFizLica = flica.ConvertAll(x => (KupacEntity)x);
+
+            kupci.AddRange(kupciFizLica);
+
+            foreach (var item in kupci) Console.WriteLine(item);
+
             if (kupci == null || kupci.Count == 0)
             {
                 return NoContent();
             }
+
+
             return Ok(mapper.Map<List<KupacDTO>>(kupci));
         }
 
+        /// <summary>
+        /// Vraca kupca po ID
+        /// </summary>
         [HttpGet("{KupacId}")]
         public ActionResult<KupacDTO> GetKupac(Guid kupacID)
         {
-            KupacEntity kupacModel = kupacRepository.GetKupacById(kupacID);
+
+            KupacEntity kupacModel;
+
+            kupacModel = (KupacEntity)fLiceRepository.GetFizickoLiceById(kupacID);
+
+            if (kupacModel == null)
+            {
+                kupacModel = (KupacEntity)pLiceRepository.GetPravnoLiceById(kupacID);
+            }
+
+
             if (kupacModel == null)
             {
                 return NotFound();
+                
             }
             return Ok(mapper.Map<KupacDTO>(kupacModel));
         }
 
+        /// <summary>
+        /// Dodaje novog kupca
+        /// </summary>
         [HttpPost]
-        public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)    //confirmation implementirati
+        public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)   
         {
             try
             {
                KupacEntity kp = mapper.Map<KupacEntity>(kupac);
 
-                KupacEntity kpCreated = kupacRepository.CreateKupac(kp);
+                KupacEntity kpCreated;
+
+                if (kp.IsFizickoLice == true)
+                {
+                    kpCreated = fLiceRepository.CreateFizickoLice((FizickoLiceEntity)kp);
+                }
+                else
+                {
+                    kpCreated = pLiceRepository.CreatePravnoLice((PravnoLiceEntity)kp);
+                }
+            
+                
 
                 string location = linkGenerator.GetPathByAction("GetKupac", "Kupac", new { KupacId = kp.KupacId });
                 return Created(location, mapper.Map<KupacDTO>(kpCreated));
@@ -69,17 +125,37 @@ namespace KupacMikroservis.Controllers
 
         }
 
+
+        /// <summary>
+        /// Brise kupca
+        /// </summary>
         [HttpDelete("{KupacId}")]
         public IActionResult DeleteKupac(Guid kupacID)
         {
+            KupacEntity kupacModel;
+
+
             try
             {
-                KupacEntity kupacModel = kupacRepository.GetKupacById(kupacID);
+                kupacModel = pLiceRepository.GetPravnoLiceById(kupacID);
+
+                if (kupacModel == null)
+                {
+                    kupacModel = fLiceRepository.GetFizickoLiceById(kupacID);
+                }
                 if (kupacModel == null)
                 {
                     return NotFound();
                 }
-                kupacRepository.DeleteKupac(kupacID);
+
+                if (kupacModel.IsFizickoLice == true)
+                {
+                    fLiceRepository.DeleteFizickoLice(kupacID);
+                }
+                else if (kupacModel.IsFizickoLice == false)
+                {
+                    pLiceRepository.DeletePravnoLice(kupacID);
+                }
 
                 return NoContent();
             }
@@ -89,20 +165,50 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Azurira kupca
+        /// </summary>
         [HttpPut]
         public ActionResult<KupacDTO> UpdateKupac(KupacUpdateDTO kupac)
         {
             try
             {
-
-                if (kupacRepository.GetKupacById(kupac.KupacId) == null)
+                if (kupac.IsFizickoLice == true)
                 {
-                    return NotFound();
-                }
-                KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
-                KupacEntity kpUpdated = kupacRepository.CreateKupac(kpEntity);
+                    var oldFizLice = fLiceRepository.GetFizickoLiceById(kupac.KupacId);
+                    if (oldFizLice == null)
+                    {
+                        return NotFound(); 
+                    }
+                    KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
 
-                return Ok(mapper.Map<KupacDTO>(kpUpdated));
+                    FizickoLiceEntity fLice = (FizickoLiceEntity)kpEntity;
+
+                    mapper.Map(fLice, oldFizLice);             
+
+                    fLiceRepository.SaveChanges(); 
+                    return Ok(mapper.Map<KupacDTO>(kpEntity));
+
+                }
+                else
+                {
+                    var oldPrLice = pLiceRepository.GetPravnoLiceById(kupac.KupacId);
+                    if (oldPrLice == null)
+                    {
+                        return NotFound();
+                    }
+                    KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
+
+                    PravnoLiceEntity pLice = (PravnoLiceEntity)kpEntity;
+
+                    mapper.Map(pLice, oldPrLice);
+
+                    pLiceRepository.SaveChanges();
+                    return Ok(mapper.Map<KupacDTO>(kpEntity));
+                }
+
+               
             }
             catch (Exception)
             {
@@ -110,6 +216,10 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Vraca HTTP opcije
+        /// </summary>
         [HttpOptions]
         public IActionResult GetKupacOptions()
         {

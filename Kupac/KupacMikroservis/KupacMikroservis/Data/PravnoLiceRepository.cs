@@ -15,6 +15,11 @@ public class PravnoLiceRepository : IPravnoLiceRepository
 
     private readonly IMapper mapper;
 
+    public PravnoLiceRepository(KupacContext context, IMapper mapper)
+    {
+        this.context = context;
+        this.mapper = mapper;
+    }
 
     public bool SaveChanges()
     {

@@ -11,7 +11,9 @@ using AutoMapper;
 
 namespace KupacMikroservis.Controllers
 {
-
+    /// <summary>
+    /// Sadrzi CRUD operacije za kontakt osobe
+    /// </summary>
     [ApiController]
     [Route("api/kontaktosoba")]
     public class KontaktOsobaController : ControllerBase
@@ -28,6 +30,9 @@ namespace KupacMikroservis.Controllers
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Vraca kontakt osobe
+        /// </summary>
         [HttpGet]
         public ActionResult<List<KontaktOsobaDTO>> GetKontaktOsobe()
         {
@@ -39,6 +44,9 @@ namespace KupacMikroservis.Controllers
             return Ok(mapper.Map<List<KontaktOsobaDTO>>(kontaktosobe));
         }
 
+        /// <summary>
+        /// Vraca kontakt osobu po ID
+        /// </summary>
         [HttpGet("{KontaktOsobaId}")]
         public ActionResult<KontaktOsobaDTO> GetKontaktOsoba(Guid koID)
         {
@@ -50,6 +58,9 @@ namespace KupacMikroservis.Controllers
             return Ok(mapper.Map<List<KontaktOsobaDTO>>(koModel));
         }
 
+        /// <summary>
+        /// Dodaje novu kontakt osobu
+        /// </summary>
         [HttpPost]
         public ActionResult<KontaktOsobaDTO> CreateKontaktOsoba([FromBody] KontaktOsobaCreateDTO ko)    //confirmation implementirati
         {
@@ -70,6 +81,9 @@ namespace KupacMikroservis.Controllers
 
         }
 
+        /// <summary>
+        ///Vraca kontakt osobu po ID
+        /// </summary>
         [HttpDelete("{KontaktOsobaId}")]
         public IActionResult DeleteKontaktOsoba(Guid koID)
         {
@@ -90,20 +104,26 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+        /// <summary>
+        /// Azurira kontakt osobu
+        /// </summary>
         [HttpPut]
         public ActionResult<KontaktOsobaDTO> UpdateKontaktOsoba(KontaktOsobaUpdateDTO ko)
         {
             try
             {
 
-                if (koRepository.GetKontaktOsoba(ko.KontaktOsobaId) == null)
+                var oldKOsoba = koRepository.GetKontaktOsoba(ko.KontaktOsobaId);
+                if (oldKOsoba == null)
                 {
-                    return NotFound();
+                    return NotFound(); 
                 }
                 KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
-                KontaktOsobaEntity koUpdated = koRepository.CreateKontaktOsoba(koEntity);
 
-                return Ok(mapper.Map<KontaktOsobaDTO>(koUpdated));
+                mapper.Map(koEntity, oldKOsoba);                
+
+                koRepository.SaveChanges();
+                return Ok(mapper.Map<KontaktOsobaDTO>(koEntity));
             }
             catch (Exception)
             {
@@ -111,6 +131,9 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+        /// <summary>
+        /// Vraca HTTP opcije
+        /// </summary>
         [HttpOptions]
         public IActionResult GetKontaktOsobaOptions()
         {

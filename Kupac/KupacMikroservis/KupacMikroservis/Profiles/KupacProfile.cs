@@ -12,12 +12,24 @@ namespace KupacMikroservis.Profiles
     {
         public KupacProfile()
         {
+
+
             CreateMap<KupacEntity, KupacDTO>();
+            
+
+            CreateMap<PravnoLiceEntity, PravnoLiceDTO>();
+            CreateMap<FizickoLiceEntity, FizickoLiceDTO>();
+
+
             CreateMap<KupacEntity, KupacCreateDTO>();
             CreateMap<KupacEntity, KupacUpdateDTO>();
             CreateMap<KupacDTO,KupacEntity>();
+         //   CreateMap<List<KupacDTO>, List<KupacEntity>>();
+         //   CreateMap<List<KupacEntity>,List<KupacDTO>>();
             CreateMap<KupacCreateDTO, KupacEntity>();
             CreateMap<KupacUpdateDTO, KupacEntity>();
+
+            
 
         }
     }

@@ -15,6 +15,12 @@ public class KontaktOsobaRepository : IKontaktOsobaRepository
 
     private readonly IMapper mapper;
 
+
+    public KontaktOsobaRepository(KupacContext context, IMapper mapper)
+    {
+        this.context = context;
+        this.mapper = mapper;
+    }
     public bool SaveChanges()
     {
         return context.SaveChanges() > 0;

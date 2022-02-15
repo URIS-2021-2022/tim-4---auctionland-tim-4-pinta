@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using KupacMikroservis.Helpers;
 using KupacMikroservis.Models;
 
-namespace URIS_ExamRegistrationProject.Controllers
+namespace KupacMikroservis.Controllers
 {
     [ApiController]
-    [Route("api/examRegistrations")]
+    [Route("api/kupac")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationHelper authenticationHelper;
@@ -27,14 +27,14 @@ namespace URIS_ExamRegistrationProject.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate(Principal principal)
         {
-            //Pokušaj autentifikacije
+           
             if (authenticationHelper.AuthenticatePrincipal(principal))
             {
                 var tokenString = authenticationHelper.GenerateJwt(principal);
                 return Ok(new { token = tokenString });
             }
 
-            //Ukoliko autentifikacija nije uspela vraća se status 401
+          
             return Unauthorized();
         }
     }

@@ -18,6 +18,12 @@ namespace KupacMikroservis.Data
 
         private readonly IMapper mapper;
 
+        public PrioritetRepository(KupacContext context, IMapper mapper)
+        {
+            this.context = context;
+            this.mapper = mapper;
+        }
+
 
         public bool SaveChanges()
         {

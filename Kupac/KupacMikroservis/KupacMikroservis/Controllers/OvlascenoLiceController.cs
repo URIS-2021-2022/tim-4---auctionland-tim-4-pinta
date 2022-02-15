@@ -8,10 +8,13 @@ using System.Threading.Tasks;
 using KupacMikroservis.Data;
 using KupacMikroservis.Models;
 using AutoMapper;
+using KupacMikroservis.ServiceCalls;
 
 namespace KupacMikroservis.Controllers
 {
-
+    /// <summary>
+    /// Sadrzi CRUD operacije za ovlascena lica
+    /// </summary>
     [ApiController]
     [Route("api/ovlascenolice")]
     public class OvlascenoLiceController : ControllerBase
@@ -20,14 +23,20 @@ namespace KupacMikroservis.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
+        public readonly IAdresaService adresaService;
 
-        public OvlascenoLiceController(IOvlascenoLiceRepository oLiceRepository, LinkGenerator linkGenerator, IMapper mapper)
+
+        public OvlascenoLiceController(IOvlascenoLiceRepository oLiceRepository, IAdresaService adresaService, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.oLiceRepository = oLiceRepository;
+            this.adresaService = adresaService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
         }
 
+        /// <summary>
+        /// Vraca ovlascena lica
+        /// </summary>
         [HttpGet]
         public ActionResult<List<OvlascenoLiceDTO>> GetOvlascenaLica()
         {
@@ -39,6 +48,9 @@ namespace KupacMikroservis.Controllers
             return Ok(mapper.Map<List<OvlascenoLiceDTO>>(ovlascenaLica));
         }
 
+        /// <summary>
+        /// Vraca ovlasceno lice po ID
+        /// </summary>
         [HttpGet("{OvlascenoLiceId}")]
         public ActionResult<OvlascenoLiceDTO> GetOvlascenoLice(Guid oLiceID)
         {
@@ -50,6 +62,10 @@ namespace KupacMikroservis.Controllers
             return Ok(mapper.Map<List<OvlascenoLiceDTO>>(oLiceModel));
         }
 
+
+        /// <summary>
+        /// Dodaje ovlasceno lice
+        /// </summary>
         [HttpPost]
         public ActionResult<OvlascenoLiceDTO> CreateOvlascenoLice([FromBody] OvlascenoLiceCreateDTO oLice)    //confirmation implementirati
         {
@@ -70,6 +86,9 @@ namespace KupacMikroservis.Controllers
 
         }
 
+        /// <summary>
+        ///Brise ovlasceno lice
+        /// </summary>
         [HttpDelete("{OvlascenoLiceId}")]
         public IActionResult DeleteOvlascenoLice(Guid oLiceID)
         {
@@ -90,20 +109,27 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Azurira ovlasceno lice
+        /// </summary>
         [HttpPut]
         public ActionResult<OvlascenoLiceDTO> UpdateOvlascenoLice(OvlascenoLiceUpdateDTO ol)
         {
             try
             {
 
-                if (oLiceRepository.GetOvlascenoLiceById(ol.OvlascenoLiceId) == null)
+                var oldOLice= oLiceRepository.GetOvlascenoLiceById(ol.OvlascenoLiceId);
+                if (oldOLice == null)
                 {
                     return NotFound();
                 }
                 OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
-                OvlascenoLiceEntity olUpdated = oLiceRepository.CreateOvlascenoLice(olEntity);
 
-                return Ok(mapper.Map<OvlascenoLiceDTO>(olUpdated));
+                mapper.Map(olEntity, oldOLice);
+
+                oLiceRepository.SaveChanges();
+                return Ok(mapper.Map<OvlascenoLiceDTO>(olEntity));
             }
             catch (Exception)
             {
@@ -111,6 +137,9 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+        /// <summary>
+        /// Vraca HTTP opcije
+        /// </summary>
         [HttpOptions]
         public IActionResult GetOvlascenoLiceOptions()
         {

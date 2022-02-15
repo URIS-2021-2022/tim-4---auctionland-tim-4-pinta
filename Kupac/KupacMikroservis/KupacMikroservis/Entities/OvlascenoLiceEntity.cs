@@ -19,5 +19,7 @@ namespace KupacMikroservis.Models
 
         public string BrojTable { get; set; }
 
+        public Guid AdresaID { get; set; }
+
     }
 }

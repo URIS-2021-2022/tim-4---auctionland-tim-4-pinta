@@ -69,7 +69,8 @@ namespace KupacMikroservis.Entities
                    Ime = "Petar",
                    Prezime = "Petrosevic",
                    BrojLicnogDokumenta="565423433",
-                   BrojTable="54356543"
+                   BrojTable="54356543",
+                   AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907")
 
 
 
@@ -82,7 +83,8 @@ namespace KupacMikroservis.Entities
                   Ime = "Luka",
                   Prezime = "Lukovic",
                   BrojLicnogDokumenta = "5653424",
-                  BrojTable = "543231313"
+                  BrojTable = "543231313",
+                  AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907")
 
 
 
@@ -118,6 +120,7 @@ namespace KupacMikroservis.Entities
              .HasData(new
              {
                  KupacId = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0"),
+                 IsFizickoLice = false,
                  Naziv = "NS DOO",
                  BrojTelefona1 = "062665231",
                  BrojTelefona2 = "0615573331",
@@ -129,8 +132,11 @@ namespace KupacMikroservis.Entities
                  DatumPrestankaZabrane = (DateTime?)null,
                  Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
                  OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3975c8"),
-                 MaticniBroj="455643231",
-                 Faks="654322345"
+                 AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
+                 UplataID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
+                 MaticniBroj = "455643231",
+                 Faks = "654322345"
+                 
 
 
 
@@ -140,6 +146,7 @@ namespace KupacMikroservis.Entities
            .HasData(new
            {
                KupacId = Guid.Parse("2a421c13-a195-46f7-8dbd-67596c4974c0"),
+               IsFizickoLice = false,
                Naziv = "SN AD",
                BrojTelefona1 = "062635321",
                BrojTelefona2 = "0615535651",
@@ -151,8 +158,11 @@ namespace KupacMikroservis.Entities
                DatumPrestankaZabrane = (DateTime?)null,
                Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
                OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3975c8"),
+               AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
+               UplataID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                MaticniBroj = "455643231",
                Faks = "654322345"
+               
 
 
 
@@ -163,6 +173,7 @@ namespace KupacMikroservis.Entities
          .HasData(new
          {
              KupacId = Guid.Parse("1a411c13-a195-48f7-8dbd-67596c3974c0"),
+             IsFizickoLice = true,
              Naziv = "Pera Peric",
              BrojTelefona1 = "062665511",
              BrojTelefona2 = "061553311",
@@ -172,10 +183,13 @@ namespace KupacMikroservis.Entities
              DatumPocetkaZabrane = (DateTime?)null,
              DuzinaTrajanjaZabraneUGodinama = 0,
              DatumPrestankaZabrane = (DateTime?)null,
-             Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0") ,
+             Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
              OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3974c8"),
+             AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
+             UplataID = Guid.Parse("7a411c13-a195-48f7-8dbd-67596c3974c0"),
              JMBG = "6765432484",
              KontaktOsoba = Guid.Parse("1a411c13-a195-3337-8dbd-44444c3974c0")
+            
 
 
 
@@ -185,6 +199,7 @@ namespace KupacMikroservis.Entities
          .HasData(new
          {
              KupacId = Guid.Parse("2a411c13-a195-48f7-8dbd-67596c3974c0"),
+             IsFizickoLice = true,
              Naziv = "Jova Jovic",
              BrojTelefona1 = "062665521",
              BrojTelefona2 = "061553331",
@@ -196,8 +211,10 @@ namespace KupacMikroservis.Entities
              DatumPrestankaZabrane = (DateTime?)null,
              Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
              OvlascenoLice = Guid.Parse("1a411c13-a185-48f7-8dbd-67596c3975c8"),
+             AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
+             UplataID = Guid.Parse("7a411c13-a195-48f7-8dbd-67596c3974c0"),
              JMBG = "7654321234",
-             KontaktOsoba= Guid.Parse("1a411c13-a195-3337-8dbd-33333c3974c0") 
+             KontaktOsoba= Guid.Parse("1a411c13-a195-3337-8dbd-33333c3974c0")
 
 
 

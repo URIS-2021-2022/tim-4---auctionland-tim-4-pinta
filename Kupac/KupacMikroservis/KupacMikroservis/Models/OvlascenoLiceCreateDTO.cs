@@ -16,7 +16,9 @@ namespace KupacMikroservis.Models
 
         public string BrojLicnogDokumenta { get; set; }
 
-        public ArrayList BrojTable = new ArrayList();
+        public string BrojTable { get; set; }
+
+        public Guid AdresaID { get; set; }
 
     }
 }

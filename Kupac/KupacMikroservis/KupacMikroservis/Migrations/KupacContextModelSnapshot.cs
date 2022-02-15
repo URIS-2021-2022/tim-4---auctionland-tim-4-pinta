@@ -25,6 +25,9 @@ namespace KupacMikroservis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AdresaID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("BrojRacuna")
                         .HasColumnType("nvarchar(max)");
 
@@ -49,6 +52,9 @@ namespace KupacMikroservis.Migrations
                     b.Property<bool>("ImaZabranu")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsFizickoLice")
+                        .HasColumnType("bit");
+
                     b.Property<string>("JMBG")
                         .HasColumnType("nvarchar(max)");
 
@@ -64,6 +70,9 @@ namespace KupacMikroservis.Migrations
                     b.Property<Guid>("Prioritet")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UplataID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("KupacId");
 
                     b.ToTable("fLica");
@@ -72,32 +81,38 @@ namespace KupacMikroservis.Migrations
                         new
                         {
                             KupacId = new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             BrojRacuna = "2532431234534",
                             BrojTelefona1 = "062665511",
                             BrojTelefona2 = "061553311",
                             DuzinaTrajanjaZabraneUGodinama = 0,
                             Email = "pera@gmail.com",
                             ImaZabranu = false,
+                            IsFizickoLice = true,
                             JMBG = "6765432484",
                             KontaktOsoba = new Guid("1a411c13-a195-3337-8dbd-44444c3974c0"),
                             Naziv = "Pera Peric",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3974c8"),
-                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0")
+                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
+                            UplataID = new Guid("7a411c13-a195-48f7-8dbd-67596c3974c0")
                         },
                         new
                         {
                             KupacId = new Guid("2a411c13-a195-48f7-8dbd-67596c3974c0"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             BrojRacuna = "253425254534",
                             BrojTelefona1 = "062665521",
                             BrojTelefona2 = "061553331",
                             DuzinaTrajanjaZabraneUGodinama = 0,
                             Email = "jova@gmail.com",
                             ImaZabranu = false,
+                            IsFizickoLice = true,
                             JMBG = "7654321234",
                             KontaktOsoba = new Guid("1a411c13-a195-3337-8dbd-33333c3974c0"),
                             Naziv = "Jova Jovic",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
-                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0")
+                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
+                            UplataID = new Guid("7a411c13-a195-48f7-8dbd-67596c3974c0")
                         });
                 });
 
@@ -148,6 +163,9 @@ namespace KupacMikroservis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AdresaID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("BrojLicnogDokumenta")
                         .HasColumnType("nvarchar(max)");
 
@@ -168,6 +186,7 @@ namespace KupacMikroservis.Migrations
                         new
                         {
                             OvlascenoLiceId = new Guid("1a411c13-a195-3337-8dbd-11111c3974c0"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             BrojLicnogDokumenta = "565423433",
                             BrojTable = "54356543",
                             Ime = "Petar",
@@ -176,6 +195,7 @@ namespace KupacMikroservis.Migrations
                         new
                         {
                             OvlascenoLiceId = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             BrojLicnogDokumenta = "5653424",
                             BrojTable = "543231313",
                             Ime = "Luka",
@@ -187,6 +207,9 @@ namespace KupacMikroservis.Migrations
                 {
                     b.Property<Guid>("KupacId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdresaID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BrojRacuna")
@@ -216,6 +239,9 @@ namespace KupacMikroservis.Migrations
                     b.Property<bool>("ImaZabranu")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsFizickoLice")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MaticniBroj")
                         .HasColumnType("nvarchar(max)");
 
@@ -228,6 +254,9 @@ namespace KupacMikroservis.Migrations
                     b.Property<Guid>("Prioritet")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UplataID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("KupacId");
 
                     b.ToTable("pLica");
@@ -236,6 +265,7 @@ namespace KupacMikroservis.Migrations
                         new
                         {
                             KupacId = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             BrojRacuna = "2536565534",
                             BrojTelefona1 = "062665231",
                             BrojTelefona2 = "0615573331",
@@ -243,14 +273,17 @@ namespace KupacMikroservis.Migrations
                             Email = "ivaa@gmail.com",
                             Faks = "654322345",
                             ImaZabranu = false,
+                            IsFizickoLice = false,
                             MaticniBroj = "455643231",
                             Naziv = "NS DOO",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
-                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0")
+                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
+                            UplataID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0")
                         },
                         new
                         {
                             KupacId = new Guid("2a421c13-a195-46f7-8dbd-67596c4974c0"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             BrojRacuna = "253456533534",
                             BrojTelefona1 = "062635321",
                             BrojTelefona2 = "0615535651",
@@ -258,10 +291,12 @@ namespace KupacMikroservis.Migrations
                             Email = "mikaa@gmail.com",
                             Faks = "654322345",
                             ImaZabranu = false,
+                            IsFizickoLice = false,
                             MaticniBroj = "455643231",
                             Naziv = "SN AD",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
-                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0")
+                            Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
+                            UplataID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0")
                         });
                 });
 

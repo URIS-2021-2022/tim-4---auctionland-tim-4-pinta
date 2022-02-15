@@ -13,6 +13,8 @@ namespace KupacMikroservis.Models
 
         public string Naziv { get; set; }
 
+        public bool IsFizickoLice { get;set;}
+
         public string BrojTelefona1 { get; set; }
 
         public string BrojTelefona2 { get; set; }
@@ -29,13 +31,22 @@ namespace KupacMikroservis.Models
 
         public DateTime DatumPrestankaZabrane { get; set; }
 
-        public PrioritetEntity Prioritet { get; set; }
+        public Guid Prioritet { get; set; }
 
-        public string JMBG { get; set; }
+        
+        public Guid OvlascenoLice { get; set; }
 
-        public string MaticniBroj { get; set; }
+        public Guid AdresaID { get; set; }
 
-        public string Faks { get; set; }
+        public Guid UplataID { get; set; }
+
+
+
+        //    public string JMBG { get; set; }
+
+        //    public string MaticniBroj { get; set; }
+
+        //   public string Faks { get; set; }
 
 
     }

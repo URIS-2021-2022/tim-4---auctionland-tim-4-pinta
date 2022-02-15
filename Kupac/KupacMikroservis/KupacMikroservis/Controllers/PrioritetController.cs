@@ -11,7 +11,9 @@ using AutoMapper;
 
 namespace KupacMikroservis.Controllers
 {
-    // Omogucava dodavanje dodatnih stvari, npr. status kodova
+    /// <summary>
+    /// Sadrzi CRUD operacije za prioritete
+    /// </summary>
     [ApiController]
     [Route("api/prioritet")]
     public class PrioritetController : ControllerBase
@@ -28,6 +30,10 @@ namespace KupacMikroservis.Controllers
             this.mapper = mapper;
         }
 
+
+        /// <summary>
+        /// Vraca prioritete
+        /// </summary>
         [HttpGet]
         public ActionResult<List<PrioritetDTO>> GetPrioriteti()
         {
@@ -39,6 +45,9 @@ namespace KupacMikroservis.Controllers
             return Ok(mapper.Map<List<PrioritetDTO>>(prioriteti));
         }
 
+        /// <summary>
+        /// Vraca prioritet po ID
+        /// </summary>
         [HttpGet("{PrioritetId}")]
         public ActionResult<PrioritetDTO> GetPrioritet(Guid PrioritetId)
         {
@@ -50,8 +59,12 @@ namespace KupacMikroservis.Controllers
             return Ok(mapper.Map<PrioritetDTO>(prioritetModel));
         }
 
+
+        /// <summary>
+        /// Dodaje novi prioritet
+        /// </summary>
         [HttpPost]
-        public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)    //confirmation implementirati
+        public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)   
         {
            try
             {
@@ -68,8 +81,11 @@ namespace KupacMikroservis.Controllers
 
            }
                
-        } 
+        }
 
+        /// <summary>
+        /// Brise prioritet
+        /// </summary>
         [HttpDelete("{PrioritetId}")]
         public IActionResult DeletePrioritet(Guid prioritetID)
         {
@@ -81,7 +97,7 @@ namespace KupacMikroservis.Controllers
                     return NotFound();
                 }
                 prioritetRepository.DeletePrioritet(prioritetID);
-                // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
+               
                 return NoContent();
             }
             catch
@@ -90,20 +106,26 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+        /// <summary>
+        /// Azurira prioritet
+        /// </summary>
         [HttpPut]
         public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
         {
             try
             {
-              
-                if (prioritetRepository.GetPrioritetById(prioritet.PrioritetId) == null)
-                {
-                    return NotFound(); 
-                }
-                PrioritetEntity prEntity = mapper.Map<PrioritetEntity>(prioritet);
-                PrioritetEntity prUpdated = prioritetRepository.CreatePrioritet(prEntity);
 
-                return Ok(mapper.Map<PrioritetDTO>(prUpdated));
+                var oldPrioritet = prioritetRepository.GetPrioritetById(prioritet.PrioritetId);
+                if (oldPrioritet == null)
+                {
+                    return NotFound();
+                }
+                PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
+
+                mapper.Map(pEntity, oldPrioritet);
+
+                prioritetRepository.SaveChanges();
+                return Ok(mapper.Map<PrioritetDTO>(pEntity));
             }
             catch (Exception)
             {
@@ -111,6 +133,9 @@ namespace KupacMikroservis.Controllers
             }
         }
 
+        /// <summary>
+        /// Vraca HTTP opcije
+        /// </summary>
         [HttpOptions]
         public IActionResult GetPrioritetOptions()
        {

@@ -13,6 +13,8 @@ namespace KupacMikroservis.Models
         [Key]
         public Guid KupacId { get; set; }
 
+        public bool IsFizickoLice { get;set;}
+
         public string Naziv { get; set; }
 
         public string BrojTelefona1 { get; set; }
@@ -36,6 +38,10 @@ namespace KupacMikroservis.Models
 
      [ForeignKey("OvlascenoLicEntity")]
         public Guid OvlascenoLice { get; set; }
+
+        public Guid AdresaID { get; set; }
+
+        public Guid UplataID { get; set; }
 
     }
 }
