@@ -23,6 +23,7 @@ using JavnoNadmetanjeAgregat.Data;
 using JavnoNadmetanjeAgregat.Helpers;
 using JavnoNadmetanjeAgregat.Entities;
 using Microsoft.EntityFrameworkCore;
+using JavnoNadmetanjeAgregat.ServiceCalls;
 
 namespace JavnoNadmetanjeAgregat
 {
@@ -119,6 +120,10 @@ namespace JavnoNadmetanjeAgregat
             services.AddScoped<ISluzbeniListRepository, SluzbeniListRepository>();
             services.AddSingleton<IUserRepository, UserMockRepository>();
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            services.AddScoped<IKatastarskaOpstinaService, KatastarskaOpstinaService>();
+            services.AddScoped<IKupacService, KupacService>();
+            services.AddScoped<IParcelaService, ParcelaService>();
+            services.AddScoped<IAdresaService, AdresaService>();
 
             services.AddSwaggerGen(setupAction =>
             {

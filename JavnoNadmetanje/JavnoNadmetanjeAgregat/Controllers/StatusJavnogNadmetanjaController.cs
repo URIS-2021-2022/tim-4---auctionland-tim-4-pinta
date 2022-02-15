@@ -96,8 +96,10 @@ namespace JavnoNadmetanjeAgregat.Controllers
             {
                 StatusJavnogNadmetanjaEntity obj = mapper.Map<StatusJavnogNadmetanjaEntity>(statusJavnogNadmetanja);
                 StatusJavnogNadmetanjaEntity s = statusJavnogNadmetanjaRepository.CreateStatusJavnogNadmetanja(obj);
-                string location = linkGenerator.GetPathByAction("GetStatusJavnogNadmetanja", "StatusJavnogNadmetanja", new { statusJavnogNadmetanjaID = s.StatusJavnogNadmetanjaID });
-                return Created(location,mapper.Map<StatusJavnogNadmetanjaDto>(statusJavnogNadmetanja));
+                //string location = linkGenerator.GetPathByAction("GetStatusJavnogNadmetanja", "StatusJavnogNadmetanja", new { statusJavnogNadmetanjaID = s.StatusJavnogNadmetanjaID });
+                //return Created(location,mapper.Map<StatusJavnogNadmetanjaDto>(statusJavnogNadmetanja))
+                //;
+                return Created("", mapper.Map<StatusJavnogNadmetanjaDto>(s));
             }
             catch
             {
@@ -152,24 +154,29 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             try
             {
-                if (statusJavnogNadmetanjaRepository.GetStatusJavnogNadmetanjaById(statusJavnogNadmetanja.StatusJavnogNadmetanjaID) == null)
+                var oldStatusJavnoNadmetanje = statusJavnogNadmetanjaRepository.GetStatusJavnogNadmetanjaById(statusJavnogNadmetanja.StatusJavnogNadmetanjaID);
+                if (oldStatusJavnoNadmetanje == null)
                 {
                     return NotFound();
                 }
-                StatusJavnogNadmetanjaEntity s = statusJavnogNadmetanjaRepository.UpdateStatusJavnogNadmetanja(statusJavnogNadmetanja);
-                return Ok(mapper.Map<StatusJavnogNadmetanjaDto>(s));
+                StatusJavnogNadmetanjaEntity statusJavnogNadmetanjaEntity = mapper.Map<StatusJavnogNadmetanjaEntity>(statusJavnogNadmetanja);
+                mapper.Map(statusJavnogNadmetanjaEntity, oldStatusJavnoNadmetanje); //Update objekta koji treba da sačuvamo u bazi                
+
+                statusJavnogNadmetanjaRepository.SaveChanges(); //Perzistiramo promene
+                return Ok(mapper.Map<StatusJavnogNadmetanjaDto>(statusJavnogNadmetanjaEntity));
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+
             }
         }
 
-        /// <summary>
-        /// Vraca opcije za rad sa javnim nadmetanjima
-        /// </summary>
-        /// <returns></returns>
-        [HttpOptions]
+            /// <summary>
+            /// Vraca opcije za rad sa javnim nadmetanjima
+            /// </summary>
+            /// <returns></returns>
+            [HttpOptions]
         public IActionResult GetStatusJavnogNadmetanjaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");

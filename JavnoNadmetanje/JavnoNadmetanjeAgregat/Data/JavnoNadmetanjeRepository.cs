@@ -51,7 +51,7 @@ namespace JavnoNadmetanjeAgregat.Data
             return (from j in context.JavnaNadmetanja select j).ToList();
         }
 
-        public JavnoNadmetanjeEntity UpdateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje)
+        public void UpdateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje)
         {
             throw new NotImplementedException();
         }

@@ -365,6 +365,26 @@
             Visina dopune depozita javnog nadmetanja
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.KatastarskaOpstinaID">
+            <summary>
+            ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.AdresaID">
+            <summary>
+            ID adrese
+            </summary>
+        </member>
         <member name="T:JavnoNadmetanjeAgregat.Entities.SluzbeniListEntity">
             <summary>
             Entitet sluzbenog lista
@@ -404,6 +424,31 @@
              <summary>
             Naziv tipa javnog nadmetanja
              </summary>
+        </member>
+        <member name="T:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto">
+            <summary>
+            DTO za adresu javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.Ulica">
+            <summary>
+            Ulica adrese
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.Broj">
+            <summary>
+            Broj adrese
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.Mesto">
+            <summary>
+            Mesto adrese
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.PostanskiBroj">
+            <summary>
+            Postanski broj adrese
+            </summary>
         </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto">
             <summary>
@@ -458,6 +503,131 @@
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.VisinaDopuneDepozita">
             <summary>
             Visina dopune depozita javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.AdresaID">
+            <summary>
+            ID adrese
+            </summary>
+        </member>
+        <member name="T:JavnoNadmetanjeAgregat.Models.KatastarskaOpstinaJavnoNadmetanjeDto">
+            <summary>
+            DTO za katastarsku opstinu javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KatastarskaOpstinaJavnoNadmetanjeDto.KatastarskaOpstinaNaziv">
+            <summary>
+            Naziv katastarske opstine
+            </summary>
+        </member>
+        <member name="T:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto">
+            <summary>
+            DTO za kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.Naziv">
+            <summary>
+            Naziv kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.BrojTelefona1">
+            <summary>
+            Prvi broj telefona kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.BrojTelefona2">
+            <summary>
+            Drugi broj telefona kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.Email">
+            <summary>
+            Email kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.OstvarenaPovrsina">
+            <summary>
+            Ostvarena povrsina kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.BrojRacuna">
+            <summary>
+            Broj racuna kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.ImaZabranu">
+            <summary>
+            Da li kupac javnog nadmetanja ima zabranu
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.DatumPocetkaZabrane">
+            <summary>
+            Datum pocetka zabrane kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.DuzinaTrajanjaZabraneUGodinama">
+            <summary>
+            Duzina trajanja zabrane u godinama
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.DatumPrestankaZabrane">
+            <summary>
+            Datum prestanka zabrane kupca javnog nadmetanja
+            </summary>
+        </member>
+        <member name="T:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto">
+            <summary>
+            DTO za parcelu javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.Povrsina">
+            <summary>
+            Povrsina parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.BrojParcele">
+            <summary>
+            Broj parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.BrojListaNepokretnosti">
+            <summary>
+            Broj lista nepokretnosti za parcelu
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.KulturaStvarnoStanje">
+            <summary>
+            Stvarno stanje kulture na parceli
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.KlasaStvarnoStanje">
+            <summary>
+            Stvarno stanje klase na parceli
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.ObradivostStvarnoStanje">
+            <summary>
+            Stvarno stanje obradivosti za parcelu
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.ZasticenaZonaStvarnoStanje">
+            <summary>
+            Stvarno stanje zasticene zone za parcelu
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.OdvodnjavanjeStvarnoStanje">
+            <summary>
+            Stvarno stanje odvodnjavanja za parcelu
             </summary>
         </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.Principal">

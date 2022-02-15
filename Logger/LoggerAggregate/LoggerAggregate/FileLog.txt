@@ -1,0 +1,18 @@
+2022-02-06 14:59:50.3384 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-06 15:00:16.2709 WARN Naziv metode: UPDATE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-06 15:03:48.1437 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-06 15:04:08.2491 ERROR Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: 
+2022-02-06 15:04:08.4188 WARN Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-06 15:06:39.3467 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-06 15:06:59.2817 WARN Naziv metode: GET/id metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-06 15:07:22.5590 WARN Naziv metode: UPDATE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-06 15:12:31.1836 INFO Naziv metode: POST metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-06 15:12:55.3997 WARN Naziv metode: UPDATE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-07 11:15:10.3155 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-07 11:22:43.1045 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-07 14:26:37.1912 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev
+2022-02-07 14:27:07.1614 WARN Naziv metode: GET/id metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-07 14:28:03.6675 ERROR Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: 
+2022-02-07 14:28:03.6938 WARN Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-07 14:34:30.6111 ERROR Naziv metode: POST metoda,Naziv servisa: Zalba mikroservis,poruka: Greska
+2022-02-07 14:34:45.6560 INFO Naziv metode: GET metoda,Naziv servisa: Zalba mikroservis,poruka: Uspijesan zahtjev

@@ -53,5 +53,22 @@ namespace JavnoNadmetanjeAgregat.Models
         /// Visina dopune depozita javnog nadmetanja
         /// </summary>
         public int VisinaDopuneDepozita { get; set; }
+
+        public Guid KatastarskaOpstinaID { get; set; }
+
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
+
+        /// <summary>
+        /// ID parcele
+        /// </summary>
+        public Guid ParcelaID { get; set; }
+
+        /// <summary>
+        /// ID adrese
+        /// </summary>
+        public Guid AdresaID { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace JavnoNadmetanjeAgregat.Controllers
 {
     [ApiController]
-    [Route("api/javnoNamdetanjeAgregat")]
+    [Route("api/autentifikacija")]
     [Produces("application/json", "application/xml")]
     public class AuthenticationController : ControllerBase
     {

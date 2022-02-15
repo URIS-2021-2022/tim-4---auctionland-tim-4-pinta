@@ -15,8 +15,10 @@ namespace JavnoNadmetanjeAgregat.Data
 
         JavnoNadmetanjeEntity CreateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje); 
 
-        JavnoNadmetanjeEntity UpdateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje);
+        void UpdateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje);
 
         void DeleteJavnoNadmetanje(Guid javnoNadmetanjeID);
+
+        bool SaveChanges();
     }
 }

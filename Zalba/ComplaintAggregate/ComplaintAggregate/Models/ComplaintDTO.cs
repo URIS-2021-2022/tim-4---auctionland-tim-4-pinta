@@ -14,5 +14,12 @@ namespace ComplaintAggregate.Models
         public DateTime Datum_rijesenja { get; set; }
         public int Broj_rijesenja { get; set; }
         public int Broj_nadmetanja { get; set; }
+
+        public Guid Status_zalbe { get; set; }
+
+        public Guid Tip_id { get; set; }
+
+        public Guid Radnja_na_osnovu_zalbe_ID { get; set; }
+
     }
 }

@@ -94,8 +94,9 @@ namespace JavnoNadmetanjeAgregat.Controllers
             {
                 TipJavnogNadmetanjaEntity obj = mapper.Map<TipJavnogNadmetanjaEntity>(tipJavnogNadmetanja);
                 TipJavnogNadmetanjaEntity t = tipJavnogNadmetanjaRepository.CreateTipJavnogNadmetanja(obj);
-                string location = linkGenerator.GetPathByAction("GetTipJavnogNadmetanja", "TipJavnogNadmetanja", new { tipJavnogNadmetanjaID =t.TipJavnogNadmetanjaID });
-                return Created(location, mapper.Map<TipJavnogNadmetanjaDto>(t));
+                //string location = linkGenerator.GetPathByAction("GetTipJavnogNadmetanja", "TipJavnogNadmetanja", new { tipJavnogNadmetanjaID =t.TipJavnogNadmetanjaID });
+                //return Created(location, mapper.Map<TipJavnogNadmetanjaDto>(t));
+                return Created("", mapper.Map<TipJavnogNadmetanjaDto>(t));
             }
             catch
             {
@@ -150,12 +151,16 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             try
             {
-                if (tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID) == null)
+                var oldTipJavnoNadmetanje = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
+                if (oldTipJavnoNadmetanje== null)
                 {
                     return NotFound();
                 }
-                TipJavnogNadmetanjaEntity o = tipJavnogNadmetanjaRepository.UpdateTipJavnogNadmetanja(tipJavnogNadmetanja);
-                return Ok(mapper.Map<TipJavnogNadmetanjaDto>(o));
+                TipJavnogNadmetanjaEntity tipJavnogNadmetanjaEntity = mapper.Map<TipJavnogNadmetanjaEntity>(tipJavnogNadmetanja);
+                mapper.Map(tipJavnogNadmetanjaEntity, oldTipJavnoNadmetanje); //Update objekta koji treba da sačuvamo u bazi                
+
+                tipJavnogNadmetanjaRepository.SaveChanges(); //Perzistiramo promene
+                return Ok(mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanjaEntity));
             }
             catch (Exception)
             {

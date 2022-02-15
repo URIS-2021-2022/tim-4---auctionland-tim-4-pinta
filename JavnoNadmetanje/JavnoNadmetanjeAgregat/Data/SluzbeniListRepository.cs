@@ -44,7 +44,7 @@ namespace JavnoNadmetanjeAgregat.Data
             return sl;
         }
 
-        public SluzbeniListEntity UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)
+        public void UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)
         {
             throw new NotImplementedException();
         }
