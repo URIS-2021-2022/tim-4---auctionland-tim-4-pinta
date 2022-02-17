@@ -59,5 +59,10 @@ namespace Parcela.Models
         /// ID kupca parcele
         /// </summary>
         public Guid KupacID { get; set; }
+
+        /// <summary>
+        /// Kupac parcele
+        /// </summary>
+        public KupacParceleDto Kupac { get; set; }
     }
 }

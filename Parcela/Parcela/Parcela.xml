@@ -966,6 +966,11 @@
             ID kupca parcele
             </summary>
         </member>
+        <member name="P:Parcela.Models.ParcelaDto.Kupac">
+            <summary>
+            Kupac parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Models.Principal">
             <summary>
             Predstavlja model za autentifikaciju

@@ -10,8 +10,8 @@ using Parcela.Entities;
 namespace Parcela.Migrations
 {
     [DbContext(typeof(ParcelaContext))]
-    [Migration("20220207154010_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220216171947_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -270,7 +270,7 @@ namespace Parcela.Migrations
                             KlasaStvarnoStanje = "Klasa1",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                             KulturaStvarnoStanje = "Kukuruz",
-                            KupacID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                            KupacID = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                             ObradivostStvarnoStanje = "Obradivost1",
@@ -290,7 +290,7 @@ namespace Parcela.Migrations
                             KlasaStvarnoStanje = "Klasa2",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                             KulturaStvarnoStanje = "Soja",
-                            KupacID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                            KupacID = new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                             ObradivostStvarnoStanje = "Obradivost2",

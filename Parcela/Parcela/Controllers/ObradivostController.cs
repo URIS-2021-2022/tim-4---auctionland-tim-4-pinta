@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
 using Parcela.Entities;
 using Parcela.Models;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace Parcela.Controllers
         private readonly IObradivostRepository obradivostRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public ObradivostController(IObradivostRepository obradivostRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ObradivostController(IObradivostRepository obradivostRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.obradivostRepository = obradivostRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
 
         /// <summary>
@@ -43,11 +49,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<ObradivostDto>> GetObradivosti()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih obradivosti";
+
             List<ObradivostEntity> obradivosti = obradivostRepository.GetObradivosti();
             if (obradivosti == null || obradivosti.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<ObradivostDto>>(obradivosti));
         }
 
@@ -63,11 +76,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ObradivostDto> GetObradivost(Guid obradivostID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje obradivosti po ID-ju";
+
             ObradivostEntity obradivost = obradivostRepository.GetObradivostById(obradivostID);
             if (obradivost == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<ObradivostDto>(obradivost));
         }
 
@@ -91,16 +111,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ObradivostDto> CreateObradivost([FromBody] ObradivostDto obradivost)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove obradivosti";
+
             try
             {
                 ObradivostEntity obr = mapper.Map<ObradivostEntity>(obradivost);
                 ObradivostEntity o = obradivostRepository.CreateObradivost(obr);
                 obradivostRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetObradivost", "Obradivost", new { obradivostID = o.ObradivostID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<ObradivostDto>(o));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -119,15 +146,22 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteObradivost(Guid obradivostID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje obradivosti";
+
             try
             {
                 ObradivostEntity obradivost = obradivostRepository.GetObradivostById(obradivostID);
                 if (obradivost == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 obradivostRepository.DeleteObradivost(obradivostID);
                 obradivostRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
@@ -151,11 +185,16 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ObradivostDto> UpdateObradivost(ObradivostEntity obradivost)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje obradivosti";
+
             try
             {
                 var oldObradivost = obradivostRepository.GetObradivostById(obradivost.ObradivostID);
                 if (oldObradivost == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 ObradivostEntity obradivostEntity = mapper.Map<ObradivostEntity>(obradivost);
@@ -163,10 +202,14 @@ namespace Parcela.Controllers
                 mapper.Map(obradivostEntity, oldObradivost);
 
                 obradivostRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<ObradivostDto>(obradivostEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -179,6 +222,10 @@ namespace Parcela.Controllers
         public IActionResult GetObradivostOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa obradivostima";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using AdresaServis.Data;
 using AdresaServis.Entities;
 using AdresaServis.Models;
+using AdresaServis.ServiceCalls;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,12 +24,17 @@ namespace AdresaServis.Controllers
         private readonly IAdresaRepository adresaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public AdresaController(IAdresaRepository adresaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public AdresaController(IAdresaRepository adresaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.adresaRepository = adresaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Adresa";
         }
 
         /// <summary>
@@ -43,11 +49,18 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<AdresaDto>> GetAdrese()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih adresa";
+
             List<AdresaEntity> adrese = adresaRepository.GetAdrese();
             if (adrese == null || adrese.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<AdresaDto>>(adrese));
         }
 
@@ -63,11 +76,18 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<AdresaDto> GetAdresa(Guid adresaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje adrese po ID-ju";
+
             AdresaEntity adresa = adresaRepository.GetAdresaById(adresaID);
             if (adresa == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<AdresaDto>(adresa));
         }
 
@@ -95,16 +115,23 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<AdresaDto> CreateAdresa([FromBody] AdresaDto adresa)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove adrese";
+
             try
             {
                 AdresaEntity adr = mapper.Map<AdresaEntity>(adresa);
                 AdresaEntity a = adresaRepository.CreateAdresa(adr);
                 adresaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetAdresa", "Adresa", new { adresaID = a.AdresaID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<AdresaDto>(a));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -123,19 +150,28 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteAdresa(Guid adresaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje adrese";
+
             try
             {
                 AdresaEntity adresa = adresaRepository.GetAdresaById(adresaID);
                 if (adresa == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 adresaRepository.DeleteAdresa(adresaID);
                 adresaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -155,11 +191,16 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<AdresaDto> UpdateAdresa(AdresaEntity adresa)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje adrese";
+
             try
             {
                 var oldAdresa = adresaRepository.GetAdresaById(adresa.AdresaID);
                 if (oldAdresa == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 AdresaEntity adresaEntity = mapper.Map<AdresaEntity>(adresa);
@@ -167,10 +208,14 @@ namespace AdresaServis.Controllers
                 mapper.Map(adresaEntity, oldAdresa);
 
                 adresaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<AdresaDto>(adresaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -183,6 +228,10 @@ namespace AdresaServis.Controllers
         public IActionResult GetAdresaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa adresama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

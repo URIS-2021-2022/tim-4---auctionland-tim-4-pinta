@@ -57,7 +57,7 @@ namespace Parcela.Entities
                     KulturaID = Guid.Parse("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                     KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                     KatastarskaOpstinaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                    KupacID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
+                    KupacID = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0")
                 });
 
             builder.Entity<ParcelaEntity>()
@@ -79,7 +79,7 @@ namespace Parcela.Entities
                     KulturaID = Guid.Parse("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                     KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                     KatastarskaOpstinaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                    KupacID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
+                    KupacID = Guid.Parse("1a411c13-a195-48f7-8dbd-67596c3974c0")
                 });
 
             builder.Entity<ZasticenaZonaEntity>()
