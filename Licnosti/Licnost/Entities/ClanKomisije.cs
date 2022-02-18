@@ -12,9 +12,11 @@ namespace Licnost.Entities
         [Key]
         public Guid ClanKomisijeId { get; set; }
 
+
         [ForeignKey("Licnost")]
         public Guid LicnostId { get; set; }
-        public LicnostEntity Clan { get; set; }
+        public LicnostEntity Licnost { get; set; }
+
 
         [ForeignKey("Komisija")]
         public Guid KomisijaId { get; set; }
