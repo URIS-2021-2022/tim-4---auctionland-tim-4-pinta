@@ -2,7 +2,7 @@
 
 namespace AdresaServis.Migrations
 {
-    public partial class Create : Migration
+    public partial class InitialCreateAdresa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

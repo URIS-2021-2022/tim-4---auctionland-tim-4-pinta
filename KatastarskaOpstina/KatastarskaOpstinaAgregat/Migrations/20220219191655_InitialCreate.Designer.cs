@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KatastarskaOpstinaAgregat.Migrations
 {
     [DbContext(typeof(KatastarskaOpstinaContext))]
-    [Migration("20220207172652_InitialCreate")]
+    [Migration("20220219191655_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
