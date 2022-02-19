@@ -41,85 +41,83 @@ namespace Licnost
 
         public void ConfigureServices(IServiceCollection services)
         {
-                
-                services.AddControllers(setup =>
-                    setup.ReturnHttpNotAcceptable = true
-                ).AddXmlDataContractSerializerFormatters() 
-                .ConfigureApiBehaviorOptions(setupAction => 
+
+            services.AddControllers(setup =>
+                setup.ReturnHttpNotAcceptable = true
+            ).AddXmlDataContractSerializerFormatters();
+                //.ConfigureApiBehaviorOptions(setupAction =>
+           // {
+                //setupAction.InvalidModelStateResponseFactory = context =>
+                //{
+
+                //    ProblemDetailsFactory problemDetailsFactory = context.HttpContext.RequestServices
+                //                .GetRequiredService<ProblemDetailsFactory>();
+
+
+                //    ValidationProblemDetails problemDetails = problemDetailsFactory.CreateValidationProblemDetails(
+                //                context.HttpContext,
+                //                context.ModelState);
+
+                //    problemDetails.Detail = "Pogledajte polje errors za detalje.";
+                //    problemDetails.Instance = context.HttpContext.Request.Path;
+
+
+                //    var actionExecutiongContext = context as ActionExecutingContext;
+
+
+                //    if ((context.ModelState.ErrorCount > 0) &&
+                //                (actionExecutiongContext?.ActionArguments.Count == context.ActionDescriptor.Parameters.Count))
+                //    {
+                //        problemDetails.Type = "https://google.com";
+                //        problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
+                //        problemDetails.Title = "Došlo je do greške prilikom validacije.";
+
+
+                //        return new UnprocessableEntityObjectResult(problemDetails)
+                //        {
+                //            ContentTypes = { "application/problem+json" }
+                //        };
+                //    };
+
+
+                //    problemDetails.Status = StatusCodes.Status400BadRequest;
+                //    problemDetails.Title = "Došlo je do greške prilikom parsiranja poslatog sadržaja.";
+                //    return new BadRequestObjectResult(problemDetails)
+                //    {
+                //        ContentTypes = { "application/problem+json" }
+                //    };
+               //};
+           // });
+
+
+            //services.AddSingleton<ILicnostRepository, LicnostMockRepository>();
+            services.AddSingleton<IUserRepository, UserMockRepository>();
+            services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            services.AddScoped<ILicnostRepository, LicnostRepository>();
+            services.AddScoped<IKomisijaRepository, KomisijaRepository>();
+            services.AddScoped<IClanKomisijeRepository, ClanKomisijeRepository>();
+            
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
-                    setupAction.InvalidModelStateResponseFactory = context =>
-                    {
-                    
-                    ProblemDetailsFactory problemDetailsFactory = context.HttpContext.RequestServices
-                            .GetRequiredService<ProblemDetailsFactory>();
-
-                    
-                    ValidationProblemDetails problemDetails = problemDetailsFactory.CreateValidationProblemDetails(
-                            context.HttpContext,
-                            context.ModelState);
-
-                    problemDetails.Detail = "Pogledajte polje errors za detalje.";
-                        problemDetails.Instance = context.HttpContext.Request.Path;
-
-                    
-                    var actionExecutiongContext = context as ActionExecutingContext;
-
-                   
-                    if ((context.ModelState.ErrorCount > 0) &&
-                            (actionExecutiongContext?.ActionArguments.Count == context.ActionDescriptor.Parameters.Count))
-                        {
-                            problemDetails.Type = "https://google.com"; 
-                        problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
-                            problemDetails.Title = "Došlo je do greške prilikom validacije.";
-
-                       
-                        return new UnprocessableEntityObjectResult(problemDetails)
-                            {
-                                ContentTypes = { "application/problem+json" }
-                            };
-                        };
-
-                   
-                    problemDetails.Status = StatusCodes.Status400BadRequest;
-                        problemDetails.Title = "Došlo je do greške prilikom parsiranja poslatog sadržaja.";
-                        return new BadRequestObjectResult(problemDetails)
-                        {
-                            ContentTypes = { "application/problem+json" }
-                        };
-                    };
-                });
-
-                services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-                
-                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                    };
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
 
             //services.AddControllers(setup =>
             //{
             //    setup.ReturnHttpNotAcceptable = true;
             //}).AddXmlDataContractSerializerFormatters();
-
-          
-
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            //services.AddSingleton<ILicnostRepository, LicnostMockRepository>();
-            services.AddScoped<ILicnostRepository, LicnostRepository>();
-            services.AddScoped<IKomisijaRepository, KomisijaRepository>();
-            services.AddScoped<IClanKomisijeRepository, ClanKomisijeRepository>();
-            services.AddSingleton<IUserRepository, UserMockRepository>();
-               services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
 
             services.AddSwaggerGen(setupAction=>
             {
@@ -137,9 +135,10 @@ namespace Licnost
                 setupAction.IncludeXmlComments(xmlCommentsPath);
 
                 
-                //services.AddDbContext<LicnostContext>();
-                services.AddDbContextPool<LicnostContext>(options=> options.UseSqlServer(Configuration.GetConnectionString("LicnostDB")));
+                
             });
+            //services.AddDbContext<LicnostContext>();
+            services.AddDbContextPool<LicnostContext>(options => options.UseSqlServer(Configuration.GetConnectionString("LicnostDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -150,6 +149,7 @@ namespace Licnost
                 app.UseDeveloperExceptionPage();
                 
             }
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseSwagger();

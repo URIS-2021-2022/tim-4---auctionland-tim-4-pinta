@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,16 @@ namespace ComplaintAggregate.Entities
 {
     public class ComplaintAggregateContext :DbContext
     {
+       
         public ComplaintAggregateContext(DbContextOptions<ComplaintAggregateContext> options): base(options)
         {
-
+           
         }
 
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<ActionBasedOnComplaint> Actions { get; set; }
         public DbSet<StatusOfComplaint> Status { get; set; }
         public DbSet<TypeOfComplaint> Types { get; set; }
-      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

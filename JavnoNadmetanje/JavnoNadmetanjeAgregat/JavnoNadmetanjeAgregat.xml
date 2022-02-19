@@ -510,6 +510,11 @@
             ID kupca parcele
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Kupac">
+            <summary>
+            Kupac javnog nadmetanja
+            </summary>
+        </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.ParcelaID">
             <summary>
             ID parcele

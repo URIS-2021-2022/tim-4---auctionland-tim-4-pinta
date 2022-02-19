@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
 using Parcela.Entities;
 using Parcela.Models;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace Parcela.Controllers
         private readonly IKlasaRepository klasaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public KlasaController(IKlasaRepository klasaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public KlasaController(IKlasaRepository klasaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.klasaRepository = klasaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
 
         /// <summary>
@@ -43,11 +49,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KlasaDto>> GetKlase()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih klasa";
+
             List<KlasaEntity> klase = klasaRepository.GetKlase();
             if (klase == null || klase.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<KlasaDto>>(klase));
         }
 
@@ -63,11 +76,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KlasaDto> GetKlasa(Guid klasaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje klase po ID-ju";
+
             KlasaEntity klasa = klasaRepository.GetKlasaById(klasaID);
             if (klasa == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<KlasaDto>(klasa));
         }
 
@@ -91,15 +111,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KlasaDto> CreateKlasa([FromBody] KlasaDto klasa)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove klase";
+
             try
             {
                 KlasaEntity kla = mapper.Map<KlasaEntity>(klasa);
                 KlasaEntity k = klasaRepository.CreateKlasa(kla);
+                klasaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetKlasa", "Klasa", new { klasaID = k.KlasaID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<KlasaDto>(klasa));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -118,18 +146,28 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteKlasa(Guid klasaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje klase";
+
             try
             {
                 KlasaEntity klasa = klasaRepository.GetKlasaById(klasaID);
                 if (klasa == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 klasaRepository.DeleteKlasa(klasaID);
+                klasaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -149,17 +187,31 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KlasaDto> UpdateKlasa(KlasaEntity klasa)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje klase";
+
             try
             {
-                if (klasaRepository.GetKlasaById(klasa.KlasaID) == null)
+                var oldKlasa = klasaRepository.GetKlasaById(klasa.KlasaID);
+                if (oldKlasa == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
-                KlasaEntity k = klasaRepository.UpdateKlasa(klasa);
-                return Ok(mapper.Map<KlasaDto>(k));
+                KlasaEntity klasaEntity = mapper.Map<KlasaEntity>(klasa);
+
+                mapper.Map(klasaEntity, oldKlasa);
+
+                klasaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<KlasaDto>(klasaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -172,6 +224,10 @@ namespace Parcela.Controllers
         public IActionResult GetKlasaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa klasama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

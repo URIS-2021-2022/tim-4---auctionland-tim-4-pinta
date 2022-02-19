@@ -1,6 +1,7 @@
 ﻿using AdresaServis.Data;
 using AdresaServis.Entities;
 using AdresaServis.Models;
+using AdresaServis.ServiceCalls;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,12 +24,17 @@ namespace AdresaServis.Controllers
         private readonly IDrzavaRepository drzavaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public DrzavaController(IDrzavaRepository drzavaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public DrzavaController(IDrzavaRepository drzavaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.drzavaRepository = drzavaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Adresa";
         }
 
         /// <summary>
@@ -43,11 +49,18 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<DrzavaDto>> GetDrzave()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih drzava";
+
             List<DrzavaEntity> drzave = drzavaRepository.GetDrzave();
             if (drzave == null || drzave.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<DrzavaDto>>(drzave));
         }
 
@@ -63,11 +76,18 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<DrzavaDto> GetDrzava(Guid drzavaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje drazve po ID-ju";
+
             DrzavaEntity drzava = drzavaRepository.GetDrzavaById(drzavaID);
             if (drzava == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<DrzavaDto>(drzava));
         }
 
@@ -89,17 +109,25 @@ namespace AdresaServis.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<DrzavaDto> CreateAdresa([FromBody] DrzavaDto drzava)
+        public ActionResult<DrzavaDto> CreateDrzava([FromBody] DrzavaDto drzava)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove drzave";
+
             try
             {
                 DrzavaEntity drz = mapper.Map<DrzavaEntity>(drzava);
                 DrzavaEntity d = drzavaRepository.CreateDrzava(drz);
+                drzavaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetDrzava", "Drzava", new { drzavaID = d.DrzavaID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<DrzavaDto>(d));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -118,18 +146,28 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteDrzava(Guid drzavaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje drzave";
+
             try
             {
                 DrzavaEntity drzava = drzavaRepository.GetDrzavaById(drzavaID);
                 if (drzava == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 drzavaRepository.DeleteDrzava(drzavaID);
+                drzavaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -149,17 +187,31 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<DrzavaDto> UpdateDrzava(DrzavaEntity drzava)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje drzave";
+
             try
             {
-                if (drzavaRepository.GetDrzavaById(drzava.DrzavaID) == null)
+                var oldDrzava = drzavaRepository.GetDrzavaById(drzava.DrzavaID);
+                if (oldDrzava == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
-                DrzavaEntity d = drzavaRepository.UpdateDrzava(drzava);
-                return Ok(mapper.Map<DrzavaDto>(d));
+                DrzavaEntity drzavaEntity = mapper.Map<DrzavaEntity>(drzava);
+
+                mapper.Map(drzavaEntity, oldDrzava);
+
+                drzavaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<DrzavaDto>(drzavaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -172,6 +224,10 @@ namespace AdresaServis.Controllers
         public IActionResult GetDrzavaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa drzavama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

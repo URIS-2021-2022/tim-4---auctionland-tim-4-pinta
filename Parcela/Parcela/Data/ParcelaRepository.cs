@@ -27,8 +27,7 @@ namespace Parcela.Data
         {
             parcela.ParcelaID = Guid.NewGuid();
             context.Parcele.Add(parcela);
-            ParcelaEntity p = GetParcelaById(parcela.ParcelaID);
-            return p;
+            return parcela;
         }
 
         public void DeleteParcela(Guid parcelaID)
@@ -46,9 +45,9 @@ namespace Parcela.Data
             return (from p in context.Parcele select p).ToList();
         }
 
-        public ParcelaEntity UpdateParcela(ParcelaEntity parcela)
+        public void UpdateParcela(ParcelaEntity parcela)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }

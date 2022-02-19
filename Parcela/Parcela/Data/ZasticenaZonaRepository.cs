@@ -27,8 +27,7 @@ namespace Parcela.Data
         {
             zasticenaZona.ZasticenaZonaID = Guid.NewGuid();
             context.ZasticeneZone.Add(zasticenaZona);
-            ZasticenaZonaEntity z = GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID);
-            return z;
+            return zasticenaZona;
         }
 
         public void DeleteZasticenaZona(Guid zasticenaZonaID)
@@ -46,9 +45,9 @@ namespace Parcela.Data
             return (from z in context.ZasticeneZone select z).ToList();
         }
 
-        public ZasticenaZonaEntity UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
+        public void UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

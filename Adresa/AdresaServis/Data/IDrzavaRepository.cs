@@ -14,7 +14,7 @@ namespace AdresaServis.Data
 
         DrzavaEntity CreateDrzava(DrzavaEntity drzava);
 
-        DrzavaEntity UpdateDrzava(DrzavaEntity drzava);
+        void UpdateDrzava(DrzavaEntity drzava);
 
         void DeleteDrzava(Guid drzavaID);
 

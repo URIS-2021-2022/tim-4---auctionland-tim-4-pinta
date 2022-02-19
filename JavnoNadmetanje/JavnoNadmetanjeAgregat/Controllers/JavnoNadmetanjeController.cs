@@ -32,13 +32,15 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IKupacService kupacService;
         private readonly IAdresaService adresaService;
         private readonly IParcelaService parcelaService;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
         private readonly IJavnoNadmetanjeRepository javnoNadmetanjeRepository;
         private readonly LinkGenerator linkGenerator; //Služi za generisanje putanje do neke akcije (videti primer u metodu CreateExamRegistration)
         private readonly IMapper mapper;
         //injektovanje zavisnosti- kad se kreira obj kontrolera mora da se prosledi nesto sto implementira interfejs tj confirmation
 
-        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService)
+        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService)
         {
             this.javnoNadmetanjeRepository = javnoNadmetanjeRepository;
             this.linkGenerator = linkGenerator;
@@ -47,6 +49,9 @@ namespace JavnoNadmetanjeAgregat.Controllers
             this.parcelaService = parcelaService;
             this.adresaService = adresaService;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "JavnoNadmetanje";
         }
 
         /// <summary>
@@ -61,11 +66,18 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<JavnoNadmetanjeDto>> GetJavnoNadmetanje()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih javnih nadmetanja";
+
             List<JavnoNadmetanjeEntity> javnoNadmetanje = javnoNadmetanjeRepository.GetJavnoNadmetanje();
             if (javnoNadmetanje == null || javnoNadmetanje.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<JavnoNadmetanjeDto>>(javnoNadmetanje));
         }
 
@@ -81,12 +93,23 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<JavnoNadmetanjeDto> GetJavnoNadmetanje(Guid javnoNadmetanjeID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje javnog nadmetanja po ID-ju";
             JavnoNadmetanjeEntity javnoNadmetanje = javnoNadmetanjeRepository.GetJavnoNadmetanjeById(javnoNadmetanjeID);
             if (javnoNadmetanje == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
-            return Ok((mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje)));
+            KupacJavnoNadmetanjeDto kupac = kupacService.GetKupacByIdAsync(javnoNadmetanje.KupacID).Result;
+            JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje);
+            javnoNadmetanjeDto.Kupac = kupac;
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
+            return Ok(javnoNadmetanjeDto);
+
+            //return Ok((mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje)));
         }
         /// <summary>
         /// Kreira novu javno nadmetanje
@@ -115,16 +138,23 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<JavnoNadmetanjeDto> CreateJavnoNadmetanje([FromBody] JavnoNadmetanjeDto javnoNadmetanje)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog javnog nadmetanja";
             try
             {
                 JavnoNadmetanjeEntity obj = mapper.Map<JavnoNadmetanjeEntity>(javnoNadmetanje);
                 JavnoNadmetanjeEntity j = javnoNadmetanjeRepository.CreateJavnoNadmetanje(obj);
-                //string location = linkGenerator.GetPathByAction("GetJavnoNadmetanje", "JavnoNadmetanje", new { javnoNadmetanjeID = j.JavnoNadmetanjeID });
-                //return Created(location, mapper.Map<JavnoNadmetanjeDto>(j));
-                return Created("", mapper.Map<JavnoNadmetanjeDto>(j));
+                javnoNadmetanjeRepository.SaveChanges();
+                String location = linkGenerator.GetPathByAction("GetJavnoNadmetanje", "JavnoNadmetanje", new { javnoNadmetanjeID = j.JavnoNadmetanjeID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Created(location, mapper.Map<JavnoNadmetanjeDto>(j));
+               // return Created("", mapper.Map<JavnoNadmetanjeDto>(j));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -142,18 +172,28 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteJavnoNadmetanje(Guid javnoNadmetanjeID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje javnog nadmetanja";
             try
             {
                 JavnoNadmetanjeEntity javnoNadmetanje = javnoNadmetanjeRepository.GetJavnoNadmetanjeById(javnoNadmetanjeID);
                 if (javnoNadmetanje == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 javnoNadmetanjeRepository.DeleteJavnoNadmetanje(javnoNadmetanjeID);
+                javnoNadmetanjeRepository.SaveChanges();
+
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -174,21 +214,31 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<JavnoNadmetanjeDto> UpdateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje javnog nadmetanja";
+
             try
             {
                 var oldJavnoNadmetanje = javnoNadmetanjeRepository.GetJavnoNadmetanjeById(javnoNadmetanje.JavnoNadmetanjeID);
                 if (oldJavnoNadmetanje == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 JavnoNadmetanjeEntity javnoNadmetanjeEntity = mapper.Map<JavnoNadmetanjeEntity>(javnoNadmetanje);
                 mapper.Map(javnoNadmetanjeEntity, oldJavnoNadmetanje); //Update objekta koji treba da sačuvamo u bazi                
 
                 javnoNadmetanjeRepository.SaveChanges(); //Perzistiramo promene
+
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanjeEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
 
@@ -201,7 +251,12 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [HttpOptions]
         public IActionResult GetJavnoNadmetanjeOptions()
         {
+
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa javnim nadmetanjima";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
 
         }

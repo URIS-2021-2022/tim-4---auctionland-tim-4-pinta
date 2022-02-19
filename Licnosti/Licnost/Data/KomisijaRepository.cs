@@ -31,13 +31,17 @@ namespace Licnost.Data
 
         public Komisija GetKomisijaById(Guid komisijaId)
         {
-            return context.Komisije.FirstOrDefault(k => k.KomisijaId  == komisijaId);
+            return context.Komisije.FirstOrDefault(k => k.KomisijaId == komisijaId);
         }
 
         public Komisija CreateKomisija(Komisija komisija)
         {
-            var createdEntity = context.Add(komisija);
-            return mapper.Map<Komisija>(createdEntity.Entity);
+            komisija.KomisijaId = Guid.NewGuid();
+            context.Komisije.Add(komisija);
+            Komisija k = GetKomisijaById(komisija.KomisijaId);
+            return k;
+            //var createdEntity = context.Add(komisija);
+            //return mapper.Map<Komisija>(createdEntity.Entity);
         }
 
         public void UpdateKomisija(Komisija komisija)

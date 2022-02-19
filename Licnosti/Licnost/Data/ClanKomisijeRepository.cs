@@ -25,30 +25,33 @@ namespace Licnost.Data
 
         public List<ClanKomisije> GetClanoviKomisije()
         {
-            return (from p in context.ClanoviKomisije select p).ToList();
+            return (from c in context.ClanoviKomisije select c).ToList();
 
         }
 
-        public ClanKomisije GetClanKomisijetById(Guid clanId)
+        public ClanKomisije GetClanKomisijeById(Guid clanId)
         {
             return context.ClanoviKomisije.FirstOrDefault(c => c.ClanKomisijeId == clanId);
         }
 
         public ClanKomisije CreateClanKomisije(ClanKomisije clan)
         {
-            var createdEntity = context.Add(clan);
-            return mapper.Map<ClanKomisije>(createdEntity.Entity);
+            clan.ClanKomisijeId = Guid.NewGuid();
+            context.ClanoviKomisije.Add(clan);
+            ClanKomisije c = GetClanKomisijeById(clan.ClanKomisijeId);
+            return c;
+            //var createdEntity = context.Add(clan);
+            //return mapper.Map<ClanKomisije>(createdEntity.Entity);
         }
 
         public void UpdateClanKomisije(ClanKomisije clan)
         {
-            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
-            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
+            throw new NotImplementedException();
         }
 
         public void DeleteClanKomisije(Guid clanId)
         {
-            var clan = GetClanKomisijetById(clanId);
+            var clan = GetClanKomisijeById(clanId);
             context.Remove(clanId);
         }
     }

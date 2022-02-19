@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
 using Parcela.Entities;
 using Parcela.Models;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace Parcela.Controllers
         private readonly IOdvodnjavanjeRepository odvodnjavanjeRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public OdvodnjavanjeController(IOdvodnjavanjeRepository odvodnjavanjeRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public OdvodnjavanjeController(IOdvodnjavanjeRepository odvodnjavanjeRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.odvodnjavanjeRepository = odvodnjavanjeRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
 
         /// <summary>
@@ -43,11 +49,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<OdvodnjavanjeDto>> GetOdvodnjavanja()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih odvodnjavanja";
+
             List<OdvodnjavanjeEntity> odvodnjavanja = odvodnjavanjeRepository.GetOdvodnjavanja();
             if (odvodnjavanja == null || odvodnjavanja.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<OdvodnjavanjeDto>>(odvodnjavanja));
         }
 
@@ -63,11 +76,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<OdvodnjavanjeDto> GetOdvodnjavanje(Guid odvodnjavanjeID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje odvodnjavanja po ID-ju";
+
             OdvodnjavanjeEntity odvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanjeID);
             if (odvodnjavanje == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<OdvodnjavanjeDto>(odvodnjavanje));
         }
 
@@ -90,15 +110,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OdvodnjavanjeDto> CreateOdvodnjavanje([FromBody] OdvodnjavanjeDto odvodnjavanje)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog odvodnjavanja";
+
             try
             {
                 OdvodnjavanjeEntity odv = mapper.Map<OdvodnjavanjeEntity>(odvodnjavanje);
                 OdvodnjavanjeEntity o = odvodnjavanjeRepository.CreateOdvodnjavanje(odv);
+                odvodnjavanjeRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetOdvodnjavanje", "Odvodnjavanje", new { odvodnjavanjeID = o.OdvodnjavanjeID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<OdvodnjavanjeDto>(o));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -114,18 +142,27 @@ namespace Parcela.Controllers
         [HttpDelete("{odvodnjavanjeID}")]
         public IActionResult DeleteOdvodnjavanje(Guid odvodnjavanjeID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje odvodnjavanja";
             try
             {
                 OdvodnjavanjeEntity odvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanjeID);
                 if (odvodnjavanje == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 odvodnjavanjeRepository.DeleteOdvodnjavanje(odvodnjavanjeID);
+                odvodnjavanjeRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -145,17 +182,31 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OdvodnjavanjeDto> UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje odvodnjavanja";
+
             try
             {
-                if (odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanje.OdvodnjavanjeID) == null)
+                var oldOdvodnjavanje = odvodnjavanjeRepository.GetOdvodnjavanjeById(odvodnjavanje.OdvodnjavanjeID);
+                if (oldOdvodnjavanje == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
-                OdvodnjavanjeEntity o = odvodnjavanjeRepository.UpdateOdvodnjavanje(odvodnjavanje);
-                return Ok(mapper.Map<OdvodnjavanjeDto>(o));
+                OdvodnjavanjeEntity odvodnjavanjeEntity = mapper.Map<OdvodnjavanjeEntity>(odvodnjavanje);
+
+                mapper.Map(odvodnjavanjeEntity, oldOdvodnjavanje);
+
+                odvodnjavanjeRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -168,6 +219,10 @@ namespace Parcela.Controllers
         public IActionResult GetOdvodnjavanjeOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa odvodnjavanjima";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

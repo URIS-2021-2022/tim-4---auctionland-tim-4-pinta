@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
 using Parcela.Entities;
 using Parcela.Models;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace Parcela.Controllers
         private readonly IDeoParceleRepository deoParceleRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly LoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public DeoParceleController(IDeoParceleRepository deoParceleRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public DeoParceleController(IDeoParceleRepository deoParceleRepository, LinkGenerator linkGenerator, IMapper mapper, LoggerService loggerService)
         {
             this.deoParceleRepository = deoParceleRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
 
         /// <summary>
@@ -43,11 +49,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<DeoParceleDto>> GetDeloviParcela ()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih delova parcela";
+
             List<DeoParceleEntity> deloviParcela = deoParceleRepository.GetDeloviParcela();
             if (deloviParcela == null || deloviParcela.Count == 0)
-            {
+            {              
+                logDto.Level = "Warn";  
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<DeoParceleDto>>(deloviParcela));
         }
 
@@ -63,11 +76,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<DeoParceleDto> GetDeoParcele(Guid deoParceleID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje dela parcele po ID-ju";
+
             DeoParceleEntity deoParcele = deoParceleRepository.GetDeoParceleById(deoParceleID);
             if (deoParcele == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<DeoParceleDto>(deoParcele));
         }
 
@@ -92,15 +112,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<DeoParceleDto> CreateDeoParcele([FromBody] DeoParceleDto deoParcele)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog dela parcele";
+
             try
             {
                 DeoParceleEntity deop = mapper.Map<DeoParceleEntity>(deoParcele);
                 DeoParceleEntity dp = deoParceleRepository.CreateDeoParcele(deop);
+                deoParceleRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetDeoParcele", "DeoParcele", new { deoParceleID = dp.DeoParceleID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<DeoParceleDto>(dp));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -119,18 +147,28 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteDeoParcele(Guid deoParceleID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje dela parcele";
+
             try
             {
                 DeoParceleEntity deoParcele = deoParceleRepository.GetDeoParceleById(deoParceleID);
                 if (deoParcele == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 deoParceleRepository.DeleteDeoParcele(deoParceleID);
+                deoParceleRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -150,17 +188,31 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleEntity deoParcele)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje dela parcele";
+
             try
             {
-                if (deoParceleRepository.GetDeoParceleById(deoParcele.DeoParceleID) == null)
+                var oldDeoParcele = deoParceleRepository.GetDeoParceleById(deoParcele.DeoParceleID);
+                if (oldDeoParcele == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
-                DeoParceleEntity dp = deoParceleRepository.UpdateDeoParcele(deoParcele);
-                return Ok(mapper.Map<DeoParceleDto>(dp));
+                DeoParceleEntity deoParceleEntity = mapper.Map<DeoParceleEntity>(deoParcele);
+
+                mapper.Map(deoParceleEntity, oldDeoParcele);
+
+                deoParceleRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<DeoParceleDto>(deoParceleEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -173,6 +225,10 @@ namespace Parcela.Controllers
         public IActionResult GetDeoParceleOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa delovima parcela";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

@@ -124,6 +124,8 @@ namespace JavnoNadmetanjeAgregat
             services.AddScoped<IKupacService, KupacService>();
             services.AddScoped<IParcelaService, ParcelaService>();
             services.AddScoped<IAdresaService, AdresaService>();
+            services.AddScoped<IGatewayService, GatewayService>();
+            services.AddScoped<ILoggerService, LoggerService>();
 
             services.AddSwaggerGen(setupAction =>
             {

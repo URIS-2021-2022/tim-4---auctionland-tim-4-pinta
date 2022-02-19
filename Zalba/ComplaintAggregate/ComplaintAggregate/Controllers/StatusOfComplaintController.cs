@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace ComplaintAggregate.Controllers
 {
     [ApiController]
-    [Route("api/zalba/status")]
+    [Route("api/status")]
     public class StatusOfComplaintController:ControllerBase
     {
         private readonly IStatusOfComplaintRepository complainStatusRepository;
@@ -71,7 +71,7 @@ namespace ComplaintAggregate.Controllers
                 StatusOfComplaint confirmation = complainStatusRepository.CreateStatus(comp);
                 complainStatusRepository.SaveChanges();
                 // Dobar API treba da vrati lokator gde se taj resurs nalazi
-                string location = linkGenerator.GetPathByAction("GetStatus", "StatusOfComplaint", new { Status_zalbe = confirmation.Status_zalbe });
+              string location = linkGenerator.GetPathByAction("GetStatus", "StatusOfComplaint", new { Status_zalbe = confirmation.Status_zalbe });
                 return Created(location, mapper.Map<StatusOfComplaintDTO>(confirmation));
             }
             catch

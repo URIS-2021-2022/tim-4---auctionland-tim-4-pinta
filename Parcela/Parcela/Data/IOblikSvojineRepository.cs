@@ -15,8 +15,10 @@ namespace Parcela.Data
 
         OblikSvojineEntity CreateOblikSvojine(OblikSvojineEntity oblikSvojine);
 
-        OblikSvojineEntity UpdateOblikSvojine(OblikSvojineEntity oblikSvojine);
+        void UpdateOblikSvojine(OblikSvojineEntity oblikSvojine);
 
         void DeleteOblikSvojine(Guid oblikSvojineID);
+
+        bool SaveChanges();
     }
 }

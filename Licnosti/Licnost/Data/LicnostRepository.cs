@@ -39,9 +39,13 @@ namespace Licnost.Data
 
             public LicnostEntity CreateLicnost(LicnostEntity licnost)
             {
-                var createdEntity = context.Add(licnost);
-                return mapper.Map<LicnostEntity>(createdEntity.Entity);
-            }
+                licnost.LicnostId= Guid.NewGuid();
+                context.Licnosti.Add(licnost);
+                LicnostEntity l = GetLicnostById(licnost.LicnostId);
+                return l;
+            //var createdEntity = context.Add(licnost);
+            //return mapper.Map<LicnostEntity>(createdEntity.Entity);
+        }
 
             public void UpdateLicnost(LicnostEntity licnost)
             {

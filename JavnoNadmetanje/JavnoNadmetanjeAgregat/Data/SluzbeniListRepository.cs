@@ -40,8 +40,8 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             sluzbeniList.SluzbeniListID = Guid.NewGuid();
             context.SluzbeniListovi.Add(sluzbeniList);
-            SluzbeniListEntity sl = GetSluzbeniListById(sluzbeniList.SluzbeniListID);
-            return sl;
+            //SluzbeniListEntity sl = GetSluzbeniListById(sluzbeniList.SluzbeniListID);
+            return sluzbeniList;
         }
 
         public void UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)

@@ -28,7 +28,6 @@ namespace Licnost.Helpers
             {
                 return true;
             }
-
             return false;
         }
 
