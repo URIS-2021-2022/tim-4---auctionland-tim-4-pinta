@@ -61,6 +61,12 @@ namespace JavnoNadmetanjeAgregat.Models
         /// </summary>
         public Guid KupacID { get; set; }
 
+
+        /// <summary>
+        /// Kupac javnog nadmetanja
+        /// </summary>
+        public KupacJavnoNadmetanjeDto Kupac { get; set; }
+
         /// <summary>
         /// ID parcele
         /// </summary>
@@ -70,5 +76,6 @@ namespace JavnoNadmetanjeAgregat.Models
         /// ID adrese
         /// </summary>
         public Guid AdresaID { get; set; }
+
     }
 }

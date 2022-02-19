@@ -2,6 +2,7 @@
 using JavnoNadmetanjeAgregat.Data;
 using JavnoNadmetanjeAgregat.Entities;
 using JavnoNadmetanjeAgregat.Models;
+using JavnoNadmetanjeAgregat.ServiceCalls;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -23,11 +24,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
-        public TipJavnogNadmetanjaController(ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
+
+        public TipJavnogNadmetanjaController(ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.tipJavnogNadmetanjaRepository = tipJavnogNadmetanjaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "TipJavnogNadmetanja";
         }
 
         /// <summary>
@@ -42,11 +49,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<TipJavnogNadmetanjaDto>> GetTipoveJavnogNadmetanja()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih tipova javnog nadmetanja";
             List<TipJavnogNadmetanjaEntity> tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanja();
             if (tipJavnogNadmetanja == null || tipJavnogNadmetanja.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<TipJavnogNadmetanjaDto>>(tipJavnogNadmetanja));
         }
 
@@ -62,11 +75,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<TipJavnogNadmetanjaDto> GetTipJavnogNadmetanja(Guid tipJavnogNadmetanjaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje tipa javnog nadmetanja po ID-ju";
             TipJavnogNadmetanjaEntity tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanjaID);
             if (tipJavnogNadmetanja == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanja));
         }
 
@@ -90,16 +109,24 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TipJavnogNadmetanjaDto> CreateTipJavnogNadmetanja([FromBody] TipJavnogNadmetanjaDto tipJavnogNadmetanja)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog tipa javnog nadmetanja";
+
             try
             {
                 TipJavnogNadmetanjaEntity obj = mapper.Map<TipJavnogNadmetanjaEntity>(tipJavnogNadmetanja);
                 TipJavnogNadmetanjaEntity t = tipJavnogNadmetanjaRepository.CreateTipJavnogNadmetanja(obj);
-                //string location = linkGenerator.GetPathByAction("GetTipJavnogNadmetanja", "TipJavnogNadmetanja", new { tipJavnogNadmetanjaID =t.TipJavnogNadmetanjaID });
-                //return Created(location, mapper.Map<TipJavnogNadmetanjaDto>(t));
-                return Created("", mapper.Map<TipJavnogNadmetanjaDto>(t));
+                tipJavnogNadmetanjaRepository.SaveChanges();
+                string location = linkGenerator.GetPathByAction("GetTipJavnogNadmetanja", "TipJavnogNadmetanja", new { tipJavnogNadmetanjaID =t.TipJavnogNadmetanjaID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Created(location, mapper.Map<TipJavnogNadmetanjaDto>(t));
+               // return Created("", mapper.Map<TipJavnogNadmetanjaDto>(t));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -118,18 +145,28 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteTipJavnogNadmetanja(Guid tipJavnogNadmetanjaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje tipa javnog nadmetanja";
+
             try
             {
                 TipJavnogNadmetanjaEntity tipJavnogNadmetanja = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanjaID);
                 if (tipJavnogNadmetanja == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 tipJavnogNadmetanjaRepository.DeleteTipJavnogNadmetanja(tipJavnogNadmetanjaID);
+                tipJavnogNadmetanjaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -149,21 +186,30 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<TipJavnogNadmetanjaDto> TipJavnogNadmetanjaObradivost(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje tipa javnog nadmetanja";
+
             try
             {
                 var oldTipJavnoNadmetanje = tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
                 if (oldTipJavnoNadmetanje== null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 TipJavnogNadmetanjaEntity tipJavnogNadmetanjaEntity = mapper.Map<TipJavnogNadmetanjaEntity>(tipJavnogNadmetanja);
                 mapper.Map(tipJavnogNadmetanjaEntity, oldTipJavnoNadmetanje); //Update objekta koji treba da sačuvamo u bazi                
 
                 tipJavnogNadmetanjaRepository.SaveChanges(); //Perzistiramo promene
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanjaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -176,6 +222,10 @@ namespace JavnoNadmetanjeAgregat.Controllers
         public IActionResult GetTipJavnogNadmetanjaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa drzavama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
 

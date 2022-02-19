@@ -29,8 +29,8 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             tipJavnogNadmetanja.TipJavnogNadmetanjaID = Guid.NewGuid();
             context.TipoviJavnihNadmetanja.Add(tipJavnogNadmetanja);
-            TipJavnogNadmetanjaEntity t= GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
-            return t;
+            //TipJavnogNadmetanjaEntity t= GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
+            return tipJavnogNadmetanja;
         }
 
         public void DeleteTipJavnogNadmetanja(Guid tipJavnogNadmetanjaID)

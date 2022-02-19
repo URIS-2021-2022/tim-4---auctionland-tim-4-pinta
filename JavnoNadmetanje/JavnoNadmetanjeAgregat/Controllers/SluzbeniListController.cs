@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using JavnoNadmetanjeAgregat.Entities;
+using JavnoNadmetanjeAgregat.ServiceCalls;
 
 namespace JavnoNadmetanjeAgregat.Controllers
 {
@@ -23,12 +24,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly ISluzbeniListRepository sluzbeniListRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public SluzbeniListController(ISluzbeniListRepository sluzbeniListRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public SluzbeniListController(ISluzbeniListRepository sluzbeniListRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.sluzbeniListRepository = sluzbeniListRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "SluzbeniList";
         }
 
 
@@ -44,11 +50,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<SluzbeniListDto>> GetSluzbeneListove()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih sluzbenih listova";
             List<SluzbeniListEntity> sluzbeniList = sluzbeniListRepository.GetSluzbeniList();
             if (sluzbeniList == null || sluzbeniList.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<SluzbeniListDto>>(sluzbeniList));
         }
 
@@ -64,11 +76,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<SluzbeniListDto> GetSluzbeniList(Guid sluzbeniListID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje sluzbenog lista po ID-ju";
             SluzbeniListEntity sluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniListID);
             if (sluzbeniList == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<SluzbeniListDto>(sluzbeniList));
         }
 
@@ -94,16 +112,24 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<SluzbeniListDto> CreateSluzbeniList([FromBody] SluzbeniListDto sluzbeniList)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog sluzbenog lista";
+
             try
             {
                 SluzbeniListEntity obj = mapper.Map<SluzbeniListEntity>(sluzbeniList);
                 SluzbeniListEntity s = sluzbeniListRepository.CreateSluzbeniList(obj);
-                // string location = linkGenerator.GetPathByAction("GetSluzbeniList", "SluzbeniList", new { sluzbeniListID = s.SluzbeniListID });
-                // return Created(location, mapper.Map<SluzbeniListDto>(s));
-                return Created("", mapper.Map<SluzbeniListDto>(s));
+                sluzbeniListRepository.SaveChanges();
+                string location = linkGenerator.GetPathByAction("GetSluzbeniList", "SluzbeniList", new { sluzbeniListID = s.SluzbeniListID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Created(location, mapper.Map<SluzbeniListDto>(s));
+                //return Created("", mapper.Map<SluzbeniListDto>(s));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -122,18 +148,28 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteSluzbeniList(Guid sluzbeniListID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje sluzbenog lista";
+
             try
             {
                 SluzbeniListEntity sluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniListID);
                 if (sluzbeniList == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 sluzbeniListRepository.DeleteSluzbeniList(sluzbeniListID);
+                sluzbeniListRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -152,21 +188,30 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<SluzbeniListDto> UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje sluzbenog lista";
+
             try
             {
                 var oldSluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniList.SluzbeniListID);
                 if (oldSluzbeniList == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 SluzbeniListEntity sluzbeniListEntity = mapper.Map<SluzbeniListEntity>(sluzbeniList);
                 mapper.Map(sluzbeniListEntity, oldSluzbeniList); //Update objekta koji treba da sačuvamo u bazi                
 
                 sluzbeniListRepository.SaveChanges(); //Perzistiramo promene
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<SluzbeniListDto>(sluzbeniListEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
 
 
@@ -181,6 +226,10 @@ namespace JavnoNadmetanjeAgregat.Controllers
         public IActionResult GetSluzbeniListOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa drzavama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
 

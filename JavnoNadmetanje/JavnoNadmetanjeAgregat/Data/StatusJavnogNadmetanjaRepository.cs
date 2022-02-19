@@ -28,8 +28,8 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             statusJavnogNadmetanja.StatusJavnogNadmetanjaID = Guid.NewGuid();
             context.StatusiJavnihNadmetanja.Add(statusJavnogNadmetanja);
-            StatusJavnogNadmetanjaEntity s = GetStatusJavnogNadmetanjaById(statusJavnogNadmetanja.StatusJavnogNadmetanjaID);
-            return s;
+            //StatusJavnogNadmetanjaEntity s = GetStatusJavnogNadmetanjaById(statusJavnogNadmetanja.StatusJavnogNadmetanjaID);
+            return statusJavnogNadmetanja;
         }
 
         public void DeleteStatusJavnogNadmetanja(Guid statusJavnogNadmetanjaID)
