@@ -25,13 +25,19 @@ namespace KupacMikroservis.Controllers
 
         public readonly IAdresaService adresaService;
 
+        private readonly ILogger logger;
+        private LogDTO logDTO;
 
-        public OvlascenoLiceController(IOvlascenoLiceRepository oLiceRepository, IAdresaService adresaService, LinkGenerator linkGenerator, IMapper mapper)
+
+        public OvlascenoLiceController(IOvlascenoLiceRepository oLiceRepository, IAdresaService adresaService, LinkGenerator linkGenerator, IMapper mapper,ILogger logger)
         {
             this.oLiceRepository = oLiceRepository;
             this.adresaService = adresaService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.logger = logger;
+            logDTO = new LogDTO();
+            logDTO.NameOfTheService = "OvlascenoLice";
         }
 
         /// <summary>
@@ -40,9 +46,14 @@ namespace KupacMikroservis.Controllers
         [HttpGet]
         public ActionResult<List<OvlascenoLiceDTO>> GetOvlascenaLica()
         {
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje svih ovlascenih lica";
+
             List<OvlascenoLiceEntity> ovlascenaLica = oLiceRepository.GetOvlascenaLica();
             if (ovlascenaLica == null || ovlascenaLica.Count == 0)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NoContent();
             }
 
@@ -56,7 +67,8 @@ namespace KupacMikroservis.Controllers
                 oLicaDtos.Add(olDto);
             }
 
-
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
             return Ok(oLicaDtos);
         }
 
@@ -66,11 +78,18 @@ namespace KupacMikroservis.Controllers
         [HttpGet("{OvlascenoLiceId}")]
         public ActionResult<OvlascenoLiceDTO> GetOvlascenoLice(Guid oLiceID)
         {
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje ovlascenih lica po ID";
+
             OvlascenoLiceEntity oLiceModel = oLiceRepository.GetOvlascenoLiceById(oLiceID);
             if (oLiceModel == null)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NotFound();
             }
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
             return Ok(mapper.Map<List<OvlascenoLiceDTO>>(oLiceModel));
         }
 
@@ -81,6 +100,9 @@ namespace KupacMikroservis.Controllers
         [HttpPost]
         public ActionResult<OvlascenoLiceDTO> CreateOvlascenoLice([FromBody] OvlascenoLiceCreateDTO oLice)    //confirmation implementirati
         {
+            logDTO.HttpMethod = "POST";
+            logDTO.Message = "Dodavanje novog ovlascenog lica";
+
             try
             {
                 OvlascenoLiceEntity ol = mapper.Map<OvlascenoLiceEntity>(oLice);
@@ -88,10 +110,15 @@ namespace KupacMikroservis.Controllers
                 OvlascenoLiceEntity olCreated = oLiceRepository.CreateOvlascenoLice(ol);
 
                 string location = linkGenerator.GetPathByAction("GetOvlascenoLice", "OvlascenoLice", new { OvlascenoLiceId = ol.OvlascenoLiceId });
+
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return Created(location, mapper.Map<OvlascenoLiceDTO>(olCreated));
             }
             catch
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
 
             }
@@ -104,19 +131,27 @@ namespace KupacMikroservis.Controllers
         [HttpDelete("{OvlascenoLiceId}")]
         public IActionResult DeleteOvlascenoLice(Guid oLiceID)
         {
+            logDTO.HttpMethod = "DELETE";
+            logDTO.Message = "Brisanje ovlascenog lica";
+
             try
             {
                 OvlascenoLiceEntity oLiceModel =oLiceRepository.GetOvlascenoLiceById(oLiceID);
                 if (oLiceModel == null)
                 {
+                    logDTO.Level = "Warn";
+                    logger.Log(logDTO);
                     return NotFound();
                 }
                 oLiceRepository.DeleteOvlascenoLice(oLiceID);
-               
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return NoContent();
             }
             catch
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -128,12 +163,17 @@ namespace KupacMikroservis.Controllers
         [HttpPut]
         public ActionResult<OvlascenoLiceDTO> UpdateOvlascenoLice(OvlascenoLiceUpdateDTO ol)
         {
+            logDTO.HttpMethod = "PUT";
+            logDTO.Message = "Azuriranje ovlascenog lica";
+
             try
             {
 
                 var oldOLice= oLiceRepository.GetOvlascenoLiceById(ol.OvlascenoLiceId);
                 if (oldOLice == null)
                 {
+                    logDTO.Level = "Warn";
+                    logger.Log(logDTO);
                     return NotFound();
                 }
                 OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
@@ -141,10 +181,14 @@ namespace KupacMikroservis.Controllers
                 mapper.Map(olEntity, oldOLice);
 
                 oLiceRepository.SaveChanges();
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return Ok(mapper.Map<OvlascenoLiceDTO>(olEntity));
             }
             catch (Exception)
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }

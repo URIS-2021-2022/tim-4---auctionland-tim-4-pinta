@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using KupacMikroservis.Data;
 using KupacMikroservis.Models;
 using AutoMapper;
+using KupacMikroservis.ServiceCalls;
 
 namespace KupacMikroservis.Controllers
 {
@@ -22,12 +23,18 @@ namespace KupacMikroservis.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
+        private readonly ILogger logger;
+        private LogDTO logDTO;
 
-        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator, IMapper mapper)
+
+        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator, IMapper mapper,ILogger logger)
         {
             this.prioritetRepository = prioritetRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.logger = logger;
+            logDTO = new LogDTO();
+            logDTO.NameOfTheService = "Prioritet";
         }
 
 
@@ -37,11 +44,18 @@ namespace KupacMikroservis.Controllers
         [HttpGet]
         public ActionResult<List<PrioritetDTO>> GetPrioriteti()
         {
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje svih prioriteta";
+
             List<PrioritetEntity> prioriteti = prioritetRepository.GetPrioriteti();
             if (prioriteti == null || prioriteti.Count == 0)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NoContent();
             }
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
             return Ok(mapper.Map<List<PrioritetDTO>>(prioriteti));
         }
 
@@ -51,11 +65,18 @@ namespace KupacMikroservis.Controllers
         [HttpGet("{PrioritetId}")]
         public ActionResult<PrioritetDTO> GetPrioritet(Guid PrioritetId)
         {
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje prioriteta po ID";
+
             PrioritetEntity prioritetModel = prioritetRepository.GetPrioritetById(PrioritetId);
             if (prioritetModel == null)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NotFound();
             }
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
             return Ok(mapper.Map<PrioritetDTO>(prioritetModel));
         }
 
@@ -66,18 +87,26 @@ namespace KupacMikroservis.Controllers
         [HttpPost]
         public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)   
         {
-           try
+            logDTO.HttpMethod = "CREATE";
+            logDTO.Message = "Dodavanje novog prioriteta";
+
+            try
             {
                 PrioritetEntity pr = mapper.Map<PrioritetEntity>(prioritet);
 
                 PrioritetEntity prCreated = prioritetRepository.CreatePrioritet(pr);
 
                 string location = linkGenerator.GetPathByAction("GetPrioritet", "Prioritet", new { PrioritetId = pr.PrioritetId });
+
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return Created(location, mapper.Map<PrioritetDTO>(prCreated));
            }
            catch
            {
-               return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
 
            }
                
@@ -89,19 +118,28 @@ namespace KupacMikroservis.Controllers
         [HttpDelete("{PrioritetId}")]
         public IActionResult DeletePrioritet(Guid prioritetID)
         {
+            logDTO.HttpMethod = "DELETE";
+            logDTO.Message = "Brisanje prioriteta";
+
             try
             {
                 PrioritetEntity prioritetModel = prioritetRepository.GetPrioritetById(prioritetID);
                 if (prioritetModel == null)
                 {
+                    logDTO.Level = "Warn";
+                    logger.Log(logDTO);
                     return NotFound();
                 }
                 prioritetRepository.DeletePrioritet(prioritetID);
-               
+
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return NoContent();
             }
             catch
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -112,12 +150,17 @@ namespace KupacMikroservis.Controllers
         [HttpPut]
         public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
         {
+            logDTO.HttpMethod = "PUT";
+            logDTO.Message = "Azuriranje prioriteta";
+
             try
             {
 
                 var oldPrioritet = prioritetRepository.GetPrioritetById(prioritet.PrioritetId);
                 if (oldPrioritet == null)
                 {
+                    logDTO.Level = "Warn";
+                    logger.Log(logDTO);
                     return NotFound();
                 }
                 PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
@@ -125,10 +168,14 @@ namespace KupacMikroservis.Controllers
                 mapper.Map(pEntity, oldPrioritet);
 
                 prioritetRepository.SaveChanges();
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return Ok(mapper.Map<PrioritetDTO>(pEntity));
             }
             catch (Exception)
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
