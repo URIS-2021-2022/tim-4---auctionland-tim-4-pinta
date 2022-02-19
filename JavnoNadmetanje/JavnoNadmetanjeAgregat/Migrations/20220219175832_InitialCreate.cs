@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JavnoNadmetanjeAgregat.Migrations
 {
-    public partial class IntialCreation : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,7 +61,6 @@ namespace JavnoNadmetanjeAgregat.Migrations
                     Krug = table.Column<int>(type: "int", nullable: false),
                     VisinaDopuneDepozita = table.Column<int>(type: "int", nullable: false),
                     KatastarskaOpstinaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    KupacID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ParcelaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AdresaID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -111,13 +110,13 @@ namespace JavnoNadmetanjeAgregat.Migrations
 
             migrationBuilder.InsertData(
                 table: "JavnaNadmetanja",
-                columns: new[] { "JavnoNadmetanjeID", "AdresaID", "Datum", "Izuzeto", "KatastarskaOpstinaID", "Krug", "KupacID", "ParcelaID", "PeriodZakupa", "PocetnaCenaPoHektaru", "StatusID", "TipID", "VisinaDopuneDepozita", "VremeKraja", "VremePocetka" },
-                values: new object[] { new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"), new Guid("988587d4-f80f-4ad9-9a00-8cabf6bd1537"), new DateTime(2021, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("d52e971f-d983-4b24-8d4e-248c60c0ab21"), 2, new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"), new Guid("fb99274d-02d4-4314-9bc3-8b25c09f46bb"), 2, 1000, new Guid("bf50e668-c01a-46e3-bae8-a1691c23c65f"), new Guid("4d51c54c-4b90-46de-8bb2-c8f74fb6fd9e"), 10, new DateTime(2021, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "JavnoNadmetanjeID", "AdresaID", "Datum", "Izuzeto", "KatastarskaOpstinaID", "Krug", "ParcelaID", "PeriodZakupa", "PocetnaCenaPoHektaru", "StatusID", "TipID", "VisinaDopuneDepozita", "VremeKraja", "VremePocetka" },
+                values: new object[] { new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), new DateTime(2021, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"), 2, new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"), 2, 1000, new Guid("bf50e668-c01a-46e3-bae8-a1691c23c65f"), new Guid("4d51c54c-4b90-46de-8bb2-c8f74fb6fd9e"), 10, new DateTime(2021, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.InsertData(
                 table: "JavnaNadmetanja",
-                columns: new[] { "JavnoNadmetanjeID", "AdresaID", "Datum", "Izuzeto", "KatastarskaOpstinaID", "Krug", "KupacID", "ParcelaID", "PeriodZakupa", "PocetnaCenaPoHektaru", "StatusID", "TipID", "VisinaDopuneDepozita", "VremeKraja", "VremePocetka" },
-                values: new object[] { new Guid("7c7764e0-27a2-4123-9eb4-081c4e9bcdbf"), new Guid("988587d4-f80f-4ad9-9a00-8cabf6bd1537"), new DateTime(2021, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("d52e971f-d983-4b24-8d4e-248c60c0ab21"), 2, new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"), new Guid("fb99274d-02d4-4314-9bc3-8b25c09f46bb"), 2, 1000, new Guid("bf50e668-c01a-46e3-bae8-a1691c23c65f"), new Guid("4d51c54c-4b90-46de-8bb2-c8f74fb6fd9e"), 10, new DateTime(2021, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+                columns: new[] { "JavnoNadmetanjeID", "AdresaID", "Datum", "Izuzeto", "KatastarskaOpstinaID", "Krug", "ParcelaID", "PeriodZakupa", "PocetnaCenaPoHektaru", "StatusID", "TipID", "VisinaDopuneDepozita", "VremeKraja", "VremePocetka" },
+                values: new object[] { new Guid("7c7764e0-27a2-4123-9eb4-081c4e9bcdbf"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), new DateTime(2021, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified), false, new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"), 2, new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"), 2, 1000, new Guid("bf50e668-c01a-46e3-bae8-a1691c23c65f"), new Guid("4d51c54c-4b90-46de-8bb2-c8f74fb6fd9e"), 10, new DateTime(2021, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2021, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_JavnaNadmetanja_StatusID",

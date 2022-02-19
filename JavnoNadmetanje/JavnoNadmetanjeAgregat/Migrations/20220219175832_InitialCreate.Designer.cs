@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JavnoNadmetanjeAgregat.Migrations
 {
     [DbContext(typeof(JavnoNadmetanjeContext))]
-    [Migration("20220219124308_IntialCreation")]
-    partial class IntialCreation
+    [Migration("20220219175832_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,9 +41,6 @@ namespace JavnoNadmetanjeAgregat.Migrations
 
                     b.Property<int>("Krug")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("KupacID")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ParcelaID")
                         .HasColumnType("uniqueidentifier");
@@ -81,13 +78,12 @@ namespace JavnoNadmetanjeAgregat.Migrations
                         new
                         {
                             JavnoNadmetanjeID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
-                            AdresaID = new Guid("988587d4-f80f-4ad9-9a00-8cabf6bd1537"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             Datum = new DateTime(2021, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Izuzeto = false,
-                            KatastarskaOpstinaID = new Guid("d52e971f-d983-4b24-8d4e-248c60c0ab21"),
+                            KatastarskaOpstinaID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             Krug = 2,
-                            KupacID = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
-                            ParcelaID = new Guid("fb99274d-02d4-4314-9bc3-8b25c09f46bb"),
+                            ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                             PeriodZakupa = 2,
                             PocetnaCenaPoHektaru = 1000,
                             StatusID = new Guid("bf50e668-c01a-46e3-bae8-a1691c23c65f"),
@@ -99,13 +95,12 @@ namespace JavnoNadmetanjeAgregat.Migrations
                         new
                         {
                             JavnoNadmetanjeID = new Guid("7c7764e0-27a2-4123-9eb4-081c4e9bcdbf"),
-                            AdresaID = new Guid("988587d4-f80f-4ad9-9a00-8cabf6bd1537"),
+                            AdresaID = new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
                             Datum = new DateTime(2021, 1, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Izuzeto = false,
-                            KatastarskaOpstinaID = new Guid("d52e971f-d983-4b24-8d4e-248c60c0ab21"),
+                            KatastarskaOpstinaID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             Krug = 2,
-                            KupacID = new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"),
-                            ParcelaID = new Guid("fb99274d-02d4-4314-9bc3-8b25c09f46bb"),
+                            ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                             PeriodZakupa = 2,
                             PocetnaCenaPoHektaru = 1000,
                             StatusID = new Guid("bf50e668-c01a-46e3-bae8-a1691c23c65f"),

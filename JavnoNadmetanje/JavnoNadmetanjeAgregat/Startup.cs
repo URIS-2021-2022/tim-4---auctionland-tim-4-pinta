@@ -121,7 +121,7 @@ namespace JavnoNadmetanjeAgregat
             services.AddSingleton<IUserRepository, UserMockRepository>();
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
             services.AddScoped<IKatastarskaOpstinaService, KatastarskaOpstinaService>();
-            services.AddScoped<IKupacService, KupacService>();
+           // services.AddScoped<IKupacService, KupacService>();
             services.AddScoped<IParcelaService, ParcelaService>();
             services.AddScoped<IAdresaService, AdresaService>();
             services.AddScoped<IGatewayService, GatewayService>();
