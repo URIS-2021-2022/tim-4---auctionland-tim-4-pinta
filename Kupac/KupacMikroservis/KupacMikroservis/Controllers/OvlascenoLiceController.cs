@@ -45,7 +45,19 @@ namespace KupacMikroservis.Controllers
             {
                 return NoContent();
             }
-            return Ok(mapper.Map<List<OvlascenoLiceDTO>>(ovlascenaLica));
+
+            List<OvlascenoLiceDTO> oLicaDtos = new List<OvlascenoLiceDTO>();
+
+            foreach (OvlascenoLiceEntity ol in ovlascenaLica)
+            {
+                AdresaOvlascenogLicaDTO adresa = adresaService.GetAdresaOvlLicaAsync(ol.AdresaID).Result;
+                OvlascenoLiceDTO olDto = mapper.Map<OvlascenoLiceDTO>(ol);
+                olDto.Adresa = adresa;
+                oLicaDtos.Add(olDto);
+            }
+
+
+            return Ok(oLicaDtos);
         }
 
         /// <summary>

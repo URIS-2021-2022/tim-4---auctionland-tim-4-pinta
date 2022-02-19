@@ -62,8 +62,20 @@ namespace KupacMikroservis.Controllers
                 return NoContent();
             }
 
+            List<KupacDTO> kupciDtos = new List<KupacDTO>();
 
-            return Ok(mapper.Map<List<KupacDTO>>(kupci));
+            foreach(KupacEntity k in kupci)
+            {
+                AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(k.AdresaID).Result;
+                UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(k.UplataID).Result;
+                KupacDTO kupacDto = mapper.Map<KupacDTO>(k);
+                kupacDto.Adresa = adresa;
+                kupacDto.Uplata = uplata;
+                kupciDtos.Add(kupacDto);
+            }
+
+
+            return Ok(kupciDtos);
         }
 
         /// <summary>
@@ -82,13 +94,19 @@ namespace KupacMikroservis.Controllers
                 kupacModel = (KupacEntity)pLiceRepository.GetPravnoLiceById(kupacID);
             }
 
-
             if (kupacModel == null)
             {
                 return NotFound();
                 
             }
-            return Ok(mapper.Map<KupacDTO>(kupacModel));
+
+            AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(kupacModel.AdresaID).Result;
+            UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
+            KupacDTO kupacDto = mapper.Map<KupacDTO>(kupacModel);
+            kupacDto.Adresa = adresa;
+            kupacDto.Uplata = uplata;
+
+            return Ok(kupacDto);
         }
 
         /// <summary>

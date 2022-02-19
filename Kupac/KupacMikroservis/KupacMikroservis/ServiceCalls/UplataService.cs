@@ -23,7 +23,7 @@ namespace KupacMikroservis.ServiceCalls
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:UplataService"];
-                Uri url = new Uri($"{ configuration["Services:UplataService"] }api/uplata/{uplataID}");
+                Uri url = new Uri($"{ configuration["Services:UplataService"] }api/uplate/{uplataID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
