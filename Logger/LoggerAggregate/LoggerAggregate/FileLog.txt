@@ -20,3 +20,22 @@
 2022-02-11 22:31:06.0022 ERROR Naziv metode: POST metoda,Naziv servisa: Zalba mikroservis,poruka: Greska
 2022-02-11 22:32:28.5522 ERROR Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: 
 2022-02-11 22:32:31.1296 WARN Naziv metode: DELETE metoda,Naziv servisa: Zalba mikroservis,poruka: Nije pronadjeno
+2022-02-19 13:56:54.4877 INFO Naziv metode: GET,Naziv servisa: SluzbeniList,poruka: Vracanje svih sluzbenih listova
+2022-02-19 13:57:35.9666 INFO Naziv metode: POST,Naziv servisa: SluzbeniList,poruka: Dodavanje novog sluzbenog lista
+2022-02-19 13:58:44.0396 INFO Naziv metode: PUT,Naziv servisa: SluzbeniList,poruka: Modifikovanje sluzbenog lista
+2022-02-19 13:58:57.3609 INFO Naziv metode: GET,Naziv servisa: SluzbeniList,poruka: Vracanje sluzbenog lista po ID-ju
+2022-02-19 13:59:09.9776 INFO Naziv metode: GET,Naziv servisa: TipJavnogNadmetanja,poruka: Vracanje svih tipova javnog nadmetanja
+2022-02-19 13:59:22.9472 INFO Naziv metode: GET,Naziv servisa: SluzbeniList,poruka: Vracanje svih sluzbenih listova
+2022-02-19 13:59:23.3240 INFO Naziv metode: GET,Naziv servisa: SluzbeniList,poruka: Vracanje svih sluzbenih listova
+2022-02-19 14:01:04.3646 INFO Naziv metode: PUT,Naziv servisa: StatusJavnogNadmetanja,poruka: Modifikovanje statusa javnog nadmetanja
+2022-02-19 14:01:15.0584 INFO Naziv metode: GET,Naziv servisa: StatusJavnogNadmetanja,poruka: Vracanje svih statusa javnog nadmetanja
+2022-02-19 14:01:56.3986 INFO Naziv metode: DELETE,Naziv servisa: TipJavnogNadmetanja,poruka: Brisanje tipa javnog nadmetanja
+2022-02-19 14:02:18.1575 INFO Naziv metode: GET,Naziv servisa: TipJavnogNadmetanja,poruka: Vracanje svih tipova javnog nadmetanja
+2022-02-19 14:27:28.0153 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina
+2022-02-19 14:27:40.2051 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina
+2022-02-19 14:27:53.9845 INFO Naziv metode: POST,Naziv servisa: KatastarskaOpstina,poruka: Dodavanje nove opstine
+2022-02-19 14:35:50.5264 INFO Naziv metode: PUT,Naziv servisa: KatastarskaOpstina,poruka: Modifikovanje opstine
+2022-02-19 14:36:03.4606 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina
+2022-02-19 14:36:25.1583 INFO Naziv metode: POST,Naziv servisa: KatastarskaOpstina,poruka: Dodavanje nove opstine
+2022-02-19 14:36:33.9757 INFO Naziv metode: POST,Naziv servisa: KatastarskaOpstina,poruka: Dodavanje nove opstine
+2022-02-19 14:36:47.3286 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina

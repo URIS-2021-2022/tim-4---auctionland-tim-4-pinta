@@ -1,5 +1,7 @@
-﻿using KatastarskaOpstinaAgregat.Data;
+﻿
+using KatastarskaOpstinaAgregat.Data;
 using KatastarskaOpstinaAgregat.Entities;
+using KatastarskaOpstinaAgregat.ServiceCalls;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +42,8 @@ namespace KatastarskaOpstinaAgregat
             //});
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IKatastarskaOpstinaRepository, KatastarskaOpstinaRepository>();
+            services.AddScoped<IGatewayService, GatewayService>();
+            services.AddScoped<ILoggerService, LoggerService>();
 
             services.AddSwaggerGen(setupAction =>
             {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using KatastarskaOpstinaAgregat.Models;
 using KatastarskaOpstinaAgregat.Data;
 using KatastarskaOpstinaAgregat.Entities;
 using KatastarskaOpstinaAgregat.Models;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KatastarskaOpstinaAgregat.ServiceCalls;
 
 namespace KatastarskaOpstinaAgregat.Controllers
 {
@@ -23,12 +25,17 @@ namespace KatastarskaOpstinaAgregat.Controllers
         private readonly IKatastarskaOpstinaRepository katastarskaOpstinaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public KatastarskaOpstinaController(IKatastarskaOpstinaRepository katastarskaOpstinaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public KatastarskaOpstinaController(IKatastarskaOpstinaRepository katastarskaOpstinaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.katastarskaOpstinaRepository = katastarskaOpstinaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "KatastarskaOpstina";
         }
 
 
@@ -44,11 +51,17 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KatastarskaOpstinaDto>> GetSluzbeneListove()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih opstina";
             List<KatastarskaOpstinaEntity> katastarskaOpstina = katastarskaOpstinaRepository.GetKatastarskaOpstina();
             if (katastarskaOpstina == null || katastarskaOpstina.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<KatastarskaOpstinaDto>>(katastarskaOpstina));
         }
 
@@ -64,11 +77,17 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KatastarskaOpstinaDto> GetKatastarskaOpstina(Guid katastarskaOpstinaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje opstine po ID-ju";
             KatastarskaOpstinaEntity katastarskaOpstina = katastarskaOpstinaRepository.GetKatastarskaOpstinaById(katastarskaOpstinaID);
             if (katastarskaOpstina == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<KatastarskaOpstinaDto>(katastarskaOpstina));
         }
 
@@ -92,16 +111,24 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KatastarskaOpstinaDto> CreateKatastarskaOpstina([FromBody] KatastarskaOpstinaDto katastarskaOpstina)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove opstine";
+
             try
             {
                 KatastarskaOpstinaEntity obj = mapper.Map<KatastarskaOpstinaEntity>(katastarskaOpstina);
                 KatastarskaOpstinaEntity s = katastarskaOpstinaRepository.CreateKatastarskaOpstina(obj);
+                katastarskaOpstinaRepository.SaveChanges();
                 // string location = linkGenerator.GetPathByAction("GetKatastarskaOpstina", "KatastarskaOpstina", new { katastarskaOpstinaID = s.KatastarskaOpstinaID });
                 // return Created(location, mapper.Map<KatastarskaOpstinaDto>(s));
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created("", mapper.Map<KatastarskaOpstinaDto>(s));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -120,18 +147,28 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteKatastarskaOpstina(Guid katastarskaOpstinaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje opstine";
+
             try
             {
                 KatastarskaOpstinaEntity katastarskaOpstina = katastarskaOpstinaRepository.GetKatastarskaOpstinaById(katastarskaOpstinaID);
                 if (katastarskaOpstina == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 katastarskaOpstinaRepository.DeleteKatastarskaOpstina(katastarskaOpstinaID);
+                katastarskaOpstinaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -150,21 +187,30 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KatastarskaOpstinaDto> UpdateKatastarskaOpstina(KatastarskaOpstinaEntity katastarskaOpstina)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje opstine";
             try
             {
                 var oldKatastarskaOpstina = katastarskaOpstinaRepository.GetKatastarskaOpstinaById(katastarskaOpstina.KatastarskaOpstinaID);
                 if (oldKatastarskaOpstina == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 KatastarskaOpstinaEntity katastarskaOpstinaEntity = mapper.Map<KatastarskaOpstinaEntity>(katastarskaOpstina);
+                katastarskaOpstinaRepository.SaveChanges();
                 mapper.Map(katastarskaOpstinaEntity, oldKatastarskaOpstina); //Update objekta koji treba da sačuvamo u bazi                
 
-                katastarskaOpstinaRepository.SaveChanges(); //Perzistiramo promene
+              
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<KatastarskaOpstinaDto>(katastarskaOpstinaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
 
 
@@ -179,6 +225,10 @@ namespace KatastarskaOpstinaAgregat.Controllers
         public IActionResult GetKatastarskaOpstinaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa adresama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
 
