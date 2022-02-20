@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Parcela.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje zasticene zone
+    /// </summary>
     public class ZasticenaZonaProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public ZasticenaZonaProfile()
         {
             CreateMap<ZasticenaZonaEntity, ZasticenaZonaDto>();

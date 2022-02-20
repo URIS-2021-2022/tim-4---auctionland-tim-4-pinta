@@ -63,9 +63,16 @@ namespace Parcela.Controllers
                 loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            List<ParcelaDto> parceleDto = mapper.Map<List<ParcelaDto>>(parcele);
+            foreach(ParcelaDto p in parceleDto)
+            {
+                p.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                p.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
+            }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<List<ParcelaDto>>(parcele));
+            return Ok(parceleDto);
+            //return Ok(mapper.Map<List<ParcelaDto>>(parcele));
         }
 
         /// <summary>
@@ -90,9 +97,9 @@ namespace Parcela.Controllers
                 loggerService.CreateLog(logDto);
                 return NotFound();
             }
-            KupacParceleDto kupac = kupacService.GetKupacByIdAsync(parcela.KupacID).Result;
             ParcelaDto parcelaDto = mapper.Map<ParcelaDto>(parcela);
-            parcelaDto.Kupac = kupac;
+            parcelaDto.Kupac = kupacService.GetKupacByIdAsync(parcela.KupacID).Result;
+            parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(parcelaDto.KatastarskaOpstinaID).Result;
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(parcelaDto);

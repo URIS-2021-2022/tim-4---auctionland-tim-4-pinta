@@ -8,6 +8,11 @@ namespace Parcela.ServiceCals
 {
     public interface IKatastarskaOpstinaService
     {
+        /// <summary>
+        /// Zahtev za katastarskom opstinom po ID-ju
+        /// </summary>
+        /// <param name="katastarskaOpstinaID"></param>
+        /// <returns></returns>
         Task<OpstinaParceleDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID);
     }
 }

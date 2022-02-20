@@ -906,7 +906,7 @@
             DTO za opstinu parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.OpstinaParceleDto.KatastarskaOpstinaNaziv">
+        <member name="P:Parcela.Models.OpstinaParceleDto.NazivKatastarskeOpstine">
             <summary>
             Naziv katastarske opstine
             </summary>
@@ -959,6 +959,11 @@
         <member name="P:Parcela.Models.ParcelaDto.KatastarskaOpstinaID">
             <summary>
             ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.Opstina">
+            <summary>
+            Katastarska opstina parcele
             </summary>
         </member>
         <member name="P:Parcela.Models.ParcelaDto.KupacID">

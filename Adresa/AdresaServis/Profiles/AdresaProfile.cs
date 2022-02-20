@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace AdresaServis.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje adrese
+    /// </summary>
     public class AdresaProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public AdresaProfile()
         {
             CreateMap<AdresaEntity, AdresaDto>();

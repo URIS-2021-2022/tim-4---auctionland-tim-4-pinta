@@ -27,6 +27,13 @@ namespace AdresaServis.Controllers
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="drzavaRepository"></param>
+        /// <param name="linkGenerator"></param>
+        /// <param name="mapper"></param>
+        /// <param name="loggerService"></param>
         public DrzavaController(IDrzavaRepository drzavaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.drzavaRepository = drzavaRepository;

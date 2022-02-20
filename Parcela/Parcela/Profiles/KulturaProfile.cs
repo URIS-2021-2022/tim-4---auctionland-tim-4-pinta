@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Parcela.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje kulture
+    /// </summary>
     public class KulturaProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public KulturaProfile()
         {
             CreateMap<KulturaEntity, KulturaDto>();

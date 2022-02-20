@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdresaServis.Migrations
 {
     [DbContext(typeof(AdresaContext))]
-    [Migration("20220207010849_InitialCreate")]
+    [Migration("20220219170526_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
