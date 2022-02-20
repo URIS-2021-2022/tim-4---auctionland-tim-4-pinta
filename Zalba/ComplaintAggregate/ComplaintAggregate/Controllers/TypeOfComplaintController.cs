@@ -15,6 +15,7 @@ namespace ComplaintAggregate.Controllers
 {
     [ApiController]
     [Route("api/zalba/tip")]
+    [Produces("application/json", "application/xml")]
     public class TypeOfComplaintController:ControllerBase
     {
         private readonly ITypeOfComplaintRepository typeOfComplaintRepository;

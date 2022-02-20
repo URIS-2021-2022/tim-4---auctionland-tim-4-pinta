@@ -1,6 +1,5 @@
 ﻿using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
-using ComplaintAggregate.Helpers;
 using ComplaintAggregate.ServiceCalls;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -115,7 +114,7 @@ namespace ComplaintAggregate
 
             services.AddSingleton<IUserRepository, UserRepository>();
 
-            services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+        //    services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
             services.AddScoped<IFileAComplaintService, FileAComplaintService>();
 
             services.AddSwaggerGen(setupAction =>
@@ -140,9 +139,10 @@ namespace ComplaintAggregate
                          },
                          TermsOfService = new Uri("http://www.ftn.uns.ac.rs/complaintAggregateTermsOfService")
                      });
+                 setupAction.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
                  //Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
-                var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
+                 var xmlComments = $"{ Assembly.GetExecutingAssembly().GetName().Name }.xml";
 
                  //Pravimo putanju do XML fajla sa komentarima
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
@@ -189,7 +189,7 @@ namespace ComplaintAggregate
             {
                 //Podesavamo endpoint gde Swagger UI moze da pronadje OpenAPI specifikaciju
                 setupAction.SwaggerEndpoint("/swagger/ComplaintAggregateOpenApiSpecification/swagger.json", "Complaint aggregate API");
-             //  setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
+            //  setupAction.RoutePrefix = ""; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
 
             });
                 app.UseEndpoints(endpoints =>
