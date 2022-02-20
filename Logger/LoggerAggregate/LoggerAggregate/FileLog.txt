@@ -39,3 +39,4 @@
 2022-02-19 14:36:25.1583 INFO Naziv metode: POST,Naziv servisa: KatastarskaOpstina,poruka: Dodavanje nove opstine
 2022-02-19 14:36:33.9757 INFO Naziv metode: POST,Naziv servisa: KatastarskaOpstina,poruka: Dodavanje nove opstine
 2022-02-19 14:36:47.3286 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina
+2022-02-20 22:51:21.6092 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje svih kupaca

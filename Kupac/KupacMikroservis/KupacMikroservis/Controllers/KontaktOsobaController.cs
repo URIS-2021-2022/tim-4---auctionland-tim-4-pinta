@@ -158,14 +158,22 @@ namespace KupacMikroservis.Controllers
                     logger.Log(logDTO);
                     return NotFound(); 
                 }
-                KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
 
-                mapper.Map(koEntity, oldKOsoba);                
+                oldKOsoba.KontaktOsobaId = ko.KontaktOsobaId;
+                oldKOsoba.Ime = ko.Ime;
+                oldKOsoba.Prezime = ko.Prezime;
+                oldKOsoba.Telefon = ko.Telefon;
+                
+              /*  KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
+
+                
+
+                mapper.Map(koEntity, oldKOsoba);  */              
 
                 koRepository.SaveChanges();
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Ok(mapper.Map<KontaktOsobaDTO>(koEntity));
+                return Ok(mapper.Map<KontaktOsobaDTO>(ko));
             }
             catch (Exception)
             {
