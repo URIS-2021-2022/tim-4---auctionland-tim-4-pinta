@@ -14,5 +14,7 @@ namespace ComplaintAggregate.Data
         ActionBasedOnComplaint UpdateAction(ActionBasedOnComplaint actionBasedOnComplaint);
         void DeleteAction(Guid Radnja_na_osnovu_zalbe_ID);
 
+        bool SaveChanges();
+
     }
 }

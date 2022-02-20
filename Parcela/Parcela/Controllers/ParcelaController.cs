@@ -26,12 +26,19 @@ namespace Parcela.Controllers
         private readonly IKupacService kupacService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, ILoggerService loggerService)
         {
             this.parcelaRepository = parcelaRepository;
+            this.katastarskaOpstinaService = katastarskaOpstinaService;
+            this.kupacService = kupacService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
 
         /// <summary>
@@ -46,12 +53,26 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<ParcelaDto>> GetParcele()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih parcela";
+
             List<ParcelaEntity> parcele = parcelaRepository.GetParcele();
             if (parcele == null || parcele.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
-            return Ok(mapper.Map<List<ParcelaDto>>(parcele));
+            List<ParcelaDto> parceleDto = mapper.Map<List<ParcelaDto>>(parcele);
+            foreach(ParcelaDto p in parceleDto)
+            {
+                p.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                p.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
+            }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
+            return Ok(parceleDto);
+            //return Ok(mapper.Map<List<ParcelaDto>>(parcele));
         }
 
         /// <summary>
@@ -66,12 +87,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ParcelaDto> GetParcela(Guid parcelaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje parcele po ID-ju";
+
             ParcelaEntity parcela = parcelaRepository.GetParcelaById(parcelaID);
             if(parcela == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
-            return Ok(mapper.Map<ParcelaDto>(parcela));
+            ParcelaDto parcelaDto = mapper.Map<ParcelaDto>(parcela);
+            parcelaDto.Kupac = kupacService.GetKupacByIdAsync(parcela.KupacID).Result;
+            parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(parcelaDto.KatastarskaOpstinaID).Result;
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
+            return Ok(parcelaDto);
+            //return Ok(mapper.Map<ParcelaDto>(parcela));
         }
 
         /// <summary>
@@ -101,15 +133,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ParcelaDto> CreateParcela([FromBody] ParcelaDto parcela)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove parcele";
+
             try
             {
                 ParcelaEntity par = mapper.Map<ParcelaEntity>(parcela);
                 ParcelaEntity p = parcelaRepository.CreateParcela(par);
+                parcelaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetParcela", "Parcela", new { parcelaID = p.ParcelaID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<ParcelaDto>(p));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");            
             }
         }
@@ -128,18 +168,28 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteParcela(Guid parcelaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje parcele";
+
             try
             {
                 ParcelaEntity parcela = parcelaRepository.GetParcelaById(parcelaID);               
                 if(parcela == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 parcelaRepository.DeleteParcela(parcelaID);
+                parcelaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -159,17 +209,31 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ParcelaDto> UpdateParcela(ParcelaEntity parcela)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikacija parcele";
+
             try
             {
-                if (parcelaRepository.GetParcelaById(parcela.ParcelaID) == null)
+                var oldParcela = parcelaRepository.GetParcelaById(parcela.ParcelaID);
+                if (oldParcela == null)
                 {
-                    return NotFound(); 
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
+                    return NotFound();
                 }
-                ParcelaEntity p = parcelaRepository.UpdateParcela(parcela);
-                return Ok(mapper.Map<ParcelaDto>(p));
+                ParcelaEntity parcelaEntity = mapper.Map<ParcelaEntity>(parcela);
+
+                mapper.Map(parcelaEntity, oldParcela);
+
+                parcelaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<ParcelaDto>(parcelaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -182,6 +246,10 @@ namespace Parcela.Controllers
         public IActionResult GetParcelaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa parcelama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

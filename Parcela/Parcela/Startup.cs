@@ -61,6 +61,8 @@ namespace Parcela
             services.AddScoped<IZasticenaZonaRepository, ZasticenaZonaRepository>();
             services.AddScoped<IKatastarskaOpstinaService, KatastarskaOpstinaService>();
             services.AddScoped<IKupacService, KupacService>();
+            services.AddScoped<IGatewayService, GatewayService>();
+            services.AddScoped<ILoggerService, LoggerService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -136,7 +138,7 @@ namespace Parcela
             app.UseSwaggerUI(setupAction =>
             {
                 setupAction.SwaggerEndpoint("/swagger/ParcelaOpenApiSpecification/swagger.json", "Parcela Agregat API");
-                setupAction.RoutePrefix = ""; 
+                setupAction.RoutePrefix = "swagger"; 
             });
 
             app.UseAuthorization();

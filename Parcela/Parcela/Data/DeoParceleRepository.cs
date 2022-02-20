@@ -27,8 +27,7 @@ namespace Parcela.Data
         {
             deoParcele.DeoParceleID = Guid.NewGuid();
             context.DeloviParcela.Add(deoParcele);
-            DeoParceleEntity dp = GetDeoParceleById(deoParcele.DeoParceleID);
-            return dp;
+            return deoParcele;
         }
 
         public void DeleteDeoParcele(Guid deoParceleID)
@@ -46,9 +45,9 @@ namespace Parcela.Data
             return context.DeloviParcela.FirstOrDefault(dp => dp.DeoParceleID == deoParceleID);
         }
 
-        public DeoParceleEntity UpdateDeoParcele(DeoParceleEntity deoParcele)
+        public void UpdateDeoParcele(DeoParceleEntity deoParcele)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

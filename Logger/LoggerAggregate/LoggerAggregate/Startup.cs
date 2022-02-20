@@ -1,4 +1,3 @@
-using LoggerAggregate.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,7 +31,6 @@ namespace LoggerAggregate
         {
 
             services.AddControllers();
-            services.AddSingleton<ILoggerService, LoggerService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LoggerAggregate", Version = "v1" });

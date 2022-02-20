@@ -15,8 +15,10 @@ namespace Parcela.Data
 
         ZasticenaZonaEntity CreateZasticenaZona(ZasticenaZonaEntity zasticenaZona);
 
-        ZasticenaZonaEntity UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona);
+        void UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona);
 
         void DeleteZasticenaZona(Guid zasticenaZonaID);
+
+        bool SaveChanges();
     }
 }

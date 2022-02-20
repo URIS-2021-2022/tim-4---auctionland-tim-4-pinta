@@ -7,84 +7,187 @@ using System.Linq;
 using System.Threading.Tasks;
 using KupacMikroservis.Data;
 using KupacMikroservis.Models;
+using AutoMapper;
+using KupacMikroservis.ServiceCalls;
 
 namespace KupacMikroservis.Controllers
 {
-    // Omogucava dodavanje dodatnih stvari, npr. status kodova
+    /// <summary>
+    /// Sadrzi CRUD operacije za prioritete
+    /// </summary>
     [ApiController]
     [Route("api/prioritet")]
     public class PrioritetController : ControllerBase
     {
         private readonly IPrioritetRepository prioritetRepository;
-        private readonly LinkGenerator linkGenerator; 
+        private readonly LinkGenerator linkGenerator;
+        private readonly IMapper mapper;
 
-       
-        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator)
+        private readonly ILogger logger;
+        private LogDTO logDTO;
+
+
+        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator, IMapper mapper,ILogger logger)
         {
             this.prioritetRepository = prioritetRepository;
             this.linkGenerator = linkGenerator;
+            this.mapper = mapper;
+            this.logger = logger;
+            logDTO = new LogDTO();
+            logDTO.NameOfTheService = "Prioritet";
         }
 
+
+        /// <summary>
+        /// Vraca prioritete
+        /// </summary>
         [HttpGet]
-        public ActionResult<List<PrioritetModel>> GetPrioriteti()
+        public ActionResult<List<PrioritetDTO>> GetPrioriteti()
         {
-            List<PrioritetModel> prioriteti = prioritetRepository.GetPrioriteti();
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje svih prioriteta";
+
+            List<PrioritetEntity> prioriteti = prioritetRepository.GetPrioriteti();
             if (prioriteti == null || prioriteti.Count == 0)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NoContent();
             }
-            return Ok(prioriteti);
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
+            return Ok(mapper.Map<List<PrioritetDTO>>(prioriteti));
         }
 
+        /// <summary>
+        /// Vraca prioritet po ID
+        /// </summary>
         [HttpGet("{PrioritetId}")]
-        public ActionResult<PrioritetModel> GetPrioritet(Guid PrioritetId)
+        public ActionResult<PrioritetDTO> GetPrioritet(Guid PrioritetId)
         {
-            PrioritetModel prioritetModel = prioritetRepository.GetPrioritetById(PrioritetId);
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje prioriteta po ID";
+
+            PrioritetEntity prioritetModel = prioritetRepository.GetPrioritetById(PrioritetId);
             if (prioritetModel == null)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NotFound();
             }
-            return Ok(prioritetModel);
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
+            return Ok(mapper.Map<PrioritetDTO>(prioritetModel));
         }
 
+
+        /// <summary>
+        /// Dodaje novi prioritet
+        /// </summary>
         [HttpPost]
-        public ActionResult<PrioritetModel> CreatePrioritet([FromBody] PrioritetModel prioritet)    //confirmation implementirati
+        public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)   
         {
+            logDTO.HttpMethod = "CREATE";
+            logDTO.Message = "Dodavanje novog prioriteta";
+
             try
             {
-                PrioritetModel pr = prioritetRepository.CreatePrioritet(prioritet);
+                PrioritetEntity pr = mapper.Map<PrioritetEntity>(prioritet);
+
+                PrioritetEntity prCreated = prioritetRepository.CreatePrioritet(pr);
 
                 string location = linkGenerator.GetPathByAction("GetPrioritet", "Prioritet", new { PrioritetId = pr.PrioritetId });
-                return Created(location, pr);
-            }
-            catch
-            {
+
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
+                return Created(location, mapper.Map<PrioritetDTO>(prCreated));
+           }
+           catch
+           {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
 
-            }
+           }
                
-        } 
+        }
 
+        /// <summary>
+        /// Brise prioritet
+        /// </summary>
         [HttpDelete("{PrioritetId}")]
         public IActionResult DeletePrioritet(Guid prioritetID)
         {
+            logDTO.HttpMethod = "DELETE";
+            logDTO.Message = "Brisanje prioriteta";
+
             try
             {
-                PrioritetModel prioritetModel = prioritetRepository.GetPrioritetById(prioritetID);
+                PrioritetEntity prioritetModel = prioritetRepository.GetPrioritetById(prioritetID);
                 if (prioritetModel == null)
                 {
+                    logDTO.Level = "Warn";
+                    logger.Log(logDTO);
                     return NotFound();
                 }
                 prioritetRepository.DeletePrioritet(prioritetID);
-                // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
+
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return NoContent();
             }
             catch
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
 
-       
+        /// <summary>
+        /// Azurira prioritet
+        /// </summary>
+        [HttpPut]
+        public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
+        {
+            logDTO.HttpMethod = "PUT";
+            logDTO.Message = "Azuriranje prioriteta";
+
+            try
+            {
+
+                var oldPrioritet = prioritetRepository.GetPrioritetById(prioritet.PrioritetId);
+                if (oldPrioritet == null)
+                {
+                    logDTO.Level = "Warn";
+                    logger.Log(logDTO);
+                    return NotFound();
+                }
+                PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
+
+                mapper.Map(pEntity, oldPrioritet);
+
+                prioritetRepository.SaveChanges();
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
+                return Ok(mapper.Map<PrioritetDTO>(pEntity));
+            }
+            catch (Exception)
+            {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+            }
+        }
+
+        /// <summary>
+        /// Vraca HTTP opcije
+        /// </summary>
+        [HttpOptions]
+        public IActionResult GetPrioritetOptions()
+       {
+           Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+           return Ok();
+       }
     }
 }

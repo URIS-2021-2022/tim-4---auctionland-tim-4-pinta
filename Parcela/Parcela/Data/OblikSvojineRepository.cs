@@ -27,8 +27,7 @@ namespace Parcela.Data
         {
             oblikSvojine.OblikSvojineID = Guid.NewGuid();
             context.ObliciSvojine.Add(oblikSvojine);
-            OblikSvojineEntity os = GetOblikSvojineById(oblikSvojine.OblikSvojineID);
-            return os;
+            return oblikSvojine;
         }
 
         public void DeleteOblikSvojine(Guid oblikSvojineID)
@@ -46,9 +45,9 @@ namespace Parcela.Data
             return context.ObliciSvojine.FirstOrDefault(os => os.OblikSvojineID == oblikSvojineID);
         }
 
-        public OblikSvojineEntity UpdateOblikSvojine(OblikSvojineEntity oblikSvojine)
+        public void UpdateOblikSvojine(OblikSvojineEntity oblikSvojine)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

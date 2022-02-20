@@ -33,6 +33,10 @@ namespace Parcela.Entities
         /// </summary>
         [ForeignKey("Parcela")]
         public Guid ParcelaID { get; set; }
+
+        /// <summary>
+        /// Parcele
+        /// </summary>
         public ParcelaEntity Parcela { get; set; }
     }
 }

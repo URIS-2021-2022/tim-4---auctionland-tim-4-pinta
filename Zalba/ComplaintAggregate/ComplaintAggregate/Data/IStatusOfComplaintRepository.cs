@@ -13,5 +13,7 @@ namespace ComplaintAggregate.Data
         StatusOfComplaint CreateStatus(StatusOfComplaint statusComplaint);
         StatusOfComplaint UpdateStatus(StatusOfComplaint statusComplaint);
         void DeleteStatus(Guid Status_id);
+
+        bool SaveChanges();
     }
 }

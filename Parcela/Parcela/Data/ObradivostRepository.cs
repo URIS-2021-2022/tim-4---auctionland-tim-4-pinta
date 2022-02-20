@@ -27,8 +27,7 @@ namespace Parcela.Data
         {
             obradivost.ObradivostID = Guid.NewGuid();
             context.Obradivosti.Add(obradivost);
-            ObradivostEntity o = GetObradivostById(obradivost.ObradivostID);
-            return o;
+            return obradivost;
         }
 
         public void DeleteObradivost(Guid obradivostID)
@@ -46,9 +45,9 @@ namespace Parcela.Data
             return (from o in context.Obradivosti select o).ToList();
         }
 
-        public ObradivostEntity UpdateObradivost(ObradivostEntity obradivost)
+        public void UpdateObradivost(ObradivostEntity obradivost)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

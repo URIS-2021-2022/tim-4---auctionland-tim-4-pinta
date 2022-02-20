@@ -199,6 +199,9 @@ namespace Parcela.Migrations
                     b.Property<string>("BrojParcele")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("KatastarskaOpstinaID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("KlasaID")
                         .HasColumnType("uniqueidentifier");
 
@@ -210,6 +213,9 @@ namespace Parcela.Migrations
 
                     b.Property<string>("KulturaStvarnoStanje")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("KupacID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("OblikSvojineID")
                         .HasColumnType("uniqueidentifier");
@@ -257,10 +263,12 @@ namespace Parcela.Migrations
                             ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                             BrojListaNepokretnosti = "12345",
                             BrojParcele = "12345",
+                            KatastarskaOpstinaID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             KlasaStvarnoStanje = "Klasa1",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                             KulturaStvarnoStanje = "Kukuruz",
+                            KupacID = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                             ObradivostStvarnoStanje = "Obradivost1",
@@ -275,10 +283,12 @@ namespace Parcela.Migrations
                             ParcelaID = new Guid("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                             BrojListaNepokretnosti = "54321",
                             BrojParcele = "54321",
+                            KatastarskaOpstinaID = new Guid("177e64ad-2ff0-4a40-9c75-1f9b02ffe1e9"),
                             KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                             KlasaStvarnoStanje = "Klasa2",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                             KulturaStvarnoStanje = "Soja",
+                            KupacID = new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                             ObradivostStvarnoStanje = "Obradivost2",

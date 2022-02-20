@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
 using Parcela.Entities;
 using Parcela.Models;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace Parcela.Controllers
         private readonly IOblikSvojineRepository oblikSvojineRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public OblikSvojineController(IOblikSvojineRepository oblikSvojineRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public OblikSvojineController(IOblikSvojineRepository oblikSvojineRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.oblikSvojineRepository = oblikSvojineRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
 
         /// <summary>
@@ -43,11 +49,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<OblikSvojineDto>> GetObradivosti()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih oblika svojine";
+
             List<OblikSvojineEntity> obliciSvojine = oblikSvojineRepository.GetObliciSvojine();
             if (obliciSvojine == null || obliciSvojine.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<OblikSvojineDto>>(obliciSvojine));
         }
 
@@ -63,11 +76,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<OblikSvojineDto> GetOblikSvojine(Guid oblikSvojineID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje oblika svojine po ID-ju";
+
             OblikSvojineEntity oblikSvojine = oblikSvojineRepository.GetOblikSvojineById(oblikSvojineID);
             if (oblikSvojine == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<ObradivostDto>(oblikSvojine));
         }
 
@@ -91,15 +111,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OblikSvojineDto> CreateOblikSvojine([FromBody] OblikSvojineDto oblikSvojine)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog oblika svojine";
+
             try
             {
                 OblikSvojineEntity obl = mapper.Map<OblikSvojineEntity>(oblikSvojine);
                 OblikSvojineEntity os = oblikSvojineRepository.CreateOblikSvojine(obl);
+                oblikSvojineRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetOblikSvojine", "OblikSvojine", new { oblikSvojineID = os.OblikSvojineID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<OblikSvojineDto>(os));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -118,18 +146,28 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteOblikSvojine(Guid oblikSvojineID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje oblika svojine";
+
             try
             {
                 OblikSvojineEntity oblikSvojine = oblikSvojineRepository.GetOblikSvojineById(oblikSvojineID);
                 if (oblikSvojine == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 oblikSvojineRepository.DeleteOblikSvojine(oblikSvojineID);
+                oblikSvojineRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -149,17 +187,31 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<OblikSvojineDto> UpdateOblikSvojine(OblikSvojineEntity oblikSvojine)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje oblika svojine";
+
             try
             {
-                if (oblikSvojineRepository.GetOblikSvojineById(oblikSvojine.OblikSvojineID) == null)
+                var oldOblikSvojine = oblikSvojineRepository.GetOblikSvojineById(oblikSvojine.OblikSvojineID);
+                if (oldOblikSvojine == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
-                OblikSvojineEntity os = oblikSvojineRepository.UpdateOblikSvojine(oblikSvojine);
-                return Ok(mapper.Map<OblikSvojineDto>(os));
+                OblikSvojineEntity oblikSvojineEntity = mapper.Map<OblikSvojineEntity>(oblikSvojine);
+
+                mapper.Map(oblikSvojineEntity, oldOblikSvojine);
+
+                oblikSvojineRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<OblikSvojineDto>(oblikSvojineEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -172,6 +224,10 @@ namespace Parcela.Controllers
         public IActionResult GetOblikSvojineOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa oblicima svojine";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

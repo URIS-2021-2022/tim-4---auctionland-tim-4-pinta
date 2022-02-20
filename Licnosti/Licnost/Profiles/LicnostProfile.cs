@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Licnost.Entities;
 using Licnost.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Licnost.Profiles
 {
@@ -17,12 +13,9 @@ namespace Licnost.Profiles
                     dest => dest.LicnostImePrezime,
                     opt => opt.MapFrom(src => $"{ src.LicnostIme } {src.LicnostPrezime}"));
 
-            CreateMap<LicnostEntity,LicnostCreateDto>();
-            CreateMap<LicnostEntity, LicnostUpdateDto>();
-
-           
+            CreateMap<LicnostCreateDto, LicnostEntity>();
+            CreateMap<LicnostUpdateDto, LicnostEntity>();
+            CreateMap<LicnostEntity, LicnostEntity>();
         }
-
-        
     }
 }

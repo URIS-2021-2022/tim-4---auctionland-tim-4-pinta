@@ -6,14 +6,16 @@ namespace KupacMikroservis.Data
 {
     public interface IPrioritetRepository
     {
-        List<PrioritetModel> GetPrioriteti();
+        List<PrioritetEntity> GetPrioriteti();
 
-        PrioritetModel GetPrioritetById(Guid prioritetID);
+        PrioritetEntity GetPrioritetById(Guid prioritetID);
 
-        PrioritetModel CreatePrioritet(PrioritetModel prioritet);
+        PrioritetEntity CreatePrioritet(PrioritetEntity prioritet);
 
-        PrioritetModel UpdatePrioritet(PrioritetModel prioritet);
+        void UpdatePrioritet(PrioritetEntity prioritet);
 
         void DeletePrioritet(Guid prioritetID);
+
+        bool SaveChanges();
     }
 }

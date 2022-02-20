@@ -15,8 +15,10 @@ namespace Parcela.Data
 
         ObradivostEntity CreateObradivost(ObradivostEntity obradivost);
 
-        ObradivostEntity UpdateObradivost(ObradivostEntity obradivost);
+        void UpdateObradivost(ObradivostEntity obradivost);
 
         void DeleteObradivost(Guid obradivostID);
+
+        bool SaveChanges();
     }
 }

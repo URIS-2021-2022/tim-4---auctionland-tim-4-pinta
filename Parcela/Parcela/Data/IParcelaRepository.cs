@@ -14,8 +14,10 @@ namespace Parcela.Data
 
         ParcelaEntity CreateParcela(ParcelaEntity parcela);
 
-        ParcelaEntity UpdateParcela(ParcelaEntity parcela);
+        void UpdateParcela(ParcelaEntity parcela);
 
         void DeleteParcela(Guid parcelaID);
+
+        bool SaveChanges();
     }
 }

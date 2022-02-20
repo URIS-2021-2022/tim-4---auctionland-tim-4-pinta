@@ -1,4 +1,6 @@
+using AutoMapper;
 using KupacMikroservis.Data;
+using KupacMikroservis.Entities;
 using KupacMikroservis.Models;
 using System;
 using System.Collections.Generic;
@@ -8,60 +10,69 @@ namespace KupacMikroservis.Data
 {
     public class PrioritetRepository : IPrioritetRepository
     {
-        public static List<PrioritetModel> Prioriteti { get; set; } = new List<PrioritetModel>();
+        //   public static List<PrioritetEntity> Prioriteti { get; set; } = new List<PrioritetEntity>();
 
-        public PrioritetRepository()
+
+
+        private readonly KupacContext context;
+
+        private readonly IMapper mapper;
+
+        public PrioritetRepository(KupacContext context, IMapper mapper)
         {
-            FillData();
+            this.context = context;
+            this.mapper = mapper;
         }
 
-        private void FillData()
+
+        public bool SaveChanges()
         {
-            Prioriteti.AddRange(new List<PrioritetModel>
-            {
-                new PrioritetModel
-                {
-                    PrioritetId = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                    PrioritetOpis = "Visok"
-                },
-                new PrioritetModel
-                {
-                    PrioritetId = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c8"),
-                    PrioritetOpis = "Nizak"
-                }
-            });
+            return context.SaveChanges() > 0;
         }
-        public PrioritetModel CreatePrioritet(PrioritetModel prioritet)
+
+
+      
+        public PrioritetEntity CreatePrioritet(PrioritetEntity prioritet)
         {
-            prioritet.PrioritetId = Guid.NewGuid();
-            Prioriteti.Add(prioritet);
-            PrioritetModel p = GetPrioritetById(prioritet.PrioritetId);
-            return p;
+            var createdEntity = context.Add(prioritet);
+            return mapper.Map<PrioritetEntity>(createdEntity.Entity);
+
+            /*     prioritet.PrioritetId = Guid.NewGuid();
+                 Prioriteti.Add(prioritet);
+                 PrioritetEntity p = GetPrioritetById(prioritet.PrioritetId);
+                 return p; */
         }
 
         public void DeletePrioritet(Guid prioritetID)
         {
-            Prioriteti.Remove(Prioriteti.FirstOrDefault(p => p.PrioritetId == prioritetID));
+            var prioritet = GetPrioritetById(prioritetID);
+            context.Remove(prioritet);
+
+            //   Prioriteti.Remove(Prioriteti.FirstOrDefault(p => p.PrioritetId == prioritetID));
         }
 
-        public List<PrioritetModel> GetPrioriteti()
+        public List<PrioritetEntity> GetPrioriteti()
         {
-            return (from p in Prioriteti select p).ToList();
+            return context.prioriteti.ToList();
+
+            //  return (from p in Prioriteti select p).ToList();
         }
 
-        public PrioritetModel GetPrioritetById(Guid prioritetID)
+        public PrioritetEntity GetPrioritetById(Guid prioritetID)
         {
-            return Prioriteti.FirstOrDefault(p => p.PrioritetId == prioritetID);
+            return context.prioriteti.FirstOrDefault(pr => pr.PrioritetId == prioritetID);
+
+            //  return Prioriteti.FirstOrDefault(p => p.PrioritetId == prioritetID);
         }
 
-        public PrioritetModel UpdatePrioritet(PrioritetModel prioritet)
+        public void UpdatePrioritet(PrioritetEntity prioritet)
         {
-            PrioritetModel p = GetPrioritetById(prioritet.PrioritetId);
+         /*   PrioritetEntity p = GetPrioritetById(prioritet.PrioritetId);
 
             p.PrioritetOpis = prioritet.PrioritetOpis;
             
 
-            return p;
+            return p; */
         }
     }
 }

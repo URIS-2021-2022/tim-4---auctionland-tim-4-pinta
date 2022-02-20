@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ComplaintAggregate.ServiceCalls
 {
-    public class FileAComplaintService :IFileAComplaintService
+    public class FileAComplaintService : IFileAComplaintService
     {
         private readonly IConfiguration configuration;
 
@@ -18,18 +18,18 @@ namespace ComplaintAggregate.ServiceCalls
             this.configuration = configuration;
         }
 
-        public bool FileAComplaint(BuyerDTO buyer)
+        public bool ConnectLogger(LogModel model)
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:KupacMikroservis"];
-                Uri url = new Uri($"{ configuration["Services:KupacMikroservis"] }api/kupac");
+              
+                Uri url = new ($"{ configuration["Services:LoggerAggregate"] }api/logger");
 
-            //    HttpContent content = new StringContent(JsonConvert.SerializeObject(buyer));
-              //  content.Headers.ContentType.MediaType = "application/json";
+                HttpContent content = new StringContent(JsonConvert.SerializeObject(model));
+                content.Headers.ContentType.MediaType = "application/json";
 
-                HttpResponseMessage response = client.GetAsync(url).Result;
-                
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
                 if (!response.IsSuccessStatusCode)
                 {
                     return false;
@@ -37,5 +37,24 @@ namespace ComplaintAggregate.ServiceCalls
                 return true;
             }
         }
+
+            public bool FileAComplaint(Guid kupacId)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                  
+                    Uri url = new Uri($"{ configuration["Services:KupacMikroservis"] }api/kupac/{kupacId}");
+
+                    HttpResponseMessage response = client.GetAsync(url).Result;
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+        }
     }
-}
+
+

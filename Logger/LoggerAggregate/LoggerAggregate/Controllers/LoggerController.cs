@@ -1,5 +1,4 @@
-﻿using LoggerAggregate.Interface;
-using LoggerAggregate.Models;
+﻿using LoggerAggregate.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -14,47 +13,29 @@ namespace LoggerAggregate.Controllers
     [Route("api/logger")]
     public class LoggerController :ControllerBase
     {
-        private readonly ILoggerService loggerService;
-        private ILogger logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger logger=LogManager.GetCurrentClassLogger();
         
-       public LoggerController(ILoggerService loggerService,ILogger logger)
+       public LoggerController()
         {
-            this.loggerService = loggerService;
-            this.logger = logger;
+             
         }
 
+        
         [HttpPost]
-        public ActionResult<LogModelConfirmation> PostLogger([FromBody] LogModel model)
+        public void PostLogger([FromBody] LogModel model)
         {
-
-            string httpLevel = loggerService.CheckHttpLevel(model.HttpLevel);
-            string httpMethodIdentifier = loggerService.CheckHttpMethod(model.HttpMethodIdentifier);
-            string httpStatus = loggerService.CheckHttpStatus(model.Error);
-
-           if(httpLevel == "Warn level")
+            
+            if (model.Level == "Info")
             {
-                logger.Warn(httpLevel + httpMethodIdentifier + httpStatus);
+                logger.Info("Naziv metode: " + model.HttpMethod + "," + "Naziv servisa: " + model.NameOfTheService + ",poruka: " + model.Message);
             }
-            if (httpLevel == "Debug level")
+            else if (model.Level == "Warn")
             {
-                logger.Debug(httpLevel + "," + httpMethodIdentifier + ","+ httpStatus);
-            }
-            if (httpLevel == "Trace level")
-            {
-                logger.Trace(httpLevel + "," + httpMethodIdentifier + "," + httpStatus);
-            }
-            if (httpLevel == "Info level")
-            {
-                logger.Info(httpLevel + "," + httpMethodIdentifier + "," + httpStatus);
-            }
-
-            return new LogModelConfirmation
-            {
-                HttpMethodIdentifier = httpMethodIdentifier,
-                HttpLevel=httpLevel,
-                Error=httpStatus,
-              
-            };
+                logger.Warn("Naziv metode: " + model.HttpMethod + "," + "Naziv servisa: " + model.NameOfTheService + ",poruka: " + model.Message);
+            }         
+             else  
+               logger.Error("Naziv metode: " + model.HttpMethod + "," + "Naziv servisa: " + model.NameOfTheService + ",poruka: " + model.Message);
+                       
         }
     }
 }

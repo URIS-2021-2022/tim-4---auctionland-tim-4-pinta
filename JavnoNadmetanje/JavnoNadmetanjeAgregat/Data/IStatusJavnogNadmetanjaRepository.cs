@@ -15,8 +15,9 @@ namespace JavnoNadmetanjeAgregat.Data
 
         StatusJavnogNadmetanjaEntity CreateStatusJavnogNadmetanja(StatusJavnogNadmetanjaEntity statusJavnogNadmetanja);
 
-        StatusJavnogNadmetanjaEntity UpdateStatusJavnogNadmetanja(StatusJavnogNadmetanjaEntity statusJavnogNadmetanja);
+        void UpdateStatusJavnogNadmetanja(StatusJavnogNadmetanjaEntity statusJavnogNadmetanja);
 
         void DeleteStatusJavnogNadmetanja(Guid statusJavnogNadmetanjaID);
+        bool SaveChanges();
     }
 }

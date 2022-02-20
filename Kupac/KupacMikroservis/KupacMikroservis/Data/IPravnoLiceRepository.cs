@@ -6,14 +6,16 @@ namespace KupacMikroservis.Data
 {
     public interface IPravnoLiceRepository
     {
-        List<PravnoLiceModel> GetPravnaLica();
+        List<PravnoLiceEntity> GetPravnaLica();
 
-        PravnoLiceModel GetPravnoLiceById(Guid pravnoLiceID); 
+        PravnoLiceEntity GetPravnoLiceById(Guid pravnoLiceID); 
 
-        PravnoLiceModel CreatePravnoLice(PravnoLiceModel pravnoLice);
+        PravnoLiceEntity CreatePravnoLice(PravnoLiceEntity pravnoLice);
 
-        PravnoLiceModel UpdatePravnoLice(PravnoLiceModel pravnoLice);
+        void UpdatePravnoLice(PravnoLiceEntity pravnoLice);
 
         void DeletePravnoLice(Guid pravnoLiceID);
+
+        bool SaveChanges();
     }
 }

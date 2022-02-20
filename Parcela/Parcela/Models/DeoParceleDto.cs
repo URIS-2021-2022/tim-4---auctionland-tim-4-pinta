@@ -19,5 +19,10 @@ namespace Parcela.Models
         /// Povrsina dela parcele
         /// </summary>
         public int PovrsinaDelaParcele { get; set; }
+
+        /// <summary>
+        /// ID parcele
+        /// </summary>
+        public Guid ParcelaID { get; set; }
     }
 }

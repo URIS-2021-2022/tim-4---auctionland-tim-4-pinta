@@ -1,78 +1,75 @@
+using AutoMapper;
 using KupacMikroservis.Data;
+using KupacMikroservis.Entities;
 using KupacMikroservis.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 public class KupacRepository : IKupacRepository
 {
-    public static List<KupacModel> Kupci { get; set; } = new List<KupacModel>();
+  //  public static List<KupacEntity> Kupci { get; set; } = new List<KupacEntity>();
+   // public static List<PravnoLiceEntity> PravnaLica { get; set; } = new List<PravnoLiceEntity>();
+   // public static List<FizickoLiceEntity> FizLica { get; set; } = new List<FizickoLiceEntity>();
 
-    public KupacRepository()
+    private readonly KupacContext context;
+
+    private readonly IMapper mapper;
+
+    public bool SaveChanges()
     {
-        FillData();
+        return context.SaveChanges() > 0;
     }
 
-    private void FillData()
-    {
-        Kupci.AddRange(new List<KupacModel>
-               {
-                   new KupacModel
-                   {
-                       KupacId = Guid.Parse("1a412c13-a195-58f7-8dbd-67596c3974c0"),
-                       Naziv = "Mika Petrovic",
-                       BrojTelefona1 = "021415513",
-                       BrojTelefona2 = "0214255731",
-                       Email = "mkp@gmail.com",
-                       BrojRacuna = "65543227654",
-                       ImaZabranu = false,
-                       DatumPocetkaZabrane = DateTime.Now,
-                       DuzinaTrajanjaZabraneUGodinama = 0,
-                       DatumPrestankaZabrane = DateTime.Now,
-                       
 
-                   },
-                   new KupacModel
-                   {
-                       KupacId = Guid.Parse("2a413c13-b195-58f7-8dbd-67596c3974c0"),
-                       Naziv = "Petar Mikic",
-                       BrojTelefona1 = "021145512",
-                       BrojTelefona2 = "021945521",
-                       Email = "petarm@gmail.com",
-                       BrojRacuna = "1234567890",
-                       ImaZabranu = false,
-                       DatumPocetkaZabrane = DateTime.Now,
-                       DuzinaTrajanjaZabraneUGodinama = 0,
-                       DatumPrestankaZabrane = DateTime.Now,
-                      
-                   }
-               });
-    }
-    public KupacModel CreateKupac(KupacModel kupac) { 
-        kupac.KupacId = Guid.NewGuid();
+    public KupacEntity CreateKupac(KupacEntity kupac) {
+
+        var createdEntity = context.Add(kupac);
+        return mapper.Map<KupacEntity>(createdEntity.Entity);
+
+     /*   kupac.KupacId = Guid.NewGuid();
         Kupci.Add(kupac);
-        KupacModel k = GetKupacById(kupac.KupacId);
-        return k;
+        KupacEntity k = GetKupacById(kupac.KupacId); */
+       // return k;
     }
 
     public void DeleteKupac(Guid kupacID)
     {
-        Kupci.Remove(Kupci.FirstOrDefault(k => k.KupacId == kupacID));
+        var kupac = GetKupacById(kupacID);
+        context.Remove(kupac);
+
+        //   Kupci.Remove(Kupci.FirstOrDefault(k => k.KupacId == kupacID));
     }
 
-    public List<KupacModel> GetKupci()
+    public List<KupacEntity> GetKupci()
     {
-        return (from k in Kupci select k).ToList();
+        List<KupacEntity> list = new List<KupacEntity>();
+        return list;
+
+        /*     PravnaLica = (from pl in PravnaLica select pl).ToList();
+             FizLica = (from fl in FizLica select fl).ToList();
+
+             Kupci.AddRange(PravnaLica);
+             Kupci.AddRange(FizLica);
+
+
+
+             return Kupci;*/
     }
 
-    public KupacModel GetKupacById(Guid kupacID)
+    public KupacEntity GetKupacById(Guid kupacID)
     {
-        return Kupci.FirstOrDefault(k => k.KupacId == kupacID);
+        //  return context.kupci.FirstOrDefault(k => k.KupacId == kupacID);
+
+        // return Kupci.FirstOrDefault(k => k.KupacId == kupacID);
+
+        return new KupacEntity();
     }
 
-    public KupacModel UpdateKupac(KupacModel kupac)
+    public void UpdateKupac(KupacEntity kupac)
     {
-        KupacModel k = GetKupacById(kupac.KupacId);
+     /*   KupacEntity k = GetKupacById(kupac.KupacId);
         
          k.Naziv = kupac.Naziv;
         k.BrojTelefona1 = kupac.BrojTelefona1;
@@ -86,6 +83,6 @@ public class KupacRepository : IKupacRepository
        
 
 
-        return k;
+        return k;*/
     }
 }

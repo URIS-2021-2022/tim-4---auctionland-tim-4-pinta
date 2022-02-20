@@ -6,14 +6,16 @@ namespace KupacMikroservis.Data
 {
    public interface IFizickoLiceRepository
     {
-        List<FizickoLiceModel> GetFizickaLica();
+        List<FizickoLiceEntity> GetFizickaLica();
 
-        FizickoLiceModel GetFizickoLiceById(Guid fizickoLiceID);
+        FizickoLiceEntity GetFizickoLiceById(Guid fizickoLiceID);
 
-        FizickoLiceModel CreateFizickoLice(FizickoLiceModel fizickoLice);
+        FizickoLiceEntity CreateFizickoLice(FizickoLiceEntity fizickoLice);
 
-        FizickoLiceModel UpdateFizickoLice(FizickoLiceModel fizickoLice);
+        void UpdateFizickoLice(FizickoLiceEntity fizickoLice);
 
         void DeleteFizickoLice(Guid fizickoLiceID);
+
+        bool SaveChanges();
     }
 }

@@ -15,8 +15,10 @@ namespace Parcela.Data
 
         KlasaEntity CreateKlasa(KlasaEntity klasa);
 
-        KlasaEntity UpdateKlasa(KlasaEntity klasa);
+        void UpdateKlasa(KlasaEntity klasa);
 
         void DeleteKlasa(Guid klasaID);
+
+        bool SaveChanges();
     }
 }

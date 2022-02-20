@@ -2,6 +2,7 @@
 using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
 using ComplaintAggregate.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
@@ -30,21 +31,27 @@ namespace ComplaintAggregate.Controllers
 
             [HttpGet]
             [HttpHead]
-            public ActionResult<List<ActionBasedOnComplaintDTO>> GetActions()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public ActionResult<List<ActionBasedOnComplaintDTO>> GetActions()
             {
-                List<ActionBasedOnComplaint> ListOfComplaints = actionBasedOnComplaintRepository.GetActions();
-                if (ListOfComplaints == null || ListOfComplaints.Count == 0)
+                var actions = actionBasedOnComplaintRepository.GetActions();
+                if (actions == null || actions.Count == 0)
                 {
                     return NoContent();
                 }
-                return Ok(mapper.Map<List<ActionBasedOnComplaintDTO>>(ListOfComplaints));
+                return Ok(mapper.Map<List<ActionBasedOnComplaintDTO>>(actions));
             }
 
 
-            [HttpGet("{statusId}")]
-            public ActionResult<ActionBasedOnComplaintDTO> GetActionById(Guid action)
+            [HttpGet("{radnjaId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesDefaultResponseType]
+        public ActionResult<ActionBasedOnComplaintDTO> GetActionById(Guid action)
             {
-                ActionBasedOnComplaint complainAggregate = actionBasedOnComplaintRepository.GetActionById(action);
+                var complainAggregate = actionBasedOnComplaintRepository.GetActionById(action);
                 if (complainAggregate == null)
                 {
                     return NotFound();
@@ -53,15 +60,19 @@ namespace ComplaintAggregate.Controllers
             }
 
             [HttpPost]
-            public ActionResult<ActionBasedOnComplaintDTO> CreateAction([FromBody] ActionBasedOnComplaintDTO complain)
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
+        public ActionResult<ActionBasedOnComplaintDTO> CreateAction([FromBody] ActionBasedOnComplaintDTO action)
             {
                 try
                 {
-                    ActionBasedOnComplaint comp = mapper.Map<ActionBasedOnComplaint>(complain);
+                    ActionBasedOnComplaint comp = mapper.Map<ActionBasedOnComplaint>(action);
 
                     ActionBasedOnComplaint confirmation = actionBasedOnComplaintRepository.CreateAction(comp);
+                    actionBasedOnComplaintRepository.SaveChanges();
 
-                    string location = linkGenerator.GetPathByAction("GetTypeOfComplaint", "TypesOfComplaints", new { Radnja_id = confirmation.Radnja_na_osnovu_zalbe_ID });
+                    string location = linkGenerator.GetPathByAction("GetActionById", "ActionBasedOnComplaint", new { Radnja_id = confirmation.Radnja_na_osnovu_zalbe_ID });
                     return Created(location, mapper.Map<ActionBasedOnComplaintDTO>(confirmation));
                 }
                 catch
@@ -70,17 +81,22 @@ namespace ComplaintAggregate.Controllers
                 }
             }
 
-            [HttpDelete("{DComplaintId}")]
-            public IActionResult DeleteTypeOfComplaint(Guid action)
+            [HttpDelete("{DradnjaId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
+        public IActionResult DeleteTypeOfComplaint(Guid action)
             {
                 try
                 {
-                    ActionBasedOnComplaint complaintModel = actionBasedOnComplaintRepository.GetActionById(action);
+                    var complaintModel = actionBasedOnComplaintRepository.GetActionById(action);
                     if (complaintModel == null)
                     {
                         return NotFound();
                     }
                     actionBasedOnComplaintRepository.DeleteAction(action);
+                    actionBasedOnComplaintRepository.SaveChanges();
                     // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
                     return NoContent();
                 }
@@ -91,18 +107,24 @@ namespace ComplaintAggregate.Controllers
             }
 
             [HttpPut]
-            public ActionResult<ActionBasedOnComplaintDTO> UpdateTypeOfComplaint(ActionBasedOnComplaint action)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
+        [ProducesDefaultResponseType]
+        public ActionResult<ActionBasedOnComplaintDTO> UpdateTypeOfComplaint(ActionBasedOnComplaintDTO action)
             {
                 try
                 {
-                    //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
-                    if (actionBasedOnComplaintRepository.GetActionById(action.Radnja_na_osnovu_zalbe_ID) == null)
+                //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
+                var actions = actionBasedOnComplaintRepository.GetActionById(action.Radnja_na_osnovu_zalbe_ID);
+                    if (actions == null)
                     {
                         return NotFound();
                     }
                     ActionBasedOnComplaint cmp = mapper.Map<ActionBasedOnComplaint>(action);
-                    ActionBasedOnComplaint complaint = actionBasedOnComplaintRepository.UpdateAction(cmp);
-                    return Ok(mapper.Map<ActionBasedOnComplaintDTO>(complaint));
+                    mapper.Map(cmp, actions);
+                    actionBasedOnComplaintRepository.SaveChanges();
+                    return Ok(mapper.Map<ActionBasedOnComplaintDTO>(actions));
                 }
                 catch (Exception)
                 {
@@ -111,7 +133,8 @@ namespace ComplaintAggregate.Controllers
             }
 
             [HttpOptions]
-            public IActionResult GetTypeOfComplaintOptions()
+            [AllowAnonymous]
+            public IActionResult GetActionBasedOnComplaintsOptions()
             {
                 Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
                 return Ok();

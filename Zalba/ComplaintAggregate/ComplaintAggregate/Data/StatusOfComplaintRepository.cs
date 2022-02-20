@@ -15,13 +15,13 @@ namespace ComplaintAggregate.Data
             FillData();
         }
 
-        private void FillData()
+        private static void FillData()
         {
             ListOfComplainations.AddRange(new List<StatusOfComplaint>
             {
                 new StatusOfComplaint
                 {
-                    Status_zalbe = Guid.NewGuid(),
+                    Status_zalbe = Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6"),
                     Usvojena= false,
                     Odbijena=true,
                     Otvorena=false
@@ -29,7 +29,7 @@ namespace ComplaintAggregate.Data
                 },
                 new StatusOfComplaint
                 {
-                    Status_zalbe = Guid.NewGuid(),
+                    Status_zalbe = Guid.Parse("c9e006af-bc13-49c7-ba4c-f2e2946301dd"),
                     Usvojena= true,
                     Odbijena=false,
                     Otvorena=true
@@ -89,6 +89,11 @@ namespace ComplaintAggregate.Data
                 Otvorena = action.Otvorena,
 
             };
+        }
+
+        public bool SaveChanges()
+        {
+            return true;
         }
     }
 }

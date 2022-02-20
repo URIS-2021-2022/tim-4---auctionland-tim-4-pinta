@@ -8,6 +8,11 @@ namespace Parcela.ServiceCals
 {
     public interface IKupacService
     {
-        KupacParceleDto GetKupacByIdAsync(Guid kupacID);
+        /// <summary>
+        /// Zahtev za kupca po ID-ju
+        /// </summary>
+        /// <param name="kupacID"></param>
+        /// <returns></returns>
+        Task<KupacParceleDto> GetKupacByIdAsync(Guid kupacID);
     }
 }

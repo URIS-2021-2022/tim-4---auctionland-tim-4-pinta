@@ -13,5 +13,7 @@ namespace ComplaintAggregate.Entities
         public bool Usvojena { get; set; }
         public bool Odbijena { get; set; }
         public bool Otvorena { get; set; }
+
+        public List<Complaint> Complaints { get; set; }
     }
 }

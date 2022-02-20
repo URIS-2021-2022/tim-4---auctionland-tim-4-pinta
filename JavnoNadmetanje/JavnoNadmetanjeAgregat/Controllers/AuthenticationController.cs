@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace JavnoNadmetanjeAgregat.Controllers
 {
     [ApiController]
-    [Route("api/examRegistrations")]
+    [Route("api/autentifikacija")]
+    [Produces("application/json", "application/xml")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationHelper authenticationHelper;

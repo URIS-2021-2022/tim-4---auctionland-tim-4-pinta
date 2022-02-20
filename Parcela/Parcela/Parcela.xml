@@ -711,6 +711,16 @@
             ID klase
             </summary>
         </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.KatastarskaOpstinaID">
+            <summary>
+            ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Entities.UserEntity">
             <summary>
             Predstavlja model korisnika
@@ -781,6 +791,11 @@
             Povrsina dela parcele
             </summary>
         </member>
+        <member name="P:Parcela.Models.DeoParceleDto.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Models.KlasaDto">
             <summary>
             DTO za klasu
@@ -801,57 +816,57 @@
             Naziv kulture
             </summary>
         </member>
-        <member name="T:Parcela.Models.KupacParcele">
+        <member name="T:Parcela.Models.KupacParceleDto">
             <summary>
             DTO za kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.Naziv">
+        <member name="P:Parcela.Models.KupacParceleDto.Naziv">
             <summary>
             Naziv kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.BrojTelefona1">
+        <member name="P:Parcela.Models.KupacParceleDto.BrojTelefona1">
             <summary>
             Prvi broj telefona kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.BrojTelefona2">
+        <member name="P:Parcela.Models.KupacParceleDto.BrojTelefona2">
             <summary>
             Drugi broj telefona kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.Email">
+        <member name="P:Parcela.Models.KupacParceleDto.Email">
             <summary>
             Email kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.OstvarenaPovrsina">
+        <member name="P:Parcela.Models.KupacParceleDto.OstvarenaPovrsina">
             <summary>
             Ostvarena povrsina kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.BrojRacuna">
+        <member name="P:Parcela.Models.KupacParceleDto.BrojRacuna">
             <summary>
             Broj racuna kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.ImaZabranu">
+        <member name="P:Parcela.Models.KupacParceleDto.ImaZabranu">
             <summary>
             Da li kupac parcele ima zabranu
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.DatumPocetkaZabrane">
+        <member name="P:Parcela.Models.KupacParceleDto.DatumPocetkaZabrane">
             <summary>
             Datum pocetka zabrane kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.DuzinaTrajanjaZabraneUGodinama">
+        <member name="P:Parcela.Models.KupacParceleDto.DuzinaTrajanjaZabraneUGodinama">
             <summary>
             Duzina trajanja zabrane u godinama
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParcele.DatumPrestankaZabrane">
+        <member name="P:Parcela.Models.KupacParceleDto.DatumPrestankaZabrane">
             <summary>
             Datum prestanka zabrane kupca parcele
             </summary>
@@ -891,7 +906,7 @@
             DTO za opstinu parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.OpstinaParceleDto.KatastarskaOpstinaNaziv">
+        <member name="P:Parcela.Models.OpstinaParceleDto.NazivKatastarskeOpstine">
             <summary>
             Naziv katastarske opstine
             </summary>
@@ -939,6 +954,26 @@
         <member name="P:Parcela.Models.ParcelaDto.OdvodnjavanjeStvarnoStanje">
             <summary>
             Stvarno stanje odvodnjavanja za parcelu
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.KatastarskaOpstinaID">
+            <summary>
+            ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.Opstina">
+            <summary>
+            Katastarska opstina parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.Kupac">
+            <summary>
+            Kupac parcele
             </summary>
         </member>
         <member name="T:Parcela.Models.Principal">

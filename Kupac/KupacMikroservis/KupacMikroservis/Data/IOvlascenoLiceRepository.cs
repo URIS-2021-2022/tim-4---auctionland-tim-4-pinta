@@ -6,14 +6,16 @@ namespace KupacMikroservis.Data
 {
    public interface IOvlascenoLiceRepository
     {
-        List<OvlascenoLiceModel> GetOvlascenaLica();
+        List<OvlascenoLiceEntity> GetOvlascenaLica();
 
-        OvlascenoLiceModel GetOvlascenoLiceById(Guid ovlascenoLiceID);
+        OvlascenoLiceEntity GetOvlascenoLiceById(Guid ovlascenoLiceID);
 
-        OvlascenoLiceModel CreateOvlascenoLice(OvlascenoLiceModel ovlascenoLice);
+        OvlascenoLiceEntity CreateOvlascenoLice(OvlascenoLiceEntity ovlascenoLice);
 
-        OvlascenoLiceModel UpdateOvlascenoLice(OvlascenoLiceModel ovlascenoLice);
+        void UpdateOvlascenoLice(OvlascenoLiceEntity ovlascenoLice);
 
         void DeleteOvlascenoLice(Guid ovlascenoLiceID);
+
+        bool SaveChanges();
     }
 }
