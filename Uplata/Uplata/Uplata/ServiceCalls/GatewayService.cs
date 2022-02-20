@@ -9,28 +9,28 @@ using System.Threading.Tasks;
 
 namespace Uplata.ServiceCalls
 {
-    public class KupacService : IKupacService
+    public class GatewayService : IGatewayService
     {
         private readonly IConfiguration configuration;
 
-        public KupacService(IConfiguration configuration)
+        public GatewayService(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-        public async Task<UplataDto> GetKupacByIdAsync(Guid kupacID)
+        public async Task<GatewayDto> GetUrl(string servis)
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:KupacService"];
-                Uri url = new Uri($"{ configuration["Services:KupacService"] }api/kupci/{kupacID}");
+                var x = configuration["Services:GatewayService"];
+                Uri url = new Uri($"{ configuration["Services:GatewayService"] }{servis}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var kupac = JsonConvert.DeserializeObject<UplataDto>(responseContent);
+                var gateway = JsonConvert.DeserializeObject<GatewayDto>(responseContent);
 
-                return kupac;
+                return gateway;
             }
         }
     }

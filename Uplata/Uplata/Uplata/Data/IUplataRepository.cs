@@ -11,14 +11,17 @@ namespace Uplata.Data
 {
     public interface IUplataRepository
     {
-        List<UplataModel> GetUplate();
+        List<UplataEntity> GetUplate();
 
-        UplataModel GetUplataByID(Guid uplataID);
+        UplataEntity GetUplataByID(Guid uplataID);
 
-        UplataModel CreateUplata(UplataModel uplataModel);
+        UplataEntity CreateUplata(UplataEntity uplata);
 
-        UplataModel UpdateUplata(UplataModel uplataModel);
+        void UpdateUplata(UplataEntity uplata);
 
         void DeleteUplata(Guid uplataID);
+
+        bool SaveChanges();
+
     }
 }

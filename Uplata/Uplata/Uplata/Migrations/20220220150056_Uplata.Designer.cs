@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Uplata.Entities;
 
 namespace Uplata.Migrations
 {
     [DbContext(typeof(UplataContext))]
-    partial class UplataContextModelSnapshot : ModelSnapshot
+    [Migration("20220220150056_Uplata")]
+    partial class Uplata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,9 +36,6 @@ namespace Uplata.Migrations
                     b.Property<string>("Iznos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("JavnoNadmetanjeID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("PozivNaBroj")
                         .HasColumnType("nvarchar(max)");
 
@@ -45,14 +44,14 @@ namespace Uplata.Migrations
 
                     b.HasKey("UplataID");
 
-                    b.ToTable("Uplata");
+                    b.ToTable("Uplate");
 
                     b.HasData(
                         new
                         {
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 20, 17, 58, 55, 702, DateTimeKind.Local).AddTicks(3850),
+                            Datum = new DateTime(2022, 2, 20, 16, 0, 56, 430, DateTimeKind.Local).AddTicks(7002),
                             Iznos = "150000",
                             PozivNaBroj = "3121-424324523-444",
                             SvrhaUplate = "ucesce na licitaciji"
@@ -61,38 +60,11 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 20, 17, 58, 55, 704, DateTimeKind.Local).AddTicks(5879),
+                            Datum = new DateTime(2022, 2, 20, 16, 0, 56, 432, DateTimeKind.Local).AddTicks(9445),
                             Iznos = "200000",
                             PozivNaBroj = "0242-424324523-444",
                             SvrhaUplate = "ucesce na licitaciji"
                         });
-                });
-
-            modelBuilder.Entity("Uplata.Entities.UplataEntity", b =>
-                {
-                    b.OwnsOne("Uplata.Entities.Kurs", "Kurs", b1 =>
-                        {
-                            b1.Property<Guid>("UplataEntityUplataID")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<DateTime>("Datum")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("Valuta")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<double>("VrednostKursa")
-                                .HasColumnType("float");
-
-                            b1.HasKey("UplataEntityUplataID");
-
-                            b1.ToTable("Uplata");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UplataEntityUplataID");
-                        });
-
-                    b.Navigation("Kurs");
                 });
 #pragma warning restore 612, 618
         }

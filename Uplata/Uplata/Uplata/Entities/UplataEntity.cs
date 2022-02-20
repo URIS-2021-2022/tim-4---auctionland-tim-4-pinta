@@ -8,13 +8,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Uplata.Entities
 {
-    public class UplataModel
+    public class UplataEntity
     {
         /// <summary>
         /// ID Uplate.
         /// </summary>
         [Key]
-        public Guid UplataID { get; set; }
+        public Guid UplataID { get; set; } = Guid.NewGuid();
 
         /// <summary>
         /// Iznos uplate.
@@ -35,16 +35,21 @@ namespace Uplata.Entities
         /// Poziv na broj uplate.
         /// </summary>
         public string PozivNaBroj { get; set; }
-
         /// <summary>
-        /// ID kupca tj uplatioca.
+        ///  Broj racuna
         /// </summary>
-        public Guid KupacID { get; set; }
+        public string BrojRacuna { get; set; }
 
         /// <summary>
         /// ID javnog nadmetanja.
         /// </summary>
 
-        public Guid JavnoNadmetanjeID { get; set; }
+        public Guid? JavnoNadmetanjeID { get; set; }
+        /// <summary>
+        /// Kurs
+        /// </summary>
+        public Kurs Kurs { get; set; }
     }
+
+    public record Kurs(double VrednostKursa, DateTime Datum, string Valuta);
 }
