@@ -23,7 +23,7 @@ namespace KupacMikroservis.ServiceCalls
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:AdresaService"];
-                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adresa/{adresaID}");
+                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adrese/{adresaID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
@@ -39,7 +39,7 @@ namespace KupacMikroservis.ServiceCalls
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:AdresaService"];
-                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adresa/{adresaID}");
+                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adrese/{adresaID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 

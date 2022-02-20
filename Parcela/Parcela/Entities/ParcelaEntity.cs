@@ -63,6 +63,10 @@ namespace Parcela.Entities
         /// </summary>
         [ForeignKey("ZasticenaZona")]
         public Guid ZasticenaZonaID { get; set; }
+
+        /// <summary>
+        /// Zasticena zona
+        /// </summary>
         public ZasticenaZonaEntity ZasticenaZona { get; set; }
 
         /// <summary>
@@ -70,6 +74,10 @@ namespace Parcela.Entities
         /// </summary>
         [ForeignKey("Odvodnjavanje")]
         public Guid OdvodnjavanjeID { get; set; }
+
+        /// <summary>
+        /// Odvodnjavanje
+        /// </summary>
         public OdvodnjavanjeEntity Odvodnjavanje { get; set; }
 
         /// <summary>
@@ -77,6 +85,10 @@ namespace Parcela.Entities
         /// </summary>
         [ForeignKey("Obradivost")]
         public Guid ObradivostID { get; set; }
+
+        /// <summary>
+        /// Obradivost
+        /// </summary>
         public ObradivostEntity Obradivost { get; set; }
 
         /// <summary>
@@ -84,6 +96,10 @@ namespace Parcela.Entities
         /// </summary>
         [ForeignKey("OblikSvojine")]
         public Guid OblikSvojineID { get; set; }
+
+        /// <summary>
+        /// Oblik svojine
+        /// </summary>
         public OblikSvojineEntity OblikSvojine { get; set; }
 
 
@@ -92,6 +108,10 @@ namespace Parcela.Entities
         /// </summary>
         [ForeignKey("Kultura")]
         public Guid KulturaID { get; set; }
+
+        /// <summary>
+        /// Kultura
+        /// </summary>
         public KulturaEntity Kultura { get; set; }
 
 
@@ -100,8 +120,15 @@ namespace Parcela.Entities
         /// </summary>
         [ForeignKey("Klasa")]
         public Guid KlasaID { get; set; }
+
+        /// <summary>
+        /// Klasa
+        /// </summary>
         public KlasaEntity Klasa { get; set; }
 
+        /// <summary>
+        /// Delovi parcele
+        /// </summary>
         public List<DeoParceleEntity> DeloviParcele { get; set; }
 
         /// <summary>

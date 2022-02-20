@@ -40,6 +40,10 @@ namespace KupacMikroservis.Models
 
         public Guid UplataID { get; set; }
 
+        public AdresaKupcaDTO Adresa { get; set; }
+
+        public UplataKupcaDTO Uplata { get; set; }
+
 
 
         //    public string JMBG { get; set; }

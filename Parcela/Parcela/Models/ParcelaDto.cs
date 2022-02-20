@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Parcela.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,6 +55,11 @@ namespace Parcela.Models
         /// ID katastarske opstine
         /// </summary>
         public Guid KatastarskaOpstinaID { get; set; }
+
+        /// <summary>
+        /// Katastarska opstina parcele
+        /// </summary>
+        public OpstinaParceleDto Opstina { get; set; }
 
         /// <summary>
         /// ID kupca parcele

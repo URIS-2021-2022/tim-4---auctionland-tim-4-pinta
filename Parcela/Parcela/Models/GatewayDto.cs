@@ -5,8 +5,14 @@ using System.Threading.Tasks;
 
 namespace Parcela.Models
 {
+    /// <summary>
+    /// DTO za Gateway
+    /// </summary>
     public class GatewayDto
     {
+        /// <summary>
+        /// Url
+        /// </summary>
         public string Url { get; set; }
     }
 }

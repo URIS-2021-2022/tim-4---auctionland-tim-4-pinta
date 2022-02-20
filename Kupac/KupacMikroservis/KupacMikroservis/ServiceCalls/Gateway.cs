@@ -6,31 +6,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using KupacMikroservis.ServiceCalls;
 
-namespace KupacMikroservis.ServiceCalls
+namespace Parcela.ServiceCals
 {
-    public class UplataService : IUplataService
+    public class Gateway : IGateway
     {
         private readonly IConfiguration configuration;
 
-        public UplataService(IConfiguration configuration)
+        public Gateway(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-        public async Task<UplataKupcaDTO> GetUplataKupcaAsync(Guid uplataID)
+        public async Task<GatewayDTO> GetUrl(string servis)
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:UplataService"];
-                Uri url = new Uri($"{ configuration["Services:UplataService"] }api/uplate/{uplataID}");
+                var x = configuration["Services:GatewayService"];
+                Uri url = new Uri($"{ configuration["Services:GatewayService"] }{servis}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var uplata = JsonConvert.DeserializeObject<UplataKupcaDTO>(responseContent);
+                var gateway = JsonConvert.DeserializeObject<GatewayDTO>(responseContent);
 
-                return uplata;
+                return gateway;
             }
         }
     }

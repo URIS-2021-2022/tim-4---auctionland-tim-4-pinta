@@ -16,7 +16,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:44200"
+      "applicationUrl": "http://localhost:44208"
     },
     "JavnoNadmetanjeAgregat": {
       "commandName": "Project",
