@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Korisnik</name>
+    </assembly>
+    <members>
+        <member name="M:Korisnik.Controllers.AuthenticationController.Authenticate(Korisnik.Models.Principal)">
+            <summary>
+            Sluzi za autentifikaciju korisnika
+            </summary>
+            <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
+            <returns></returns>
+        </member>
+        <member name="M:Korisnik.Data.KorisnikRepository.VerifyPassword(System.String,System.String,System.String)">
+            <summary>
+            Proverava validnost prosleđene lozinke sa prosleđenim hash-om
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <param name="savedHash">Sačuvan hash</param>
+            <param name="savedSalt">Sačuvan salt</param>
+            <returns></returns>
+        </member>
+        <member name="M:Korisnik.Data.UserMockRepository.UserWithCredentialsExists(System.String,System.String)">
+            <summary>
+            Proverava da li postoji korisnik sa prosleđenim kredencijalima
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Korisnik.Data.UserMockRepository.HashPassword(System.String)">
+            <summary>
+            Vrši hash-ovanje korisničke lozinke
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <returns>Generisan hash i salt</returns>
+        </member>
+        <member name="M:Korisnik.Data.UserMockRepository.VerifyPassword(System.String,System.String,System.String)">
+            <summary>
+            Proverava validnost prosleđene lozinke sa prosleđenim hash-om
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <param name="savedHash">Sačuvan hash</param>
+            <param name="savedSalt">Sačuvan salt</param>
+            <returns></returns>
+        </member>
+        <member name="M:Korisnik.Entities.KorisnikContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Popunjava bazu sa nekim inicijalnim podacima
+            </summary>
+        </member>
+        <member name="T:Korisnik.Models.KorisnikModel">
+            <summary>
+            Predstavlja model korisnika
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikModel.KorisnikId">
+            <summary>
+            Id korisnika
+            </summary>
+            
+        </member>
+        <member name="P:Korisnik.Models.KorisnikModel.Ime">
+            <summary>
+            Ime korisnika
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikModel.Prezime">
+            <summary>
+            Prezime korisnika
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikModel.KorisnickoIme">
+            <summary>
+            Korisničko ime
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikModel.Lozinka">
+            <summary>
+            Hash-ovana šifra korisnika
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikModel.Salt">
+            <summary>
+            Salt
+            </summary>
+        </member>
+        <member name="T:Korisnik.Models.KorisnikCreationDto">
+            <summary>
+            Model za kreiranje prijave ispita
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikCreationDto.KorisnikId">
+            <summary>
+            ID studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikCreationDto.Ime">
+            <summary>
+            Ime studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikCreationDto.Prezime">
+            <summary>
+            Prezime studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikCreationDto.KorisnickoIme">
+            <summary>
+             korisnicko ime .
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikCreationDto.Lozinka">
+            <summary>
+             lozinka
+            </summary>
+        </member>
+        <member name="T:Korisnik.Models.KorisnikDto">
+            <summary>
+            DTO za prijavu ispita
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikDto.Ime">
+            <summary>
+            Ime studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikDto.Prezime">
+            <summary>
+            Prezime studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikDto.KorisnickoIme">
+            <summary>
+             korisnicko ime .
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikDto.Lozinka">
+            <summary>
+             lozinka
+            </summary>
+        </member>
+        <member name="T:Korisnik.Models.KorisnikUpdateDto">
+            <summary>
+            Model za ažuriranje prijave ispita
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikUpdateDto.KorisnikId">
+            <summary>
+            ID studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikUpdateDto.Ime">
+            <summary>
+            Ime studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikUpdateDto.Prezime">
+            <summary>
+            Prezime studenta.
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikUpdateDto.KorisnickoIme">
+            <summary>
+             korisnicko ime .
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.KorisnikUpdateDto.Lozinka">
+            <summary>
+             lozinka
+            </summary>
+        </member>
+        <member name="T:Korisnik.Models.Principal">
+            <summary>
+            Predstavlja model za autentifikaciju
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.Principal.Username">
+            <summary>
+            Korisničko ime
+            </summary>
+        </member>
+        <member name="P:Korisnik.Models.Principal.Password">
+            <summary>
+            Korisnička lozinka
+            </summary>
+        </member>
+    </members>
+</doc>
