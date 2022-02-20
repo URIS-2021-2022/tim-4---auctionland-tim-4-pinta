@@ -13,23 +13,33 @@ using System.Threading.Tasks;
 
 namespace AdresaServis.Controllers
 {
+    /// <summary>
+    /// Sadrzi CRUD operacije za adrese
+    /// </summary>
     [ApiController]
     [Route("api/adrese")]
     [Produces("application/json", "application/xml")]
     public class AdresaController : ControllerBase
     {
-        /// <summary>
-        /// Sadrzi CRUD operacije za adrese
-        /// </summary>
         private readonly IAdresaRepository adresaRepository;
+        private readonly IDrzavaRepository drzavaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public AdresaController(IAdresaRepository adresaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="adresaRepository"></param>
+        /// <param name="drzavaRepository"></param>
+        /// <param name="linkGenerator"></param>
+        /// <param name="mapper"></param>
+        /// <param name="loggerService"></param>
+        public AdresaController(IAdresaRepository adresaRepository, IDrzavaRepository drzavaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.adresaRepository = adresaRepository;
+            this.drzavaRepository = drzavaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
@@ -59,6 +69,12 @@ namespace AdresaServis.Controllers
                 loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            List<AdresaDto> adreseDto = mapper.Map<List<AdresaDto>>(adrese);
+            foreach (AdresaDto a in adreseDto)
+            {
+                a.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(a.DrzavaID));
+            }
+
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<AdresaDto>>(adrese));

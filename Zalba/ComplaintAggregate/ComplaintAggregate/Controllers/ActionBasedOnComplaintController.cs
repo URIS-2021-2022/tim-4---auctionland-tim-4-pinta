@@ -9,12 +9,14 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ComplaintAggregate.Controllers
 {
     [ApiController]
-    [Route("api/zalba/radnja")]
+    [Route("api/radnja")]
+    [Produces("application/json", "application/xml")]
     public class ActionBasedOnComplaintController:ControllerBase
     {
             private readonly IActionBasedOnComplaintRepository actionBasedOnComplaintRepository;
@@ -36,7 +38,8 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<List<ActionBasedOnComplaintDTO>> GetActions()
             {
-                var actions = actionBasedOnComplaintRepository.GetActions();
+
+            var actions = actionBasedOnComplaintRepository.GetActions();
                 if (actions == null || actions.Count == 0)
                 {
                     return NoContent();

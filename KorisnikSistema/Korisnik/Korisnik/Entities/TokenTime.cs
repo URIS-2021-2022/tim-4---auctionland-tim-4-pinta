@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,10 +8,15 @@ namespace Korisnik.Models
 {
     public class TokenTime
     {
-        public Guid token { get; set; }
 
-        public int KorisnikId{ get; set; }
+        [Key]
+        public int tokenId { get; set; }
 
-        public string time{ get; set; }
+        public string token { get; set; }
+
+        
+        public int korisnikId{ get; set; }
+
+        public DateTime time{ get; set; }
     }
 }

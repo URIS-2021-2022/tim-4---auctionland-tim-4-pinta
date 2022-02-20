@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace Korisnik.Controllers
 {
     [ApiController]
-    [Route("api/examRegistrations")]
     [Produces("application/json", "application/xml")]
-    [Route("api/examRegistrations")]
+  
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationHelper authenticationHelper;
+       
 
         public AuthenticationController(IAuthenticationHelper authenticationHelper)
         {
@@ -37,11 +37,21 @@ namespace Korisnik.Controllers
             if (authenticationHelper.AuthenticatePrincipal(principal))
             {
                 var tokenString = authenticationHelper.GenerateJwt(principal);
-                return Ok(new { token = tokenString });
+
+                authenticationHelper.SaveChanges();
+
+                var token=new { token = tokenString };
+              
+                return Ok(token);
             }
 
             //Ukoliko autentifikacija nije uspela vraća se status 401
             return Unauthorized();
         }
+
+
+
+        
     }
+
 }

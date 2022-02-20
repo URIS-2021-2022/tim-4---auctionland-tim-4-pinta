@@ -9,45 +9,56 @@ namespace Uplata.Entities
 {
     public class UplataContext : DbContext
     {
-
-        public UplataContext(DbContextOptions options) : base(options)
+        private readonly IConfiguration _configuration;
+        public UplataContext(DbContextOptions options, IConfiguration configuration) : base(options)
         {
+            _configuration = configuration;
         }
 
-        public DbSet<UplataModel> Uplate { get; set; }
+        public DbSet<UplataEntity> Uplate { get; set; }
 
-        ///protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        ///{
-           /// optionsBuilder.UseSqlServer(configuration.GetConnectionString("UplataDB"));
-        ////}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("UplataDB"));
+        }
 
         /// <summary>
         /// Popunjava bazu sa nekim inicijalnim podacima
         /// </summary>
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UplataModel>()
+            builder.Entity<UplataEntity>(b =>
+            {
+                b.ToTable("Uplata").HasKey(x => x.UplataID);
+                b.OwnsOne(x => x.Kurs, sb =>
+                {
+                    sb.Property(x => x.VrednostKursa);
+                    sb.Property(x => x.Datum);
+                    sb.Property(x => x.Valuta);
+                });
+            });
+
+
+            builder.Entity<UplataEntity>()
                 .HasData(new
                 {
-                    UplataID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
+                    UplataID = Guid.Parse("8D452221-F73E-4E35-BA7C-3FDD0D08BE70"),
                     Iznos = "150000",
                     Datum = DateTime.Now,
                     SvrhaUplate = "ucesce na licitaciji",
                     PozivNaBroj = "3121-424324523-444",
-                    KupacID = Guid.Parse("6a411c23-a195-48f7-8dbd-67596c3974c0"),
-                    JavnoNadmetanjeID = Guid.Parse("6a411c23-a192-48f7-8dbd-67596c3974c0")
+                    BrojRacuna = "155-228523852256500-25"
                 });
 
-            builder.Entity<UplataModel>()
+            builder.Entity<UplataEntity>()
                 .HasData(new
                 {
-                    UplataID = Guid.Parse("7a411c13-a195-48f7-8dbd-67596c3974c0"),
+                    UplataID = Guid.Parse("5F951CF9-AAF2-45C3-823A-5C8C4C1DEAFF"),
                     Iznos = "200000",
                     Datum = DateTime.Now,
                     SvrhaUplate = "ucesce na licitaciji",
                     PozivNaBroj = "0242-424324523-444",
-                    KupacID = Guid.Parse("6a411c23-a195-48f7-8dbd-67596c3974c0"),
-                    JavnoNadmetanjeID = Guid.Parse("6a411c23-a192-48f7-8dbd-67596c3974c0")
+                    BrojRacuna = "155-228523852256500-25"
                 });
         }
     }

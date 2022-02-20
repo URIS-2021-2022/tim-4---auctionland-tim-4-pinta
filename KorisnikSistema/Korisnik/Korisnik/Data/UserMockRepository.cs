@@ -1,4 +1,5 @@
-﻿using Korisnik.Models;
+﻿using Korisnik.Entities;
+using Korisnik.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +10,18 @@ namespace Korisnik.Data
 {
     public class UserMockRepository : IUserRepository
     {
-
-        public static List<KorisnikModel> Users { get; set; } = new List<KorisnikModel>();
         private readonly static int iterations = 1000;
 
-        public UserMockRepository()
-        {
-           // FillData();
-        }
+        /* //private readonly KorisnikContext context;
 
-      
-       /* private void FillData()
-        {
-            var user1 = HashPassword("testpassword");
+         int a;
+         public UserMockRepository(int a)
+         {
+             //this.context = context;
+             this.a = a;
+         }
+        */
 
-            Users.AddRange(new List<User>
-            {
-                new User
-                {
-                    Id = Guid.Parse("CFD7FA84-8A27-4119-B6DB-5CFC1B0C94E1"),
-                    FirstName = "Petar",
-                    LastName = "Petrovic",
-                    UserName = "petar.petrovic",
-                    Email = "petar.petrovic@testmail.com",
-                    Password = user1.Item1,
-                    Salt = user1.Item2
-                }
-            });
-        }*/
 
         /// <summary>
         /// Proverava da li postoji korisnik sa prosleđenim kredencijalima
@@ -47,18 +32,20 @@ namespace Korisnik.Data
         public bool UserWithCredentialsExists(string username, string password)
         {
             //Ukoliko je username jedinstveno ovo je uredu
-            KorisnikModel user = Users.FirstOrDefault(u => u.KorisnickoIme == username);
+            //KorisnikModel user;// = context.KorisnikModels.FirstOrDefault(u => u.KorisnickoIme == username);
 
-            if (user == null)
-            {
-                return false;
-            }
+            /* if (user == null)
+             {
+                 return false;
+             }
 
-            //Ako smo našli korisnika sa tim korisničkim imenom proveravamo lozinku
-            if (VerifyPassword(password, user.Lozinka, user.Salt))
-            {
-                return true;
-            }
+             return true;
+             //Ako smo našli korisnika sa tim korisničkim imenom proveravamo lozinku
+             if (VerifyPassword(password, user.Lozinka, user.Salt))
+             {
+                 return true;
+             }
+             return false;*/
             return false;
         }
 

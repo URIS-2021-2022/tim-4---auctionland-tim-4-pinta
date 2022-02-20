@@ -19,11 +19,14 @@ namespace Uplata.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Uplata.Entities.UplataModel", b =>
+            modelBuilder.Entity("Uplata.Entities.UplataEntity", b =>
                 {
                     b.Property<Guid>("UplataID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BrojRacuna")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Datum")
                         .HasColumnType("datetime2");
@@ -31,10 +34,7 @@ namespace Uplata.Migrations
                     b.Property<string>("Iznos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("JavnoNadmetanjeID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("KupacID")
+                    b.Property<Guid?>("JavnoNadmetanjeID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PozivNaBroj")
@@ -45,29 +45,54 @@ namespace Uplata.Migrations
 
                     b.HasKey("UplataID");
 
-                    b.ToTable("Uplate");
+                    b.ToTable("Uplata");
 
                     b.HasData(
                         new
                         {
-                            UplataID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                            Datum = new DateTime(2022, 2, 7, 15, 36, 2, 89, DateTimeKind.Local).AddTicks(6851),
+                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70"),
+                            BrojRacuna = "155-228523852256500-25",
+                            Datum = new DateTime(2022, 2, 20, 17, 58, 55, 702, DateTimeKind.Local).AddTicks(3850),
                             Iznos = "150000",
-                            JavnoNadmetanjeID = new Guid("6a411c23-a192-48f7-8dbd-67596c3974c0"),
-                            KupacID = new Guid("6a411c23-a195-48f7-8dbd-67596c3974c0"),
                             PozivNaBroj = "3121-424324523-444",
                             SvrhaUplate = "ucesce na licitaciji"
                         },
                         new
                         {
-                            UplataID = new Guid("7a411c13-a195-48f7-8dbd-67596c3974c0"),
-                            Datum = new DateTime(2022, 2, 7, 15, 36, 2, 91, DateTimeKind.Local).AddTicks(9895),
+                            UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff"),
+                            BrojRacuna = "155-228523852256500-25",
+                            Datum = new DateTime(2022, 2, 20, 17, 58, 55, 704, DateTimeKind.Local).AddTicks(5879),
                             Iznos = "200000",
-                            JavnoNadmetanjeID = new Guid("6a411c23-a192-48f7-8dbd-67596c3974c0"),
-                            KupacID = new Guid("6a411c23-a195-48f7-8dbd-67596c3974c0"),
                             PozivNaBroj = "0242-424324523-444",
                             SvrhaUplate = "ucesce na licitaciji"
                         });
+                });
+
+            modelBuilder.Entity("Uplata.Entities.UplataEntity", b =>
+                {
+                    b.OwnsOne("Uplata.Entities.Kurs", "Kurs", b1 =>
+                        {
+                            b1.Property<Guid>("UplataEntityUplataID")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("Datum")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Valuta")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<double>("VrednostKursa")
+                                .HasColumnType("float");
+
+                            b1.HasKey("UplataEntityUplataID");
+
+                            b1.ToTable("Uplata");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UplataEntityUplataID");
+                        });
+
+                    b.Navigation("Kurs");
                 });
 #pragma warning restore 612, 618
         }

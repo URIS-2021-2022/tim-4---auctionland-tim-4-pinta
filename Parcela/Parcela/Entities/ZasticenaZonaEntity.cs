@@ -21,7 +21,10 @@ namespace Parcela.Entities
         /// Oznaka zasticene zone
         /// </summary>
         public int ZasticenaZonaOznaka { get; set; }
-        
+
+        /// <summary>
+        /// Parcele
+        /// </summary>
         public List<ParcelaEntity> Parcele { get; set; }
     }
 }

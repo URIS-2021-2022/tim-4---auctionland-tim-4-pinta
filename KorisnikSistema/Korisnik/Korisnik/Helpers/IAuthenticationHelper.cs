@@ -11,5 +11,7 @@ namespace Korisnik.Helpers
         public bool AuthenticatePrincipal(Principal principal);
 
         public string GenerateJwt(Principal principal);
+
+        bool SaveChanges();
     }
 }

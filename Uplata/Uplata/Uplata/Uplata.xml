@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Uplata</name>
+    </assembly>
+    <members>
+        <member name="M:Uplata.Controllers.AuthenticationController.Authenticate(Uplata.Models.Principal)">
+            <summary>
+            Sluzi za autentifikaciju korisnika
+            </summary>
+            <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
+            <returns></returns>
+        </member>
+        <member name="M:Uplata.Controllers.UplataController.GetUplate">
+            <summary>
+            Vraća sve uplate 
+            </summary>
+            <returns>Lista uplati</returns>
+            <response code="200">Vraca listu uplati</response>
+            <response code="404">Nije pronađena ni jedna jedina uplata</response>
+        </member>
+        <member name="M:Uplata.Controllers.UplataController.GetUplata(System.Guid)">
+            <summary>
+            Vraća jednu uplatu na osnovu ID-ja uplate.
+            </summary>
+            <param name="uplataID">ID uplate</param>
+            <returns></returns>
+            <response code="200">Vraća traženu uplatu</response>
+        </member>
+        <member name="M:Uplata.Controllers.UplataController.CreateUplata(Uplata.Models.UplataDto)">
+            <summary>
+            Kreira novu uplatu.
+            </summary>
+            <param name="uplata">Model uplate</param>
+            <returns>Potvrdu o kreiranoj uplati.</returns>
+            <remarks>
+            Primer zahteva za kreiranje nove uplate \
+            POST /api/uplate \
+            {     \
+                "iznos": "150000", \
+                "datum": "2841defc-761e-40d8-b8a3-d3e58516dca7", \
+                "svrhaUplate": "ucesce na licitaciji", \
+                "pozivNaBroj": "3121-424324523-444", \
+                "brojRacuna": "155-5528599695-55", \
+                "kurs": {
+                "vrednostKursa": 120, \
+                "datum": "2020-05-05", \
+                "valuta": "RSD" \
+                }      \
+            }
+            </remarks>
+            <response code="200">Vraća uplatu</response>
+            <response code="500">Došlo je do greške na serveru prilikom uplate</response>
+        </member>
+        <member name="M:Uplata.Controllers.UplataController.UpdateUplata(Uplata.Entities.UplataEntity)">
+            <summary>
+            Ažurira jednu uplatu.
+            </summary>
+            <param name="uplata">Model uplate koji se ažurira</param>
+            <returns>Potvrdu o modifikovanoj uplati.</returns>
+            <response code="200">Vraća ažuriranu uplatu</response>
+            <response code="400">Uplata koja se ažurira nije pronađena</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja uplate</response>
+        </member>
+        <member name="M:Uplata.Controllers.UplataController.DeleteUplata(System.Guid)">
+            <summary>
+            Vrši brisanje jedne uplate na osnovu ID-ja uplate.
+            </summary>
+            <param name="uplataID">ID uplate</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Uplata uspešno obrisana</response>
+            <response code="404">Nije pronađena uplata za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja uplate</response>
+        </member>
+        <member name="M:Uplata.Controllers.UplataController.GetUplataOptions">
+            <summary>
+            Vraca opcije za rad sa uplatama
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Uplata.Data.UserMockRepository.FillData">
+            <summary>
+            Metoda koja upisuje testne podatke
+            </summary>
+        </member>
+        <member name="M:Uplata.Data.UserMockRepository.UserWithCredentialsExists(System.String,System.String)">
+            <summary>
+            Proverava da li postoji korisnik sa prosleđenim kredencijalima
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Uplata.Data.UserMockRepository.HashPassword(System.String)">
+            <summary>
+            Vrši hash-ovanje korisničke lozinke
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <returns>Generisan hash i salt</returns>
+        </member>
+        <member name="M:Uplata.Data.UserMockRepository.VerifyPassword(System.String,System.String,System.String)">
+            <summary>
+            Proverava validnost prosleđene lozinke sa prosleđenim hash-om
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <param name="savedHash">Sačuvan hash</param>
+            <param name="savedSalt">Sačuvan salt</param>
+            <returns></returns>
+        </member>
+        <member name="M:Uplata.Entities.UplataContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Popunjava bazu sa nekim inicijalnim podacima
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.UplataID">
+            <summary>
+            ID Uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.Iznos">
+            <summary>
+            Iznos uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.SvrhaUplate">
+            <summary>
+            Svrhu uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.Datum">
+            <summary>
+            Datum uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.BrojRacuna">
+            <summary>
+             Broj racuna
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.JavnoNadmetanjeID">
+            <summary>
+            ID javnog nadmetanja.
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.UplataEntity.Kurs">
+            <summary>
+            Kurs
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.User.Id">
+            <summary>
+            Id korisnika
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.User.FirstName">
+            <summary>
+            Ime korisnika
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.User.LastName">
+            <summary>
+            Prezime korisnika
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.User.UserName">
+            <summary>
+            Korisničko ime
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.User.Email">
+            <summary>
+            Email korisnika
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.User.Password">
+            <summary>
+            Hash-ovana šifra korisnika
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.User.Salt">
+            <summary>
+            Salt
+            </summary>
+        </member>
+        <member name="T:Uplata.Models.Principal">
+            <summary>
+            Predstavlja model za autentifikaciju
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.Principal.Username">
+            <summary>
+            Korisničko ime
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.Principal.Password">
+            <summary>
+            Korisnička lozinka
+            </summary>
+        </member>
+        <member name="T:Uplata.Models.UplataDto">
+            <summary>
+            Dto uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDto.Iznos">
+            <summary>
+            Iznos uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDto.SvrhaUplate">
+            <summary>
+            Svrhu uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDto.Datum">
+            <summary>
+            Datum uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDto.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDto.BrojRacuna">
+            <summary>
+            Broj racuna
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDto.JavnoNadmetanjeID">
+            <summary>
+            ID javnog nadmetanja.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDto.Kurs">
+            <summary>
+            Kurs
+            </summary>
+        </member>
+        <member name="T:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto">
+            <summary>
+            DTO za javno nadmetanje
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.VremePocetka">
+            <summary>
+            Vreme pocetka
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.VremeKraja">
+            <summary>
+            Vreme kraja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.BrojUcesnika">
+            <summary>
+            Broj ucesnika na javnom nadmetanju
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.IzlicitiranaCena">
+            <summary>
+            Izlicitirana cena na javnom nadmetanju
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.AdresaOdrzavanja">
+            <summary>
+            Adresa odrzavanja javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.Status">
+            <summary>
+            ID statusa javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.Tip">
+            <summary>
+            ID tipa javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.SluzbeniList">
+            <summary>
+            ID sluzbenog lista
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -8,6 +8,10 @@ namespace Parcela.ServiceCals
 {
     public interface ILoggerService
     {
+        /// <summary>
+        /// Zahttev za kreiranje novog loga
+        /// </summary>
+        /// <param name="log"></param>
         void CreateLog(LogDto log);
     }
 }

@@ -14,6 +14,7 @@ namespace ComplaintAggregate.Controllers
 {
     [ApiController]
     [Route("api/status")]
+    [Produces("application/json", "application/xml")]
     public class StatusOfComplaintController:ControllerBase
     {
         private readonly IStatusOfComplaintRepository complainStatusRepository;

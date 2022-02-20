@@ -8,14 +8,20 @@ namespace Korisnik.Data
 {
     public interface IKorisnikRepository
     {
-        List<KorisnikModel> GetKorisniks();
+        List<KorisnikModel> GetKorisniks(string KorisnickoIme = null, string Ime = null, string Prezime = null);
 
-        KorisnikModel GetKorisniksById(int korisnikId);
+        KorisnikModel GetKorisnikById(int korisnikId);
 
-        KorisnikModel CreateKorisniks(KorisnikModel korisnikModel);
+        KorisnikModel CreateKorisnik(KorisnikModel korisnik);
 
-        KorisnikModel UpdateKorisniks(KorisnikModel korisnikModel);
+        void UpdateKorisnik(KorisnikModel korisnik);
 
         void DeleteKorisnik(int korisnikId);
+
+        bool SaveChanges();
+
+        bool Authorize(string token);
+
+        public bool UserWithCredentialsExists(string username, string password);
     }
 }
