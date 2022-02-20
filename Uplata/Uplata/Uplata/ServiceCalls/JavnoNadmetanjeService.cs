@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using JavnoNadmetanjeAgregat.Models;
 
 namespace Uplata.ServiceCalls
 {
@@ -18,7 +19,7 @@ namespace Uplata.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<UplataDto> GetJavnoNadmetanjeByIdAsync(Guid javnoNadmetanjeID)
+        public async Task<JavnoNadmetanjeUplateDto> GetJavnoNadmetanjeByIdAsync(Guid? javnoNadmetanjeID)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -28,9 +29,9 @@ namespace Uplata.ServiceCalls
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var kupac = JsonConvert.DeserializeObject<UplataDto>(responseContent);
+                var javnoNadmetanje = JsonConvert.DeserializeObject<JavnoNadmetanjeUplateDto>(responseContent);
 
-                return kupac;
+                return javnoNadmetanje;
             }
         }
     }

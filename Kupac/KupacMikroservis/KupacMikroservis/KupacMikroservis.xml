@@ -1,0 +1,509 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>KupacMikroservis</name>
+    </assembly>
+    <members>
+        <member name="M:KupacMikroservis.Controllers.AuthenticationController.Authenticate(KupacMikroservis.Models.Principal)">
+            <summary>
+            Sluzi za autentifikaciju korisnika
+            </summary>
+            <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
+            <returns></returns>
+        </member>
+        <member name="T:KupacMikroservis.Controllers.KontaktOsobaController">
+            <summary>
+            Sadrzi CRUD operacije za kontakt osobe
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KontaktOsobaController.GetKontaktOsobe">
+            <summary>
+            Vraca kontakt osobe
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KontaktOsobaController.GetKontaktOsoba(System.Guid)">
+            <summary>
+            Vraca kontakt osobu po ID
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KontaktOsobaController.CreateKontaktOsoba(KupacMikroservis.Models.KontaktOsobaCreateDTO)">
+            <summary>
+            Dodaje novu kontakt osobu
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KontaktOsobaController.DeleteKontaktOsoba(System.Guid)">
+             <summary>
+            Vraca kontakt osobu po ID
+             </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KontaktOsobaController.UpdateKontaktOsoba(KupacMikroservis.Models.KontaktOsobaUpdateDTO)">
+            <summary>
+            Azurira kontakt osobu
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KontaktOsobaController.GetKontaktOsobaOptions">
+            <summary>
+            Vraca HTTP opcije
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Controllers.KupacController">
+            <summary>
+            Sadrzi CRUD operacije za kupce
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KupacController.GetKupci">
+            <summary>
+            Vraca kupce
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KupacController.GetKupac(System.Guid)">
+            <summary>
+            Vraca kupca po ID
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KupacController.CreateKupac(KupacMikroservis.Models.KupacCreateDTO)">
+            <summary>
+            Dodaje novog kupca
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KupacController.DeleteKupac(System.Guid)">
+            <summary>
+            Brise kupca
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KupacController.UpdateKupac(KupacMikroservis.Models.KupacUpdateDTO)">
+            <summary>
+            Azurira kupca
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.KupacController.GetKupacOptions">
+            <summary>
+            Vraca HTTP opcije
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Controllers.OvlascenoLiceController">
+            <summary>
+            Sadrzi CRUD operacije za ovlascena lica
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.OvlascenoLiceController.GetOvlascenaLica">
+            <summary>
+            Vraca ovlascena lica
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.OvlascenoLiceController.GetOvlascenoLice(System.Guid)">
+            <summary>
+            Vraca ovlasceno lice po ID
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.OvlascenoLiceController.CreateOvlascenoLice(KupacMikroservis.Models.OvlascenoLiceCreateDTO)">
+            <summary>
+            Dodaje ovlasceno lice
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.OvlascenoLiceController.DeleteOvlascenoLice(System.Guid)">
+             <summary>
+            Brise ovlasceno lice
+             </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.OvlascenoLiceController.UpdateOvlascenoLice(KupacMikroservis.Models.OvlascenoLiceUpdateDTO)">
+            <summary>
+            Azurira ovlasceno lice
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.OvlascenoLiceController.GetOvlascenoLiceOptions">
+            <summary>
+            Vraca HTTP opcije
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Controllers.PrioritetController">
+            <summary>
+            Sadrzi CRUD operacije za prioritete
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.PrioritetController.GetPrioriteti">
+            <summary>
+            Vraca prioritete
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.PrioritetController.GetPrioritet(System.Guid)">
+            <summary>
+            Vraca prioritet po ID
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.PrioritetController.CreatePrioritet(KupacMikroservis.Models.PrioritetCreateDTO)">
+            <summary>
+            Dodaje novi prioritet
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.PrioritetController.DeletePrioritet(System.Guid)">
+            <summary>
+            Brise prioritet
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.PrioritetController.UpdatePrioritet(KupacMikroservis.Models.PrioritetUpdateDTO)">
+            <summary>
+            Azurira prioritet
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Controllers.PrioritetController.GetPrioritetOptions">
+            <summary>
+            Vraca HTTP opcije
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Data.UserMockRepository.FillData">
+            <summary>
+            Metoda koja upisuje testne podatke
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Data.UserMockRepository.UserWithCredentialsExists(System.String,System.String)">
+            <summary>
+            Proverava da li postoji korisnik sa prosleđenim kredencijalima
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:KupacMikroservis.Data.UserMockRepository.HashPassword(System.String)">
+            <summary>
+            Vrši hash-ovanje korisničke lozinke
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <returns>Generisan hash i salt</returns>
+        </member>
+        <member name="M:KupacMikroservis.Data.UserMockRepository.VerifyPassword(System.String,System.String,System.String)">
+            <summary>
+            Proverava validnost prosleđene lozinke sa prosleđenim hash-om
+            </summary>
+            <param name="password">Korisnička lozinka</param>
+            <param name="savedHash">Sačuvan hash</param>
+            <param name="savedSalt">Sačuvan salt</param>
+            <returns></returns>
+        </member>
+        <member name="T:KupacMikroservis.Models.FizickoLiceEntity">
+            <summary>
+            Model realnog entiteta Fizicko lice, nadtipa Kupac
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.FizickoLiceEntity.JMBG">
+            <summary>
+            JMBG fizickog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.FizickoLiceEntity.KontaktOsoba">
+            <summary>
+            Kontakt osoba fizickog lica
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.KontaktOsobaEntity">
+            <summary>
+            Modela realnog entiteta Kontakt Osoba
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KontaktOsobaEntity.KontaktOsobaId">
+            <summary>
+            ID kontakt osobe
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KontaktOsobaEntity.Ime">
+            <summary>
+            Ime kontakt osobe
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KontaktOsobaEntity.Prezime">
+            <summary>
+            Prezime kontakt osobe
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KontaktOsobaEntity.Funkcija">
+            <summary>
+            Funkcija kontakt osobe 
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KontaktOsobaEntity.Telefon">
+            <summary>
+            Telefon kontakt osobe
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.KupacEntity">
+            <summary>
+            Model realnog entiteta Kupac
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.KupacId">
+            <summary>
+            ID kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.IsFizickoLice">
+            <summary>
+            Da li je kupac fizicko lice 
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.Naziv">
+            <summary>
+            Naziv kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.BrojTelefona1">
+            <summary>
+            Broj telefona kupca 1
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.BrojTelefona2">
+            <summary>
+            Broj telefona kupca 2
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.Email">
+            <summary>
+            Email kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.BrojRacuna">
+            <summary>
+            Broj racuna kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.ImaZabranu">
+            <summary>
+            Da li kupac ima zabranu
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.DatumPocetkaZabrane">
+            <summary>
+            Datum pocetka zabrane
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.DuzinaTrajanjaZabraneUGodinama">
+            <summary>
+            Duzina trajanja zabrane u godinama
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.DatumPrestankaZabrane">
+            <summary>
+            Datum prestanka zabrane
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.Prioritet">
+            <summary>
+            Prioritet kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.OvlascenoLice">
+            <summary>
+            Ovlasceno lice kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.AdresaID">
+            <summary>
+            Adresa kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KupacEntity.UplataID">
+            <summary>
+            Uplata kupca
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.OvlascenoLiceEntity">
+            <summary>
+            Model realnog entiteta Ovlasceno lice
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.OvlascenoLiceEntity.OvlascenoLiceId">
+            <summary>
+            ID ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.OvlascenoLiceEntity.Ime">
+            <summary>
+            Ime ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.OvlascenoLiceEntity.Prezime">
+            <summary>
+            Prezime ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.OvlascenoLiceEntity.BrojLicnogDokumenta">
+            <summary>
+            Broj licnog dokumenta
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.OvlascenoLiceEntity.BrojTable">
+            <summary>
+            Broj table
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.OvlascenoLiceEntity.AdresaID">
+            <summary>
+            Adresa ovlascenog lica
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.PravnoLiceEntity">
+            <summary>
+            Model realnog entiteta Pravno lice, nadtipa Kupac
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.PravnoLiceEntity.MaticniBroj">
+            <summary>
+            Maticni broj pravnog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.PravnoLiceEntity.Faks">
+            <summary>
+            Faks pravnog lica
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.PrioritetEntity">
+            <summary>
+            Model realnog entiteta Prioritet kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.PrioritetEntity.PrioritetId">
+            <summary>
+            ID prioriteta
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.PrioritetEntity.PrioritetOpis">
+            <summary>
+            Opis, odnosno naziv prioriteta
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.AdresaKupcaDTO">
+            <summary>
+            DTO za adresu kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaKupcaDTO.Ulica">
+            <summary>
+            Ulica kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaKupcaDTO.Broj">
+            <summary>
+            Broj kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaKupcaDTO.Mesto">
+            <summary>
+            Mesto kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaKupcaDTO.PostanskiBroj">
+            <summary>
+            Postanski broj kupca
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.AdresaOvlascenogLicaDTO">
+            <summary>
+            DTO za adresu ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaOvlascenogLicaDTO.Ulica">
+            <summary>
+            Ulica ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaOvlascenogLicaDTO.Broj">
+            <summary>
+            Broj ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaOvlascenogLicaDTO.Mesto">
+            <summary>
+            Mesto ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.AdresaOvlascenogLicaDTO.PostanskiBroj">
+            <summary>
+            Postanski broj ovlascenog lica
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.Principal">
+            <summary>
+            Predstavlja model za autentifikaciju
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.Principal.Username">
+            <summary>
+            Korisnicko ime
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.Principal.Password">
+            <summary>
+            Lozinka korisnika
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Models.UplataKupcaDTO">
+            <summary>
+            DTO za uplatu kupca
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.UplataKupcaDTO.Iznos">
+            <summary>
+            Iznos uplate
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.UplataKupcaDTO.SvrhaUplate">
+            <summary>
+            Svrha uplate
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.UplataKupcaDTO.Datum">
+            <summary>
+            Datum uplate
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.UplataKupcaDTO.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate
+            </summary>
+        </member>
+        <member name="M:KupacMikroservis.Entities.KupacContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Popunjava bazu sa nekim inicijalnim podacima
+            </summary>
+        </member>
+        <member name="T:KupacMikroservis.Entities.User">
+            <summary>
+            Predstavlja model korisnika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Entities.User.ID">
+            <summary>
+            ID korisnika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Entities.User.FirstName">
+            <summary>
+            Ime korisnika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Entities.User.LastName">
+            <summary>
+            Prezime korinsika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Entities.User.UserName">
+            <summary>
+            Korisnicko ime
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Entities.User.Email">
+            <summary>
+            Email korisnika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Entities.User.Password">
+            <summary>
+            Hash-ovana lozinka korinsika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Entities.User.Salt">
+            <summary>
+            Salt
+            </summary>
+        </member>
+    </members>
+</doc>

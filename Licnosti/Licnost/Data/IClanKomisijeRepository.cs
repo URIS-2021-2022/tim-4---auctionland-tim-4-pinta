@@ -10,12 +10,14 @@ namespace Licnost.Data
     {
         List<ClanKomisije> GetClanoviKomisije();
 
-        ClanKomisije GetClanKomisijetById(Guid clanKomisijeId);
+        ClanKomisije GetClanKomisijeById(Guid clanKomisijeId);
 
         ClanKomisije CreateClanKomisije(ClanKomisije clanKomisije);
 
         void UpdateClanKomisije(ClanKomisije clanKomisije);
 
         void DeleteClanKomisije(Guid clanKomisijeId);
+
+        bool SaveChanges();
     }
 }

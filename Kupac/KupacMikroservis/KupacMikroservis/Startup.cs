@@ -93,7 +93,7 @@ namespace KupacMikroservis
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
 
                
-            //    setupAction.IncludeXmlComments(xmlCommentsPath);
+                setupAction.IncludeXmlComments(xmlCommentsPath);
             });
             //    services.AddSwaggerGen(c =>
             //   {
@@ -114,7 +114,7 @@ namespace KupacMikroservis
                 //  app.UseSwagger();
                 // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KupacMikroservis v1"));
             }
-            else //Ukoliko se nalazimo u Production modu postavljamo default poruku za greške koje nastaju na servisu
+            else 
             {
                 app.UseExceptionHandler(appBuilder =>
                 {

@@ -11,11 +11,7 @@ namespace KupacMikroservis.Models
     /// </summary>
     public class UplataKupcaDTO
     {
-        /// <summary>
-        /// Broj racuna kupca
-        /// </summary>
-        public string PozivNaBroj { get; set; }
-
+        
         /// <summary>
         /// Iznos uplate
         /// </summary>
@@ -24,12 +20,17 @@ namespace KupacMikroservis.Models
         /// <summary>
         /// Svrha uplate
         /// </summary>
-        public string Svrha { get; set; }
+        public string SvrhaUplate { get; set; }
 
         /// <summary>
         /// Datum uplate
         /// </summary>
         public string Datum { get; set; }
+
+        /// <summary>
+        /// Poziv na broj uplate
+        /// </summary>
+        public string PozivNaBroj { get; set; }
 
 
     }

@@ -20,6 +20,8 @@ namespace KupacMikroservis.Models
 
         public Guid AdresaID { get; set; }
 
+        public AdresaOvlascenogLicaDTO Adresa { get; set; }
+
 
     }
 }

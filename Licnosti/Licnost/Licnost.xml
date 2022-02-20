@@ -4,6 +4,131 @@
         <name>Licnost</name>
     </assembly>
     <members>
+        <member name="M:Licnost.Controllers.AuthenticationController.Authenticate(Licnost.Models.Principal)">
+            <summary>
+            Sluzi za autentifikaciju korisnika
+            </summary>
+            <param name="principal">Model sa podacima na osnovu kojih se vrsi autentifikacija</param>
+            <returns></returns>
+        </member>
+        <member name="M:Licnost.Controllers.ClanKomisijeController.GetClanoviKomisije">
+            <summary>
+            Vraća sve clanove komisije na osnovu prosleđenih filtera
+            </summary>
+            <returns>Listu clanova komisije</returns>
+            <response code="200">Vraća listu clanova komisije</response>
+            <response code="404">Nije pronađena ni jedan jedini clan komisije</response>
+        </member>
+        <member name="M:Licnost.Controllers.ClanKomisijeController.GetClanKomisije(System.Guid)">
+            <summary>
+            Vraća jednog clana komisije na osnovu ID-ja clana.
+            </summary>
+            <param name="clanId">ID clana</param>
+            <returns></returns>
+            <response code="200">Vraća traženog clana</response>
+        </member>
+        <member name="M:Licnost.Controllers.ClanKomisijeController.CreateClanKomisije(Licnost.Models.ClanKomisijeDto)">
+             <summary>
+             Kreira novog člana komisije
+             </summary>
+             <param name="clan">Model člana komisije</param>
+             <returns>Potvrdu o kreiranom novom članu</returns>
+             <remarks>
+             Primer zahteva za kreiranje novog člana \
+             POST /api/ClanKomisije \
+             {     \
+                 "LicnostId": 1, \
+                 "KomisijaId": 1 \
+                 
+            }
+             </remarks>
+              <response code="200">Vraća kreiranog člana komisije</response>
+             <response code="500">Došlo je do greške na serveru prilikom kreiranja člana komisije</response>
+        </member>
+        <member name="M:Licnost.Controllers.ClanKomisijeController.DeleteClanKomisije(System.Guid)">
+            <summary>
+            Vrši brisanje jednog člana komisije na osnovu ID-ja člana.
+            </summary>
+            <param name="clanId">ID člana</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Član uspešno obrisan</response>
+            <response code="404">Nije pronađen član za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja člana</response>
+        </member>
+        <member name="M:Licnost.Controllers.ClanKomisijeController.UpdateClanKomisije(Licnost.Models.ClanKomisijeUpdateDto)">
+            <summary>
+            Ažurira jednog člana.
+            </summary>
+            <param name="clan">Model člana koji se ažurira</param>
+            <returns>Potvrdu o modifikovanom članu.</returns>
+            <response code="200">Vraća ažuriranog člana</response>
+            <response code="400">Član koji se ažurira nije pronađen</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja člana</response>
+        </member>
+        <member name="M:Licnost.Controllers.ClanKomisijeController.GetClankomisijeOptions">
+            <summary>
+            Vraća opcije za rad sa ličnostima
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Licnost.Controllers.KomisijaController.GetKomisije">
+            <summary>
+            Vraća sve komisije na osnovu prosleđenih filtera
+            </summary>
+            <returns>Listu komisija</returns>
+            <response code="200">Vraća listu komisija</response>
+            <response code="404">Nije pronađena ni jedna jedina komisija</response>
+        </member>
+        <member name="M:Licnost.Controllers.KomisijaController.GetKomisija(System.Guid)">
+            <summary>
+            Vraća jednu komisiju na osnovu ID-ja komisije.
+            </summary>
+            <param name="komisijaId">ID komisije</param>
+            <returns></returns>
+            <response code="200">Vraća traženu komisiju</response>
+        </member>
+        <member name="M:Licnost.Controllers.KomisijaController.CreateKomisija(Licnost.Models.KomisijaDto)">
+             <summary>
+             Kreira novu komisiju
+             </summary>
+             <param name="komisija">Model komisije</param>
+             <returns>Potvrdu o kreiranoj novoj komisiji</returns>
+             <remarks>
+             Primer zahteva za kreiranje nove komisije \
+             POST /api/Komisija \
+             {     \
+                 "licnostId": 1 \
+            }
+             </remarks>
+              <response code="200">Vraća kreiranu komisiju</response>
+             <response code="500">Došlo je do greške na serveru prilikom kreiranja komisije</response>
+        </member>
+        <member name="M:Licnost.Controllers.KomisijaController.DeleteKomisija(System.Guid)">
+            <summary>
+            Vrši brisanje jedne komisije na osnovu ID-ja komisije.
+            </summary>
+            <param name="komisijaId">ID komisije</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Komisija uspešno obrisana</response>
+            <response code="404">Nije pronađena komisija za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja komisije</response>
+        </member>
+        <member name="M:Licnost.Controllers.KomisijaController.UpdateKomisija(Licnost.Models.KomisijaUpdateDto)">
+            <summary>
+            Ažurira jednu komisiju.
+            </summary>
+            <param name="komisija">Model komisije koja se ažurira</param>
+            <returns>Potvrdu o modifikovanoj komisiji.</returns>
+            <response code="200">Vraća ažuriranu komisiju</response>
+            <response code="400">Komisija koja se ažurira nije pronađena</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja komisije</response>
+        </member>
+        <member name="M:Licnost.Controllers.KomisijaController.GetKomisijaOptions">
+            <summary>
+            Vraća opcije za rad sa komisijama
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Licnost.Controllers.LicnostController.GetLicnosti(System.String,System.String)">
             <summary>
             Vraća sve ličnosti na osnovu prosleđenih filtera
@@ -66,38 +191,49 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Licnost.Data.UserMockRepository.FillData">
-            <summary>
-            Metoda koja upisuje testne podatke
-            </summary>
-        </member>
-        <member name="M:Licnost.Data.UserMockRepository.UserWithCredentialsExists(System.String,System.String)">
-            <summary>
-            Proverava da li postoji korisnik sa prosleđenim kredencijalima
-            </summary>
-            <param name="username"></param>
-            <param name="password"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Licnost.Data.UserMockRepository.HashPassword(System.String)">
-            <summary>
-            Vrši hash-ovanje korisničke lozinke
-            </summary>
-            <param name="password">Korisnička lozinka</param>
-            <returns>Generisan hash i salt</returns>
-        </member>
-        <member name="M:Licnost.Data.UserMockRepository.VerifyPassword(System.String,System.String,System.String)">
-            <summary>
-            Proverava validnost prosleđene lozinke sa prosleđenim hash-om
-            </summary>
-            <param name="password">Korisnička lozinka</param>
-            <param name="savedHash">Sačuvan hash</param>
-            <param name="savedSalt">Sačuvan salt</param>
-            <returns></returns>
-        </member>
         <member name="M:Licnost.Entities.LicnostContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             Popunjava bazu sa nekim inicijalnim podacima
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.User.UserID">
+            <summary>
+            ID korisnika
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.User.FirstName">
+            <summary>
+            Ime korisnika
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.User.LastName">
+            <summary>
+            Prezime korinsika
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.User.UserName">
+            <summary>
+            Korisnicko ime
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.User.Email">
+            <summary>
+            Email korisnika
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.User.Password">
+            <summary>
+            Hash-ovana lozinka korinsika
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.User.Salt">
+            <summary>
+            Salt
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.KomisijaDto.LicnostId">
+            <summary>
+            Predsednik komisije
             </summary>
         </member>
         <member name="T:Licnost.Models.LicnostCreateDto">

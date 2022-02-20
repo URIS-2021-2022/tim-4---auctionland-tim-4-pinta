@@ -94,7 +94,7 @@
             <response code = "200">Vraca trazenu drzavu</response>
             <response code = "404">Trazena drzava nije pronadjena</response>
         </member>
-        <member name="M:AdresaServis.Controllers.DrzavaController.CreateAdresa(AdresaServis.Models.DrzavaDto)">
+        <member name="M:AdresaServis.Controllers.DrzavaController.CreateDrzava(AdresaServis.Models.DrzavaDto)">
             <summary>
             Kreira novu drzavu
             </summary>

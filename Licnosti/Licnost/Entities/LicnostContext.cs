@@ -16,6 +16,8 @@ namespace Licnost.Entities
         //    this.configuration = configuration;
         //}
 
+  
+
         public LicnostContext(DbContextOptions<LicnostContext> options) : base(options)
         {
 
@@ -58,19 +60,19 @@ namespace Licnost.Entities
             builder.Entity<Komisija>()
                .HasData(new
                {
-                    KomisijaId= Guid.Parse("3540BF55-427A-4892-91D6-633D683EF0ED"),
+                   KomisijaId = Guid.Parse("3540BF55-427A-4892-91D6-633D683EF0ED"),
 
-                     LicnostId= Guid.Parse("E91B29CC-79A5-4DE8-8030-77DF6E514DEF")
+                   LicnostId = Guid.Parse("E91B29CC-79A5-4DE8-8030-77DF6E514DEF")
 
                });
 
             builder.Entity<ClanKomisije>()
                 .HasData(new
                 {
-                   ClanKomisijeId= Guid.Parse("049C45E5-8873-49C2-8275-0B63293F15E7"),
+                    ClanKomisijeId = Guid.Parse("049C45E5-8873-49C2-8275-0B63293F15E7"),
 
                     LicnostId = Guid.Parse("218C05C6-5066-4354-9568-B263AB11713B"),
-                    KomisijaId= Guid.Parse("3540BF55-427A-4892-91D6-633D683EF0ED")
+                    KomisijaId = Guid.Parse("3540BF55-427A-4892-91D6-633D683EF0ED")
 
                 });
         }

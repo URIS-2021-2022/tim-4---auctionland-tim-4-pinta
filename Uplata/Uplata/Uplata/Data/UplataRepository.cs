@@ -23,12 +23,11 @@ namespace Uplata.Data
             return context.SaveChanges() > 0;
         }
 
-        public UplataModel CreateUplata(UplataModel uplata)
+        public UplataEntity CreateUplata(UplataEntity uplata)
         {
             uplata.UplataID = Guid.NewGuid();
             context.Uplate.Add(uplata);
-            UplataModel u = GetUplataByID(uplata.UplataID);
-            return u;
+            return uplata;
         }
 
         public void DeleteUplata(Guid uplataID)
@@ -36,17 +35,17 @@ namespace Uplata.Data
             context.Uplate.Remove(context.Uplate.FirstOrDefault(p => p.UplataID == uplataID));
         }
 
-        public UplataModel GetUplataByID(Guid uplataID)
+        public UplataEntity GetUplataByID(Guid uplataID)
         {
             return context.Uplate.FirstOrDefault(p => p.UplataID == uplataID);
         }
 
-        public List<UplataModel> GetUplate()
+        public List<UplataEntity> GetUplate()
         {
-            return (from u in context.Uplate select u).ToList();
+            return (from p in context.Uplate select p).ToList();
         }
 
-        public UplataModel UpdateUplata(UplataModel uplata)
+        public void UpdateUplata(UplataEntity uplata)
         {
             throw new NotImplementedException();
         }

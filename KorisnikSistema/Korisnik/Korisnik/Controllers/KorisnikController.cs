@@ -15,7 +15,6 @@ namespace Korisnik.Controllers
     [ApiController]
     [Route("api/korisnik")]
     [Produces("application/json", "application/xml")] 
-    [Authorize]
     public class KorisnikController : ControllerBase
     {
         private readonly IKorisnikRepository korisnikRepository;
@@ -38,12 +37,32 @@ namespace Korisnik.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KorisnikDto>> GetKorisniks()
         {
-            List<KorisnikModel> korisniks = korisnikRepository.GetKorisniks();
-            if (korisniks == null || korisniks.Count == 0)
+
+            try
             {
-                return NoContent();
+
+                if (korisnikRepository.Authorize(Request.Headers["token"]))
+                {
+                    List<KorisnikModel> korisniks = korisnikRepository.GetKorisniks();
+                    if (korisniks == null || korisniks.Count == 0)
+                    {
+                        return NoContent();
+                    }
+                    return Ok(mapper.Map<List<KorisnikDto>>(korisniks));
+
+                }
+
+                else
+                {
+                    return Unauthorized();
+                }
+
             }
-            return Ok(mapper.Map<List<KorisnikDto>>(korisniks));
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
         }
 
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,7 +70,7 @@ namespace Korisnik.Controllers
         [HttpGet("{KorisnikId}")]
         public ActionResult<KorisnikDto> GetKorisnik(int korisnikId)
         {
-            KorisnikModel korisnik = korisnikRepository.GetKorisniksById(korisnikId);
+            KorisnikModel korisnik = korisnikRepository.GetKorisnikById(korisnikId);
             if (korisnik == null)
             {
                 return NotFound();
@@ -63,14 +82,17 @@ namespace Korisnik.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KorisnikModel> CreateKorisnik([FromBody] KorisnikModel korisnik)
+        public ActionResult<KorisnikDto> CreateKorisnik([FromBody] KorisnikDto korisnik)
         {
             try
             {
 
-                KorisnikModel korisnik1 = korisnikRepository.CreateKorisniks(korisnik);
-               
-                return korisnik1;
+                KorisnikModel korisnik1 = mapper.Map<KorisnikModel>(korisnik);
+                Random rand = new Random();
+                korisnik1.KorisnikId = rand.Next();
+                KorisnikModel korisnik2= korisnikRepository.CreateKorisnik(korisnik1);
+                korisnikRepository.SaveChanges();
+                return Ok(mapper.Map<KorisnikDto>(korisnik2));
             }
             catch
             {
@@ -85,13 +107,13 @@ namespace Korisnik.Controllers
         {
             try
             {
-                KorisnikModel korisnik = korisnikRepository.GetKorisniksById(korisnikId);
+                KorisnikModel korisnik = korisnikRepository.GetKorisnikById(korisnikId);
                 if (korisnik == null)
                 {
                     return NotFound();
                 }
                 korisnikRepository.DeleteKorisnik(korisnikId);
-
+                korisnikRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -100,27 +122,32 @@ namespace Korisnik.Controllers
             }
         }
 
-        /*
+        
         [HttpPut]
-        public ActionResult<ExamRegistrationConfirmationDto> UpdateExamRegistration(ExamRegistrationUpdateDto examRegistration)
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<KorisnikDto> UpdateKorisnik(KorisnikModel korisnik)
         {
             try
             {
-                //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.
-                if (examRegistrationRepository.GetExamRegistrationById(examRegistration.ExamRegistrationId) == null)
+                KorisnikModel oldKorisnik = korisnikRepository.GetKorisnikById(korisnik.KorisnikId);
+                if (oldKorisnik == null)
                 {
-                    return NotFound(); //Ukoliko ne postoji vratiti status 404 (NotFound).
+                    return NotFound(); 
                 }
-                ExamRegistration examRegistrationEntity = mapper.Map<ExamRegistration>(examRegistration);
-                ExamRegistrationConfirmation confirmation = examRegistrationRepository.UpdateExamRegistration(examRegistrationEntity);
-                return Ok(mapper.Map<ExamRegistrationConfirmationDto>(confirmation));
+              
+                mapper.Map(korisnik, oldKorisnik);
+                korisnikRepository.SaveChanges();
+                return Ok(mapper.Map<KorisnikDto>(oldKorisnik));
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
-        */
+        
         [HttpOptions]
         [AllowAnonymous]
         public IActionResult GetExamRegistrationOptions()
@@ -128,21 +155,7 @@ namespace Korisnik.Controllers
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
             return Ok();
         }
-        /*
-        // Validira da student ne moze da prijavi ispit u visoj godini nego sto je prijavljen
-        private bool ValidateExamRegistration(ExamRegistrationCreationDto examRegistration)
-        {
-            if (examRegistration.StudentEnrolledYear < examRegistration.SubjectTerm)
-            {
-                return false;
-            }
-            if (examRegistration.StudentEnrolledYear == examRegistration.SubjectTerm && examRegistration.StudentCurrentSemester < examRegistration.SubjectSemester)
-            {
-                return false;
-            }
-            return true;
-        }
-        */
+        
         
     }
 }

@@ -23,17 +23,20 @@ namespace Parcela.Controllers
     {
         private readonly IKulturaRepository kulturaRepository;
         private readonly IGatewayService gatewayService;
-        private readonly ILoggerService loggerService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
         public KulturaController(IKulturaRepository kulturaRepository, IGatewayService gatewayService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.kulturaRepository = kulturaRepository;
             this.gatewayService = gatewayService;
-            this.loggerService = loggerService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
 
         /// <summary>
@@ -48,13 +51,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KulturaDto>> GetKulture()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih kultura";
+
             List<KulturaEntity> kulture = kulturaRepository.GetKulture();
             if (kulture == null || kulture.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
-            LogModel log = new LogModel("GET", "Parcela", "Info", "Vracanje svi kultura");
-            loggerService.CreateLog(log);
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<KulturaDto>>(kulture));
         }
 
@@ -70,13 +78,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KulturaDto> GetKultura(Guid kulturaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje kulture po ID-ju";
+
             KulturaEntity kultura = kulturaRepository.GetKulturaById(kulturaID);
             if (kultura == null)
-            {
+            {        
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
-            //Task<GatewayDto> gat = gatewayService.GetUrl("korisnik");
-            //kultura.KulturaNaziv = gat.Result.Url; 
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<KulturaDto>(kultura));
         }
 
@@ -100,16 +113,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KulturaDto> CreateKultura([FromBody] KulturaDto kultura)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove kulture";
+
             try
             {
                 KulturaEntity kul = mapper.Map<KulturaEntity>(kultura);
                 KulturaEntity k = kulturaRepository.CreateKultura(kul);
                 kulturaRepository.SaveChanges();                    
-                string location = linkGenerator.GetPathByAction("GetKultura", "Kultura", new { kulturaID = k.KulturaID });
+                string location = linkGenerator.GetPathByAction("GetKultura", "Kultura", new { kulturaID = k.KulturaID });      
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<KulturaDto>(k));
             }
             catch
-            {
+            { 
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -128,19 +148,28 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteKultura(Guid kulturaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje kulture";
+
             try
             {
                 KulturaEntity kultura = kulturaRepository.GetKulturaById(kulturaID);
                 if (kultura == null)
-                {
+                {                  
+                    logDto.Level = "Warn";  
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 kulturaRepository.DeleteKultura(kulturaID);
                 kulturaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -160,11 +189,16 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KulturaDto> UpdateKultura(KulturaEntity kultura)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje kulture";
+
             try
             {
                 var oldKultura = kulturaRepository.GetKulturaById(kultura.KulturaID);
                 if (oldKultura == null)
-                {
+                {        
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound(); 
                 }
                 KulturaEntity kulturaEntity = mapper.Map<KulturaEntity>(kultura);
@@ -172,10 +206,14 @@ namespace Parcela.Controllers
                 mapper.Map(kulturaEntity, oldKultura);                
 
                 kulturaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<KulturaDto>(kulturaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -188,6 +226,10 @@ namespace Parcela.Controllers
         public IActionResult GetKulturaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa kulturama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

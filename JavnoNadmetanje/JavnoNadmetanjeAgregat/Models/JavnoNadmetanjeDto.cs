@@ -11,7 +11,7 @@ namespace JavnoNadmetanjeAgregat.Models
     /// <summary>
     /// DTO za javno nadmetanje
     /// </summary>
-    public class JavnoNadmetanjeDto 
+    public class JavnoNadmetanjeDto
     {
         /// <summary>
         /// Datum odrzavanja javnog nadmetanja
@@ -32,7 +32,7 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// Period zakupa javnog nadmetanja
         /// </summary>
-        public int  PeriodZakupa { get; set; }
+        public int PeriodZakupa { get; set; }
         /// <summary>
         /// Izuzetos javnog nadmetanja
         /// </summary>
@@ -44,7 +44,7 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// Status javnog nadmetanja
         /// </summary>
-        public  Guid StatusID { get; set; }
+        public Guid StatusID { get; set; }
         /// <summary>
         /// Krug javnog nadmetanja
         /// </summary>
@@ -54,12 +54,25 @@ namespace JavnoNadmetanjeAgregat.Models
         /// </summary>
         public int VisinaDopuneDepozita { get; set; }
 
+        /// <summary>
+        /// ID Katastarske opstine
+        /// </summary>
         public Guid KatastarskaOpstinaID { get; set; }
 
         /// <summary>
         /// ID kupca parcele
         /// </summary>
-        public Guid KupacID { get; set; }
+        public KatastarskaOpstinaJavnoNadmetanjeDto KatastarskaOpstina { get; set; }
+
+        ///// <summary>
+        ///// ID kupca parcele
+        ///// </summary>
+        //public Guid KupacID { get; set; }
+
+        ///// <summary>
+        ///// Kupac javnog nadmetanja
+        ///// </summary>
+        //public KupacJavnoNadmetanjeDto Kupac { get; set; }
 
         /// <summary>
         /// ID parcele
@@ -67,8 +80,20 @@ namespace JavnoNadmetanjeAgregat.Models
         public Guid ParcelaID { get; set; }
 
         /// <summary>
+        /// Parcela javnog nadmetanja
+        /// </summary>
+        public ParcelaJavnoNadmetanjeDto Parcela {get; set;}
+
+        /// <summary>
         /// ID adrese
         /// </summary>
         public Guid AdresaID { get; set; }
+
+        /// <summary>
+        /// Adresa javnog nadmetanja
+        /// </summary>
+        public AdresaJavnoNadmetanjeDto Adresa { get; set; }
+
+
     }
 }

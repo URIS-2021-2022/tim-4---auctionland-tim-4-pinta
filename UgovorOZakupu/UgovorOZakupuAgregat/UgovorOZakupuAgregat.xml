@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UgovorOZakupuAgregat</name>
+    </assembly>
+    <members>
+        <member name="M:UgovorOZakupuAgregat.Controllers.DokumentController.GetDokumenti">
+            <summary>
+            Vraća sve dokumente na osnovu prosleđenih filtera
+            </summary>
+            <returns>Listu dokumenata</returns>
+            <response code="200">Vraća listu dokumenata</response>
+            <response code="404">Nije pronađena ni jedan jedini dokument</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.DokumentController.GetDokument(System.Guid)">
+            <summary>
+            Vraća jedan dokument na osnovu ID-ja dokumenta.
+            </summary>
+            <param name="dokumentId">ID dokumenta</param>
+            <returns></returns>
+            <response code="200">Vraća tražen dokument</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.DokumentController.CreateDokument(UgovorOZakupuAgregat.Models.DokumentDto)">
+             <summary>
+             Kreira novi dokument
+             </summary>
+             <param name="dokument">Model dokumenta</param>
+             <returns>Potvrdu o kreiranom novom dokumentu</returns>
+             <remarks>
+             Primer zahteva za kreiranje novog dokumenta \
+             POST /api/Dokument \
+             {     \
+                 "ZavodniBroj = "1234a", \
+                 "Datum = "25-01-2021", \
+                 "DatumDonosenjaDokumenta = "25-01-2021"\
+                 
+            }     
+             </remarks>
+              <response code="201">Vraća kreiran dokument</response>
+             <response code="500">Došlo je do greške na serveru prilikom kreiranja dokumenta</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.DokumentController.DeleteDokument(System.Guid)">
+            <summary>
+            Vrši brisanje jednog dokumenta na osnovu ID-ja dokumenta.
+            </summary>
+            <param name="dokumentId">ID dokumenta</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Dokument uspešno obrisan</response>
+            <response code="404">Nije pronađen dokument za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja dokumenta</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.DokumentController.UpdateDokument(UgovorOZakupuAgregat.Models.DokumentUpdateDto)">
+            <summary>
+            Ažurira jednan dokument.
+            </summary>
+            <param name="dokument">Model dokumenta koji se ažurira</param>
+            <returns>Potvrdu o modifikovanom dokumentu.</returns>
+            <response code="200">Vraća ažuriran dokument</response>
+            <response code="400">Dokument koji se ažurira nije pronađen</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja dokumenta</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.DokumentController.GetDokumentOptions">
+            <summary>
+            Vraća opcije za rad sa dokumentima
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.GetRokovi">
+            <summary>
+            Vraća sve rokove dospeća na osnovu prosleđenih filtera
+            </summary>
+            <returns>Listu rokova dospeća</returns>
+            <response code="200">Vraća listu rokova dospeća</response>
+            <response code="404">Nije pronađena ni jedan jedini rok dospeća</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.GetRok(System.Guid)">
+            <summary>
+            Vraća jedan rok dospeća na osnovu ID-ja roka dospeća.
+            </summary>
+            <param name="rokId">ID roka dospeća</param>
+            <returns></returns>
+            <response code="200">Vraća tražen rok dospeća</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.CreateRok(UgovorOZakupuAgregat.Models.RokoviDospecaDto)">
+             <summary>
+             Kreira novi rok dospeća
+             </summary>
+             <param name="rok">Model roka dospeća</param>
+             <returns>Potvrdu o kreiranom novom roku dospeća</returns>
+             <remarks>
+             Primer zahteva za kreiranje novog roka dospeća \
+             POST /api/Dokument \
+             {     \
+                 "ZavodniBroj = "1234a", \
+                 "Datum = "25-01-2021", \
+                 "DatumDonosenjaDokumenta = "25-01-2021"\
+            
+            }
+             </remarks>
+              <response code="201">Vraća kreiran rok dospeća</response>
+             <response code="500">Došlo je do greške na serveru prilikom kreiranja roka dospeća</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.DeleteRok(System.Guid)">
+            <summary>
+            Vrši brisanje jednog roka dospeća na osnovu ID-ja roka dospeća.
+            </summary>
+            <param name="rokId">ID roka dospeća</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Rok dospeća uspešno obrisan</response>
+            <response code="404">Nije pronađen rok dospeća za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja roka dospeća</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.UpdateRok(UgovorOZakupuAgregat.Models.RokoviDospecaUpdateDto)">
+            <summary>
+            Ažurira jednan rok dospeća.
+            </summary>
+            <param name="rok">Model roka dospeća koji se ažurira</param>
+            <returns>Potvrdu o modifikovanom roku dospeća.</returns>
+            <response code="200">Vraća ažuriran rok dospeća</response>
+            <response code="404">Rok dospeća koji se ažurira nije pronađen</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja dokumenta</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.GetRokOptions">
+            <summary>
+            Vraća opcije za rad sa dokumentima
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.GetTipovi">
+            <summary>
+            Vraća sve tipove garancije na osnovu prosleđenih filtera
+            </summary>
+            <returns>Listu tipova garancije</returns>
+            <response code="200">Vraća listu tipova garancije</response>
+            <response code="404">Nije pronađena ni jedan jedini tip garancije</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.GetTipGarancije(System.Guid)">
+            <summary>
+            Vraća jedan tip garancije na osnovu ID-ja tipa garancije.
+            </summary>
+            <param name="tipId">ID tipa garancije</param>
+            <returns></returns>
+            <response code="200">Vraća tražen tip garancije</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.CreateTipGarancije(UgovorOZakupuAgregat.Models.TipGarancijeDto)">
+             <summary>
+             Kreira novi tip garancije
+             </summary>
+             <param name="tipGarancije">Model tipa garancije</param>
+             <returns>Potvrdu o kreiranom novom tipu garancije</returns>
+             <remarks>
+             Primer zahteva za kreiranje novog tipa garancije \
+             POST /api/tipoviGarancije \
+             {     \
+                 "ZavodniBroj = "1234a", \
+                 "Datum = "25-01-2021", \
+                 "DatumDonosenjaDokumenta = "25-01-2021"\
+                 
+            }     
+             </remarks>
+              <response code="201">Vraća kreiran tip garancije</response>
+             <response code="500">Došlo je do greške na serveru prilikom kreiranja  tipa garancije</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.DeleteTipGarancije(System.Guid)">
+            <summary>
+            Vrši brisanje jednog tipa garancije na osnovu ID-ja tipa garancije.
+            </summary>
+            <param name="tipGarancijeId">ID tipa garancije</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Tip garancije uspešno obrisan</response>
+            <response code="404">Nije pronađen tip garancije za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja tipa garancije</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.UpdateTipGarancije(UgovorOZakupuAgregat.Models.TipGarancijeUpdateDto)">
+            <summary>
+            Ažurira jednan tip garancije.
+            </summary>
+            <param name="tipGarancije">Model tipa garancije koji se ažurira</param>
+            <returns>Potvrdu o modifikovanom tipu garancije.</returns>
+            <response code="200">Vraća ažuriran tip garancije</response>
+            <response code="400">Tip garancije koji se ažurira nije pronađen</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja tipa garancije</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.GetTipGarancijeOptions">
+            <summary>
+            Vraća opcije za rad sa tipovima garancije
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.GetUgovori">
+            <summary>
+            Vraća sve ugovore na osnovu prosleđenih filtera
+            </summary>
+            <returns>Listu ugovora</returns>
+            <response code="200">Vraća listu ugovora</response>
+            <response code="404">Nije pronađena ni jedan jedini ugovor</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.GetUgovor(System.Guid)">
+            <summary>
+            Vraća jedan ugovor na osnovu ID-ja ugovora.
+            </summary>
+            <param name="ugovorId">ID ugovora</param>
+            <returns></returns>
+            <response code="200">Vraća tražen ugovor</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.CreateUgovor(UgovorOZakupuAgregat.Models.UgovorOZakupuDto)">
+             <summary>
+             Kreira novi ugovor
+             </summary>
+             <param name="ugovor">Model ugovora</param>
+             <returns>Potvrdu o kreiranom novom ugovoru</returns>
+             <remarks>
+             Primer zahteva za kreiranje nove ličnosti \
+             POST /api/Ugovor \
+             {     \
+                 " DokumentId= Guid.Parse("D1209104-7358-4C22-9F4F-415203563A25")", \
+                 "TipId= Guid.Parse("E1F134E5-25F9-4B00-8B96-A809D11CD33B")", \
+                 "RokId= Guid.Parse("234D1ADA-07B8-4789-9C87-86B83118FED0")", \
+                 " ZavodniBroj="11a", \
+                 " DatumZavodjenja= "24-01-2021", \
+                 " RokZaVracanjeZemljista= "24-05-2021", \
+                 "  MestoPotpisivanja="Novi Sad"", \
+                 "  DatumPotpisa ="25-01-2021", \
+            }
+                  
+             </remarks>
+              <response code="201">Vraća kreiran ugovor</response>
+             <response code="500">Došlo je do greške na serveru prilikom kreiranja ugovora</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.DeleteUgovor(System.Guid)">
+            <summary>
+            Vrši brisanje jednog ugovora na osnovu ID-ja ugovora.
+            </summary>
+            <param name="ugovorId">ID ugovora</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Ugovor uspešno obrisan</response>
+            <response code="404">Nije pronađen ugovor za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja ugovora</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.UpdateUgovor(UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto)">
+            <summary>
+            Ažurira jednan ugovor.
+            </summary>
+            <param name="ugovor">Model ugovora koji se ažurira</param>
+            <returns>Potvrdu o modifikovanom ugovoru.</returns>
+            <response code="200">Vraća ažuriran ugovor</response>
+            <response code="400">Ugovor koji se ažurira nije pronađen</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja ugovora</response>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.GetUgovorOptions">
+            <summary>
+            Vraća opcije za rad sa ugovorima
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Entities.UgovorOZakupuContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Popunjava bazu sa nekim inicijalnim podacima
+            </summary>
+        </member>
+    </members>
+</doc>

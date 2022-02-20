@@ -12,6 +12,7 @@ namespace Licnost.Entities
         [Key]
         public Guid KomisijaId { get; set; }
 
+
         [ForeignKey("Licnost")]
         public Guid LicnostId { get; set; }
         public LicnostEntity Licnost { get; set; }

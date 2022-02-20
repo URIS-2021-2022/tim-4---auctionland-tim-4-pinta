@@ -1,7 +1,10 @@
-﻿using Korisnik.Models;
+﻿using AutoMapper;
+using Korisnik.Entities;
+using Korisnik.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace Korisnik.Data
@@ -9,51 +12,94 @@ namespace Korisnik.Data
     public class KorisnikRepository : IKorisnikRepository
     {
 
-        public static List<KorisnikModel> Korisniks { get; set; } = new List<KorisnikModel>();
-
-
-
-        public KorisnikModel CreateKorisniks(KorisnikModel korisnikModel)
+        private readonly KorisnikContext context;
+        private readonly IMapper mapper;
+        private readonly static int iterations = 1000;
+        public KorisnikRepository(KorisnikContext context, IMapper mapper)
         {
-            //korisnikModel.KorisnikId = Guid.NewGuid();
-            Korisniks.Add(korisnikModel);
-            KorisnikModel korisnik = GetKorisniksById(korisnikModel.KorisnikId);
+            this.context = context;
+            this.mapper = mapper;
+        }
 
-            return new KorisnikModel
-            {
-                KorisnikId = korisnik.KorisnikId,
-                Ime = korisnik.Ime,
-                Prezime=korisnik.Prezime,
-                KorisnickoIme=korisnik.KorisnickoIme,
-                Lozinka = korisnik.Lozinka
-            };
+        public bool SaveChanges()
+        {
+            return context.SaveChanges() > 0;
+        }
+
+        public List<KorisnikModel> GetKorisniks(string KorisnickoIme = null, string Ime = null, string Prezime = null)
+        {
+            return context.KorisnikModels.Where(e => (KorisnickoIme == null || e.KorisnickoIme == KorisnickoIme) &&
+                                                        (Ime == null || e.Ime == Ime) &&
+                                                        (Prezime == null || e.Prezime == Prezime)).ToList();
+        }
+
+        public KorisnikModel GetKorisnikById(int korisnikId)
+        {
+            return context.KorisnikModels.FirstOrDefault(e => e.KorisnikId == korisnikId);
+        }
+
+        public KorisnikModel CreateKorisnik(KorisnikModel korisnik)
+        {
+            var createdEntity = context.Add(korisnik);
+            return mapper.Map<KorisnikModel>(createdEntity.Entity);
+        }
+
+        public void UpdateKorisnik(KorisnikModel korisnik)
+        {
+            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
+            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
         }
 
         public void DeleteKorisnik(int korisnikId)
         {
-            Korisniks.Remove(Korisniks.FirstOrDefault(e => e.KorisnikId == korisnikId));
+            var registration = GetKorisnikById(korisnikId);
+            context.Remove(registration);
         }
 
-        public List<KorisnikModel> GetKorisniks()
+        public bool Authorize(String token)
         {
-            return Korisniks;
+
+            return context.Tokens.FirstOrDefault(e => e.token == token)!=null;
+           
         }
 
-        public KorisnikModel GetKorisniksById(int korisnikId)
+        public bool UserWithCredentialsExists(string username, string password)
         {
-            return Korisniks.FirstOrDefault(e => e.KorisnikId == korisnikId);
+            //Ukoliko je username jedinstveno ovo je uredu
+            KorisnikModel user = context.KorisnikModels.FirstOrDefault(u => u.KorisnickoIme == username);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            return true;
+            //Ako smo našli korisnika sa tim korisničkim imenom proveravamo lozinku
+            if (VerifyPassword(password, user.Lozinka, user.Salt))
+            {
+                return true;
+            }
+            return false;
         }
 
-        public KorisnikModel UpdateKorisniks(KorisnikModel korisnikModel)
+
+        /// <summary>
+        /// Proverava validnost prosleđene lozinke sa prosleđenim hash-om
+        /// </summary>
+        /// <param name="password">Korisnička lozinka</param>
+        /// <param name="savedHash">Sačuvan hash</param>
+        /// <param name="savedSalt">Sačuvan salt</param>
+        /// <returns></returns>
+        public bool VerifyPassword(string password, string savedHash, string savedSalt)
         {
-            KorisnikModel korisnik = GetKorisniksById(korisnikModel.KorisnikId);
-            korisnik.KorisnikId = korisnikModel.KorisnikId;
-            korisnik.Ime = korisnikModel.Ime;
-            korisnik.Prezime = korisnikModel.Prezime;
-            korisnik.KorisnickoIme = korisnikModel.KorisnickoIme;
-            korisnik.Lozinka = korisnikModel.Lozinka;
-
-            return korisnik;
+            var saltBytes = Convert.FromBase64String(savedSalt);
+            var rfc2898DeriveBytes = new Rfc2898DeriveBytes(password, saltBytes, iterations);
+            if (Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256)) == savedHash)
+            {
+                return true;
+            }
+            return false;
         }
+
     }
 }

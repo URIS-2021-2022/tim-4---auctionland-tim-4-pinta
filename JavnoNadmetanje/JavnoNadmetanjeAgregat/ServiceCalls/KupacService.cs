@@ -23,7 +23,7 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:KupacService"];
-                Uri url = new Uri($"{ configuration["Services:KupacService"] }api/kupci/{kupacID}");
+                Uri url = new Uri($"{ configuration["Services:KupacService"] }api/kupac/{kupacID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 

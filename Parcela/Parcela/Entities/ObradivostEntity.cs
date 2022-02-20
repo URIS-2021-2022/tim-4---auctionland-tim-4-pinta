@@ -22,6 +22,9 @@ namespace Parcela.Entities
         /// </summary>
         public String ObradivostNaziv { get; set; }
 
+        /// <summary>
+        /// Parcele
+        /// </summary>
         public List<ParcelaEntity> Parcele { get; set; }
     }
 }

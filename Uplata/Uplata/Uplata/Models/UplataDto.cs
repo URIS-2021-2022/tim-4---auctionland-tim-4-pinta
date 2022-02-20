@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 using System.Threading.Tasks;
+using JavnoNadmetanjeAgregat.Models;
+using Uplata.Entities;
 
 namespace Uplata.Models
 {
@@ -32,15 +34,22 @@ namespace Uplata.Models
         public string PozivNaBroj { get; set; }
 
         /// <summary>
-        /// ID kupca tj uplatioca.
+        /// Broj racuna
         /// </summary>
-        public Guid KupacID { get; set; }
+        public string BrojRacuna { get; set; }
 
         /// <summary>
         /// ID javnog nadmetanja.
         /// </summary>
 
-        public Guid JavnoNadmetanjeID { get; set; }
+        public Guid? JavnoNadmetanjeID { get; set; }
 
+
+        public JavnoNadmetanjeUplateDto JavnoNadmetanje { get; set; }
+
+        /// <summary>
+        /// Kurs
+        /// </summary>
+        public Kurs Kurs { get; set; }
     }
 }

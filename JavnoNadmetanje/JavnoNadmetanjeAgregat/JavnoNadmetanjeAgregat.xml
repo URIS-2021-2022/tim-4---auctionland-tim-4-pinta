@@ -370,11 +370,6 @@
             ID katastarske opstine
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.KupacID">
-            <summary>
-            ID kupca parcele
-            </summary>
-        </member>
         <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.ParcelaID">
             <summary>
             ID parcele
@@ -505,7 +500,12 @@
             Visina dopune depozita javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.KupacID">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.KatastarskaOpstinaID">
+            <summary>
+            ID Katastarske opstine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.KatastarskaOpstina">
             <summary>
             ID kupca parcele
             </summary>
@@ -515,9 +515,19 @@
             ID parcele
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Parcela">
+            <summary>
+            Parcela javnog nadmetanja
+            </summary>
+        </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.AdresaID">
             <summary>
             ID adrese
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Adresa">
+            <summary>
+            Adresa javnog nadmetanja
             </summary>
         </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.KatastarskaOpstinaJavnoNadmetanjeDto">

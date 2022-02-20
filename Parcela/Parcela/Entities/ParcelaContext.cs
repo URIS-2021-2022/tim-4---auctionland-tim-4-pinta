@@ -7,27 +7,58 @@ using System.Threading.Tasks;
 
 namespace Parcela.Entities
 {
+    /// <summary>
+    /// Context za bazu podataka
+    /// </summary>
     public class ParcelaContext : DbContext
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="options"></param>
         public ParcelaContext(DbContextOptions<ParcelaContext> options) : base(options)
         {
             
         }
 
+        /// <summary>
+        /// DbSet Parcele
+        /// </summary>
         public DbSet<ParcelaEntity> Parcele { get; set; }
 
+        /// <summary>
+        /// DbSet ZasticeneZone
+        /// </summary>
         public DbSet<ZasticenaZonaEntity> ZasticeneZone { get; set; }
 
+        /// <summary>
+        /// DbSet Odvodnjavanja
+        /// </summary>
         public DbSet<OdvodnjavanjeEntity> Odvodnjavanja { get; set; }
 
+        /// <summary>
+        /// DbSet Obradivosti
+        /// </summary>
         public DbSet<ObradivostEntity> Obradivosti { get; set; }
 
+        /// <summary>
+        /// DbSet ObliciSvojine
+        /// </summary>
         public DbSet<OblikSvojineEntity> ObliciSvojine { get; set; }
 
+        /// <summary>
+        /// DbSet Kulture
+        /// </summary>
         public DbSet<KulturaEntity> Kulture { get; set; }
 
+        /// <summary>
+        /// DbSet Klase
+        /// </summary>
         public DbSet<KlasaEntity> Klase { get; set; }
 
+        /// <summary>
+        /// DbSet DeloviParcela
+        /// </summary>
         public DbSet<DeoParceleEntity> DeloviParcela { get; set; }
 
 
@@ -36,6 +67,10 @@ namespace Parcela.Entities
         //    optionsBuilder.UseSqlServer(configuration.GetConnectionString("ParcelaDB"));
         //}
 
+        /// <summary>
+        /// Kreiranje modela
+        /// </summary>
+        /// <param name="builder"></param>
         protected override void OnModelCreating(ModelBuilder builder)
         { 
             builder.Entity<ParcelaEntity>()
@@ -56,8 +91,8 @@ namespace Parcela.Entities
                     OblikSvojineID = Guid.Parse("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                     KulturaID = Guid.Parse("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                     KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                    KatastarskaOpstinaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                    KupacID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
+                    KatastarskaOpstinaID = Guid.Parse("3BD80C2A-C790-402F-B214-E3EBBC29D89F"),
+                    KupacID = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0")
                 });
 
             builder.Entity<ParcelaEntity>()
@@ -78,8 +113,8 @@ namespace Parcela.Entities
                     OblikSvojineID = Guid.Parse("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                     KulturaID = Guid.Parse("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                     KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                    KatastarskaOpstinaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                    KupacID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc")
+                    KatastarskaOpstinaID = Guid.Parse("177E64AD-2FF0-4A40-9C75-1F9B02FFE1E9"),
+                    KupacID = Guid.Parse("1a411c13-a195-48f7-8dbd-67596c3974c0")
                 });
 
             builder.Entity<ZasticenaZonaEntity>()

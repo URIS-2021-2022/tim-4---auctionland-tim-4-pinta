@@ -44,10 +44,10 @@ namespace JavnoNadmetanjeAgregat.Entities
                     StatusID = Guid.Parse("BF50E668-C01A-46E3-BAE8-A1691C23C65F"),
                     Krug = 2,
                     VisinaDopuneDepozita = 10,
-                    KupacID = Guid.Parse("1BE6851E-600A-40FF-A28D-79FDAB519392"),
-                    AdresaID = Guid.Parse("988587D4-F80F-4AD9-9A00-8CABF6BD1537"),
-                    KatastarskaOpstinaID = Guid.Parse("D52E971F-D983-4B24-8D4E-248C60C0AB21"),
-                    ParcelaID = Guid.Parse("FB99274D-02D4-4314-9BC3-8B25C09F46BB")
+                    KatastarskaOpstinaID = Guid.Parse("3BD80C2A-C790-402F-B214-E3EBBC29D89F"),
+                    //KupacID = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0"),
+                    ParcelaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
+                    AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907")
                 });
 
             builder.Entity<JavnoNadmetanjeEntity>()
@@ -64,10 +64,11 @@ namespace JavnoNadmetanjeAgregat.Entities
                    StatusID = Guid.Parse("BF50E668-C01A-46E3-BAE8-A1691C23C65F"),
                    Krug = 2,
                    VisinaDopuneDepozita = 10,
-                   KupacID = Guid.Parse("1BE6851E-600A-40FF-A28D-79FDAB519392"),
-                   AdresaID = Guid.Parse("988587D4-F80F-4AD9-9A00-8CABF6BD1537"),
-                   KatastarskaOpstinaID = Guid.Parse("D52E971F-D983-4B24-8D4E-248C60C0AB21"),
-                   ParcelaID= Guid.Parse("FB99274D-02D4-4314-9BC3-8B25C09F46BB")
+                   KatastarskaOpstinaID = Guid.Parse("3BD80C2A-C790-402F-B214-E3EBBC29D89F"),
+                   //KupacID = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0"),
+                   ParcelaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
+                   AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907")
+                   
                }) ;
             builder.Entity<SluzbeniListEntity>()
                 .HasData(new

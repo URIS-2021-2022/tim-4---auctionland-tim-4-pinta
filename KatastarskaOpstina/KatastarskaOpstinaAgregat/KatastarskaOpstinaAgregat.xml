@@ -19,54 +19,52 @@
         </member>
         <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.GetKatastarskaOpstina(System.Guid)">
             <summary>
-            Vraca jednan sluzbeni list na osnovu ID-ja
+            Vraca jednu katastarsku opstinu na osnovu ID-ja
             </summary>
-            <param name="katastarskaOpstinaID">ID sluzbeni list</param>
-            <returns>Trazeni sluzbeni list</returns>
-            <response code = "200">Vraca trazen sluzbeni list</response>
-            <response code = "404">Trazen sluzbeni list nije pronadjen</response>
+            <param name="katastarskaOpstinaID">ID katastarska opstina</param>
+            <returns>Trazena katastarska opstina</returns>
+            <response code = "200">Vraca trazenu katastarsku opstinu</response>
+            <response code = "404">Trazena katastarske opstina nije pronadjen</response>
         </member>
         <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.CreateKatastarskaOpstina(KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaDto)">
             <summary>
-            Kreira nov sluzbeni list
+            Kreira novu katastarsku opstinu
             </summary>
-            <param name="katastarskaOpstina">Model sluzbeni list</param>
-            <returns>Potvrda o kreiranom sluzbenom listu</returns>
+            <param name="katastarskaOpstina">Model katastarska opstina</param>
+            <returns>Potvrda o kreiranoj katastarskoj opstini</returns>
             <remarks>
-            Primer zahteva za kreiranje novog sluzbenog lista \
+            Primer zahteva za kreiranje nove katastarske opstine \
             POST /api/katastarskaOpstina \
             { \
-            "Opstina": "Beograd", \
-            "BrojSluzbenogLista": 12, \
-            "DatumIzdavanjaSluzbenogLista": "27-01-2021", \
+            "NazivKatastarskeOpstine": "Beograd", \
             } 
             </remarks>
-            <response code = "201">Vraca kreirano javno nadmetanje</response>
-            <response code = "500">Doslo je do greske na serveru prilikom kreiranja javnog nadmetanja</response>
+            <response code = "201">Vraca kreiranu katastarsku opstinu</response>
+            <response code = "500">Doslo je do greske na serveru prilikom kreiranja katastarske opstine</response>
         </member>
         <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.DeleteKatastarskaOpstina(System.Guid)">
             <summary>
-            Vrsi brisanje jednog sluzbenog lista na osnovu ID-ja
+            Vrsi brisanje jedne katastarske opstine na osnovu ID-ja
             </summary>
             <param name="katastarskaOpstinaID">ID katastarskaOpstina</param>
             <returns>Status 204 (NoContent)</returns>
-            <response code="204">Sluzbeni list uspesno obrisano</response>
-            <response code="404">Nije pronadjen sluzbeni list za brisanje</response>
-            <response code="500">Doslo je do greske na serveru prilikom brisanja sluzbenog lista</response>
+            <response code="204">Katastarska opstina uspesno obrisano</response>
+            <response code="404">Nije pronadjena katastarska opstina za brisanje</response>
+            <response code="500">Doslo je do greske na serveru prilikom brisanja katastarske opstine</response>
         </member>
         <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.UpdateKatastarskaOpstina(KatastarskaOpstinaAgregat.Entities.KatastarskaOpstinaEntity)">
             <summary>
-            Azurira jedan sluzbeni list
+            Azurira jednu katastarsku opstinu
             </summary>
-            <param name="katastarskaOpstina">Model sluzbenog lista koja se azurira</param>
-            <returns>Potvrdu o modifikovanom sluzbenom listu</returns>
-            <response code="200">Vraca azuriran sluzbeni list</response>
-            <response code="400">Sluzbeni list koji se azurira nije pronadjen</response>
-            <response code="500">Doslo je do greske prilikom azuriranja sluzbenog lista</response>
+            <param name="katastarskaOpstina">Model katastarske opstine koji se azurira</param>
+            <returns>Potvrdu o modifikovanoj katastarskoj opstini</returns>
+            <response code="200">Vraca azuriranu katastarsku opstinu</response>
+            <response code="400">Katastarska opstina koja se azurira nije pronadjena</response>
+            <response code="500">Doslo je do greske prilikom azuriranja katastarske opstine</response>
         </member>
         <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.GetKatastarskaOpstinaOptions">
             <summary>
-            Vraca opcije za rad sa javnim nadmetanjima
+            Vraca opcije za rad sa katastarskim opstinama
             </summary>
             <returns></returns>
         </member>

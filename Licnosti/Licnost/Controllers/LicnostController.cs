@@ -14,7 +14,6 @@ namespace Licnost.Controllers
     
     [ApiController]
     [Route("api/licnosti")]
-    [Authorize]
     [Produces("application/json", "application/xml")]
     public class LicnostController : ControllerBase
     {
@@ -65,12 +64,12 @@ namespace Licnost.Controllers
         [HttpGet("{licnostId}")]
         public ActionResult<LicnostDto> GetLicnost(Guid licnostId)
         {
-            LicnostEntity licnost = licnostRepository.GetLicnostById(licnostId);
+            var licnost = licnostRepository.GetLicnostById(licnostId);
             if (licnost == null)
             {
-                return NoContent();
+                return NotFound();
             }
-            return Ok(mapper.Map<List<LicnostDto>>(licnost));
+            return Ok(mapper.Map<LicnostDto>(licnost));
         }
 
 
@@ -99,9 +98,11 @@ namespace Licnost.Controllers
             try
             {
                 LicnostEntity licnostEntity = mapper.Map<LicnostEntity>(licnost);
-                LicnostEntity licnostCreate = licnostRepository.CreateLicnost((Entities.LicnostEntity)licnostEntity);
-                string location = linkGenerator.GetPathByAction("GetLicnost", "Licnost", new { licnostId = licnostCreate.LicnostId });
-                return Created(location, mapper.Map<LicnostDto>(licnostCreate));
+                LicnostEntity licnostCreate = licnostRepository.CreateLicnost(licnostEntity);
+                licnostRepository.SaveChanges();
+                //string location = linkGenerator.GetPathByAction("GetLicnost", "Licnost", new { licnostId = licnostCreate.LicnostId });
+               // return Created(location, mapper.Map<LicnostDto>(licnostCreate));
+                return Created("", mapper.Map<LicnostDto>(licnostCreate));
             }
             catch
             {
@@ -126,13 +127,13 @@ namespace Licnost.Controllers
         {
             try
             {
-                Entities.LicnostEntity licnostModel = licnostRepository.GetLicnostById(licnostId);
+                LicnostEntity licnostModel = licnostRepository.GetLicnostById(licnostId);
                 if (licnostModel == null)
                 {
                     return NotFound();
                 }
                 licnostRepository.DeleteLicnost(licnostId);
-
+                licnostRepository.SaveChanges();
                 return NoContent();
             }
             catch
@@ -149,7 +150,6 @@ namespace Licnost.Controllers
         /// <response code="200">Vraća ažuriranu ličnost</response>
         /// <response code="400">Ličnost koja se ažurira nije pronađena</response>
         /// <response code="500">Došlo je do greške na serveru prilikom ažuriranja ličnosti</response>
-        [HttpPut]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

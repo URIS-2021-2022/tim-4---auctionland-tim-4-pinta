@@ -17,5 +17,7 @@ namespace Licnost.Data
         void UpdateKomisija(Komisija komisija);
 
         void DeleteKomisija(Guid komisijaId);
+
+        bool SaveChanges();
     }
 }

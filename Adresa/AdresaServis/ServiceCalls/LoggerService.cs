@@ -23,7 +23,7 @@ namespace AdresaServis.ServiceCalls
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:LoggerService"];
-                Uri url = new Uri($"{ configuration["Services:LoggerService"] }api/logovi");
+                Uri url = new Uri($"{ configuration["Services:LoggerService"] }api/logger");
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(log));
                 content.Headers.ContentType.MediaType = "application/json";

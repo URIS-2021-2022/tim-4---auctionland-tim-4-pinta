@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Parcela.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje dela parcele
+    /// </summary>
     public class DeoParceleProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public DeoParceleProfile()
         {
             CreateMap<DeoParceleEntity, DeoParceleDto>();

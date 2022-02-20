@@ -32,8 +32,8 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             javnoNadmetanje.JavnoNadmetanjeID = Guid.NewGuid();
             context.JavnaNadmetanja.Add(javnoNadmetanje);
-            JavnoNadmetanjeEntity j = GetJavnoNadmetanjeById(javnoNadmetanje.JavnoNadmetanjeID);
-            return j;
+            //JavnoNadmetanjeEntity j = GetJavnoNadmetanjeById(javnoNadmetanje.JavnoNadmetanjeID);
+            return javnoNadmetanje;
         }
 
         public void DeleteJavnoNadmetanje(Guid javnoNadmetanjeID)

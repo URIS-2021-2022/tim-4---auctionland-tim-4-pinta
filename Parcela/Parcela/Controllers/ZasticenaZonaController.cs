@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Parcela.Data;
 using Parcela.Entities;
 using Parcela.Models;
+using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,17 @@ namespace Parcela.Controllers
         private readonly IZasticenaZonaRepository zasticenaZonaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly ILoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public ZasticenaZonaController(IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public ZasticenaZonaController(IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
         {
             this.zasticenaZonaRepository = zasticenaZonaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "Parcela";
         }
         /// <summary>
         /// Vraca sve zasticene zone
@@ -42,11 +48,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<ZasticenaZonaDto>> GetZasticeneZone()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih zasticenih zona";
+
             List<ZasticenaZonaEntity> zasticeneZone = zasticenaZonaRepository.GetZasticeneZone();
             if (zasticeneZone == null || zasticeneZone.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<ZasticenaZonaDto>>(zasticeneZone));
         }
 
@@ -62,11 +75,18 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ZasticenaZonaDto> GetZasticenaZona(Guid zasticenaZonaID)
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje zasticene zone po ID-ju";
+
             ZasticenaZonaEntity zasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZonaID);
             if (zasticenaZona == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<ZasticenaZonaDto>(zasticenaZona));
         }
 
@@ -90,16 +110,23 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ZasticenaZonaDto> CreateZasticenaZona([FromBody] ZasticenaZonaDto zasticenaZona)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje nove zasticene zone";
+
             try
             {
                 ZasticenaZonaEntity zaz = mapper.Map<ZasticenaZonaEntity>(zasticenaZona);
                 ZasticenaZonaEntity z = zasticenaZonaRepository.CreateZasticenaZona(zaz);
                 zasticenaZonaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetZasticenaZona", "ZasticenaZona", new { zasticenaZonaID = z.ZasticenaZonaID });
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<ZasticenaZonaDto>(z));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -115,19 +142,27 @@ namespace Parcela.Controllers
         [HttpDelete("{zasticenaZonaID}")]
         public IActionResult DeleteZasticenaZona(Guid zasticenaZonaID)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje zasticene zone";
             try
             {
                 ZasticenaZonaEntity zasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZonaID);
                 if (zasticenaZona == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 zasticenaZonaRepository.DeleteZasticenaZona(zasticenaZonaID);
                 zasticenaZonaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -147,11 +182,16 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ZasticenaZonaDto> UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje zasticene zone";
+
             try
             {
                 var oldZasticenaZona = zasticenaZonaRepository.GetZasticenaZonaById(zasticenaZona.ZasticenaZonaID);
                 if (oldZasticenaZona == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 ZasticenaZonaEntity zasticenaZonaEntity = mapper.Map<ZasticenaZonaEntity>(zasticenaZona);
@@ -159,10 +199,14 @@ namespace Parcela.Controllers
                 mapper.Map(zasticenaZonaEntity, oldZasticenaZona);
 
                 zasticenaZonaRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Ok(mapper.Map<ZasticenaZonaDto>(zasticenaZonaEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
@@ -175,6 +219,10 @@ namespace Parcela.Controllers
         public IActionResult GetZasticenaZonaOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa zasticenim zonama";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

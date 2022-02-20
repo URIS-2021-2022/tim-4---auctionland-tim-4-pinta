@@ -28,7 +28,10 @@ namespace KupacMikroservis.Controllers
         private readonly IAdresaService adresaService;
         private readonly IUplataService uplataService;
 
-        public KupacController(IPravnoLiceRepository pLiceRepository, IFizickoLiceRepository fLiceRepository, IAdresaService adresaService, IUplataService uplataService, LinkGenerator linkGenerator, IMapper mapper)
+        private readonly ILogger logger;
+        private LogDTO logDTO;
+
+        public KupacController(IPravnoLiceRepository pLiceRepository, IFizickoLiceRepository fLiceRepository, IAdresaService adresaService, IUplataService uplataService, LinkGenerator linkGenerator, IMapper mapper, ILogger logger)
         {
             this.pLiceRepository = pLiceRepository;
             this.fLiceRepository = fLiceRepository;
@@ -36,6 +39,9 @@ namespace KupacMikroservis.Controllers
             this.uplataService = uplataService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.logger = logger;
+            logDTO = new LogDTO();
+            logDTO.NameOfTheService = "Kupac";
         }
 
 
@@ -45,6 +51,8 @@ namespace KupacMikroservis.Controllers
         [HttpGet]
         public ActionResult<List<KupacDTO>> GetKupci()
         {
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje svih kupaca";
 
             List<PravnoLiceEntity> plica = pLiceRepository.GetPravnaLica();
             List<FizickoLiceEntity> flica = fLiceRepository.GetFizickaLica();
@@ -59,11 +67,26 @@ namespace KupacMikroservis.Controllers
 
             if (kupci == null || kupci.Count == 0)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NoContent();
             }
 
+            List<KupacDTO> kupciDtos = new List<KupacDTO>();
 
-            return Ok(mapper.Map<List<KupacDTO>>(kupci));
+            foreach(KupacEntity k in kupci)
+            {
+                AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(k.AdresaID).Result;
+                UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(k.UplataID).Result;
+                KupacDTO kupacDto = mapper.Map<KupacDTO>(k);
+                kupacDto.Adresa = adresa;
+                kupacDto.Uplata = uplata;
+                kupciDtos.Add(kupacDto);
+            }
+
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
+            return Ok(kupciDtos);
         }
 
         /// <summary>
@@ -72,6 +95,8 @@ namespace KupacMikroservis.Controllers
         [HttpGet("{KupacId}")]
         public ActionResult<KupacDTO> GetKupac(Guid kupacID)
         {
+            logDTO.HttpMethod = "GET";
+            logDTO.Message = "Vracanje kupca po ID";
 
             KupacEntity kupacModel;
 
@@ -82,13 +107,23 @@ namespace KupacMikroservis.Controllers
                 kupacModel = (KupacEntity)pLiceRepository.GetPravnoLiceById(kupacID);
             }
 
-
             if (kupacModel == null)
             {
+                logDTO.Level = "Warn";
+                logger.Log(logDTO);
                 return NotFound();
                 
             }
-            return Ok(mapper.Map<KupacDTO>(kupacModel));
+
+            AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(kupacModel.AdresaID).Result;
+            UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
+            KupacDTO kupacDto = mapper.Map<KupacDTO>(kupacModel);
+            kupacDto.Adresa = adresa;
+            kupacDto.Uplata = uplata;
+
+            logDTO.Level = "Info";
+            logger.Log(logDTO);
+            return Ok(kupacDto);
         }
 
         /// <summary>
@@ -97,6 +132,9 @@ namespace KupacMikroservis.Controllers
         [HttpPost]
         public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)   
         {
+            logDTO.HttpMethod = "POST";
+            logDTO.Message = "Dodavanje novog kupca";
+
             try
             {
                KupacEntity kp = mapper.Map<KupacEntity>(kupac);
@@ -115,10 +153,15 @@ namespace KupacMikroservis.Controllers
                 
 
                 string location = linkGenerator.GetPathByAction("GetKupac", "Kupac", new { KupacId = kp.KupacId });
+
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return Created(location, mapper.Map<KupacDTO>(kpCreated));
             }
             catch
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
 
             }
@@ -132,6 +175,9 @@ namespace KupacMikroservis.Controllers
         [HttpDelete("{KupacId}")]
         public IActionResult DeleteKupac(Guid kupacID)
         {
+            logDTO.HttpMethod = "DELETE";
+            logDTO.Message = "Brisanje kupca";
+
             KupacEntity kupacModel;
 
 
@@ -145,6 +191,8 @@ namespace KupacMikroservis.Controllers
                 }
                 if (kupacModel == null)
                 {
+                    logDTO.Level = "Warn";
+                    logger.Log(logDTO);
                     return NotFound();
                 }
 
@@ -156,11 +204,14 @@ namespace KupacMikroservis.Controllers
                 {
                     pLiceRepository.DeletePravnoLice(kupacID);
                 }
-
+                logDTO.Level = "Info";
+                logger.Log(logDTO);
                 return NoContent();
             }
             catch
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -172,6 +223,9 @@ namespace KupacMikroservis.Controllers
         [HttpPut]
         public ActionResult<KupacDTO> UpdateKupac(KupacUpdateDTO kupac)
         {
+            logDTO.HttpMethod = "PUT";
+            logDTO.Message = "Azuriranje kupca";
+
             try
             {
                 if (kupac.IsFizickoLice == true)
@@ -179,6 +233,8 @@ namespace KupacMikroservis.Controllers
                     var oldFizLice = fLiceRepository.GetFizickoLiceById(kupac.KupacId);
                     if (oldFizLice == null)
                     {
+                        logDTO.Level = "Warn";
+                        logger.Log(logDTO);
                         return NotFound(); 
                     }
                     KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
@@ -187,7 +243,9 @@ namespace KupacMikroservis.Controllers
 
                     mapper.Map(fLice, oldFizLice);             
 
-                    fLiceRepository.SaveChanges(); 
+                    fLiceRepository.SaveChanges();
+                    logDTO.Level = "Info";
+                    logger.Log(logDTO);
                     return Ok(mapper.Map<KupacDTO>(kpEntity));
 
                 }
@@ -196,6 +254,8 @@ namespace KupacMikroservis.Controllers
                     var oldPrLice = pLiceRepository.GetPravnoLiceById(kupac.KupacId);
                     if (oldPrLice == null)
                     {
+                        logDTO.Level = "Warn";
+                        logger.Log(logDTO);
                         return NotFound();
                     }
                     KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
@@ -205,6 +265,9 @@ namespace KupacMikroservis.Controllers
                     mapper.Map(pLice, oldPrLice);
 
                     pLiceRepository.SaveChanges();
+
+                    logDTO.Level = "Info";
+                    logger.Log(logDTO);
                     return Ok(mapper.Map<KupacDTO>(kpEntity));
                 }
 
@@ -212,6 +275,8 @@ namespace KupacMikroservis.Controllers
             }
             catch (Exception)
             {
+                logDTO.Level = "Error";
+                logger.Log(logDTO);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }

@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Parcela.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje oblika svojine
+    /// </summary>
     public class OblikSvojineProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
         public OblikSvojineProfile()
         {
             CreateMap<OblikSvojineEntity, OblikSvojineDto>();

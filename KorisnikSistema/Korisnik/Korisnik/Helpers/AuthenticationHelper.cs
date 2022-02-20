@@ -1,4 +1,5 @@
 ﻿using Korisnik.Data;
+using Korisnik.Entities;
 using Korisnik.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,18 +15,21 @@ namespace Korisnik.Helpers
     public class AuthenticationHelper : IAuthenticationHelper
     {
         private readonly IConfiguration configuration;
-        private readonly IUserRepository userRepository;
+        private readonly IKorisnikRepository userRepository;
+        private readonly KorisnikContext context;
 
-        public AuthenticationHelper(IConfiguration configuration, IUserRepository userRepository)
+        public AuthenticationHelper(IConfiguration configuration, IKorisnikRepository userRepository, KorisnikContext context)
         {
             this.configuration = configuration;
             this.userRepository = userRepository;
+            this.context = context;
         }
 
         public bool AuthenticatePrincipal(Principal principal)
         {
             if (userRepository.UserWithCredentialsExists(principal.Username, principal.Password))
             {
+               
                 return true;
             }
 
@@ -43,7 +47,24 @@ namespace Korisnik.Helpers
                                              expires: DateTime.Now.AddMinutes(120),
                                              signingCredentials: credentials);
 
+            TokenTime tokenTime = new TokenTime();
+            KorisnikModel korisnik=context.KorisnikModels.FirstOrDefault(e => e.KorisnickoIme == principal.Username);
+            Random rand = new Random();
+   
+            tokenTime.tokenId = rand.Next();
+            tokenTime.korisnikId = korisnik.KorisnikId;
+            tokenTime.time = DateTime.Now;
+            tokenTime.token = new JwtSecurityTokenHandler().WriteToken(token).ToString();
+
+            var createdEntity = context.Add(tokenTime);
+
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+
+        public bool SaveChanges()
+        {
+            return context.SaveChanges() > 0;
         }
     }
 }

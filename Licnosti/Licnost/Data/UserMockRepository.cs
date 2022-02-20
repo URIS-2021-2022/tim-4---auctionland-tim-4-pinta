@@ -17,9 +17,6 @@ namespace Licnost.Data
             FillData();
         }
 
-        /// <summary>
-        /// Metoda koja upisuje testne podatke
-        /// </summary>
         private void FillData()
         {
             var user1 = HashPassword("testpassword");
@@ -28,7 +25,7 @@ namespace Licnost.Data
             {
                 new User
                 {
-                    Id = Guid.Parse("CFD7FA84-8A27-4119-B6DB-5CFC1B0C94E1"),
+                    UserID = Guid.Parse("B5175C32-A852-4496-A75A-C7E6F383FE36"),
                     FirstName = "Petar",
                     LastName = "Petrovic",
                     UserName = "petar.petrovic",
@@ -39,15 +36,8 @@ namespace Licnost.Data
             });
         }
 
-        /// <summary>
-        /// Proverava da li postoji korisnik sa prosleđenim kredencijalima
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
         public bool UserWithCredentialsExists(string username, string password)
         {
-            //Ukoliko je username jedinstveno ovo je uredu
             User user = Users.FirstOrDefault(u => u.UserName == username);
 
             if (user == null)
@@ -55,7 +45,6 @@ namespace Licnost.Data
                 return false;
             }
 
-            //Ako smo našli korisnika sa tim korisničkim imenom proveravamo lozinku
             if (VerifyPassword(password, user.Password, user.Salt))
             {
                 return true;
@@ -63,33 +52,18 @@ namespace Licnost.Data
             return false;
         }
 
-        /// <summary>
-        /// Vrši hash-ovanje korisničke lozinke
-        /// </summary>
-        /// <param name="password">Korisnička lozinka</param>
-        /// <returns>Generisan hash i salt</returns>
         private Tuple<string, string> HashPassword(string password)
         {
             var sBytes = new byte[password.Length];
             new RNGCryptoServiceProvider().GetNonZeroBytes(sBytes);
             var salt = Convert.ToBase64String(sBytes);
 
-            var derivedBytes = new Rfc2898DeriveBytes(password, sBytes, iterations);
+            var derivedBytes = new Rfc2898DeriveBytes(password, sBytes);
 
-            return new Tuple<string, string>
-            (
-                Convert.ToBase64String(derivedBytes.GetBytes(256)),
-                salt
-            );
+            return new Tuple<string, string>(Convert.ToBase64String(derivedBytes.GetBytes(256)), salt);
         }
 
-        /// <summary>
-        /// Proverava validnost prosleđene lozinke sa prosleđenim hash-om
-        /// </summary>
-        /// <param name="password">Korisnička lozinka</param>
-        /// <param name="savedHash">Sačuvan hash</param>
-        /// <param name="savedSalt">Sačuvan salt</param>
-        /// <returns></returns>
+
         public bool VerifyPassword(string password, string savedHash, string savedSalt)
         {
             var saltBytes = Convert.FromBase64String(savedSalt);
