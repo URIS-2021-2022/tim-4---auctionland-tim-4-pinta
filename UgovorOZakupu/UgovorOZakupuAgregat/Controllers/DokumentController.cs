@@ -10,10 +10,13 @@ using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Data;
 using UgovorOZakupuAgregat.Entities;
 using UgovorOZakupuAgregat.Models;
+using UgovorOZakupuAgregat.ServiceCalls;
 
 namespace UgovorOZakupuAgregat.Controllers
 {
-
+    /// <summary>
+    /// Sadrži CRUD operacije za dokumente
+    /// </summary>
     [ApiController]
     [Route("api/dokumenti")]
     [Produces("application/json", "application/xml")]
@@ -22,12 +25,17 @@ namespace UgovorOZakupuAgregat.Controllers
         private readonly IDokumentRepository dokumentRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly LoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public DokumentController(IDokumentRepository dokumentRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public DokumentController(IDokumentRepository dokumentRepository, LinkGenerator linkGenerator, IMapper mapper, LoggerService loggerService)
         {
             this.dokumentRepository = dokumentRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "UgovorOZakupu";
         }
 
         /// <summary>
@@ -42,11 +50,18 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpHead]
         public ActionResult<List<DokumentDto>> GetDokumenti()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih dokumenata";
+
             List<Dokument> dokumenti = dokumentRepository.GetDokumenti();
             if (dokumenti == null || dokumenti.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<DokumentDto>>(dokumenti));
         }
 
@@ -64,11 +79,18 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpGet("{dokumentId}")]
         public ActionResult<DokumentDto> GetDokument(Guid dokumentId)
         {
-            var dokument = dokumentRepository.GetDokumentById(dokumentId);
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje dokumenta po ID-ju";
+
+            Dokument dokument = dokumentRepository.GetDokumentById(dokumentId);
             if (dokument == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<DokumentDto>(dokument));
         }
 
@@ -80,7 +102,7 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <returns>Potvrdu o kreiranom novom dokumentu</returns>
         /// <remarks>
         /// Primer zahteva za kreiranje novog dokumenta \
-        /// POST /api/Dokument \
+        /// POST /api/dokumenti \
         /// {     \
         ///     "ZavodniBroj = "1234a", \
         ///     "Datum = "25-01-2021", \
@@ -96,15 +118,24 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpPost]
         public ActionResult<DokumentDto> CreateDokument([FromBody] DokumentDto dokument)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog dokumenta";
+
             try
             {
                 Dokument dokumentEntity = mapper.Map<Dokument>(dokument);
                 Dokument dokumentCreate = dokumentRepository.CreateDokument(dokumentEntity);
                 dokumentRepository.SaveChanges();
-                return Created("", mapper.Map<DokumentDto>(dokumentCreate));
+                string location = linkGenerator.GetPathByAction("GetDokument", "Dokument", new { dokumentId = dokumentCreate.DokumentId});
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Created(location, mapper.Map<DokumentDto>(dokumentCreate));
+                
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -124,19 +155,28 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpDelete("{dokumentId}")]
         public IActionResult DeleteDokument(Guid dokumentId)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje dokumenta";
+
             try
             {
                 Dokument dokumentModel = dokumentRepository.GetDokumentById(dokumentId);
                 if (dokumentModel == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 dokumentRepository.DeleteDokument(dokumentId);
                 dokumentRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -156,20 +196,29 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpPut]
         public ActionResult<DokumentDto> UpdateDokument(DokumentUpdateDto dokument)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Modifikovanje dela parcele";
+
             try
             {
                 var stariDokument = dokumentRepository.GetDokumentById(dokument.DokumentId);
                 if (dokumentRepository.GetDokumentById(dokument.DokumentId) == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 Dokument dokumentEntity = mapper.Map<Dokument>(dokument);
                 mapper.Map(dokumentEntity, stariDokument);
                 dokumentRepository.SaveChanges();
-                return Ok(mapper.Map<DokumentDto>(stariDokument));
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<DokumentDto>(dokumentEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
 
@@ -185,6 +234,10 @@ namespace UgovorOZakupuAgregat.Controllers
         public IActionResult GetDokumentOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa dokumentima";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

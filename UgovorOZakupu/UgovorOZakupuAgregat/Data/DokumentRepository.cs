@@ -39,15 +39,13 @@ namespace UgovorOZakupuAgregat.Data
         {
             dokument.DokumentId = Guid.NewGuid();
             context.Dokumenti.Add(dokument);
-            Dokument d = GetDokumentById(dokument.DokumentId);
-            return d;
+            return dokument;
 
         }
 
         public void UpdateDokument(Dokument dokument)
         {
-            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
-            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
+
         }
 
         public void DeleteDokument(Guid dokumentId)

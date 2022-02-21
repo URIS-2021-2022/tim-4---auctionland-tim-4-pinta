@@ -39,15 +39,13 @@ namespace UgovorOZakupuAgregat.Data
         {
             tipGarancije.TipId = Guid.NewGuid();
             context.TipoviGarancije.Add(tipGarancije);
-            TipGarancije t = GetTipGarancijeById(tipGarancije.TipId);
-            return t;
+            return tipGarancije;
 
         }
 
         public void UpdateTipGarancije(TipGarancije tip)
         {
-            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
-            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
+            
         }
 
         public void DeleteTipGarancije(Guid tipId)

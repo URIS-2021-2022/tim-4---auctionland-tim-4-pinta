@@ -48,7 +48,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca kupce
         /// </summary>
+        /// <returns>Lista klasa</returns>
+        /// <response code = "200">Vraca listu kupaca</response>
+        /// <response code = "404">Nije pronadjen nijedan kupac</response>
         [HttpGet]
+        [Produces("application/json", "application/xml")]
         public ActionResult<List<KupacDTO>> GetKupci()
         {
             logDTO.HttpMethod = "GET";
@@ -94,6 +98,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca kupca po ID
         /// </summary>
+        /// /// <param name="KupacId">ID kupca</param>
+        /// <returns>Trazeni kupac</returns>
+        /// <response code = "200">Vraca trazenog kupca</response>
+        /// <response code = "404">Trazeni kupac nije pronadjen</response>
         [HttpGet("{KupacId}")]
         public ActionResult<KupacDTO> GetKupac(Guid kupacID)
         {
@@ -131,6 +139,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Dodaje novog kupca
         /// </summary>
+        /// <param name="kupac">Model kupca</param>
+        /// <returns>Potvrda o kreiranom kupcu</returns>
+        /// <response code = "201">Vraca kreiranog kupca</response>
+        /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
         public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)   
         {
@@ -177,6 +189,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Brise kupca
         /// </summary>
+        /// <param name="KupacId">ID kupca</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Kupac uspesno obrisana</response>
+        /// <response code="404">Nije pronadjen kupac</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{KupacId}")]
         public IActionResult DeleteKupac(Guid kupacID)
         {
@@ -222,6 +239,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Azurira kupca
         /// </summary>
+        /// <param name="kupac">Model kupca za azuriranje</param>
+        /// <returns>Potvrda o modifikovanom kupcu</returns>
+        /// <response code="200">Vraca azuriranog kupca</response>
+        /// <response code="400">Kupac nije pronadjen</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpPut("{KupacId}")]
         public ActionResult<KupacDTO> UpdateKupac([FromBody]KupacUpdateDTO kupac)
         {
