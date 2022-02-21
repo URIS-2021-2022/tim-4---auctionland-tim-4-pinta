@@ -77,7 +77,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator" && split[2] != "menadzer")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
             {
                 return Unauthorized();
             }
@@ -130,7 +130,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator" && split[2] != "menadzer")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
             {
                 return Unauthorized();
             }
@@ -196,7 +196,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
             {
                 return Unauthorized();
             }
@@ -244,7 +244,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
             {
                 return Unauthorized();
             }
@@ -300,7 +300,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
             {
                 return Unauthorized();
             }
