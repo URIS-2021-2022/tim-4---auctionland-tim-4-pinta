@@ -85,6 +85,11 @@
             Salt
             </summary>
         </member>
+        <member name="P:Korisnik.Models.KorisnikModel.TipKorisnika">
+            <summary>
+            Tip korisnika
+            </summary>
+        </member>
         <member name="T:Korisnik.Models.KorisnikCreationDto">
             <summary>
             Model za kreiranje prijave ispita

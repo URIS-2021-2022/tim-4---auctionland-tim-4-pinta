@@ -56,14 +56,14 @@ namespace AdresaServis
                         {
                             Name = "Stefan Radulović",
                             Email = "stefanradulovic58@gmail.com",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
                         License = new Microsoft.OpenApi.Models.OpenApiLicense
                         {
                             Name = "FTN licence",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
-                        TermsOfService = new Uri("http://www.ftn.uns.ac.rs/")
+                        TermsOfService = new Uri(Configuration["Uri:Ftn"])
                     });
 
                 ////Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
@@ -75,10 +75,6 @@ namespace AdresaServis
                 ////Govorimo swagger-u gde se nalazi dati xml fajl sa komentarima
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdresaServis", Version = "v1" });
-            //});
 
             services.AddDbContextPool<AdresaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AdresaDB")));
         }
@@ -89,8 +85,6 @@ namespace AdresaServis
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdresaServis v1"));
             }
 
             app.UseSwagger();

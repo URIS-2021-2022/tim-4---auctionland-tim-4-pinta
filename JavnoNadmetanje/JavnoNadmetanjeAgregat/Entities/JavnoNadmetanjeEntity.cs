@@ -70,10 +70,10 @@ namespace JavnoNadmetanjeAgregat.Entities
         /// </summary>
         public Guid KatastarskaOpstinaID { get; set; }
 
-        ///// <summary>
-        ///// ID kupca parcele
-        ///// </summary>
-        //public Guid KupacID { get; set; }
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
 
         /// <summary>
         /// ID parcele

@@ -186,7 +186,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleEntity deoParcele)
+        public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleUpdateDto deoParcele)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje dela parcele";
@@ -202,12 +202,14 @@ namespace Parcela.Controllers
                 }
                 DeoParceleEntity deoParceleEntity = mapper.Map<DeoParceleEntity>(deoParcele);
 
-                mapper.Map(deoParceleEntity, oldDeoParcele);
+                oldDeoParcele.PovrsinaDelaParcele = deoParceleEntity.PovrsinaDelaParcele;
+                oldDeoParcele.RedniBroj = deoParceleEntity.PovrsinaDelaParcele;
+                oldDeoParcele.ParcelaID = deoParceleEntity.ParcelaID;
 
                 deoParceleRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<DeoParceleDto>(deoParceleEntity));
+                return Ok(mapper.Map<DeoParceleDto>(oldDeoParcele));
             }
             catch (Exception)
             {

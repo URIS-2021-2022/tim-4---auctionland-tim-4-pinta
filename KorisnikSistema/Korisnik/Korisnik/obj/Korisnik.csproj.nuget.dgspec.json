@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {}
+    "C:\\Users\\Stefan\\source\\repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {
+    "C:\\Users\\Stefan\\source\\repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
+        "projectUniqueName": "C:\\Users\\Stefan\\source\\repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
         "projectName": "Korisnik",
-        "projectPath": "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
+        "projectPath": "C:\\Users\\Stefan\\source\\repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\Korisnik.csproj",
         "packagesPath": "C:\\Users\\Stefan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Stefan\\Source\\Repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\obj\\",
+        "outputPath": "C:\\Users\\Stefan\\source\\repos\\tim-4---auctionland-tim-4-pinta\\KorisnikSistema\\Korisnik\\Korisnik\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -47,9 +47,53 @@
               "target": "Package",
               "version": "[11.0.0, )"
             },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
+            "Microsoft.AspNetCore.Authentication": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.13, )"
+            },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[6.15.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

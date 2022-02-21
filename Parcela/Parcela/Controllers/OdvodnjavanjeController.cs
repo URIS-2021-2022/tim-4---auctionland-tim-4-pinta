@@ -180,7 +180,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<OdvodnjavanjeDto> UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje)
+        public ActionResult<OdvodnjavanjeDto> UpdateOdvodnjavanje(OdvodnjavanjeUpdateDto odvodnjavanje)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje odvodnjavanja";
@@ -196,12 +196,12 @@ namespace Parcela.Controllers
                 }
                 OdvodnjavanjeEntity odvodnjavanjeEntity = mapper.Map<OdvodnjavanjeEntity>(odvodnjavanje);
 
-                mapper.Map(odvodnjavanjeEntity, oldOdvodnjavanje);
+                oldOdvodnjavanje.OdvodnjavanjeNaziv = odvodnjavanjeEntity.OdvodnjavanjeNaziv;
 
                 odvodnjavanjeRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeEntity));
+                return Ok(mapper.Map<OdvodnjavanjeDto>(oldOdvodnjavanje));
             }
             catch (Exception)
             {

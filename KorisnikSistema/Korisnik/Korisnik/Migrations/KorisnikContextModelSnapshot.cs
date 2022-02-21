@@ -41,6 +41,9 @@ namespace Korisnik.Migrations
                     b.Property<string>("Salt")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TipKorisnika")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("KorisnikId");
 
                     b.ToTable("KorisnikModels");
@@ -53,7 +56,8 @@ namespace Korisnik.Migrations
                             KorisnickoIme = "IT1/2020",
                             Lozinka = "1",
                             Prezime = "Petrović",
-                            Salt = "1"
+                            Salt = "1",
+                            TipKorisnika = "administrator"
                         },
                         new
                         {
@@ -62,7 +66,8 @@ namespace Korisnik.Migrations
                             KorisnickoIme = "IT2/2019",
                             Lozinka = "1",
                             Prezime = "Marković",
-                            Salt = "1"
+                            Salt = "1",
+                            TipKorisnika = "licitant"
                         });
                 });
 

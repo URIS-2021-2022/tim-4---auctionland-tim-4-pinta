@@ -185,7 +185,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KlasaDto> UpdateKlasa(KlasaEntity klasa)
+        public ActionResult<KlasaDto> UpdateKlasa(KlasaUpdateDto klasa)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje klase";
@@ -201,12 +201,12 @@ namespace Parcela.Controllers
                 }
                 KlasaEntity klasaEntity = mapper.Map<KlasaEntity>(klasa);
 
-                mapper.Map(klasaEntity, oldKlasa);
+                oldKlasa.KlasaOznaka = klasaEntity.KlasaOznaka;
 
                 klasaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<KlasaDto>(klasaEntity));
+                return Ok(mapper.Map<KlasaDto>(oldKlasa));
             }
             catch (Exception)
             {

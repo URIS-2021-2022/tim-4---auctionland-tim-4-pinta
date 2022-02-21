@@ -14,6 +14,11 @@ namespace Parcela.Models
         /// Naziv kupca parcele
         /// </summary>
         public string Naziv { get; set; }
+        
+        /// <summary>
+        /// Da li je kupac fizicko ili pravno lice
+        /// </summary>
+        public bool IsFizickoLice { get; set; }
 
         /// <summary>
         /// Prvi broj telefona kupca parcele
@@ -29,11 +34,6 @@ namespace Parcela.Models
         /// Email kupca parcele
         /// </summary>
         public string Email { get; set; }
-
-        /// <summary>
-        /// Ostvarena povrsina kupca parcele
-        /// </summary>
-        public int OstvarenaPovrsina { get; set; }
 
         /// <summary>
         /// Broj racuna kupca parcele
@@ -59,5 +59,35 @@ namespace Parcela.Models
         /// Datum prestanka zabrane kupca parcele
         /// </summary>
         public DateTime DatumPrestankaZabrane { get; set; }
+
+        /// <summary>
+        /// Prioritet kupca
+        /// </summary>
+        public Guid Prioritet { get; set; }
+
+        /// <summary>
+        /// ID ovlascenog lica
+        /// </summary>
+        public Guid OvlascenoLice { get; set; }
+
+        /// <summary>
+        /// ID adrese kupca
+        /// </summary>
+        public Guid AdresaID { get; set; }
+
+        /// <summary>
+        /// ID uplate kupca
+        /// </summary>
+        public Guid UplataID { get; set; }
+
+        /// <summary>
+        /// Adresa kupca
+        /// </summary>
+        public AdresaKupcaDto Adresa { get; set; }
+
+        /// <summary>
+        /// Uplata kupca
+        /// </summary>
+        public UplataKupcaDto Uplata { get; set; }
     }
 }

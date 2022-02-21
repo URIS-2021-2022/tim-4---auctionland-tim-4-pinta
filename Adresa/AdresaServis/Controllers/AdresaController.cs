@@ -102,9 +102,11 @@ namespace AdresaServis.Controllers
                 loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            AdresaDto adresaDto = mapper.Map<AdresaDto>(adresa);
+            adresaDto.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(adresa.DrzavaID));
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<AdresaDto>(adresa));
+            return Ok(adresaDto);
         }
 
         /// <summary>
@@ -129,7 +131,7 @@ namespace AdresaServis.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<AdresaDto> CreateAdresa([FromBody] AdresaDto adresa)
+        public ActionResult<AdresaDto> CreateAdresa([FromBody] AdresaCreateDto adresa)
         {
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove adrese";
@@ -142,7 +144,9 @@ namespace AdresaServis.Controllers
                 string location = linkGenerator.GetPathByAction("GetAdresa", "Adresa", new { adresaID = a.AdresaID });
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<AdresaDto>(a));
+                AdresaDto adresaDto = mapper.Map<AdresaDto>(a);
+                adresaDto.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(a.DrzavaID));
+                return Created(location, adresaDto);
             }
             catch
             {
@@ -205,7 +209,7 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<AdresaDto> UpdateAdresa(AdresaEntity adresa)
+        public ActionResult<AdresaDto> UpdateAdresa(AdresaUpdateDto adresa)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje adrese";
@@ -221,12 +225,18 @@ namespace AdresaServis.Controllers
                 }
                 AdresaEntity adresaEntity = mapper.Map<AdresaEntity>(adresa);
 
-                mapper.Map(adresaEntity, oldAdresa);
+                oldAdresa.Ulica = adresaEntity.Ulica;
+                oldAdresa.Broj = adresaEntity.Broj;
+                oldAdresa.Mesto = adresaEntity.Mesto;
+                oldAdresa.PostanskiBroj = adresaEntity.PostanskiBroj;
+                oldAdresa.DrzavaID = adresaEntity.DrzavaID;
 
                 adresaRepository.SaveChanges();
+                AdresaDto adresaDto = mapper.Map<AdresaDto>(oldAdresa);
+                adresaDto.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(oldAdresa.DrzavaID)); ;
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<AdresaDto>(adresaEntity));
+                return Ok(adresaDto);
             }
             catch (Exception)
             {

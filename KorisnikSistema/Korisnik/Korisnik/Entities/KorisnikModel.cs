@@ -37,5 +37,10 @@ namespace Korisnik.Models
         /// Salt
         /// </summary>
         public string Salt { get; set; }
+
+        /// <summary>
+        /// Tip korisnika
+        /// </summary>
+        public string TipKorisnika { get; set; }
     }
 }

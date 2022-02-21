@@ -183,7 +183,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ObradivostDto> UpdateObradivost(ObradivostEntity obradivost)
+        public ActionResult<ObradivostDto> UpdateObradivost(ObradivostUpdateDto obradivost)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje obradivosti";
@@ -199,12 +199,12 @@ namespace Parcela.Controllers
                 }
                 ObradivostEntity obradivostEntity = mapper.Map<ObradivostEntity>(obradivost);
 
-                mapper.Map(obradivostEntity, oldObradivost);
+                oldObradivost.ObradivostNaziv = obradivostEntity.ObradivostNaziv;
 
                 obradivostRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<ObradivostDto>(obradivostEntity));
+                return Ok(mapper.Map<ObradivostDto>(oldObradivost));
             }
             catch (Exception)
             {

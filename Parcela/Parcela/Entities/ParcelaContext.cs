@@ -61,19 +61,13 @@ namespace Parcela.Entities
         /// </summary>
         public DbSet<DeoParceleEntity> DeloviParcela { get; set; }
 
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(configuration.GetConnectionString("ParcelaDB"));
-        //}
-
         /// <summary>
         /// Kreiranje modela
         /// </summary>
-        /// <param name="builder"></param>
-        protected override void OnModelCreating(ModelBuilder builder)
+        /// <param name="modelBuilder"></param>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         { 
-            builder.Entity<ParcelaEntity>()
+            modelBuilder.Entity<ParcelaEntity>()
                 .HasData(new
                 {
                     ParcelaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0"),
@@ -95,7 +89,7 @@ namespace Parcela.Entities
                     KupacID = Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0")
                 });
 
-            builder.Entity<ParcelaEntity>()
+            modelBuilder.Entity<ParcelaEntity>()
                 .HasData(new
                 {
                     ParcelaID = Guid.Parse("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
@@ -117,91 +111,91 @@ namespace Parcela.Entities
                     KupacID = Guid.Parse("1a411c13-a195-48f7-8dbd-67596c3974c0")
                 });
 
-            builder.Entity<ZasticenaZonaEntity>()
+            modelBuilder.Entity<ZasticenaZonaEntity>()
                 .HasData(new
                 {
                     ZasticenaZonaID = Guid.Parse("a873025a-b4bc-440d-8e65-dc63fb9025d7"),
                     ZasticenaZonaOznaka = 1
                 });
 
-            builder.Entity<ZasticenaZonaEntity>()
+            modelBuilder.Entity<ZasticenaZonaEntity>()
                 .HasData(new
                 {
                     ZasticenaZonaID = Guid.Parse("9eec3d7d-2f21-4719-a8db-415806748dfb"),
                     ZasticenaZonaOznaka = 2
                 });
 
-            builder.Entity<OdvodnjavanjeEntity>()
+            modelBuilder.Entity<OdvodnjavanjeEntity>()
                 .HasData(new
                 {
                     OdvodnjavanjeID = Guid.Parse("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"),
                     OdvodnjavanjeNaziv = "Odvodnjavanje1"
                 });
 
-            builder.Entity<OdvodnjavanjeEntity>()
+            modelBuilder.Entity<OdvodnjavanjeEntity>()
                 .HasData(new
                 {
                     OdvodnjavanjeID = Guid.Parse("a2f44a7b-cdfb-4d69-b651-6d715afe8217"),
                     OdvodnjavanjeNaziv = "Odvodnjavanje2"
                 });
 
-            builder.Entity<ObradivostEntity>()
+            modelBuilder.Entity<ObradivostEntity>()
                 .HasData(new
                 {
                     ObradivostID = Guid.Parse("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
                     ObradivostNaziv = "Obradivost1"
                 });
 
-            builder.Entity<ObradivostEntity>()
+            modelBuilder.Entity<ObradivostEntity>()
                 .HasData(new
                 {
                     ObradivostID = Guid.Parse("bf45ffef-1166-44fb-a2e1-67824a6561f2"),
                     ObradivostNaziv = "Obradivost2"
                 });
 
-            builder.Entity<OblikSvojineEntity>()
+            modelBuilder.Entity<OblikSvojineEntity>()
                 .HasData(new
                 {
                     OblikSvojineID = Guid.Parse("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                     OblikSvojineNaziv = "Oblik svojine 1"
                 });
 
-            builder.Entity<OblikSvojineEntity>()
+            modelBuilder.Entity<OblikSvojineEntity>()
                 .HasData(new
                 {
                     OblikSvojineID = Guid.Parse("91a1f792-bc28-4f6e-bdda-cb577d7858fe"),
                     OblikSvojineNaziv = "Oblik svojine 2"
                 });
 
-            builder.Entity<KulturaEntity>()
+            modelBuilder.Entity<KulturaEntity>()
                 .HasData(new
                 {
                     KulturaID = Guid.Parse("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
                     KulturaNaziv = "Kukuruz"
                 });
 
-            builder.Entity<KulturaEntity>()
+            modelBuilder.Entity<KulturaEntity>()
                 .HasData(new
                 {
                     KulturaID = Guid.Parse("86f5706f-737b-4b20-beed-531aa64326cb"),
                     KulturaNaziv = "Soja"
                 });
 
-            builder.Entity<KlasaEntity>()
+            modelBuilder.Entity<KlasaEntity>()
                 .HasData(new
                 {
                     KlasaID = Guid.Parse("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
                     KlasaOznaka = 1
                 });
 
-            builder.Entity<KlasaEntity>()
+            modelBuilder.Entity<KlasaEntity>()
                 .HasData(new
                 {
                     KlasaID = Guid.Parse("18227841-6ba9-4509-b8fa-faa8f6699b3b"),
                     KlasaOznaka = 2
                 });
 
-            builder.Entity<DeoParceleEntity>()
+            modelBuilder.Entity<DeoParceleEntity>()
                 .HasData(new
                 {
                     DeoParceleID = Guid.Parse("cae99a88-c6ee-4f4c-a463-419ac8fc1b85"),
@@ -210,7 +204,7 @@ namespace Parcela.Entities
                     ParcelaID = Guid.Parse("6a411c13-a195-48f7-8dbd-67596c3974c0")
                 });
 
-            builder.Entity<DeoParceleEntity>()
+            modelBuilder.Entity<DeoParceleEntity>()
                 .HasData(new
                 {
                     DeoParceleID = Guid.Parse("2884b2b0-302c-4eac-847c-65e4c356132b"),

@@ -10,12 +10,10 @@ namespace Parcela.Data
     public class DeoParceleRepository : IDeoParceleRepository
     {
         private readonly ParcelaContext context;
-        private readonly IMapper mapper;
 
-        public DeoParceleRepository(ParcelaContext context, IMapper mapper)
+        public DeoParceleRepository(ParcelaContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
