@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 namespace UgovorOZakupuAgregat.Models
 {
     /// <summary>
-    /// DTO tipa garancije
+    /// DTO za gateway
     /// </summary>
-    public class TipGarancijeDto
+    public class GatewayDto
     {
         /// <summary>
-        /// Naziv tipa garancije
+        /// URL
         /// </summary>
-        public string Naziv { get; set; }
+        public string Url { get; set; }
     }
 }

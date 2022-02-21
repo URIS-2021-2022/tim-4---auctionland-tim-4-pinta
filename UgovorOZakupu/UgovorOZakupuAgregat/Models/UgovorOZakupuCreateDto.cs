@@ -1,43 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UgovorOZakupuAgregat.Entities
+namespace UgovorOZakupuAgregat.Models
 {
     /// <summary>
-    /// Predstavlja model entiteta ugovor o zakupu
+    /// Model za kreiranje novog ugovora o zakupu
     /// </summary>
-    public class UgovorOZakupu
+    public class UgovorOZakupuCreateDto
     {
         /// <summary>
-        /// ID ugovora o zakupu
+        /// ID dokumenta(odluka)
         /// </summary>
-        [Key]
-        public Guid UgovorId { get; set; }
-
-
-        /// <summary>
-        /// ID odluke (dokumenta) ugovora
-        /// </summary>
-        [ForeignKey("Dokument")]
         public Guid DokumentId { get; set; }
-        /// <summary>
-        /// Model dokumenta
-        /// </summary>
-        public Dokument Dokument { get; set; }
 
         /// <summary>
-        /// ID tipa garancije ugovora
+        /// ID tipa garancije
         /// </summary>
-        [ForeignKey("TipGarancije")]
         public Guid TipId { get; set; }
-        /// <summary>
-        /// Model tipa garancije
-        /// </summary>
-        public TipGarancije TipGarancije { get; set; }
 
         /// <summary>
         /// Zavodni broj ugovora
@@ -45,7 +26,7 @@ namespace UgovorOZakupuAgregat.Entities
         public string ZavodniBroj { get; set; }
 
         /// <summary>
-        /// Datum zavodjenja ugovora
+        /// Datum zavođenja ugovora
         /// </summary>
         public DateTime DatumZavodjenja { get; set; }
 
@@ -65,12 +46,12 @@ namespace UgovorOZakupuAgregat.Entities
         public DateTime DatumPotpisa { get; set; }
 
         /// <summary>
-        ///  ID ministra (ličnost) ugovora
+        /// ID ministra (ličnost)
         /// </summary>
         public Guid LicnostId { get; set; }
 
         /// <summary>
-        /// ID lica (kupac) ugovora
+        /// ID lica (kupac)
         /// </summary>
         public Guid KupacId { get; set; }
 
@@ -78,7 +59,5 @@ namespace UgovorOZakupuAgregat.Entities
         ///ID javnog nadmetanja
         /// </summary>
         public Guid JavnoNadmetanjeId { get; set; }
-
-
     }
 }

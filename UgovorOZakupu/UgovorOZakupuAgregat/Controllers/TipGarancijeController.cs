@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Data;
 using UgovorOZakupuAgregat.Entities;
 using UgovorOZakupuAgregat.Models;
-
-
+using UgovorOZakupuAgregat.ServiceCalls;
 
 namespace UgovorOZakupuAgregat.Controllers
 {
+    /// <summary>
+    /// Sadrži CRUD operacije za tipove garancije
+    /// </summary>
     [ApiController]
     [Route("api/tipoviGarancije")]
     [Produces("application/json", "application/xml")]
@@ -23,12 +25,17 @@ namespace UgovorOZakupuAgregat.Controllers
         private readonly ITipGarancijeRepository tipGarancijeRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly LoggerService loggerService;
+        private readonly LogDto logDto;
 
-        public TipGarancijeController(ITipGarancijeRepository tipGarancijeRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public TipGarancijeController(ITipGarancijeRepository tipGarancijeRepository, LinkGenerator linkGenerator, IMapper mapper, LoggerService loggerService)
         {
             this.tipGarancijeRepository = tipGarancijeRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.loggerService = loggerService;
+            logDto = new LogDto();
+            logDto.NameOfTheService = "UgovorOZakupu";
         }
 
         /// <summary>
@@ -43,11 +50,18 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpHead]
         public ActionResult<List<TipGarancijeDto>> GetTipovi()
         {
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje svih tipova garancije";
+
             List<TipGarancije> tipoviGarancije = tipGarancijeRepository.GetTipovi();
             if (tipoviGarancije == null || tipoviGarancije.Count == 0)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<TipGarancijeDto>>(tipoviGarancije));
         }
 
@@ -65,11 +79,18 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpGet("{tipId}")]
         public ActionResult<TipGarancijeDto> GetTipGarancije(Guid tipId)
         {
-            var tipGarancije = tipGarancijeRepository.GetTipGarancijeById(tipId);
+            logDto.HttpMethod = "GET";
+            logDto.Message = "Vracanje tipa garancije po ID-ju";
+
+            TipGarancije tipGarancije = tipGarancijeRepository.GetTipGarancijeById(tipId);
             if (tipGarancije == null)
             {
+                logDto.Level = "Warn";
+                loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<TipGarancijeDto>(tipGarancije));
         }
 
@@ -83,11 +104,8 @@ namespace UgovorOZakupuAgregat.Controllers
         /// Primer zahteva za kreiranje novog tipa garancije \
         /// POST /api/tipoviGarancije \
         /// {     \
-        ///     "ZavodniBroj = "1234a", \
-        ///     "Datum = "25-01-2021", \
-        ///     "DatumDonosenjaDokumenta = "25-01-2021"\
-        ///     
-        ///}     
+        ///      Naziv= "Jemstvo" \
+        /// }     
         /// </remarks>
         ///  <response code="201">Vraća kreiran tip garancije</response>
         /// <response code="500">Došlo je do greške na serveru prilikom kreiranja  tipa garancije</response>
@@ -97,15 +115,23 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpPost]
         public ActionResult<TipGarancijeDto> CreateTipGarancije([FromBody] TipGarancijeDto tipGarancije)
         {
+            logDto.HttpMethod = "POST";
+            logDto.Message = "Dodavanje novog tipa garancije";
+
             try
             {
                 TipGarancije tipGarancijeEntity = mapper.Map<TipGarancije>(tipGarancije);
                 TipGarancije tipGarancijeCreate = tipGarancijeRepository.CreateTipGarancije(tipGarancijeEntity);
                 tipGarancijeRepository.SaveChanges();
-                return Created("", mapper.Map<TipGarancijeDto>(tipGarancijeCreate));
+                string location = linkGenerator.GetPathByAction("GetTipGarancije", "TipGarancije", new { tipId = tipGarancijeCreate.TipId});
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Created(location, mapper.Map<TipGarancijeDto>(tipGarancijeCreate));
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
@@ -125,19 +151,28 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpDelete("{tipGarancijeId}")]
         public IActionResult DeleteTipGarancije(Guid tipGarancijeId)
         {
+            logDto.HttpMethod = "DELETE";
+            logDto.Message = "Brisanje tipa garancije";
+
             try
             {
                 TipGarancije tipGarancijeModel = tipGarancijeRepository.GetTipGarancijeById(tipGarancijeId);
                 if (tipGarancijeModel == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 tipGarancijeRepository.DeleteTipGarancije(tipGarancijeId);
                 tipGarancijeRepository.SaveChanges();
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             catch
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
             }
         }
@@ -157,20 +192,29 @@ namespace UgovorOZakupuAgregat.Controllers
         [HttpPut]
         public ActionResult<TipGarancijeDto> UpdateTipGarancije(TipGarancijeUpdateDto tipGarancije)
         {
+            logDto.HttpMethod = "PUT";
+            logDto.Message = "Ažuriranje tipa garancije";
+
             try
             {
                 var stariTip = tipGarancijeRepository.GetTipGarancijeById(tipGarancije.TipId);
-                if (tipGarancijeRepository.GetTipGarancijeById(tipGarancije.TipId) == null)
+                if (stariTip == null)
                 {
+                    logDto.Level = "Warn";
+                    loggerService.CreateLog(logDto);
                     return NotFound();
                 }
                 TipGarancije tipGarancijeEntity = mapper.Map<TipGarancije>(tipGarancije);
                 mapper.Map(tipGarancijeEntity, stariTip);
                 tipGarancijeRepository.SaveChanges();
-                return Ok(mapper.Map<TipGarancijeDto>(stariTip));
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
+                return Ok(mapper.Map<TipGarancijeDto>(tipGarancijeEntity));
             }
             catch (Exception)
             {
+                logDto.Level = "Error";
+                loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
 
@@ -186,6 +230,10 @@ namespace UgovorOZakupuAgregat.Controllers
         public IActionResult GetTipGarancijeOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
+            logDto.HttpMethod = "OPTIONS";
+            logDto.Message = "Opcije za rad sa tipovima garancije";
+            logDto.Level = "Info";
+            loggerService.CreateLog(logDto);
             return Ok();
         }
     }

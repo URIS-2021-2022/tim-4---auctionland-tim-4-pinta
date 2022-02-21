@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Entities;
 using UgovorOZakupuAgregat.Models;
 
 namespace UgovorOZakupuAgregat.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje rokova dospeća
+    /// </summary>
     public class RokoviDospecaProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor profila
+        /// </summary>
         public RokoviDospecaProfile()
         {
             CreateMap<RokoviDospeca, RokoviDospecaDto>();
@@ -19,7 +21,6 @@ namespace UgovorOZakupuAgregat.Profiles
             CreateMap<RokoviDospecaUpdateDto, RokoviDospeca>();
 
             CreateMap<RokoviDospeca, RokoviDospeca>();
-
         }
     }
 }

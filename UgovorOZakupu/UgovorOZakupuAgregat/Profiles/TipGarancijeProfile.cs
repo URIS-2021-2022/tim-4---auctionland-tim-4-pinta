@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Entities;
 using UgovorOZakupuAgregat.Models;
 
 namespace UgovorOZakupuAgregat.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje tipa garancije
+    /// </summary>
     public class TipGarancijeProfile : Profile
     {
+        /// <summary>
+        /// Knstruktor profila za mapiranje tipa garancije
+        /// </summary>
         public TipGarancijeProfile()
         {
             CreateMap<TipGarancije, TipGarancijeDto>();
@@ -19,8 +21,6 @@ namespace UgovorOZakupuAgregat.Profiles
             CreateMap<TipGarancijeUpdateDto, TipGarancije>();
 
             CreateMap<TipGarancije, TipGarancije>();
-
-
         }
     }
 }
