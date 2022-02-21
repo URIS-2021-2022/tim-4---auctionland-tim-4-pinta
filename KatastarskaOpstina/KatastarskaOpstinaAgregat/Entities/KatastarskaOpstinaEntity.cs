@@ -20,6 +20,8 @@ namespace KatastarskaOpstinaAgregat.Entities
         /// <summary>
         /// Nazvi katastarske opstine
         /// </summary>
+        [Required]
+        [StringLength(50)]
         public String NazivKatastarskeOpstine { get; set; }
     }
 }

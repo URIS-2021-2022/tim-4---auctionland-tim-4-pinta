@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace KatastarskaOpstinaAgregat.Models
 {
-    /// <summary>
-    /// Dto za katastarsku opstinu
-    /// </summary>
-    public class KatastarskaOpstinaDto
+    public class KatastarskaOpstinaUpdateDto
     {
+       
+        /// <summary>
+        /// ID katastarske opstine
+        /// </summary>
+        public Guid KatastarskaOpstinaID { get; set; }
+
         /// <summary>
         /// Nazvi katastarske opstine
         /// </summary>
