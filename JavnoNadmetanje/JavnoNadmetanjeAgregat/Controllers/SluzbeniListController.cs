@@ -186,7 +186,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<SluzbeniListDto> UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)
+        public ActionResult<SluzbeniListDto> UpdateSluzbeniList(SluzbeniListUpdateDto sluzbeniList)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje sluzbenog lista";
@@ -194,19 +194,22 @@ namespace JavnoNadmetanjeAgregat.Controllers
             try
             {
                 var oldSluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniList.SluzbeniListID);
-                if (oldSluzbeniList == null)
+                if (sluzbeniListRepository.GetSluzbeniListById(sluzbeniList.SluzbeniListID) == null)
                 {
                     logDto.Level = "Warn";
                     loggerService.CreateLog(logDto);
                     return NotFound();
                 }
+               
                 SluzbeniListEntity sluzbeniListEntity = mapper.Map<SluzbeniListEntity>(sluzbeniList);
                 mapper.Map(sluzbeniListEntity, oldSluzbeniList); //Update objekta koji treba da sačuvamo u bazi                
 
                 sluzbeniListRepository.SaveChanges(); //Perzistiramo promene
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
+             
                 return Ok(mapper.Map<SluzbeniListDto>(sluzbeniListEntity));
+               
             }
             catch (Exception)
             {

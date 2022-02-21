@@ -20,6 +20,8 @@ namespace AdresaServis.Profiles
         {
             CreateMap<DrzavaEntity, DrzavaDto>();
             CreateMap<DrzavaDto, DrzavaEntity>();
+            CreateMap<DrzavaEntity, DrzavaUpdateDto>();
+            CreateMap<DrzavaUpdateDto, DrzavaEntity>();
         }
     }
 }

@@ -129,6 +129,15 @@ namespace UgovorOZakupuAgregat.Migrations
                     b.Property<Guid>("DokumentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("JavnoNadmetanjeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("KupacId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LicnostId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("MestoPotpisivanja")
                         .HasColumnType("nvarchar(max)");
 
@@ -156,6 +165,9 @@ namespace UgovorOZakupuAgregat.Migrations
                             DatumPotpisa = new DateTime(2021, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DatumZavodjenja = new DateTime(2021, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DokumentId = new Guid("d1209104-7358-4c22-9f4f-415203563a25"),
+                            JavnoNadmetanjeId = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
+                            KupacId = new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"),
+                            LicnostId = new Guid("e91b29cc-79a5-4de8-8030-77df6e514def"),
                             MestoPotpisivanja = "Novi Sad",
                             RokZaVracanjeZemljista = new DateTime(2021, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             TipId = new Guid("e1f134e5-25f9-4b00-8b96-a809d11cd33b"),

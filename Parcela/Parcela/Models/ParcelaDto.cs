@@ -52,6 +52,36 @@ namespace Parcela.Models
         public String OdvodnjavanjeStvarnoStanje { get; set; }
 
         /// <summary>
+        /// ID zasticene zone
+        /// </summary>
+        public Guid ZasticenaZonaID { get; set; }
+
+        /// <summary>
+        /// ID odvodnjavanja
+        /// </summary>
+        public Guid OdvodnjavanjeID { get; set; }
+
+        /// <summary>
+        /// ID obradivosti
+        /// </summary>
+        public Guid ObradivostID { get; set; }
+
+        /// <summary>
+        /// ID oblika svojine
+        /// </summary>
+        public Guid OblikSvojineID { get; set; }
+
+        /// <summary>
+        /// ID kulture
+        /// </summary>
+        public Guid KulturaID { get; set; }
+
+        /// <summary>
+        /// ID klase
+        /// </summary>
+        public Guid KlasaID { get; set; }
+
+        /// <summary>
         /// ID katastarske opstine
         /// </summary>
         public Guid KatastarskaOpstinaID { get; set; }

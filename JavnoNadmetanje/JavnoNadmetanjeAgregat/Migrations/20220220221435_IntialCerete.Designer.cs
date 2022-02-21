@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JavnoNadmetanjeAgregat.Migrations
 {
     [DbContext(typeof(JavnoNadmetanjeContext))]
-    [Migration("20220219175832_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220220221435_IntialCerete")]
+    partial class IntialCerete
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,9 @@ namespace JavnoNadmetanjeAgregat.Migrations
 
                     b.Property<int>("Krug")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("KupacID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ParcelaID")
                         .HasColumnType("uniqueidentifier");
@@ -83,6 +86,7 @@ namespace JavnoNadmetanjeAgregat.Migrations
                             Izuzeto = false,
                             KatastarskaOpstinaID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             Krug = 2,
+                            KupacID = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
                             ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                             PeriodZakupa = 2,
                             PocetnaCenaPoHektaru = 1000,
@@ -100,6 +104,7 @@ namespace JavnoNadmetanjeAgregat.Migrations
                             Izuzeto = false,
                             KatastarskaOpstinaID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             Krug = 2,
+                            KupacID = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
                             ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
                             PeriodZakupa = 2,
                             PocetnaCenaPoHektaru = 1000,

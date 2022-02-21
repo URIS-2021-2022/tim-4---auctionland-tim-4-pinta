@@ -13,17 +13,15 @@ namespace AdresaServis.Data
     public class DrzavaRepository : IDrzavaRepository
     {
         private readonly AdresaContext context;
-        private readonly IMapper mapper;
 
         /// <summary>
         /// Konstruktor
         /// </summary>
         /// <param name="context"></param>
         /// <param name="mapper"></param>
-        public DrzavaRepository(AdresaContext context, IMapper mapper)
+        public DrzavaRepository(AdresaContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         /// <summary>

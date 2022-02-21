@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Korisnik.Migrations
 {
     [DbContext(typeof(KorisnikContext))]
-    [Migration("20220212104102_Security")]
-    partial class Security
+    [Migration("20220221162253_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,9 @@ namespace Korisnik.Migrations
                     b.Property<string>("Salt")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TipKorisnika")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("KorisnikId");
 
                     b.ToTable("KorisnikModels");
@@ -55,7 +58,8 @@ namespace Korisnik.Migrations
                             KorisnickoIme = "IT1/2020",
                             Lozinka = "1",
                             Prezime = "Petrović",
-                            Salt = "1"
+                            Salt = "1",
+                            TipKorisnika = "administrator"
                         },
                         new
                         {
@@ -64,7 +68,8 @@ namespace Korisnik.Migrations
                             KorisnickoIme = "IT2/2019",
                             Lozinka = "1",
                             Prezime = "Marković",
-                            Salt = "1"
+                            Salt = "1",
+                            TipKorisnika = "licitant"
                         });
                 });
 

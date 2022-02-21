@@ -17,6 +17,7 @@ namespace KupacMikroservis.Controllers
     /// </summary>
     [ApiController]
     [Route("api/ovlascenolice")]
+    [Produces("application/json", "application/xml")]
     public class OvlascenoLiceController : ControllerBase
     {
         private readonly IOvlascenoLiceRepository oLiceRepository;
@@ -43,6 +44,9 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca ovlascena lica
         /// </summary>
+        /// <returns>Lista ovlascenih lica</returns>
+        /// <response code = "200">Vraca listu ovlascenih lica</response>
+        /// <response code = "404">Nije pronadjeno nijedno ovlasceno lice</response>
         [HttpGet]
         public ActionResult<List<OvlascenoLiceDTO>> GetOvlascenaLica()
         {
@@ -75,6 +79,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca ovlasceno lice po ID
         /// </summary>
+        /// <param name="OvlascenoLiceId">ID ovlascenog lica</param>
+        /// <returns>Trazeno ovlasceno lice</returns>
+        /// <response code = "200">Vraca trazeno ovlasceno lice</response>
+        /// <response code = "404">Trazeno ovlasceno lice nije pronadjeno</response>
         [HttpGet("{OvlascenoLiceId}")]
         public ActionResult<OvlascenoLiceDTO> GetOvlascenoLice(Guid oLiceID)
         {
@@ -97,6 +105,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Dodaje ovlasceno lice
         /// </summary>
+        /// <param name="oLice">Model ovlascenog lica</param>
+        /// <returns>Potvrda o kreiranom ovlascenom licu</returns>
+        /// <response code = "201">Vraca kreirano ovlasceno lice</response>
+        /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
         public ActionResult<OvlascenoLiceDTO> CreateOvlascenoLice([FromBody] OvlascenoLiceCreateDTO oLice)    //confirmation implementirati
         {
@@ -128,6 +140,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         ///Brise ovlasceno lice
         /// </summary>
+        /// <param name="OvlascenoLiceId">ID ovlascenog lica</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Ovlasceno lice uspesno obrisano</response>
+        /// <response code="404">Nije pronadjeno ovlasceno lice</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{OvlascenoLiceId}")]
         public IActionResult DeleteOvlascenoLice(Guid oLiceID)
         {
@@ -160,6 +177,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Azurira ovlasceno lice
         /// </summary>
+        /// <param name="ol">Model ovlascenog lica za azuriranje</param>
+        /// <returns>Potvrda o azuriranom ovlascenom licu</returns>
+        /// <response code="200">Vraca azurirano ovlasceno lice</response>
+        /// <response code="400">Ovlasceno lice nije pronadjeno</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpPut]
         public ActionResult<OvlascenoLiceDTO> UpdateOvlascenoLice(OvlascenoLiceUpdateDTO ol)
         {
@@ -170,20 +192,28 @@ namespace KupacMikroservis.Controllers
             {
 
                 var oldOLice= oLiceRepository.GetOvlascenoLiceById(ol.OvlascenoLiceId);
+                oldOLice.OvlascenoLiceId = ol.OvlascenoLiceId;
+                oldOLice.Ime = ol.Ime;
+                oldOLice.Prezime = ol.Prezime;
+                oldOLice.BrojLicnogDokumenta = ol.BrojLicnogDokumenta;
+                oldOLice.BrojTable = ol.BrojTable;
+
+
                 if (oldOLice == null)
                 {
                     logDTO.Level = "Warn";
                     logger.Log(logDTO);
                     return NotFound();
                 }
-                OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
+                /*        OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
 
-                mapper.Map(olEntity, oldOLice);
+                        mapper.Map(olEntity, oldOLice);
 
-                oLiceRepository.SaveChanges();
-                logDTO.Level = "Info";
-                logger.Log(logDTO);
-                return Ok(mapper.Map<OvlascenoLiceDTO>(olEntity));
+                        oLiceRepository.SaveChanges();
+               */
+               logDTO.Level = "Info";
+               logger.Log(logDTO);
+                return Ok(mapper.Map<OvlascenoLiceDTO>(oldOLice));
             }
             catch (Exception)
             {

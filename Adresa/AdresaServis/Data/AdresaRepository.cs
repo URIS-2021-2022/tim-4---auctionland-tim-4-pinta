@@ -13,17 +13,15 @@ namespace AdresaServis.Data
     public class AdresaRepository : IAdresaRepository
     {
         private readonly AdresaContext context;
-        private readonly IMapper mapper;
 
         /// <summary>
         /// Kontruktor
         /// </summary>
         /// <param name="context"></param>
         /// <param name="mapper"></param>
-        public AdresaRepository(AdresaContext context, IMapper mapper)
+        public AdresaRepository(AdresaContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Korisnik.Migrations
 {
-    public partial class Security : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace Korisnik.Migrations
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     KorisnickoIme = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Lozinka = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Salt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TipKorisnika = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,13 +42,13 @@ namespace Korisnik.Migrations
 
             migrationBuilder.InsertData(
                 table: "KorisnikModels",
-                columns: new[] { "KorisnikId", "Ime", "KorisnickoIme", "Lozinka", "Prezime", "Salt" },
-                values: new object[] { 2, "Petar", "IT1/2020", "1", "Petrović", "1" });
+                columns: new[] { "KorisnikId", "Ime", "KorisnickoIme", "Lozinka", "Prezime", "Salt", "TipKorisnika" },
+                values: new object[] { 2, "Petar", "IT1/2020", "1", "Petrović", "1", "administrator" });
 
             migrationBuilder.InsertData(
                 table: "KorisnikModels",
-                columns: new[] { "KorisnikId", "Ime", "KorisnickoIme", "Lozinka", "Prezime", "Salt" },
-                values: new object[] { 3, "Marko", "IT2/2019", "1", "Marković", "1" });
+                columns: new[] { "KorisnikId", "Ime", "KorisnickoIme", "Lozinka", "Prezime", "Salt", "TipKorisnika" },
+                values: new object[] { 3, "Marko", "IT2/2019", "1", "Marković", "1", "licitant" });
 
             migrationBuilder.InsertData(
                 table: "Tokens",

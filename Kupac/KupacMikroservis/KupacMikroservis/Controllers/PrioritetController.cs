@@ -17,6 +17,7 @@ namespace KupacMikroservis.Controllers
     /// </summary>
     [ApiController]
     [Route("api/prioritet")]
+    [Produces("application/json", "application/xml")]
     public class PrioritetController : ControllerBase
     {
         private readonly IPrioritetRepository prioritetRepository;
@@ -41,6 +42,9 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca prioritete
         /// </summary>
+        ///  /// <returns>Lista prioriteta</returns>
+        /// <response code = "200">Vraca listu prioriteta</response>
+        /// <response code = "404">Nije pronadjen nijedan prioritet</response>
         [HttpGet]
         public ActionResult<List<PrioritetDTO>> GetPrioriteti()
         {
@@ -62,6 +66,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca prioritet po ID
         /// </summary>
+        /// <param name="PrioritetId">ID prioriteta</param>
+        /// <returns>Trazeni prioritet</returns>
+        /// <response code = "200">Vraca trazeni prioritet</response>
+        /// <response code = "404">Trazeni prioritet nije pronadjen</response>
         [HttpGet("{PrioritetId}")]
         public ActionResult<PrioritetDTO> GetPrioritet(Guid PrioritetId)
         {
@@ -84,6 +92,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Dodaje novi prioritet
         /// </summary>
+        ///  /// <param name="prioritet">Model prioriteta</param>
+        /// <returns>Potvrda o kreiranom prioritetu</returns>
+        /// <response code = "201">Vraca kreirani prioritet</response>
+        /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
         public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)   
         {
@@ -115,6 +127,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Brise prioritet
         /// </summary>
+        /// <param name="PrioritetId">ID prioriteta</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Prioritet uspesno obrisan</response>
+        /// <response code="404">Nije pronadjen prioritet</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{PrioritetId}")]
         public IActionResult DeletePrioritet(Guid prioritetID)
         {
@@ -147,7 +164,12 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Azurira prioritet
         /// </summary>
-        [HttpPut]
+        /// <param name="prioritet">Model prioriteta za azuriranje</param>
+        /// <returns>Potvrda o modifikovanom prioritetu</returns>
+        /// <response code="200">Vraca azuriran prioritet</response>
+        /// <response code="400">Prioritet nije pronadjen</response>
+        /// <response code="500">Doslo je do greske</response>
+        [HttpPut("{PrioritetId}")]
         public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
         {
             logDTO.HttpMethod = "PUT";
@@ -157,20 +179,27 @@ namespace KupacMikroservis.Controllers
             {
 
                 var oldPrioritet = prioritetRepository.GetPrioritetById(prioritet.PrioritetId);
+                oldPrioritet.PrioritetId = prioritet.PrioritetId;
+                oldPrioritet.PrioritetOpis = prioritet.PrioritetOpis;
+
                 if (oldPrioritet == null)
                 {
                     logDTO.Level = "Warn";
                     logger.Log(logDTO);
                     return NotFound();
                 }
-                PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
+                /*     PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
 
-                mapper.Map(pEntity, oldPrioritet);
+                     mapper.Map(pEntity, oldPrioritet);
+
+                     prioritetRepository.SaveChanges();
+                     logDTO.Level = "Info";
+                     logger.Log(logDTO); */
+                // return Ok(mapper.Map<PrioritetDTO>(pEntity));
 
                 prioritetRepository.SaveChanges();
-                logDTO.Level = "Info";
-                logger.Log(logDTO);
-                return Ok(mapper.Map<PrioritetDTO>(pEntity));
+
+                return Ok(mapper.Map<PrioritetDTO>(oldPrioritet));
             }
             catch (Exception)
             {

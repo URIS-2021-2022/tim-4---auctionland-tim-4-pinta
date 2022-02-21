@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using KupacMikroservis.ServiceCalls;
 
-namespace Parcela.ServiceCals
+namespace KupacMikroservis.ServiceCalls
 {
     public class Gateway : IGateway
     {

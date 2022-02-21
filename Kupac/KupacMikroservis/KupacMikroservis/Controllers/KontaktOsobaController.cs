@@ -17,6 +17,7 @@ namespace KupacMikroservis.Controllers
     /// </summary>
     [ApiController]
     [Route("api/kontaktosoba")]
+    [Produces("application/json", "application/xml")]
     public class KontaktOsobaController : ControllerBase
     {
         private readonly IKontaktOsobaRepository koRepository;
@@ -39,6 +40,9 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca kontakt osobe
         /// </summary>
+        /// <returns>Lista kontakt osoba</returns>
+        /// <response code = "200">Vraca listu kontakt osoba</response>
+        /// <response code = "404">Nije pronadjena nijedna kontakt osoba</response>
         [HttpGet]
         public ActionResult<List<KontaktOsobaDTO>> GetKontaktOsobe()
         {
@@ -60,6 +64,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca kontakt osobu po ID
         /// </summary>
+        /// <param name="KontaktOsobaId">ID kontakt osobe</param>
+        /// <returns>Trazena kontakt osoba</returns>
+        /// <response code = "200">Vraca trazenu kontakt osobu</response>
+        /// <response code = "404">Trazena kontakt osoba nije pronadjena</response>
         [HttpGet("{KontaktOsobaId}")]
         public ActionResult<KontaktOsobaDTO> GetKontaktOsoba(Guid koID)
         {
@@ -82,6 +90,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Dodaje novu kontakt osobu
         /// </summary>
+        /// <param name="ko">Model kontakt osobe</param>
+        /// <returns>Potvrda o kreiranoj kontakt osobi</returns>
+        /// <response code = "201">Vraca kreiranu kontakt osobu</response>
+        /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
         public ActionResult<KontaktOsobaDTO> CreateKontaktOsoba([FromBody] KontaktOsobaCreateDTO ko)    //confirmation implementirati
         {
@@ -112,6 +124,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         ///Vraca kontakt osobu po ID
         /// </summary>
+        /// <param name="KontaktOsobaId">ID kontakt osobe</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Kontakt osoba uspesno obrisana</response>
+        /// <response code="404">Nije pronadjena kontakt osoba</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{KontaktOsobaId}")]
         public IActionResult DeleteKontaktOsoba(Guid koID)
         {
@@ -142,6 +159,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Azurira kontakt osobu
         /// </summary>
+        /// <param name="ko">Model kontakt osobe za azuriranje</param>
+        /// <returns>Potvrda o modifikovanoj kontakt osobi</returns>
+        /// <response code="200">Vraca azuriranu kontakt osobu</response>
+        /// <response code="400">Kontakt osoba nije pronadjena</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpPut]
         public ActionResult<KontaktOsobaDTO> UpdateKontaktOsoba(KontaktOsobaUpdateDTO ko)
         {
@@ -158,14 +180,22 @@ namespace KupacMikroservis.Controllers
                     logger.Log(logDTO);
                     return NotFound(); 
                 }
-                KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
 
-                mapper.Map(koEntity, oldKOsoba);                
+                oldKOsoba.KontaktOsobaId = ko.KontaktOsobaId;
+                oldKOsoba.Ime = ko.Ime;
+                oldKOsoba.Prezime = ko.Prezime;
+                oldKOsoba.Telefon = ko.Telefon;
+                
+              /*  KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
+
+                
+
+                mapper.Map(koEntity, oldKOsoba);  */              
 
                 koRepository.SaveChanges();
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Ok(mapper.Map<KontaktOsobaDTO>(koEntity));
+                return Ok(mapper.Map<KontaktOsobaDTO>(ko));
             }
             catch (Exception)
             {

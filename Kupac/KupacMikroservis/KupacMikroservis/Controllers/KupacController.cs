@@ -48,7 +48,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca kupce
         /// </summary>
+        /// <returns>Lista klasa</returns>
+        /// <response code = "200">Vraca listu kupaca</response>
+        /// <response code = "404">Nije pronadjen nijedan kupac</response>
         [HttpGet]
+        [Produces("application/json", "application/xml")]
         public ActionResult<List<KupacDTO>> GetKupci()
         {
             logDTO.HttpMethod = "GET";
@@ -72,26 +76,32 @@ namespace KupacMikroservis.Controllers
                 return NoContent();
             }
 
-            List<KupacDTO> kupciDtos = new List<KupacDTO>();
+            //   List<KupacDTO> kupciDtos = new List<KupacDTO>();
 
-            foreach(KupacEntity k in kupci)
-            {
-                AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(k.AdresaID).Result;
-                UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(k.UplataID).Result;
-                KupacDTO kupacDto = mapper.Map<KupacDTO>(k);
-                kupacDto.Adresa = adresa;
-                kupacDto.Uplata = uplata;
-                kupciDtos.Add(kupacDto);
-            }
+            List<KupacDTO> kupciDtos = mapper.Map<List<KupacDTO>>(kupci);
 
-            logDTO.Level = "Info";
-            logger.Log(logDTO);
+            /*     foreach(KupacEntity k in kupci)
+                 {
+                    AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(k.AdresaID).Result;
+                     UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(k.UplataID).Result;
+                     KupacDTO kupacDto = mapper.Map<KupacDTO>(k);
+                     kupacDto.Adresa = adresa;
+                     kupacDto.Uplata = uplata;
+                     kupciDtos.Add(kupacDto);
+                 } */
+
+             logDTO.Level = "Info";
+             logger.Log(logDTO);
             return Ok(kupciDtos);
         }
 
         /// <summary>
         /// Vraca kupca po ID
         /// </summary>
+        /// /// <param name="KupacId">ID kupca</param>
+        /// <returns>Trazeni kupac</returns>
+        /// <response code = "200">Vraca trazenog kupca</response>
+        /// <response code = "404">Trazeni kupac nije pronadjen</response>
         [HttpGet("{KupacId}")]
         public ActionResult<KupacDTO> GetKupac(Guid kupacID)
         {
@@ -116,10 +126,10 @@ namespace KupacMikroservis.Controllers
             }
 
             AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(kupacModel.AdresaID).Result;
-            UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
+          //  UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
             KupacDTO kupacDto = mapper.Map<KupacDTO>(kupacModel);
             kupacDto.Adresa = adresa;
-            kupacDto.Uplata = uplata;
+          //  kupacDto.Uplata = uplata;
 
             logDTO.Level = "Info";
             logger.Log(logDTO);
@@ -129,6 +139,10 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Dodaje novog kupca
         /// </summary>
+        /// <param name="kupac">Model kupca</param>
+        /// <returns>Potvrda o kreiranom kupcu</returns>
+        /// <response code = "201">Vraca kreiranog kupca</response>
+        /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
         public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)   
         {
@@ -143,11 +157,14 @@ namespace KupacMikroservis.Controllers
 
                 if (kp.IsFizickoLice == true)
                 {
-                    kpCreated = fLiceRepository.CreateFizickoLice((FizickoLiceEntity)kp);
+                    
+                    FizickoLiceEntity flCreated = kp as FizickoLiceEntity;
+                    kpCreated = fLiceRepository.CreateFizickoLice(flCreated);
                 }
                 else
                 {
-                    kpCreated = pLiceRepository.CreatePravnoLice((PravnoLiceEntity)kp);
+                    PravnoLiceEntity plCreated = new PravnoLiceEntity(kp);
+                    kpCreated = pLiceRepository.CreatePravnoLice(plCreated);
                 }
             
                 
@@ -172,6 +189,11 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Brise kupca
         /// </summary>
+        /// <param name="KupacId">ID kupca</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Kupac uspesno obrisana</response>
+        /// <response code="404">Nije pronadjen kupac</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{KupacId}")]
         public IActionResult DeleteKupac(Guid kupacID)
         {
@@ -185,10 +207,7 @@ namespace KupacMikroservis.Controllers
             {
                 kupacModel = pLiceRepository.GetPravnoLiceById(kupacID);
 
-                if (kupacModel == null)
-                {
-                    kupacModel = fLiceRepository.GetFizickoLiceById(kupacID);
-                }
+                
                 if (kupacModel == null)
                 {
                     logDTO.Level = "Warn";
@@ -220,8 +239,13 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Azurira kupca
         /// </summary>
-        [HttpPut]
-        public ActionResult<KupacDTO> UpdateKupac(KupacUpdateDTO kupac)
+        /// <param name="kupac">Model kupca za azuriranje</param>
+        /// <returns>Potvrda o modifikovanom kupcu</returns>
+        /// <response code="200">Vraca azuriranog kupca</response>
+        /// <response code="400">Kupac nije pronadjen</response>
+        /// <response code="500">Doslo je do greske</response>
+        [HttpPut("{KupacId}")]
+        public ActionResult<KupacDTO> UpdateKupac([FromBody]KupacUpdateDTO kupac)
         {
             logDTO.HttpMethod = "PUT";
             logDTO.Message = "Azuriranje kupca";
@@ -230,8 +254,24 @@ namespace KupacMikroservis.Controllers
             {
                 if (kupac.IsFizickoLice == true)
                 {
-                    var oldFizLice = fLiceRepository.GetFizickoLiceById(kupac.KupacId);
-                    if (oldFizLice == null)
+                 var oldFizLice = fLiceRepository.GetFizickoLiceById(kupac.KupacId);
+                
+                oldFizLice.KupacId = kupac.KupacId;
+                oldFizLice.Naziv = kupac.Naziv;
+                oldFizLice.BrojRacuna = kupac.BrojRacuna;
+                oldFizLice.BrojTelefona1 = kupac.BrojTelefona1;
+                oldFizLice.BrojTelefona2 = kupac.BrojTelefona2;
+                oldFizLice.Email = kupac.Email;
+                oldFizLice.AdresaID = kupac.AdresaID;
+                oldFizLice.UplataID = kupac.UplataID;
+                oldFizLice.Prioritet = kupac.Prioritet;
+                oldFizLice.DatumPocetkaZabrane = kupac.DatumPocetkaZabrane;
+                oldFizLice.DuzinaTrajanjaZabraneUGodinama = kupac.DuzinaTrajanjaZabraneUGodinama;
+                oldFizLice.DatumPrestankaZabrane = kupac.DatumPrestankaZabrane;
+                oldFizLice.IsFizickoLice = kupac.IsFizickoLice;
+                
+
+                if (oldFizLice == null)
                     {
                         logDTO.Level = "Warn";
                         logger.Log(logDTO);
@@ -252,23 +292,45 @@ namespace KupacMikroservis.Controllers
                 else
                 {
                     var oldPrLice = pLiceRepository.GetPravnoLiceById(kupac.KupacId);
-                    if (oldPrLice == null)
+
+               
+
+                if (oldPrLice == null)
                     {
                         logDTO.Level = "Warn";
                         logger.Log(logDTO);
                         return NotFound();
                     }
-                    KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
 
-                    PravnoLiceEntity pLice = (PravnoLiceEntity)kpEntity;
+                oldPrLice.KupacId = kupac.KupacId;
+                oldPrLice.Naziv = kupac.Naziv;
+                oldPrLice.BrojRacuna = kupac.BrojRacuna;
+                oldPrLice.BrojTelefona1 = kupac.BrojTelefona1;
+                oldPrLice.BrojTelefona2 = kupac.BrojTelefona2;
+                oldPrLice.Email = kupac.Email;
+                oldPrLice.AdresaID = kupac.AdresaID;
+                oldPrLice.UplataID = kupac.UplataID;
+                oldPrLice.Prioritet = kupac.Prioritet;
+                oldPrLice.DatumPocetkaZabrane = kupac.DatumPocetkaZabrane;
+                oldPrLice.DuzinaTrajanjaZabraneUGodinama = kupac.DuzinaTrajanjaZabraneUGodinama;
+                oldPrLice.DatumPrestankaZabrane = kupac.DatumPrestankaZabrane;
+                oldPrLice.IsFizickoLice = kupac.IsFizickoLice;
 
-                    mapper.Map(pLice, oldPrLice);
+                /*    KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
 
-                    pLiceRepository.SaveChanges();
+                    PravnoLiceEntity pLice = new PravnoLiceEntity(kpEntity);
+
+                mapper.Map(pLice, oldPrLice);
+
+             
+               */
+
+                pLiceRepository.SaveChanges();
+                
 
                     logDTO.Level = "Info";
                     logger.Log(logDTO);
-                    return Ok(mapper.Map<KupacDTO>(kpEntity));
+                    return Ok(mapper.Map<KupacDTO>(kupac));
                 }
 
                

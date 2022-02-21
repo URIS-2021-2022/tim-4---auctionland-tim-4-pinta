@@ -38,17 +38,15 @@ namespace UgovorOZakupuAgregat.Data
         public UgovorOZakupu CreateUgovor(UgovorOZakupu ugovor)
         {
             ugovor.UgovorId= Guid.NewGuid();
-
             context.Ugovori.Add(ugovor);
-            UgovorOZakupu u = GetUgovorById(ugovor.UgovorId);
-            return u;
+            //UgovorOZakupu u = GetUgovorById(ugovor.UgovorId);
+            return ugovor;
            
         }
 
         public void UpdateUgovor(UgovorOZakupu ugovor)
         {
-            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
-            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
+            
         }
 
         public void DeleteUgovor(Guid ugovorId)

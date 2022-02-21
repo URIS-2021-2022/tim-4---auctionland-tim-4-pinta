@@ -9,6 +9,8 @@ using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Parcela.Controllers
@@ -23,15 +25,19 @@ namespace Parcela.Controllers
     {
         private readonly IKulturaRepository kulturaRepository;
         private readonly IGatewayService gatewayService;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public KulturaController(IKulturaRepository kulturaRepository, IGatewayService gatewayService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
+  
+
+        public KulturaController(IKulturaRepository kulturaRepository, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.kulturaRepository = kulturaRepository;
             this.gatewayService = gatewayService;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
@@ -49,8 +55,23 @@ namespace Parcela.Controllers
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<KulturaDto>> GetKulture()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if(split[1] != "administrator")
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if(res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+       
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih kultura";
 
@@ -187,7 +208,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KulturaDto> UpdateKultura(KulturaEntity kultura)
+        public ActionResult<KulturaDto> UpdateKultura(KulturaUpdateDto kultura)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje kulture";
@@ -202,13 +223,13 @@ namespace Parcela.Controllers
                     return NotFound(); 
                 }
                 KulturaEntity kulturaEntity = mapper.Map<KulturaEntity>(kultura);
-
-                mapper.Map(kulturaEntity, oldKultura);                
+           
+                oldKultura.KulturaNaziv = kulturaEntity.KulturaNaziv;
 
                 kulturaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<KulturaDto>(kulturaEntity));
+                return Ok(mapper.Map<KulturaDto>(oldKultura));
             }
             catch (Exception)
             {

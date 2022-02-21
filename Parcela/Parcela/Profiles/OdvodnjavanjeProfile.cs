@@ -20,6 +20,8 @@ namespace Parcela.Profiles
         {
             CreateMap<OdvodnjavanjeEntity, OdvodnjavanjeDto>();
             CreateMap<OdvodnjavanjeDto, OdvodnjavanjeEntity>();
+            CreateMap<OdvodnjavanjeEntity, OdvodnjavanjeUpdateDto>();
+            CreateMap<OdvodnjavanjeUpdateDto, OdvodnjavanjeEntity>();
         }
     }
 }
