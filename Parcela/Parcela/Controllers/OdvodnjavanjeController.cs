@@ -180,7 +180,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<OdvodnjavanjeDto> UpdateOdvodnjavanje(OdvodnjavanjeEntity odvodnjavanje)
+        public ActionResult<OdvodnjavanjeDto> UpdateOdvodnjavanje(OdvodnjavanjeUpdateDto odvodnjavanje)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje odvodnjavanja";

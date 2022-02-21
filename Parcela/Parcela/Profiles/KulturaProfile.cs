@@ -20,6 +20,8 @@ namespace Parcela.Profiles
         {
             CreateMap<KulturaEntity, KulturaDto>();
             CreateMap<KulturaDto, KulturaEntity>();
+            CreateMap<KulturaEntity, KulturaUpdateDto>();
+            CreateMap<KulturaUpdateDto, KulturaEntity>();
         }
     }
 }

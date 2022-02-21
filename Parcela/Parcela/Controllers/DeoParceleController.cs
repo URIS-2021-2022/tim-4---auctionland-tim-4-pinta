@@ -186,7 +186,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleEntity deoParcele)
+        public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleUpdateDto deoParcele)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje dela parcele";

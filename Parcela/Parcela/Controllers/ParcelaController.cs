@@ -123,6 +123,13 @@ namespace Parcela.Controllers
         /// "obradivostStvarnoStanje": "Obradivost1", \
         /// "zasticenaZonaStvarnoStanje": "ZasticenaZona1", \
         /// "odvodnjavanjeStvarnoStanje": "Odvodnjavanje1" \
+        /// "kulturaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+        /// "klasaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+        /// "obradivostID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+        /// "zasticenaZonaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+        /// "odvodnjavanjeID": "a873025a-b4bc-440d-8e65-dc63fb9025d7" \
+        /// "opstinaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+        /// "kupacID": "a873025a-b4bc-440d-8e65-dc63fb9025d7" \
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu parcelu</response>
@@ -131,7 +138,7 @@ namespace Parcela.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ParcelaDto> CreateParcela([FromBody] ParcelaDto parcela)
+        public ActionResult<ParcelaDto> CreateParcela([FromBody] ParcelaCreateDto parcela)
         {
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove parcele";
@@ -207,7 +214,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ParcelaDto> UpdateParcela(ParcelaEntity parcela)
+        public ActionResult<ParcelaDto> UpdateParcela(ParcelaUpdateDto parcela)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikacija parcele";

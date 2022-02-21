@@ -183,7 +183,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ObradivostDto> UpdateObradivost(ObradivostEntity obradivost)
+        public ActionResult<ObradivostDto> UpdateObradivost(ObradivostUpdateDto obradivost)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje obradivosti";

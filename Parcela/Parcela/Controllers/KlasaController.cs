@@ -185,7 +185,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KlasaDto> UpdateKlasa(KlasaEntity klasa)
+        public ActionResult<KlasaDto> UpdateKlasa(KlasaUpdateDto klasa)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje klase";

@@ -187,7 +187,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KulturaDto> UpdateKultura(KulturaEntity kultura)
+        public ActionResult<KulturaDto> UpdateKultura(KulturaUpdateDto kultura)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje kulture";

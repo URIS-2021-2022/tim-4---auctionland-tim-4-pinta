@@ -1,5 +1,4 @@
-﻿using Parcela.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +6,9 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za parcelu
+    /// DTO za kreiranje parcele
     /// </summary>
-    public class ParcelaDto
+    public class ParcelaCreateDto
     {
         /// <summary>
         /// Povrsina parcele
@@ -87,18 +86,8 @@ namespace Parcela.Models
         public Guid KatastarskaOpstinaID { get; set; }
 
         /// <summary>
-        /// Katastarska opstina parcele
-        /// </summary>
-        public OpstinaParceleDto Opstina { get; set; }
-
-        /// <summary>
         /// ID kupca parcele
         /// </summary>
         public Guid KupacID { get; set; }
-
-        /// <summary>
-        /// Kupac parcele
-        /// </summary>
-        public KupacParceleDto Kupac { get; set; }
     }
 }
