@@ -134,6 +134,32 @@
     },
 
 
+    {
+      "DownstreamPathTemplate": "/api/logger",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44202
+        }
+      ],
+      "UpstreamPathTemplate": "/logger",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "AuthenticationOptions": {
+
+        "AllowedScopes": []
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "5s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+
+
 
     {
       "DownstreamPathTemplate": "/api/parcele/{everything}",

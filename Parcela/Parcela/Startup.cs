@@ -55,6 +55,7 @@ namespace Parcela
             services.AddScoped<IKupacService, KupacService>();
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IKorisnikSistemaService, KorisnikSistemaService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

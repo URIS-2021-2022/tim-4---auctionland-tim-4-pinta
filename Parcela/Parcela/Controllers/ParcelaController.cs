@@ -66,8 +66,8 @@ namespace Parcela.Controllers
             List<ParcelaDto> parceleDto = mapper.Map<List<ParcelaDto>>(parcele);
             foreach(ParcelaDto p in parceleDto)
             {
-                p.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
-                p.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
+                //p.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                //p.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
             }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);

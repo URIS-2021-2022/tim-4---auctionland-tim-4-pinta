@@ -43,6 +43,10 @@ namespace UgovorOZakupuAgregat
             services.AddScoped<ITipGarancijeRepository, TipGarancijeRepository>();
             services.AddScoped<IRokoviDospecaRepository, RokoviDospecaRepository>();
             services.AddScoped<ILicnostService, LicnostService>();
+            services.AddScoped<IKupacService, KupacService>();
+            services.AddScoped<IJavnoNadmetanjeService, JavnoNadmetanjeService>();
+            services.AddScoped<IGatewayService, GatewayService>();
+            services.AddScoped<ILoggerService, LoggerService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -84,5 +84,5 @@
 2022-02-19 19:48:45.6789 INFO Naziv metode: GET,Naziv servisa: JavnoNadmetanje,poruka: Vracanje svih javnih nadmetanja
 2022-02-19 20:01:27.9318 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina
 >>>>>>> d321625f7a7814d636de5073cc7cf63f13e3a78b
-2022-02-21 17:31:30.2258 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje adrese po ID-ju
-2022-02-21 17:31:32.0862 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-21 17:50:03.6638 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih parcela
+2022-02-21 19:13:22.8546 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih kultura

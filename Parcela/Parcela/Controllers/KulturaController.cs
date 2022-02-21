@@ -9,6 +9,8 @@ using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Parcela.Controllers
@@ -23,15 +25,19 @@ namespace Parcela.Controllers
     {
         private readonly IKulturaRepository kulturaRepository;
         private readonly IGatewayService gatewayService;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public KulturaController(IKulturaRepository kulturaRepository, IGatewayService gatewayService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
+  
+
+        public KulturaController(IKulturaRepository kulturaRepository, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.kulturaRepository = kulturaRepository;
             this.gatewayService = gatewayService;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
@@ -47,15 +53,24 @@ namespace Parcela.Controllers
         /// <response code = "404">Nije pronadjena nijedna kultura</response>
         [HttpGet]
         [HttpHead]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<KulturaDto>> GetKulture()
         {
-            if (Request.Headers["token"].ToString() == null) 
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if(split[1] != "administrator")
             {
                 return Unauthorized();
             }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if(res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+       
 
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih kultura";

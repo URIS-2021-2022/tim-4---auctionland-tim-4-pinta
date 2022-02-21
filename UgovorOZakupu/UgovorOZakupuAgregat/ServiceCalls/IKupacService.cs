@@ -6,8 +6,8 @@ using UgovorOZakupuAgregat.Models;
 
 namespace UgovorOZakupuAgregat.ServiceCalls
 {
-    public interface ILicnostService
+    public interface IKupacService
     {
-        Task<LicnostUgovoraDto> GetLicnostByIdAsync(Guid licnostId);
+        Task<KupacUgovoraDto> GetKupacByIdAsync(Guid kupacId);
     }
 }

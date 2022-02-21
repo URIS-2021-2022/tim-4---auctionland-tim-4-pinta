@@ -6,8 +6,8 @@ using UgovorOZakupuAgregat.Models;
 
 namespace UgovorOZakupuAgregat.ServiceCalls
 {
-    public interface ILicnostService
+    public interface ILoggerService
     {
-        Task<LicnostUgovoraDto> GetLicnostByIdAsync(Guid licnostId);
+        void CreateLog(LogDto log);
     }
 }
