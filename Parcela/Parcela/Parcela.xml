@@ -22,6 +22,7 @@
             </summary>
             <returns>Lista deolova parcela</returns>
             <response code = "200">Vraca listu delova parcela</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjen nijedan deo parcele</response>
         </member>
         <member name="M:Parcela.Controllers.DeoParceleController.GetDeoParcele(System.Guid)">
@@ -31,9 +32,10 @@
             <param name="deoParceleID">ID dela parcele</param>
             <returns>Trazeni deo parcele</returns>
             <response code = "200">Vraca trazeni deo parcele</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazeni deo parcele nije pronadjen</response>
         </member>
-        <member name="M:Parcela.Controllers.DeoParceleController.CreateDeoParcele(Parcela.Models.DeoParceleDto)">
+        <member name="M:Parcela.Controllers.DeoParceleController.CreateDeoParcele(Parcela.Models.DeoParceleCreateDto)">
             <summary>
             Kreira novi deo parcele
             </summary>
@@ -45,9 +47,11 @@
             { \
             "redniBroj": 1, \
             "povrsinaDelaParcele": 1000, \
+            "parcelaID": "03b0da3e-2604-4a9a-9e80-ad192727a3e9"
             } 
             </remarks>
             <response code = "201">Vraca kreirani deo parcele</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja dela parcele</response>
         </member>
         <member name="M:Parcela.Controllers.DeoParceleController.DeleteDeoParcele(System.Guid)">
@@ -57,6 +61,7 @@
             <param name="deoParceleID">Id dela parcele</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Deo parcele uspesno obrisan</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjen deo parcele za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja dela parcele</response>
         </member>
@@ -68,6 +73,7 @@
             <returns>Potvrda o modifikovanom delu parcele</returns>
             <response code="200">Vraca azurirani deo parcele</response>
             <response code="400">Deo parcele koji se azurira nije pronadjen</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja dela parcele</response>
         </member>
         <member name="M:Parcela.Controllers.DeoParceleController.GetDeoParceleOptions">
@@ -87,6 +93,7 @@
             </summary>
             <returns>Lista klasa</returns>
             <response code = "200">Vraca listu klasa</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjena nijedna klasa</response>
         </member>
         <member name="M:Parcela.Controllers.KlasaController.GetKlasa(System.Guid)">
@@ -96,6 +103,7 @@
             <param name="klasaID">ID klase</param>
             <returns>Trazena klasa</returns>
             <response code = "200">Vraca trazenu klasa</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena klasa nije pronadjena</response>
         </member>
         <member name="M:Parcela.Controllers.KlasaController.CreateKlasa(Parcela.Models.KlasaDto)">
@@ -108,10 +116,11 @@
             Primer zahteva za kreiranje nove klase \
             POST /api/klase \
             { \
-            "klasaOznaka": 1, \
+            "klasaOznaka": "I", \
             } 
             </remarks>
             <response code = "201">Vraca kreiranu klasu</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja klase</response>
         </member>
         <member name="M:Parcela.Controllers.KlasaController.DeleteKlasa(System.Guid)">
@@ -121,6 +130,7 @@
             <param name="klasaID">ID klase</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Klasa uspesno obrisana</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjena klasa za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja klase</response>
         </member>
@@ -132,6 +142,7 @@
             <returns>Potvrda o modifikovanoj klasi</returns>
             <response code="200">Vraca azuriranu klasu</response>
             <response code="400">Klasa koja se azurira nije pronadjena</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja klase</response>
         </member>
         <member name="M:Parcela.Controllers.KlasaController.GetKlasaOptions">
@@ -152,6 +163,7 @@
             <returns>Lista kultura</returns>
             <response code = "200">Vraca listu kultura</response>
             <response code = "404">Nije pronadjena nijedna kultura</response>
+            <response code = "401">Korisnik nije autorizovan</response>
         </member>
         <member name="M:Parcela.Controllers.KulturaController.GetKultura(System.Guid)">
             <summary>
@@ -160,6 +172,7 @@
             <param name="kulturaID">ID kulture</param>
             <returns>Trazena kultura</returns>
             <response code = "200">Vraca trazenu kulturu</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena kultura nije pronadjena</response>
         </member>
         <member name="M:Parcela.Controllers.KulturaController.CreateKultura(Parcela.Models.KulturaDto)">
@@ -172,10 +185,11 @@
             Primer zahteva za kreiranje nove kulture \
             POST /api/kulture \
             { \
-            "kulturaNaziv": "Kultura1", \
+            "kulturaNaziv": "Njive", \
             } 
             </remarks>
             <response code = "201">Vraca kreiranu kulturu</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja kulture</response>
         </member>
         <member name="M:Parcela.Controllers.KulturaController.DeleteKultura(System.Guid)">
@@ -185,6 +199,7 @@
             <param name="kulturaID">ID kulture</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Kultura uspesno obrisana</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjena kultura za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja kulture</response>
         </member>
@@ -196,6 +211,7 @@
             <returns>Potvrda o modifikovanoj kulturi</returns>
             <response code="200">Vraca azuriranu kulturu</response>
             <response code="400">Kultura koja se azurira nije pronadjena</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja kultura</response>
         </member>
         <member name="M:Parcela.Controllers.KulturaController.GetKulturaOptions">
@@ -215,6 +231,7 @@
             </summary>
             <returns>Lista oblika svojine</returns>
             <response code = "200">Vraca listu oblika svojine</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjen nijedan oblik svojine</response>
         </member>
         <member name="M:Parcela.Controllers.OblikSvojineController.GetOblikSvojine(System.Guid)">
@@ -224,6 +241,7 @@
             <param name="oblikSvojineID">ID oblika svojine</param>
             <returns>Trazen oblik svojine</returns>
             <response code = "200">Vraca trazen oblik svojine</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazen oblik svojine nije pronadjen</response>
         </member>
         <member name="M:Parcela.Controllers.OblikSvojineController.CreateOblikSvojine(Parcela.Models.OblikSvojineDto)">
@@ -236,10 +254,11 @@
             Primer zahteva za kreiranje novog oblika svojine \
             POST /api/obliciSvojine \
             { \
-            "oblikSvoijenNazvi": "Oblik svojine 1", \
+            "oblikSvoijenNaziv": "Privatna svojina", \
             } 
             </remarks>
             <response code = "201">Vraca kreiran oblik svojine</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja oblika svojine</response>
         </member>
         <member name="M:Parcela.Controllers.OblikSvojineController.DeleteOblikSvojine(System.Guid)">
@@ -249,6 +268,7 @@
             <param name="oblikSvojineID">ID oblika svojine</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Oblik svojine uspesno obrisan</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjen oblik svojine za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja oblika svojine</response>
         </member>
@@ -260,6 +280,7 @@
             <returns>Potvrda o modifikovanom obliku svojine</returns>
             <response code="200">Vraca azuriran oblik svojine</response>
             <response code="400">Oblik svojine koji se azurira nije pronadjen</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja oblika svojine</response>
         </member>
         <member name="M:Parcela.Controllers.OblikSvojineController.GetOblikSvojineOptions">
@@ -279,6 +300,7 @@
             </summary>
             <returns>Lista obradivosti</returns>
             <response code = "200">Vraca listu obradivosti</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjena nijedna obradivost</response>
         </member>
         <member name="M:Parcela.Controllers.ObradivostController.GetObradivost(System.Guid)">
@@ -288,6 +310,7 @@
             <param name="obradivostID">ID obradivosti</param>
             <returns>Trazena obradivost</returns>
             <response code = "200">Vraca trazenu obradivost</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena obradivost nije pronadjena</response>
         </member>
         <member name="M:Parcela.Controllers.ObradivostController.CreateObradivost(Parcela.Models.ObradivostDto)">
@@ -300,10 +323,11 @@
             Primer zahteva za kreiranje nove obradivosti \
             POST /api/obradivosti \
             { \
-            "obradivostNaziv": "Obradivost1", \
+            "obradivostNaziv": "Obradivo", \
             } 
             </remarks>
             <response code = "201">Vraca kreiranu obradivost</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja obradivosti</response>
         </member>
         <member name="M:Parcela.Controllers.ObradivostController.DeleteObradivost(System.Guid)">
@@ -313,6 +337,7 @@
             <param name="obradivostID">ID obradivosti</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Obradivost uspesno obrisana</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjena obradivost za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja obradivosti</response>
         </member>
@@ -324,6 +349,7 @@
             <returns>Potvrda o modifikovanoj obradivosti</returns>
             <response code="200">Vraca azuriranu obradivost</response>
             <response code="400">Obradivost koja se azurira nije pronadjena</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja obradivosti</response>
         </member>
         <member name="M:Parcela.Controllers.ObradivostController.GetObradivostOptions">
@@ -343,6 +369,7 @@
             </summary>
             <returns>Lista odvodnjavanja</returns>
             <response code = "200">Vraca listu odvodnjavanja</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije prondadjeno nijedno odvodnjavanje</response>
         </member>
         <member name="M:Parcela.Controllers.OdvodnjavanjeController.GetOdvodnjavanje(System.Guid)">
@@ -352,6 +379,7 @@
             <param name="odvodnjavanjeID">ID odvodnjavanja</param>
             <returns>Trazeno odvodnjavanje</returns>
             <response code = "200">Vraca trazeno odvodnjvanje</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazeno odvodnjavanje nije prondjeno</response>
         </member>
         <member name="M:Parcela.Controllers.OdvodnjavanjeController.CreateOdvodnjavanje(Parcela.Models.OdvodnjavanjeDto)">
@@ -364,10 +392,11 @@
             Primer zahteva za kreiranje novog odvodnjavanja \
             POST /api/odvodnjavanja \
             { \
-            "odvodnjavanjeNaziv": "Odvodnjavanje1", \
+            "odvodnjavanjeNaziv": "Podzemno", \
             } 
             </remarks>
             <response code = "201">Vraca kreirano odvodnjavanje</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja odvodnjavanja</response>
         </member>
         <member name="M:Parcela.Controllers.OdvodnjavanjeController.DeleteOdvodnjavanje(System.Guid)">
@@ -377,6 +406,7 @@
             <param name="odvodnjavanjeID">ID odvodnjavanja</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Odvodnjavanje uspesno obrisano</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjeno odvodnjavanje za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja odvodnjvanja</response>
         </member>
@@ -388,6 +418,7 @@
             <returns>Potvrda o modifikovanom azuriranju</returns>
             <response code="200">Vraca azurirano odvodnajvanje</response>
             <response code="400">Odvodnjavanje koje se azurira nije pronadjeno</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja odvodnjavanja</response>
         </member>
         <member name="M:Parcela.Controllers.OdvodnjavanjeController.GetOdvodnjavanjeOptions">
@@ -407,6 +438,7 @@
             </summary>
             <returns>Lista parcela</returns>
             <response code = "200">Vraca listu parcela</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjena nijedna parcela</response>
         </member>
         <member name="M:Parcela.Controllers.ParcelaController.GetParcela(System.Guid)">
@@ -416,6 +448,7 @@
             <param name="parcelaID">ID parcele</param>
             <returns>Trazena parcela</returns>
             <response code = "200">Vraca trazenu parcelu</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena parcela nije pronadjena</response>
         </member>
         <member name="M:Parcela.Controllers.ParcelaController.CreateParcela(Parcela.Models.ParcelaCreateDto)">
@@ -431,11 +464,11 @@
             "povrsina": 3000, \
             "brojParcele": "333", \
             "brojListaNepokretnosti": "333", \
-            "kulturaStvarnoStanje": "Kukuruz", \
-            "klasaStvarnoStanje": "Klasa1", \
-            "obradivostStvarnoStanje": "Obradivost1", \
-            "zasticenaZonaStvarnoStanje": "ZasticenaZona1", \
-            "odvodnjavanjeStvarnoStanje": "Odvodnjavanje1" \
+            "kulturaStvarnoStanje": "Njive", \
+            "klasaStvarnoStanje": "II", \
+            "obradivostStvarnoStanje": "Obradivo", \
+            "zasticenaZonaStvarnoStanje": 1, \
+            "odvodnjavanjeStvarnoStanje": "Podzemno" \
             "kulturaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
             "klasaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
             "obradivostID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
@@ -446,6 +479,7 @@
             } 
             </remarks>
             <response code = "201">Vraca kreiranu parcelu</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja parcele</response>
         </member>
         <member name="M:Parcela.Controllers.ParcelaController.DeleteParcela(System.Guid)">
@@ -455,6 +489,7 @@
             <param name="parcelaID">ID parcele</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Parcela uspesno obrisana</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjena parcela za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja parcele</response>
         </member>
@@ -466,6 +501,7 @@
             <returns>Potvrdu o modifikovanoj parceli</returns>
             <response code="200">Vraca azuriranu parcelu</response>
             <response code="400">Parcela koja se azurira nije pronadjena</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja parcele</response>
         </member>
         <member name="M:Parcela.Controllers.ParcelaController.GetParcelaOptions">
@@ -485,6 +521,7 @@
             </summary>
             <returns>Lista zasticenih zona</returns>
             <response code = "200">Vraca listu zasticenih zona</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjena nijedna zasticena zona</response>
         </member>
         <member name="M:Parcela.Controllers.ZasticenaZonaController.GetZasticenaZona(System.Guid)">
@@ -494,6 +531,7 @@
             <param name="zasticenaZonaID">ID zasticene zone</param>
             <returns>Trazena zasticena zona</returns>
             <response code = "200">Vraca trazenu zasticenu zonu</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena zasticena zona nije pronadjena</response>
         </member>
         <member name="M:Parcela.Controllers.ZasticenaZonaController.CreateZasticenaZona(Parcela.Models.ZasticenaZonaDto)">
@@ -510,6 +548,7 @@
             } 
             </remarks>
             <response code = "201">Vraca kreiranu zasticenu zonu</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja zasticene zone</response>
         </member>
         <member name="M:Parcela.Controllers.ZasticenaZonaController.DeleteZasticenaZona(System.Guid)">
@@ -519,6 +558,7 @@
             <param name="zasticenaZonaID">ID zasticene zone</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Zasticena zona uspesno obrisana</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjena zasticena zona za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja zasticene zone</response>
         </member>
@@ -530,6 +570,7 @@
             <returns>Potvrda o modifikovanoj zasticenoj zoni</returns>
             /// <response code="200">Vraca azuriranu zasticenu zonu</response>
             <response code="400">Zasticena zona koja se azurira nije pronadjena</response>
+            <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja zasticene zone</response>
         </member>
         <member name="M:Parcela.Controllers.ZasticenaZonaController.GetZasticenaZonaOptions">
@@ -935,6 +976,26 @@
             Postanski broj kupca
             </summary>
         </member>
+        <member name="T:Parcela.Models.DeoParceleCreateDto">
+            <summary>
+            DTO za kreiranje dela parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.DeoParceleCreateDto.RedniBroj">
+            <summary>
+            Redni broj dela parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.DeoParceleCreateDto.PovrsinaDelaParcele">
+            <summary>
+            Povrsina dela parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.DeoParceleCreateDto.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Models.DeoParceleDto">
             <summary>
             DTO za deo parcele
@@ -953,6 +1014,11 @@
         <member name="P:Parcela.Models.DeoParceleDto.ParcelaID">
             <summary>
             ID parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.DeoParceleDto.Parcela">
+            <summary>
+            Parcela kojoj pripada deo parcele
             </summary>
         </member>
         <member name="T:Parcela.Models.DeoParceleUpdateDto">
@@ -1395,9 +1461,19 @@
             ID zasticene zone
             </summary>
         </member>
+        <member name="P:Parcela.Models.ParcelaDto.ZasticenaZona">
+            <summary>
+            Zasticena zona
+            </summary>
+        </member>
         <member name="P:Parcela.Models.ParcelaDto.OdvodnjavanjeID">
             <summary>
             ID odvodnjavanja
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.Odvodnjavanje">
+            <summary>
+            Odvodnjavanje parcele
             </summary>
         </member>
         <member name="P:Parcela.Models.ParcelaDto.ObradivostID">
@@ -1405,9 +1481,19 @@
             ID obradivosti
             </summary>
         </member>
+        <member name="P:Parcela.Models.ParcelaDto.Obradivost">
+            <summary>
+            Obradivost parcele
+            </summary>
+        </member>
         <member name="P:Parcela.Models.ParcelaDto.OblikSvojineID">
             <summary>
             ID oblika svojine
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.OblikSvojine">
+            <summary>
+            Oblik svojine parcele
             </summary>
         </member>
         <member name="P:Parcela.Models.ParcelaDto.KulturaID">
@@ -1415,9 +1501,19 @@
             ID kulture
             </summary>
         </member>
+        <member name="P:Parcela.Models.ParcelaDto.Kultura">
+            <summary>
+            Kultura parcele
+            </summary>
+        </member>
         <member name="P:Parcela.Models.ParcelaDto.KlasaID">
             <summary>
             ID klase
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ParcelaDto.Klasa">
+            <summary>
+            Klasa parcele
             </summary>
         </member>
         <member name="P:Parcela.Models.ParcelaDto.KatastarskaOpstinaID">

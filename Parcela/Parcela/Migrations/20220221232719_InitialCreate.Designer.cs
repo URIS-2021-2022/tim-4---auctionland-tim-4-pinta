@@ -10,7 +10,7 @@ using Parcela.Entities;
 namespace Parcela.Migrations
 {
     [DbContext(typeof(ParcelaContext))]
-    [Migration("20220219151519_InitialCreate")]
+    [Migration("20220221232719_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,15 +47,29 @@ namespace Parcela.Migrations
                         {
                             DeoParceleID = new Guid("cae99a88-c6ee-4f4c-a463-419ac8fc1b85"),
                             ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                            PovrsinaDelaParcele = 1000,
+                            PovrsinaDelaParcele = 2000,
                             RedniBroj = 1
+                        },
+                        new
+                        {
+                            DeoParceleID = new Guid("c1df8ec6-dcae-4b27-bb33-7539fb6125c0"),
+                            ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
+                            PovrsinaDelaParcele = 3000,
+                            RedniBroj = 1
+                        },
+                        new
+                        {
+                            DeoParceleID = new Guid("910876c8-ab40-4a29-a047-f9913ebaefb8"),
+                            ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
+                            PovrsinaDelaParcele = 4000,
+                            RedniBroj = 3
                         },
                         new
                         {
                             DeoParceleID = new Guid("2884b2b0-302c-4eac-847c-65e4c356132b"),
                             ParcelaID = new Guid("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
                             PovrsinaDelaParcele = 2000,
-                            RedniBroj = 2
+                            RedniBroj = 1
                         });
                 });
 
@@ -65,8 +79,8 @@ namespace Parcela.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("KlasaOznaka")
-                        .HasColumnType("int");
+                    b.Property<string>("KlasaOznaka")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("KlasaID");
 
@@ -76,12 +90,42 @@ namespace Parcela.Migrations
                         new
                         {
                             KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                            KlasaOznaka = 1
+                            KlasaOznaka = "I"
                         },
                         new
                         {
                             KlasaID = new Guid("18227841-6ba9-4509-b8fa-faa8f6699b3b"),
-                            KlasaOznaka = 2
+                            KlasaOznaka = "II"
+                        },
+                        new
+                        {
+                            KlasaID = new Guid("b417f2f5-5b3a-4856-a140-49a361d4cfd5"),
+                            KlasaOznaka = "III"
+                        },
+                        new
+                        {
+                            KlasaID = new Guid("1d6f312f-73e5-4a57-9dd5-ba31f08bb967"),
+                            KlasaOznaka = "IV"
+                        },
+                        new
+                        {
+                            KlasaID = new Guid("560475bd-3701-405b-9be8-e89768ce3eb5"),
+                            KlasaOznaka = "V"
+                        },
+                        new
+                        {
+                            KlasaID = new Guid("d2c9a6ad-8c0d-44d2-8b56-2c4eada4ff99"),
+                            KlasaOznaka = "VI"
+                        },
+                        new
+                        {
+                            KlasaID = new Guid("51c6ad49-5b78-424d-9cf5-259cb7d9e0e0"),
+                            KlasaOznaka = "VII"
+                        },
+                        new
+                        {
+                            KlasaID = new Guid("9a011828-2b22-4666-b300-fe98e2c94d9a"),
+                            KlasaOznaka = "VIII"
                         });
                 });
 
@@ -102,12 +146,42 @@ namespace Parcela.Migrations
                         new
                         {
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
-                            KulturaNaziv = "Kukuruz"
+                            KulturaNaziv = "Njive"
                         },
                         new
                         {
                             KulturaID = new Guid("86f5706f-737b-4b20-beed-531aa64326cb"),
-                            KulturaNaziv = "Soja"
+                            KulturaNaziv = "Vrtovi"
+                        },
+                        new
+                        {
+                            KulturaID = new Guid("36840f4a-91c7-48b2-a85e-c2f285db0a56"),
+                            KulturaNaziv = "Vocnjaci"
+                        },
+                        new
+                        {
+                            KulturaID = new Guid("04e29d95-7330-4d42-a10a-08556d478a46"),
+                            KulturaNaziv = "Vinogradi"
+                        },
+                        new
+                        {
+                            KulturaID = new Guid("67db5b31-6cb1-4bd0-a6a9-52702b06ced4"),
+                            KulturaNaziv = "Livade"
+                        },
+                        new
+                        {
+                            KulturaID = new Guid("e7977a9e-74c7-4f4b-91b7-57fc03159456"),
+                            KulturaNaziv = "Pasnjaci"
+                        },
+                        new
+                        {
+                            KulturaID = new Guid("cb674d70-bd30-4ed5-bcc0-b5db489bfbe7"),
+                            KulturaNaziv = "Sume"
+                        },
+                        new
+                        {
+                            KulturaID = new Guid("5f4a3a1e-3406-4991-abd4-0f095b59ac84"),
+                            KulturaNaziv = "Trstici-mocvare"
                         });
                 });
 
@@ -128,12 +202,37 @@ namespace Parcela.Migrations
                         new
                         {
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
-                            OblikSvojineNaziv = "Oblik svojine 1"
+                            OblikSvojineNaziv = "Privatno"
                         },
                         new
                         {
                             OblikSvojineID = new Guid("91a1f792-bc28-4f6e-bdda-cb577d7858fe"),
-                            OblikSvojineNaziv = "Oblik svojine 2"
+                            OblikSvojineNaziv = "Drzavna svojina RS"
+                        },
+                        new
+                        {
+                            OblikSvojineID = new Guid("8cd557cd-b1ce-4a6e-8491-ddc80310d1e7"),
+                            OblikSvojineNaziv = "Drzavna svojina"
+                        },
+                        new
+                        {
+                            OblikSvojineID = new Guid("11474cc8-1ac3-47b5-87f0-c7de7f29f024"),
+                            OblikSvojineNaziv = "Drustvena svojina"
+                        },
+                        new
+                        {
+                            OblikSvojineID = new Guid("64bda426-0a91-44fa-8da9-93cf24cc93ae"),
+                            OblikSvojineNaziv = "Zadruzna svojina"
+                        },
+                        new
+                        {
+                            OblikSvojineID = new Guid("2d83379c-87e6-45a1-9f00-321b820062fc"),
+                            OblikSvojineNaziv = "Mesovita svojina"
+                        },
+                        new
+                        {
+                            OblikSvojineID = new Guid("085f566f-9900-45e4-800a-d679331b8050"),
+                            OblikSvojineNaziv = "Drugi oblici"
                         });
                 });
 
@@ -154,12 +253,12 @@ namespace Parcela.Migrations
                         new
                         {
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
-                            ObradivostNaziv = "Obradivost1"
+                            ObradivostNaziv = "Obradivo"
                         },
                         new
                         {
                             ObradivostID = new Guid("bf45ffef-1166-44fb-a2e1-67824a6561f2"),
-                            ObradivostNaziv = "Obradivost2"
+                            ObradivostNaziv = "Ostalo"
                         });
                 });
 
@@ -180,12 +279,12 @@ namespace Parcela.Migrations
                         new
                         {
                             OdvodnjavanjeID = new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"),
-                            OdvodnjavanjeNaziv = "Odvodnjavanje1"
+                            OdvodnjavanjeNaziv = "Povrsinsko"
                         },
                         new
                         {
                             OdvodnjavanjeID = new Guid("a2f44a7b-cdfb-4d69-b651-6d715afe8217"),
-                            OdvodnjavanjeNaziv = "Odvodnjavanje2"
+                            OdvodnjavanjeNaziv = "Podzemno"
                         });
                 });
 
@@ -263,42 +362,82 @@ namespace Parcela.Migrations
                         new
                         {
                             ParcelaID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0"),
-                            BrojListaNepokretnosti = "12345",
-                            BrojParcele = "12345",
+                            BrojListaNepokretnosti = "12",
+                            BrojParcele = "111",
                             KatastarskaOpstinaID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                            KlasaStvarnoStanje = "Klasa1",
+                            KlasaStvarnoStanje = "I",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
-                            KulturaStvarnoStanje = "Kukuruz",
+                            KulturaStvarnoStanje = "Njive",
                             KupacID = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
-                            ObradivostStvarnoStanje = "Obradivost1",
+                            ObradivostStvarnoStanje = "Obradivo",
                             OdvodnjavanjeID = new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"),
-                            OdvodnjavanjeStvarnoStanje = "Odvodnjavanje1",
-                            Povrsina = 1000,
+                            OdvodnjavanjeStvarnoStanje = "Povrsinsko",
+                            Povrsina = 10000,
                             ZasticenaZonaID = new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"),
-                            ZasticenaZonaStvarnoStanje = "ZasticenaZona1"
+                            ZasticenaZonaStvarnoStanje = "1"
                         },
                         new
                         {
                             ParcelaID = new Guid("1c7ea607-8ddb-493a-87fa-4bf5893e965b"),
-                            BrojListaNepokretnosti = "54321",
-                            BrojParcele = "54321",
+                            BrojListaNepokretnosti = "92",
+                            BrojParcele = "222",
                             KatastarskaOpstinaID = new Guid("177e64ad-2ff0-4a40-9c75-1f9b02ffe1e9"),
                             KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
-                            KlasaStvarnoStanje = "Klasa2",
+                            KlasaStvarnoStanje = "II",
                             KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
-                            KulturaStvarnoStanje = "Soja",
+                            KulturaStvarnoStanje = "Vinogradi",
                             KupacID = new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"),
                             OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
                             ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
-                            ObradivostStvarnoStanje = "Obradivost2",
+                            ObradivostStvarnoStanje = "Obradivo",
                             OdvodnjavanjeID = new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"),
-                            OdvodnjavanjeStvarnoStanje = "Odvodnjavanje2",
+                            OdvodnjavanjeStvarnoStanje = "Podzemno",
                             Povrsina = 2000,
                             ZasticenaZonaID = new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"),
-                            ZasticenaZonaStvarnoStanje = "ZasticenaZona2"
+                            ZasticenaZonaStvarnoStanje = "2"
+                        },
+                        new
+                        {
+                            ParcelaID = new Guid("228927ab-e8fd-4d7e-8986-b9c3c4930480"),
+                            BrojListaNepokretnosti = "54",
+                            BrojParcele = "333",
+                            KatastarskaOpstinaID = new Guid("177e64ad-2ff0-4a40-9c75-1f9b02ffe1e9"),
+                            KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                            KlasaStvarnoStanje = "III",
+                            KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
+                            KulturaStvarnoStanje = "Vocnjaci",
+                            KupacID = new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"),
+                            OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
+                            ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
+                            ObradivostStvarnoStanje = "Ostalo",
+                            OdvodnjavanjeID = new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"),
+                            OdvodnjavanjeStvarnoStanje = "Podzemno",
+                            Povrsina = 3000,
+                            ZasticenaZonaID = new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"),
+                            ZasticenaZonaStvarnoStanje = "3"
+                        },
+                        new
+                        {
+                            ParcelaID = new Guid("a913cb6f-9608-474a-88dc-4f38a51315ea"),
+                            BrojListaNepokretnosti = "63",
+                            BrojParcele = "444",
+                            KatastarskaOpstinaID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
+                            KlasaID = new Guid("829f5f3f-6159-4e15-ab52-d4c78ce944dc"),
+                            KlasaStvarnoStanje = "I",
+                            KulturaID = new Guid("149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"),
+                            KulturaStvarnoStanje = "Njive",
+                            KupacID = new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"),
+                            OblikSvojineID = new Guid("0051339e-4bf1-4d63-89f9-d5f744016a2b"),
+                            ObradivostID = new Guid("1fbc26e0-a797-45b8-bfb2-75d6799237ba"),
+                            ObradivostStvarnoStanje = "Obradivo",
+                            OdvodnjavanjeID = new Guid("32cf50d2-ab1a-45fb-a5de-f6c4fd646775"),
+                            OdvodnjavanjeStvarnoStanje = "Povrsinsko",
+                            Povrsina = 4000,
+                            ZasticenaZonaID = new Guid("a873025a-b4bc-440d-8e65-dc63fb9025d7"),
+                            ZasticenaZonaStvarnoStanje = "1"
                         });
                 });
 
@@ -325,6 +464,16 @@ namespace Parcela.Migrations
                         {
                             ZasticenaZonaID = new Guid("9eec3d7d-2f21-4719-a8db-415806748dfb"),
                             ZasticenaZonaOznaka = 2
+                        },
+                        new
+                        {
+                            ZasticenaZonaID = new Guid("9d994da6-a766-4d67-971b-3b589b1ecbf8"),
+                            ZasticenaZonaOznaka = 3
+                        },
+                        new
+                        {
+                            ZasticenaZonaID = new Guid("28ea362f-4e6c-4e0e-b853-b79c509a6b16"),
+                            ZasticenaZonaOznaka = 4
                         });
                 });
 

@@ -20,6 +20,8 @@ namespace Parcela.Profiles
         {
             CreateMap<DeoParceleEntity, DeoParceleDto>();
             CreateMap<DeoParceleDto, DeoParceleEntity>();
+            CreateMap<DeoParceleEntity, DeoParceleCreateDto>();
+            CreateMap<DeoParceleCreateDto, DeoParceleEntity>();
             CreateMap<DeoParceleEntity, DeoParceleUpdateDto>();
             CreateMap<DeoParceleUpdateDto, DeoParceleEntity>();
         }
