@@ -24,7 +24,7 @@ namespace Parcela.ServiceCals
         {
             using (HttpClient client = new HttpClient())
             {
-                Uri url = new Uri($"{configuration["Services:LoggerService"]}api/logger");
+                Uri url = new Uri($"{configuration["Services:LoggerService"]}");
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(log));
                 content.Headers.ContentType.MediaType = "application/json";
