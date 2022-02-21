@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AdresaServis.Controllers
@@ -25,6 +26,7 @@ namespace AdresaServis.Controllers
         private readonly IDrzavaRepository drzavaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
@@ -36,12 +38,13 @@ namespace AdresaServis.Controllers
         /// <param name="linkGenerator"></param>
         /// <param name="mapper"></param>
         /// <param name="loggerService"></param>
-        public AdresaController(IAdresaRepository adresaRepository, IDrzavaRepository drzavaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public AdresaController(IAdresaRepository adresaRepository, IDrzavaRepository drzavaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService)
         {
             this.adresaRepository = adresaRepository;
             this.drzavaRepository = drzavaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.loggerService = loggerService;
             logDto = new LogDto();
             logDto.NameOfTheService = "Adresa";
@@ -52,13 +55,28 @@ namespace AdresaServis.Controllers
         /// </summary>
         /// <returns>Lista adresa</returns>
         /// <response code = "200">Vraca listu adresa</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         /// <response code = "404">Nije pronadjena nijedna adresa</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<AdresaDto>> GetAdrese()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih adresa";
 
@@ -69,15 +87,17 @@ namespace AdresaServis.Controllers
                 loggerService.CreateLog(logDto);
                 return NoContent();
             }
-            List<AdresaDto> adreseDto = mapper.Map<List<AdresaDto>>(adrese);
-            foreach (AdresaDto a in adreseDto)
+            List<AdresaDto> adreseDto = new List<AdresaDto>();
+            foreach(AdresaEntity a in adrese)
             {
-                a.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(a.DrzavaID));
+                AdresaDto adresaDto = mapper.Map<AdresaDto>(a);
+                adresaDto.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(a.DrzavaID));
+                adreseDto.Add(adresaDto);
             }
 
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<List<AdresaDto>>(adrese));
+            return Ok(adreseDto);
         }
 
         /// <summary>
@@ -86,12 +106,28 @@ namespace AdresaServis.Controllers
         /// <param name="adresaID">ID adrese</param>
         /// <returns>Trazena adresa</returns>
         /// <response code = "200">Vraca trazenu adresu</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         /// <response code = "404">Trazena adresa nije pronadjena</response>
         [HttpGet("{adresaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<AdresaDto> GetAdresa(Guid adresaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje adrese po ID-ju";
 
@@ -126,13 +162,29 @@ namespace AdresaServis.Controllers
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu adresu</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja adrese</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<AdresaDto> CreateAdresa([FromBody] AdresaCreateDto adresa)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove adrese";
 
@@ -142,10 +194,10 @@ namespace AdresaServis.Controllers
                 AdresaEntity a = adresaRepository.CreateAdresa(adr);
                 adresaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetAdresa", "Adresa", new { adresaID = a.AdresaID });
-                logDto.Level = "Info";
-                loggerService.CreateLog(logDto);
                 AdresaDto adresaDto = mapper.Map<AdresaDto>(a);
                 adresaDto.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(a.DrzavaID));
+                logDto.Level = "Info";
+                loggerService.CreateLog(logDto);
                 return Created(location, adresaDto);
             }
             catch
@@ -162,14 +214,30 @@ namespace AdresaServis.Controllers
         /// <param name="adresaID">ID adrese</param>
         /// <returns>Status 204 (NoContent)</returns>
         /// <response code="204">Adresa uspesno obrisana</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         /// <response code="404">Nije pronadjena adresa za brisanje</response>
         /// <response code="500">Doslo je do greske na serveru prilikom brisanja adrese</response>
         [HttpDelete("{adresaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteAdresa(Guid adresaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje adrese";
 
@@ -203,14 +271,30 @@ namespace AdresaServis.Controllers
         /// <returns>Potvrdu o modifikovanoj adresi</returns>
         /// <response code="200">Vraca azuriranu adresu</response>
         /// <response code="400">Adresa koja se azurira nije pronadjena</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja adrese</response>
         [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<AdresaDto> UpdateAdresa(AdresaUpdateDto adresa)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje adrese";
 

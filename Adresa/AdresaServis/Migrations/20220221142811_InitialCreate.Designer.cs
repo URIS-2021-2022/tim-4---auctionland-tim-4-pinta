@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AdresaServis.Migrations
 {
     [DbContext(typeof(AdresaContext))]
-    [Migration("20220219170526_InitialCreate")]
+    [Migration("20220221142811_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,33 @@ namespace AdresaServis.Migrations
                             Mesto = "Novi Sad",
                             PostanskiBroj = "21000",
                             Ulica = "Strazilovska"
+                        },
+                        new
+                        {
+                            AdresaID = new Guid("eacfb448-52fc-40f0-8815-d7ccce300ece"),
+                            Broj = "25",
+                            DrzavaID = new Guid("fd5e46de-290f-4844-a004-4a94ae24f654"),
+                            Mesto = "Subotica",
+                            PostanskiBroj = "12000",
+                            Ulica = "Radnicka"
+                        },
+                        new
+                        {
+                            AdresaID = new Guid("c0ccfc64-7dd0-4144-b95a-ecfe3ebabeee"),
+                            Broj = "2",
+                            DrzavaID = new Guid("fd5e46de-290f-4844-a004-4a94ae24f654"),
+                            Mesto = "Novi Sad",
+                            PostanskiBroj = "21000",
+                            Ulica = "Fruskogorska"
+                        },
+                        new
+                        {
+                            AdresaID = new Guid("7729e3dc-0586-4ae5-8a0f-2b22b0e2253e"),
+                            Broj = "12",
+                            DrzavaID = new Guid("fd5e46de-290f-4844-a004-4a94ae24f654"),
+                            Mesto = "Subotica",
+                            PostanskiBroj = "12000",
+                            Ulica = "Cara Lazara"
                         });
                 });
 
@@ -92,6 +119,26 @@ namespace AdresaServis.Migrations
                         {
                             DrzavaID = new Guid("2b7558a6-f3f4-460d-80e0-26e1c037f455"),
                             NazivDrzave = "Crna Gora"
+                        },
+                        new
+                        {
+                            DrzavaID = new Guid("3eced2eb-0a79-4711-a2b6-f6152548440b"),
+                            NazivDrzave = "Slovenija"
+                        },
+                        new
+                        {
+                            DrzavaID = new Guid("8b8b55ff-4109-4d98-890e-7f0d6aa70fda"),
+                            NazivDrzave = "Hrvatska"
+                        },
+                        new
+                        {
+                            DrzavaID = new Guid("84feab2f-7b67-4e69-92cc-1f682e89f255"),
+                            NazivDrzave = "Bugarska"
+                        },
+                        new
+                        {
+                            DrzavaID = new Guid("788c3bd6-1145-4322-8237-1ea25e5a81e6"),
+                            NazivDrzave = "Makedonija"
                         });
                 });
 

@@ -18,6 +18,6 @@ namespace Parcela.Models
         /// <summary>
         /// Naziv klase
         /// </summary>
-        public int KlasaOznaka { get; set; }
+        public string KlasaOznaka { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace AdresaServis
             services.AddScoped<IDrzavaRepository, DrzavaRepository>();
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IKorisnikSistemaService, KorisnikSistemaService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
