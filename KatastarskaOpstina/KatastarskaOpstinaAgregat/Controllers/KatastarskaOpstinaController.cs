@@ -95,6 +95,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [HttpGet("{katastarskaOpstinaID}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KatastarskaOpstinaDto> GetKatastarskaOpstina(Guid katastarskaOpstinaID)
         {
             string token = Request.Headers["token"].ToString();
@@ -142,6 +143,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KatastarskaOpstinaDto> CreateKatastarskaOpstina([FromBody] KatastarskaOpstinaDto katastarskaOpstina)
         {
             string token = Request.Headers["token"].ToString();
@@ -191,6 +193,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult DeleteKatastarskaOpstina(Guid katastarskaOpstinaID)
         {
             string token = Request.Headers["token"].ToString();
@@ -244,6 +247,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KatastarskaOpstinaDto> UpdateKatastarskaOpstina(KatastarskaOpstinaUpdateDto katastarskaOpstina)
         {
             string token = Request.Headers["token"].ToString();
