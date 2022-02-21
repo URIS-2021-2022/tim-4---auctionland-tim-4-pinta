@@ -33,8 +33,9 @@ namespace Korisnik.Controllers
 
         [HttpGet]
         [HttpHead]
-        [ProducesResponseType(StatusCodes.Status200OK)] 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<KorisnikDto>> GetKorisniks()
         {
 
@@ -65,56 +66,102 @@ namespace Korisnik.Controllers
             }
         }
 
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpGet("{KorisnikId}")]
         public ActionResult<KorisnikDto> GetKorisnik(int korisnikId)
         {
-            KorisnikModel korisnik = korisnikRepository.GetKorisnikById(korisnikId);
-            if (korisnik == null)
+
+            try
             {
-                return NotFound();
+
+                if (korisnikRepository.Authorize(Request.Headers["token"]))
+                { 
+                   
+                    KorisnikModel korisnik = korisnikRepository.GetKorisnikById(korisnikId);
+                    if (korisnik == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(mapper.Map<KorisnikDto>(korisnik));
+                }
+
+                else
+                {
+                    return Unauthorized();
+                }
+
             }
-            return Ok(mapper.Map<KorisnikDto>(korisnik));
+            catch (Exception ex)
+            {
+                throw ex;
+
+            }
         }
 
+        [HttpHead]
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KorisnikDto> CreateKorisnik([FromBody] KorisnikDto korisnik)
         {
             try
             {
 
-                KorisnikModel korisnik1 = mapper.Map<KorisnikModel>(korisnik);
-                Random rand = new Random();
-                korisnik1.KorisnikId = rand.Next();
-                KorisnikModel korisnik2= korisnikRepository.CreateKorisnik(korisnik1);
-                korisnikRepository.SaveChanges();
-                return Ok(mapper.Map<KorisnikDto>(korisnik2));
+                if (korisnikRepository.Authorize(Request.Headers["token"]))
+                {
+
+                    KorisnikModel korisnik1 = mapper.Map<KorisnikModel>(korisnik);
+                    Random rand = new Random();
+                    korisnik1.KorisnikId = rand.Next();
+                    KorisnikModel korisnik2 = korisnikRepository.CreateKorisnik(korisnik1);
+                    korisnikRepository.SaveChanges();
+                    return Ok(mapper.Map<KorisnikDto>(korisnik2));
+                }
+                else
+                {
+                    return Unauthorized();
+                }
+
             }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
             }
         }
+
+
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [HttpDelete("{KorisnikId}")]
         public IActionResult DeleteKorisnik(int korisnikId)
         {
             try
             {
-                KorisnikModel korisnik = korisnikRepository.GetKorisnikById(korisnikId);
-                if (korisnik == null)
+
+                if (korisnikRepository.Authorize(Request.Headers["token"]))
                 {
-                    return NotFound();
+                    KorisnikModel korisnik = korisnikRepository.GetKorisnikById(korisnikId);
+                    if (korisnik == null)
+                    {
+                        return NotFound();
+                    }
+                    korisnikRepository.DeleteKorisnik(korisnikId);
+                    korisnikRepository.SaveChanges();
+                    return NoContent();
                 }
-                korisnikRepository.DeleteKorisnik(korisnikId);
-                korisnikRepository.SaveChanges();
-                return NoContent();
+                else
+                {
+                    return Unauthorized();
+                }
+
             }
             catch
             {
@@ -122,32 +169,60 @@ namespace Korisnik.Controllers
             }
         }
 
-        
+        [HttpHead]
         [HttpPut]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KorisnikDto> UpdateKorisnik(KorisnikModel korisnik)
         {
             try
             {
-                KorisnikModel oldKorisnik = korisnikRepository.GetKorisnikById(korisnik.KorisnikId);
-                if (oldKorisnik == null)
+
+                if (korisnikRepository.Authorize(Request.Headers["token"]))
                 {
-                    return NotFound(); 
+                    KorisnikModel oldKorisnik = korisnikRepository.GetKorisnikById(korisnik.KorisnikId);
+                    if (oldKorisnik == null)
+                    {
+                        return NotFound();
+                    }
+
+                    mapper.Map(korisnik, oldKorisnik);
+                    korisnikRepository.SaveChanges();
+                    return Ok(mapper.Map<KorisnikDto>(oldKorisnik));
                 }
-              
-                mapper.Map(korisnik, oldKorisnik);
-                korisnikRepository.SaveChanges();
-                return Ok(mapper.Map<KorisnikDto>(oldKorisnik));
+
+                else
+                {
+                    return Unauthorized();
+                }
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
         }
+
         
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("authorize/{token}")]
+        public ActionResult Authorize(string token)
+        {
+
+           if(korisnikRepository.Authorize(token))
+           {
+                return Ok();
+               
+           }
+
+            return Unauthorized();
+        }
+
+
+
         [HttpOptions]
         [AllowAnonymous]
         public IActionResult GetExamRegistrationOptions()
