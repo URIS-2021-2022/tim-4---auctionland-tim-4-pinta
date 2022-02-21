@@ -42,7 +42,8 @@ namespace Korisnik.Entities
                     Prezime = "Petrović",
                     KorisnickoIme = "IT1/2020",
                     Lozinka = "1",
-                    Salt = "1"
+                    Salt = "1",
+                    TipKorisnika = "administrator"
                 });
 
             builder.Entity<KorisnikModel>()
@@ -54,7 +55,8 @@ namespace Korisnik.Entities
                     Prezime = "Marković",
                     KorisnickoIme = "IT2/2019",
                     Lozinka ="1",
-                    Salt = "1"
+                    Salt = "1",
+                    TipKorisnika = "licitant"
                 });
 
             builder.Entity<TokenTime>()
