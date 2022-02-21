@@ -723,7 +723,7 @@
             <summary>
             Kreiranje modela
             </summary>
-            <param name="builder"></param>
+            <param name="modelBuilder"></param>
         </member>
         <member name="T:Parcela.Entities.ParcelaEntity">
             <summary>
@@ -1013,6 +1013,31 @@
         <member name="P:Parcela.Models.KlasaUpdateDto.KlasaOznaka">
             <summary>
             Naziv klase
+            </summary>
+        </member>
+        <member name="T:Parcela.Models.KorisnikSistemaDto">
+            <summary>
+            DTO za korisnika sistema
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KorisnikSistemaDto.Ime">
+            <summary>
+            Ime studenta.
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KorisnikSistemaDto.Prezime">
+            <summary>
+            Prezime studenta.
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KorisnikSistemaDto.KorisnickoIme">
+            <summary>
+             korisnicko ime .
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KorisnikSistemaDto.Lozinka">
+            <summary>
+             lozinka
             </summary>
         </member>
         <member name="T:Parcela.Models.KulturaDto">

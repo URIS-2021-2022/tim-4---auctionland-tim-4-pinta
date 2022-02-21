@@ -47,10 +47,16 @@ namespace Parcela.Controllers
         /// <response code = "404">Nije pronadjena nijedna kultura</response>
         [HttpGet]
         [HttpHead]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KulturaDto>> GetKulture()
         {
+            if (Request.Headers["token"].ToString() == null) 
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih kultura";
 

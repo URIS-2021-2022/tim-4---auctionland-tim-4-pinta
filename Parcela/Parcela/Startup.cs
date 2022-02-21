@@ -41,14 +41,6 @@ namespace Parcela
                 setup.ReturnHttpNotAcceptable = true
             ).AddXmlDataContractSerializerFormatters();
 
-            //services.AddSingleton<IParcelaRepository, ParcelaMockRepository>();
-            //services.AddSingleton<IDeoParceleRepository, DeoParceleMockRepository>();
-            //services.AddSingleton<IKlasaRepository, KlasaMockRepository>();
-            //services.AddSingleton<IKulturaRepository, KulturaMockRepository>();
-            //services.AddSingleton<IOblikSvojineRepository, OblikSvojineMockRepository>();
-            //services.AddSingleton<IObradivostRepository, ObradivostMockRepository>();
-            //services.AddSingleton<IOdvodnjavanjeRepository, OdvodnjavanjeMockRepository>();
-            //services.AddSingleton<IZasticenaZonaRepository, ZasticenaZonaMockRepository>();
             services.AddSingleton<IUserRepository, UserMockRepository>();
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
             services.AddScoped<IParcelaRepository, ParcelaRepository>();
@@ -92,14 +84,14 @@ namespace Parcela
                         {
                             Name = "Stefan Radulović",
                             Email = "stefanradulovic58@gmail.com",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
                         License = new Microsoft.OpenApi.Models.OpenApiLicense
                         {
                             Name = "FTN licence",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
-                        TermsOfService = new Uri("http://www.ftn.uns.ac.rs/")
+                        TermsOfService = new Uri(Configuration["Uri:Ftn"])
                     });
 
                 ////Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
@@ -111,10 +103,6 @@ namespace Parcela
                 ////Govorimo swagger-u gde se nalazi dati xml fajl sa komentarima
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Parcela", Version = "v1" });
-            //});
 
             services.AddDbContextPool<ParcelaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ParcelaDB")));
         }
@@ -125,8 +113,6 @@ namespace Parcela
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                //app.UseSwagger();
-                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Parcela v1"));
             }
 
             app.UseHttpsRedirection();

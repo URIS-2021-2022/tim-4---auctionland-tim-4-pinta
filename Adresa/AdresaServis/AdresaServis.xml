@@ -160,7 +160,7 @@
             Repozitorijum za adrese
             </summary>
         </member>
-        <member name="M:AdresaServis.Data.AdresaRepository.#ctor(AdresaServis.Entities.AdresaContext,AutoMapper.IMapper)">
+        <member name="M:AdresaServis.Data.AdresaRepository.#ctor(AdresaServis.Entities.AdresaContext)">
             <summary>
             Kontruktor
             </summary>
@@ -211,7 +211,7 @@
             Repozitorijum za drzave
             </summary>
         </member>
-        <member name="M:AdresaServis.Data.DrzavaRepository.#ctor(AdresaServis.Entities.AdresaContext,AutoMapper.IMapper)">
+        <member name="M:AdresaServis.Data.DrzavaRepository.#ctor(AdresaServis.Entities.AdresaContext)">
             <summary>
             Konstruktor
             </summary>
@@ -282,7 +282,7 @@
             <summary>
             Kreiranje modela
             </summary>
-            <param name="builder"></param>
+            <param name="modelBuilder"></param>
         </member>
         <member name="T:AdresaServis.Entities.AdresaEntity">
             <summary>
