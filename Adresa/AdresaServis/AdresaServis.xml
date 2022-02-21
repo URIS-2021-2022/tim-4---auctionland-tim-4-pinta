@@ -4,10 +4,20 @@
         <name>AdresaServis</name>
     </assembly>
     <members>
-        <member name="F:AdresaServis.Controllers.AdresaController.adresaRepository">
+        <member name="T:AdresaServis.Controllers.AdresaController">
             <summary>
             Sadrzi CRUD operacije za adrese
             </summary>
+        </member>
+        <member name="M:AdresaServis.Controllers.AdresaController.#ctor(AdresaServis.Data.IAdresaRepository,AdresaServis.Data.IDrzavaRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaServis.ServiceCalls.ILoggerService)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="adresaRepository"></param>
+            <param name="drzavaRepository"></param>
+            <param name="linkGenerator"></param>
+            <param name="mapper"></param>
+            <param name="loggerService"></param>
         </member>
         <member name="M:AdresaServis.Controllers.AdresaController.GetAdrese">
             <summary>
@@ -76,6 +86,15 @@
             <summary>
             Sadrzi CRUD operacije za drzave
             </summary>
+        </member>
+        <member name="M:AdresaServis.Controllers.DrzavaController.#ctor(AdresaServis.Data.IDrzavaRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaServis.ServiceCalls.ILoggerService)">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="drzavaRepository"></param>
+            <param name="linkGenerator"></param>
+            <param name="mapper"></param>
+            <param name="loggerService"></param>
         </member>
         <member name="M:AdresaServis.Controllers.DrzavaController.GetDrzave">
             <summary>
@@ -323,6 +342,96 @@
         <member name="P:AdresaServis.Entities.DrzavaEntity.Adrese">
             <summary>
             Adrese u drzavi
+            </summary>
+        </member>
+        <member name="T:AdresaServis.Models.AdresaDto">
+            <summary>
+            DTO za adresu
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.AdresaDto.Ulica">
+            <summary>
+            Ulica adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.AdresaDto.Broj">
+            <summary>
+            Broj adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.AdresaDto.Mesto">
+            <summary>
+            Mesto adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.AdresaDto.PostanskiBroj">
+            <summary>
+            Postanski broj adrese
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.AdresaDto.DrzavaID">
+            <summary>
+            ID drzave
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.AdresaDto.Drzava">
+            <summary>
+            Drzava adrese
+            </summary>
+        </member>
+        <member name="T:AdresaServis.Models.DrzavaDto">
+            <summary>
+            DTO za drzavu
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.DrzavaDto.NazivDrzave">
+            <summary>
+            Naziv drzave
+            </summary>
+        </member>
+        <member name="T:AdresaServis.Models.LogDto">
+            <summary>
+            DTO za log
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.LogDto.HttpMethod">
+            <summary>
+            Http metoda
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.LogDto.NameOfTheService">
+            <summary>
+            Naziv servisa
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.LogDto.Level">
+            <summary>
+            Level loga
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.LogDto.Message">
+            <summary>
+            Poruka
+            </summary>
+        </member>
+        <member name="T:AdresaServis.Profiles.AdresaProfile">
+            <summary>
+            Profil za mapiranje adrese
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Profiles.AdresaProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:AdresaServis.Profiles.DrzavaProfile">
+            <summary>
+            Profil za mapiranje drzave
+            </summary>
+        </member>
+        <member name="M:AdresaServis.Profiles.DrzavaProfile.#ctor">
+            <summary>
+            Konstruktor
             </summary>
         </member>
     </members>
