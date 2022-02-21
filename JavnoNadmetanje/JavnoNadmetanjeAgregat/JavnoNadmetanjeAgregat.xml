@@ -33,7 +33,7 @@
             <response code = "200">Vraca trazeno javno nadmetanje</response>
             <response code = "404">Trazeno javno nadmetanje nije pronadjena</response>
         </member>
-        <member name="M:JavnoNadmetanjeAgregat.Controllers.JavnoNadmetanjeController.CreateJavnoNadmetanje(JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto)">
+        <member name="M:JavnoNadmetanjeAgregat.Controllers.JavnoNadmetanjeController.CreateJavnoNadmetanje(JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto)">
             <summary>
             Kreira novu javno nadmetanje
             </summary>
@@ -450,6 +450,96 @@
             Postanski broj adrese
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaKupcaDto.Ulica">
+            <summary>
+            Ulica kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaKupcaDto.Broj">
+            <summary>
+            Broj kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaKupcaDto.Mesto">
+            <summary>
+            Mesto kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.AdresaKupcaDto.PostanskiBroj">
+            <summary>
+            Postanski broj kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.Datum">
+            <summary>
+            Datum odrzavanja javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.VremePocetka">
+            <summary>
+            Vreme pocetka javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.VremeKraja">
+            <summary>
+            Vreme kraja javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.PocetnaCenaPoHektaru">
+            <summary>
+            Pocetna cena po hektaru javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.PeriodZakupa">
+            <summary>
+            Period zakupa javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.Izuzeto">
+            <summary>
+            Izuzetos javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.TipID">
+            <summary>
+            Tip javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.StatusID">
+            <summary>
+            Status javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.Krug">
+            <summary>
+            Krug javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.VisinaDopuneDepozita">
+            <summary>
+            Visina dopune depozita javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.KatastarskaOpstinaID">
+            <summary>
+            ID Katastarske opstine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeCreationDto.AdresaID">
+            <summary>
+            ID adrese
+            </summary>
+        </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto">
             <summary>
             DTO za javno nadmetanje
@@ -630,39 +720,39 @@
             Naziv kupca parcele
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.IsFizickoLice">
+            <summary>
+            Da li je kupac fizicko ili pravno lice
+            </summary>
+        </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.BrojTelefona1">
             <summary>
-            Prvi broj telefona kupca javnog nadmetanja
+            Prvi broj telefona kupca parcele
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.BrojTelefona2">
             <summary>
-            Drugi broj telefona kupca javnog nadmetanja
+            Drugi broj telefona kupca parcele
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.Email">
             <summary>
-            Email kupca javnog nadmetanja
-            </summary>
-        </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.OstvarenaPovrsina">
-            <summary>
-            Ostvarena povrsina kupca javnog nadmetanja
+            Email kupca parcele
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.BrojRacuna">
             <summary>
-            Broj racuna kupca javnog nadmetanja
+            Broj racuna kupca parcele
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.ImaZabranu">
             <summary>
-            Da li kupac javnog nadmetanja ima zabranu
+            Da li kupac parcele ima zabranu
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.DatumPocetkaZabrane">
             <summary>
-            Datum pocetka zabrane kupca javnog nadmetanja
+            Datum pocetka zabrane kupca parcele
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.DuzinaTrajanjaZabraneUGodinama">
@@ -672,7 +762,37 @@
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.DatumPrestankaZabrane">
             <summary>
-            Datum prestanka zabrane kupca javnog nadmetanja
+            Datum prestanka zabrane kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.Prioritet">
+            <summary>
+            Prioritet kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.OvlascenoLice">
+            <summary>
+            ID ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.AdresaID">
+            <summary>
+            ID adrese kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.UplataID">
+            <summary>
+            ID uplate kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.Adresa">
+            <summary>
+            Adresa kupca
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.KupacJavnoNadmetanjeDto.Uplata">
+            <summary>
+            Uplata kupca
             </summary>
         </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto">
@@ -814,6 +934,33 @@
              <summary>
             Naziv tipa javnog nadmetanja
              </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.UplataKupcaDto.Iznos">
+            <summary>
+            Iznos uplate
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.UplataKupcaDto.SvrhaUplate">
+            <summary>
+            Svrha uplate
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.UplataKupcaDto.Datum">
+            <summary>
+            Datum uplate
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.UplataKupcaDto.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate
+            </summary>
+        </member>
+        <member name="M:JavnoNadmetanjeAgregat.ServiceCalls.IKupacService.GetKupacByIdAsync(System.Guid)">
+            <summary>
+            Zahtev za kupca po ID-ju
+            </summary>
+            <param name="kupacID"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

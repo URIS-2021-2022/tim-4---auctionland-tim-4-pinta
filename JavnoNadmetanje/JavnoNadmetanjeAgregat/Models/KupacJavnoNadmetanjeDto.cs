@@ -10,43 +10,45 @@ namespace JavnoNadmetanjeAgregat.Models
     /// </summary>
     public class KupacJavnoNadmetanjeDto
     {
+
+
         /// <summary>
         /// Naziv kupca parcele
         /// </summary>
         public string Naziv { get; set; }
 
         /// <summary>
-        /// Prvi broj telefona kupca javnog nadmetanja
+        /// Da li je kupac fizicko ili pravno lice
+        /// </summary>
+        public bool IsFizickoLice { get; set; }
+
+        /// <summary>
+        /// Prvi broj telefona kupca parcele
         /// </summary>
         public string BrojTelefona1 { get; set; }
 
         /// <summary>
-        /// Drugi broj telefona kupca javnog nadmetanja
+        /// Drugi broj telefona kupca parcele
         /// </summary>
         public string BrojTelefona2 { get; set; }
 
         /// <summary>
-        /// Email kupca javnog nadmetanja
+        /// Email kupca parcele
         /// </summary>
         public string Email { get; set; }
 
         /// <summary>
-        /// Ostvarena povrsina kupca javnog nadmetanja
-        /// </summary>
-        public int OstvarenaPovrsina { get; set; }
-
-        /// <summary>
-        /// Broj racuna kupca javnog nadmetanja
+        /// Broj racuna kupca parcele
         /// </summary>
         public string BrojRacuna { get; set; }
 
         /// <summary>
-        /// Da li kupac javnog nadmetanja ima zabranu
+        /// Da li kupac parcele ima zabranu
         /// </summary>
         public bool ImaZabranu { get; set; }
 
         /// <summary>
-        /// Datum pocetka zabrane kupca javnog nadmetanja
+        /// Datum pocetka zabrane kupca parcele
         /// </summary>
         public DateTime DatumPocetkaZabrane { get; set; }
 
@@ -56,8 +58,41 @@ namespace JavnoNadmetanjeAgregat.Models
         public int DuzinaTrajanjaZabraneUGodinama { get; set; }
 
         /// <summary>
-        /// Datum prestanka zabrane kupca javnog nadmetanja
+        /// Datum prestanka zabrane kupca parcele
         /// </summary>
         public DateTime DatumPrestankaZabrane { get; set; }
+
+        /// <summary>
+        /// Prioritet kupca
+        /// </summary>
+        public Guid Prioritet { get; set; }
+
+        /// <summary>
+        /// ID ovlascenog lica
+        /// </summary>
+        public Guid OvlascenoLice { get; set; }
+
+        /// <summary>
+        /// ID adrese kupca
+        /// </summary>
+        public Guid AdresaID { get; set; }
+
+        /// <summary>
+        /// ID uplate kupca
+        /// </summary>
+        public Guid UplataID { get; set; }
+
+        /// <summary>
+        /// Adresa kupca
+        /// </summary>
+        public AdresaKupcaDto Adresa { get; set; }
+
+        /// <summary>
+        /// Uplata kupca
+        /// </summary>
+        public UplataKupcaDto Uplata { get; set; }
     }
+
 }
+    
+

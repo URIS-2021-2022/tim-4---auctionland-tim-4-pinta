@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za deo parcele
+    /// DTO za kreiranje dela parcele
     /// </summary>
-    public class DeoParceleDto
+    public class DeoParceleCreateDto
     {
         /// <summary>
         /// Redni broj dela parcele
@@ -24,10 +24,5 @@ namespace Parcela.Models
         /// ID parcele
         /// </summary>
         public Guid ParcelaID { get; set; }
-
-        /// <summary>
-        /// Parcela kojoj pripada deo parcele
-        /// </summary>
-        public ParcelaDto Parcela { get; set; }
     }
 }

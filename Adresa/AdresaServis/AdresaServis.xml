@@ -9,7 +9,7 @@
             Sadrzi CRUD operacije za adrese
             </summary>
         </member>
-        <member name="M:AdresaServis.Controllers.AdresaController.#ctor(AdresaServis.Data.IAdresaRepository,AdresaServis.Data.IDrzavaRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaServis.ServiceCalls.ILoggerService)">
+        <member name="M:AdresaServis.Controllers.AdresaController.#ctor(AdresaServis.Data.IAdresaRepository,AdresaServis.Data.IDrzavaRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaServis.ServiceCalls.IKorisnikSistemaService,AdresaServis.ServiceCalls.ILoggerService)">
             <summary>
             Konstruktor
             </summary>
@@ -25,6 +25,7 @@
             </summary>
             <returns>Lista adresa</returns>
             <response code = "200">Vraca listu adresa</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjena nijedna adresa</response>
         </member>
         <member name="M:AdresaServis.Controllers.AdresaController.GetAdresa(System.Guid)">
@@ -34,6 +35,7 @@
             <param name="adresaID">ID adrese</param>
             <returns>Trazena adresa</returns>
             <response code = "200">Vraca trazenu adresu</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena adresa nije pronadjena</response>
         </member>
         <member name="M:AdresaServis.Controllers.AdresaController.CreateAdresa(AdresaServis.Models.AdresaCreateDto)">
@@ -54,6 +56,7 @@
             } 
             </remarks>
             <response code = "201">Vraca kreiranu adresu</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja adrese</response>
         </member>
         <member name="M:AdresaServis.Controllers.AdresaController.DeleteAdresa(System.Guid)">
@@ -63,6 +66,7 @@
             <param name="adresaID">ID adrese</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Adresa uspesno obrisana</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjena adresa za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja adrese</response>
         </member>
@@ -74,6 +78,7 @@
             <returns>Potvrdu o modifikovanoj adresi</returns>
             <response code="200">Vraca azuriranu adresu</response>
             <response code="400">Adresa koja se azurira nije pronadjena</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja adrese</response>
         </member>
         <member name="M:AdresaServis.Controllers.AdresaController.GetAdresaOptions">
@@ -87,7 +92,7 @@
             Sadrzi CRUD operacije za drzave
             </summary>
         </member>
-        <member name="M:AdresaServis.Controllers.DrzavaController.#ctor(AdresaServis.Data.IDrzavaRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaServis.ServiceCalls.ILoggerService)">
+        <member name="M:AdresaServis.Controllers.DrzavaController.#ctor(AdresaServis.Data.IDrzavaRepository,Microsoft.AspNetCore.Routing.LinkGenerator,AutoMapper.IMapper,AdresaServis.ServiceCalls.IKorisnikSistemaService,AdresaServis.ServiceCalls.ILoggerService)">
             <summary>
             Konstruktor
             </summary>
@@ -102,6 +107,7 @@
             </summary>
             <returns>Lista drzava</returns>
             <response code = "200">Vraca listu drzava</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjena nijedna drzava</response>
         </member>
         <member name="M:AdresaServis.Controllers.DrzavaController.GetDrzava(System.Guid)">
@@ -111,6 +117,7 @@
             <param name="drzavaID">ID drzave</param>
             <returns>Trazena drzava</returns>
             <response code = "200">Vraca trazenu drzavu</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena drzava nije pronadjena</response>
         </member>
         <member name="M:AdresaServis.Controllers.DrzavaController.CreateDrzava(AdresaServis.Models.DrzavaDto)">
@@ -127,6 +134,7 @@
             } 
             </remarks>
             <response code = "201">Vraca kreiranu drzavu</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja drzave</response>
         </member>
         <member name="M:AdresaServis.Controllers.DrzavaController.DeleteDrzava(System.Guid)">
@@ -136,6 +144,7 @@
             <param name="drzavaID">ID drzave</param>
             <returns>Status 204 (NoContent)</returns>
             <response code="204">Drzava uspesno obrisana</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code="404">Nije pronadjena drzava za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja drzave</response>
         </member>
@@ -147,6 +156,7 @@
             <returns>Potvrdu o modifikovanoj drzavi</returns>
             <response code="200">Vraca azuriranu drzavu</response>
             <response code="400">Drzava koja se azurira nije pronadjena</response>
+            <response code = "401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja drzave</response>
         </member>
         <member name="M:AdresaServis.Controllers.DrzavaController.GetDrzavaOptions">

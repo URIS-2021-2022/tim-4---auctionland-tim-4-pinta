@@ -57,9 +57,19 @@ namespace Parcela.Models
         public Guid ZasticenaZonaID { get; set; }
 
         /// <summary>
+        /// Zasticena zona
+        /// </summary>
+        public ZasticenaZonaDto ZasticenaZona { get; set; }
+
+        /// <summary>
         /// ID odvodnjavanja
         /// </summary>
         public Guid OdvodnjavanjeID { get; set; }
+
+        /// <summary>
+        /// Odvodnjavanje parcele
+        /// </summary>
+        public OdvodnjavanjeDto Odvodnjavanje { get; set; }
 
         /// <summary>
         /// ID obradivosti
@@ -67,9 +77,19 @@ namespace Parcela.Models
         public Guid ObradivostID { get; set; }
 
         /// <summary>
+        /// Obradivost parcele
+        /// </summary>
+        public ObradivostDto Obradivost { get; set; }
+
+        /// <summary>
         /// ID oblika svojine
         /// </summary>
         public Guid OblikSvojineID { get; set; }
+
+        /// <summary>
+        /// Oblik svojine parcele
+        /// </summary>
+        public OblikSvojineDto OblikSvojine { get; set; }
 
         /// <summary>
         /// ID kulture
@@ -77,9 +97,19 @@ namespace Parcela.Models
         public Guid KulturaID { get; set; }
 
         /// <summary>
+        /// Kultura parcele
+        /// </summary>
+        public KulturaDto Kultura { get; set; }
+
+        /// <summary>
         /// ID klase
         /// </summary>
         public Guid KlasaID { get; set; }
+
+        /// <summary>
+        /// Klasa parcele
+        /// </summary>
+        public KlasaDto Klasa { get; set; }
 
         /// <summary>
         /// ID katastarske opstine
