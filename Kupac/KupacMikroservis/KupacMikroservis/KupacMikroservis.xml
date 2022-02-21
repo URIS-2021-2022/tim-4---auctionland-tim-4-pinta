@@ -504,6 +504,31 @@
             Postanski broj ovlascenog lica
             </summary>
         </member>
+        <member name="T:KupacMikroservis.Models.KorisnikSistemaDTO">
+            <summary>
+            DTO za korisnika sistema
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KorisnikSistemaDTO.Ime">
+            <summary>
+            Ime korisnika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KorisnikSistemaDTO.Prezime">
+            <summary>
+            Prezime korisnika
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KorisnikSistemaDTO.KorisnickoIme">
+            <summary>
+             Korisnicko ime
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.KorisnikSistemaDTO.Lozinka">
+            <summary>
+             Lozinka
+            </summary>
+        </member>
         <member name="T:KupacMikroservis.Models.Principal">
             <summary>
             Predstavlja model za autentifikaciju
@@ -589,5 +614,6 @@
             Salt
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:KupacMikroservis.ServiceCalls.IKorisnikSistemaService.AuthorizeAsync(System.String)" -->
     </members>
 </doc>
