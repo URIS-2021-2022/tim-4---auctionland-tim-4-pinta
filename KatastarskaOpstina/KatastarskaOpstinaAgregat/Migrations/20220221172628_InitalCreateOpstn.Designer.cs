@@ -4,14 +4,16 @@ using KatastarskaOpstinaAgregat.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KatastarskaOpstinaAgregat.Migrations
 {
     [DbContext(typeof(KatastarskaOpstinaContext))]
-    partial class KatastarskaOpstinaContextModelSnapshot : ModelSnapshot
+    [Migration("20220221172628_InitalCreateOpstn")]
+    partial class InitalCreateOpstn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

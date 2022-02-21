@@ -44,15 +44,16 @@ namespace KatastarskaOpstinaAgregat
             services.AddScoped<IKatastarskaOpstinaRepository, KatastarskaOpstinaRepository>();
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IKorisnikService, KorisnikService>();
 
             services.AddSwaggerGen(setupAction =>
             {
                 setupAction.SwaggerDoc("KatastarskaOpstinaOpenApiSpecification",
                     new Microsoft.OpenApi.Models.OpenApiInfo()
                     {
-                        Title = "Javno nadmetanje Agregat API",
+                        Title = "Katastarska opstina Agregat API",
                         Version = "1",
-                        Description = "Pomoću ovog API-ja može da se vrši dodavanje, modifikacija i brisanje parcela, odnosno njenih delova, kao i pregled svih kreiranih parcela i delova parcela.",
+                        Description = "Pomoću ovog API-ja može da se vrši dodavanje, modifikacija i brisanje opstina, kao i pregled svih kreiranih opstina.",
                         Contact = new Microsoft.OpenApi.Models.OpenApiContact
                         {
                             Name = "Dajana Jelic",
