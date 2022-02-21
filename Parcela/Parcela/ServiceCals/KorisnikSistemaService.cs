@@ -1,7 +1,9 @@
-﻿using Parcela.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Parcela.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,16 +11,18 @@ namespace Parcela.ServiceCals
 {
     public class KorisnikSistemaService : IKorisnikSistemaService
     {
-        public async Task<KorisnikSistemaDto> GetKorisnikAsync()
+        public async Task<HttpStatusCode> AuthorizeAsync(string token)
         {
-            /*   var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://localhost:42001/api/korisnik");
-               var httpClient = _httpClientFactory.CreateClient();
-               var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
+            using (HttpClient client = new HttpClient())
+            {
 
-               var response = await httpResponseMessage.Content.ReadAsStringAsync();
-               return response;*/
-            return new KorisnikSistemaDto();
+                HttpResponseMessage response = client.GetAsync("http://localhost:44500/api/korisnik/authorize/" + token).Result;
+
+                var responseContent = response.StatusCode;
+
+                return responseContent;
+            }
         }
         
     }
