@@ -62,7 +62,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KupacDTO>> GetKupci()
         {
-            string token = Request.Headers["token"].ToString();
+        /*    string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
             if (res.ToString() != "OK")
             {
@@ -73,7 +73,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja" && split[1] != "menadzer")
             {
                 return Unauthorized();
-            }
+            }*/
 
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje svih kupaca";
@@ -127,7 +127,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KupacDTO> GetKupac(Guid kupacID)
         {
-            string token = Request.Headers["token"].ToString();
+         /*   string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
             if (res.ToString() != "OK")
             {
@@ -138,7 +138,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja" && split[1] != "menadzer")
             {
                 return Unauthorized();
-            }
+            } */
 
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje kupca po ID";
@@ -161,7 +161,7 @@ namespace KupacMikroservis.Controllers
             }
 
             AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(kupacModel.AdresaID).Result;
-           UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
+            UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
             KupacDTO kupacDto = mapper.Map<KupacDTO>(kupacModel);
             kupacDto.Adresa = adresa;
             kupacDto.Uplata = uplata;
@@ -312,6 +312,10 @@ namespace KupacMikroservis.Controllers
         /// <response code="400">Kupac nije pronadjen</response>
         /// <response code="500">Doslo je do greske</response>
         [HttpPut("{KupacId}")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KupacDTO> UpdateKupac([FromBody]KupacUpdateDTO kupac)
         {
             string token = Request.Headers["token"].ToString();

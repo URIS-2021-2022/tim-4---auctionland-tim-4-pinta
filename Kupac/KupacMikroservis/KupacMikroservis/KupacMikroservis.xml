@@ -551,22 +551,32 @@
         </member>
         <member name="P:KupacMikroservis.Models.UplataKupcaDTO.Iznos">
             <summary>
-            Iznos uplate
+            Iznos uplate.
             </summary>
         </member>
         <member name="P:KupacMikroservis.Models.UplataKupcaDTO.SvrhaUplate">
             <summary>
-            Svrha uplate
+            Svrhu uplate.
             </summary>
         </member>
         <member name="P:KupacMikroservis.Models.UplataKupcaDTO.Datum">
             <summary>
-            Datum uplate
+            Datum uplate.
             </summary>
         </member>
         <member name="P:KupacMikroservis.Models.UplataKupcaDTO.PozivNaBroj">
             <summary>
-            Poziv na broj uplate
+            Poziv na broj uplate.
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.UplataKupcaDTO.BrojRacuna">
+            <summary>
+            Broj racuna
+            </summary>
+        </member>
+        <member name="P:KupacMikroservis.Models.UplataKupcaDTO.JavnoNadmetanjeID">
+            <summary>
+            ID javnog nadmetanja.
             </summary>
         </member>
         <member name="M:KupacMikroservis.Entities.KupacContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">

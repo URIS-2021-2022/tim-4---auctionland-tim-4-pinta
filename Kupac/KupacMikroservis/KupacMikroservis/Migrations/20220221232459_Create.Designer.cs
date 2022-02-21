@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KupacMikroservis.Migrations
 {
     [DbContext(typeof(KupacContext))]
-    [Migration("20220215131201_Create")]
+    [Migration("20220221232459_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,7 +96,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "Pera Peric",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3974c8"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("7a411c13-a195-48f7-8dbd-67596c3974c0")
+                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         },
                         new
                         {
@@ -114,7 +114,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "Jova Jovic",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("7a411c13-a195-48f7-8dbd-67596c3974c0")
+                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         });
                 });
 
@@ -280,7 +280,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "NS DOO",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0")
+                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         },
                         new
                         {
@@ -298,7 +298,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "SN AD",
                             OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("6a411c13-a195-48f7-8dbd-67596c3974c0")
+                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         });
                 });
 
