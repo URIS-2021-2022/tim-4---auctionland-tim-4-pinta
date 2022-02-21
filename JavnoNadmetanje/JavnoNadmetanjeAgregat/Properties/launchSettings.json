@@ -10,13 +10,13 @@
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:44208"
+      "applicationUrl": "http://localhost:44222"
     },
     "JavnoNadmetanjeAgregat": {
       "commandName": "Project",

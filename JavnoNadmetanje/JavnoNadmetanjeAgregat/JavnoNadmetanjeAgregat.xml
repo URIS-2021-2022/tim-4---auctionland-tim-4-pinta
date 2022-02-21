@@ -66,7 +66,7 @@
             <response code="404">Nije pronadjeno javno nadmetanje za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja javnog nadmetanja</response>
         </member>
-        <member name="M:JavnoNadmetanjeAgregat.Controllers.JavnoNadmetanjeController.UpdateJavnoNadmetanje(JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity)">
+        <member name="M:JavnoNadmetanjeAgregat.Controllers.JavnoNadmetanjeController.UpdateJavnoNadmetanje(JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto)">
             <summary>
             Azurira jedno javno nadmetanje
             </summary>
@@ -132,7 +132,7 @@
             <response code="404">Nije pronadjen sluzbeni list za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja sluzbenog lista</response>
         </member>
-        <member name="M:JavnoNadmetanjeAgregat.Controllers.SluzbeniListController.UpdateSluzbeniList(JavnoNadmetanjeAgregat.Entities.SluzbeniListEntity)">
+        <member name="M:JavnoNadmetanjeAgregat.Controllers.SluzbeniListController.UpdateSluzbeniList(JavnoNadmetanjeAgregat.Models.SluzbeniListUpdateDto)">
             <summary>
             Azurira jedan sluzbeni list
             </summary>
@@ -196,7 +196,7 @@
             <response code="404">Nije pronadjen status javnog nadmetanja za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja statusa javnog nadmetanja</response>
         </member>
-        <member name="M:JavnoNadmetanjeAgregat.Controllers.StatusJavnogNadmetanjaController.UpdateStatusJavnogNadmetanja(JavnoNadmetanjeAgregat.Entities.StatusJavnogNadmetanjaEntity)">
+        <member name="M:JavnoNadmetanjeAgregat.Controllers.StatusJavnogNadmetanjaController.UpdateStatusJavnogNadmetanja(JavnoNadmetanjeAgregat.Models.StatusJavnogNadmetanjaUpdateDto)">
             <summary>
             Azurira jedan status javnog nadmetanja
             </summary>
@@ -260,7 +260,7 @@
             <response code="404">Nije pronadjen tip javnog nadmetanja za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja tipa javnog nadmetanja</response>
         </member>
-        <member name="M:JavnoNadmetanjeAgregat.Controllers.TipJavnogNadmetanjaController.TipJavnogNadmetanjaObradivost(JavnoNadmetanjeAgregat.Entities.TipJavnogNadmetanjaEntity)">
+        <member name="M:JavnoNadmetanjeAgregat.Controllers.TipJavnogNadmetanjaController.TipJavnogNadmetanjaObradivost(JavnoNadmetanjeAgregat.Models.TipJavnogNadmetanjaUpdateDto)">
             <summary>
             Azurira jedan tip javnog nadmetanja
             </summary>
@@ -368,6 +368,11 @@
         <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.KatastarskaOpstinaID">
             <summary>
             ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.KupacID">
+            <summary>
+            ID kupca parcele
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Entities.JavnoNadmetanjeEntity.ParcelaID">
@@ -510,6 +515,16 @@
             ID kupca parcele
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Kupac">
+            <summary>
+            Kupac javnog nadmetanja
+            </summary>
+        </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.ParcelaID">
             <summary>
             ID parcele
@@ -530,12 +545,77 @@
             Adresa javnog nadmetanja
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.JavnoNadmetanjeID">
+            <summary>
+            ID javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.Datum">
+            <summary>
+            Datum odrzavanja javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.VremePocetka">
+            <summary>
+            Vreme pocetka javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.VremeKraja">
+            <summary>
+            Vreme kraja javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.PocetnaCenaPoHektaru">
+            <summary>
+            Pocetna cena po hektaru javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.PeriodZakupa">
+            <summary>
+            Period zakupa javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.Izuzeto">
+            <summary>
+            Izuzetos javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.TipID">
+            <summary>
+            Tip javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.VisinaDopuneDepozita">
+            <summary>
+            Visina dopune depozita javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.KatastarskaOpstinaID">
+            <summary>
+            ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUpdateDto.AdresaID">
+            <summary>
+            ID adrese
+            </summary>
+        </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.KatastarskaOpstinaJavnoNadmetanjeDto">
             <summary>
             DTO za katastarsku opstinu javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.KatastarskaOpstinaJavnoNadmetanjeDto.KatastarskaOpstinaNaziv">
+        <member name="P:JavnoNadmetanjeAgregat.Models.KatastarskaOpstinaJavnoNadmetanjeDto.NazivKatastarskeOpstine">
             <summary>
             Naziv katastarske opstine
             </summary>
@@ -675,6 +755,26 @@
             Datum izdavanja sluzbenog lista
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.SluzbeniListUpdateDto.SluzbeniListID">
+            <summary>
+            ID sluzbeni list 
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.SluzbeniListUpdateDto.Opstina">
+             <summary>
+            Opstina sluzbenog lista
+             </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.SluzbeniListUpdateDto.BrojSluzbenogLista">
+            <summary>
+            Broj sluzbenog lista
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.SluzbeniListUpdateDto.DatumIzdavanjaSluzbenogLista">
+            <summary>
+            Datum izdavanja sluzbenog lista
+            </summary>
+        </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.StatusJavnogNadmetanjaDto">
             <summary>
             DTO za status javnog nadmetanja
@@ -685,6 +785,16 @@
             Naziv statusa javnog nadmetanja
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.StatusJavnogNadmetanjaUpdateDto.StatusJavnogNadmetanjaID">
+            <summary>
+            ID statusa javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.StatusJavnogNadmetanjaUpdateDto.NazivStatusaJavnogNadmetanja">
+             <summary>
+            Naziv statusa javnog nadmetanja
+             </summary>
+        </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.TipJavnogNadmetanjaDto">
             <summary>
             DTO za tip javnog nadmetanja
@@ -694,6 +804,16 @@
             <summary>
             naziv tip javnog nadmetanja
             </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.TipJavnogNadmetanjaUpdateDto.TipJavnogNadmetanjaID">
+             <summary>
+            ID tipa javnog nadmetanja
+             </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.TipJavnogNadmetanjaUpdateDto.NazivTipaJavnogNadmetanja">
+             <summary>
+            Naziv tipa javnog nadmetanja
+             </summary>
         </member>
     </members>
 </doc>

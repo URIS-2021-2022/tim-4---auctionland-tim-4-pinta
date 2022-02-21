@@ -14,6 +14,8 @@ namespace JavnoNadmetanjeAgregat.Profiles
         {
             CreateMap<StatusJavnogNadmetanjaEntity, StatusJavnogNadmetanjaDto>();
             CreateMap<StatusJavnogNadmetanjaDto, StatusJavnogNadmetanjaEntity>();
+            CreateMap<StatusJavnogNadmetanjaUpdateDto, StatusJavnogNadmetanjaEntity>();
+            CreateMap<StatusJavnogNadmetanjaEntity, StatusJavnogNadmetanjaEntity>();
         }
     }
 }

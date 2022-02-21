@@ -13,6 +13,6 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// Naziv katastarske opstine
         /// </summary>
-        public string KatastarskaOpstinaNaziv { get; set; }
+        public string NazivKatastarskeOpstine { get; set; }
     }
 }

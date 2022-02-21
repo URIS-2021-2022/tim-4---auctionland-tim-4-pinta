@@ -64,15 +64,15 @@ namespace JavnoNadmetanjeAgregat.Models
         /// </summary>
         public KatastarskaOpstinaJavnoNadmetanjeDto KatastarskaOpstina { get; set; }
 
-        ///// <summary>
-        ///// ID kupca parcele
-        ///// </summary>
-        //public Guid KupacID { get; set; }
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
 
-        ///// <summary>
-        ///// Kupac javnog nadmetanja
-        ///// </summary>
-        //public KupacJavnoNadmetanjeDto Kupac { get; set; }
+        /// <summary>
+        /// Kupac javnog nadmetanja
+        /// </summary>
+        public KupacJavnoNadmetanjeDto Kupac { get; set; }
 
         /// <summary>
         /// ID parcele

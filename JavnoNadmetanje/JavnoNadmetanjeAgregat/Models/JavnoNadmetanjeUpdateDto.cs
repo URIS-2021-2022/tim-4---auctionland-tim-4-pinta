@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JavnoNadmetanjeAgregat.Entities
+namespace JavnoNadmetanjeAgregat.Models
 {
-    //sluzi za cuvanje u statickoj listi
-    /// <summary>
-    /// Entitet javnog nadmetanja
-    /// </summary>
-    public class JavnoNadmetanjeEntity
+    public class JavnoNadmetanjeUpdateDto
     {
-        [Key]
         /// <summary>
         /// ID javnog nadmetanja
         /// </summary>
@@ -45,20 +38,8 @@ namespace JavnoNadmetanjeAgregat.Entities
         /// <summary>
         /// Tip javnog nadmetanja
         /// </summary>
-         
-        [ForeignKey("Tip")]
         public Guid TipID { get; set; }
-        public TipJavnogNadmetanjaEntity Tip { get; set; }
-        /// <summary>
-        /// Status javnog nadmetanja
-        /// </summary>
-        [ForeignKey("Status")]
         public Guid StatusID { get; set; }
-        public StatusJavnogNadmetanjaEntity Status { get; set; }
-
-        /// <summary>
-        /// Krug javnog nadmetanja
-        /// </summary>
         public int Krug { get; set; }
         /// <summary>
         /// Visina dopune depozita javnog nadmetanja
