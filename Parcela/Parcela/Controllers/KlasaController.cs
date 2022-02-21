@@ -201,12 +201,12 @@ namespace Parcela.Controllers
                 }
                 KlasaEntity klasaEntity = mapper.Map<KlasaEntity>(klasa);
 
-                mapper.Map(klasaEntity, oldKlasa);
+                oldKlasa.KlasaOznaka = klasaEntity.KlasaOznaka;
 
                 klasaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<KlasaDto>(klasaEntity));
+                return Ok(mapper.Map<KlasaDto>(oldKlasa));
             }
             catch (Exception)
             {

@@ -201,12 +201,12 @@ namespace Parcela.Controllers
                 }
                 OblikSvojineEntity oblikSvojineEntity = mapper.Map<OblikSvojineEntity>(oblikSvojine);
 
-                mapper.Map(oblikSvojineEntity, oldOblikSvojine);
+                oldOblikSvojine.OblikSvojineNaziv = oblikSvojineEntity.OblikSvojineNaziv;
 
                 oblikSvojineRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<OblikSvojineDto>(oblikSvojineEntity));
+                return Ok(mapper.Map<OblikSvojineDto>(oldOblikSvojine));
             }
             catch (Exception)
             {

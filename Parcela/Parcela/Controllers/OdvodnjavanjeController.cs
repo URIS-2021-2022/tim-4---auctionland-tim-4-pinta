@@ -196,12 +196,12 @@ namespace Parcela.Controllers
                 }
                 OdvodnjavanjeEntity odvodnjavanjeEntity = mapper.Map<OdvodnjavanjeEntity>(odvodnjavanje);
 
-                mapper.Map(odvodnjavanjeEntity, oldOdvodnjavanje);
+                oldOdvodnjavanje.OdvodnjavanjeNaziv = odvodnjavanjeEntity.OdvodnjavanjeNaziv;
 
                 odvodnjavanjeRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeEntity));
+                return Ok(mapper.Map<OdvodnjavanjeDto>(oldOdvodnjavanje));
             }
             catch (Exception)
             {

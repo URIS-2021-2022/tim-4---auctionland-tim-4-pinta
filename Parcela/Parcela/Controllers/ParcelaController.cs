@@ -214,7 +214,7 @@ namespace Parcela.Controllers
 
             try
             {
-                var oldParcela = parcelaRepository.GetParcelaById(parcela.ParcelaID);
+                ParcelaEntity oldParcela = parcelaRepository.GetParcelaById(parcela.ParcelaID);
                 if (oldParcela == null)
                 {
                     logDto.Level = "Warn";
@@ -223,12 +223,26 @@ namespace Parcela.Controllers
                 }
                 ParcelaEntity parcelaEntity = mapper.Map<ParcelaEntity>(parcela);
 
-                mapper.Map(parcelaEntity, oldParcela);
+                oldParcela.Povrsina = parcelaEntity.Povrsina;
+                oldParcela.BrojParcele = parcelaEntity.BrojParcele;
+                oldParcela.BrojListaNepokretnosti = parcelaEntity.BrojListaNepokretnosti;
+                oldParcela.KulturaStvarnoStanje = parcelaEntity.KulturaStvarnoStanje;
+                oldParcela.KlasaStvarnoStanje = parcelaEntity.KlasaStvarnoStanje;
+                oldParcela.ObradivostStvarnoStanje = parcelaEntity.ZasticenaZonaStvarnoStanje;
+                oldParcela.OdvodnjavanjeStvarnoStanje = parcelaEntity.OdvodnjavanjeStvarnoStanje;
+                oldParcela.ZasticenaZonaID = parcelaEntity.ZasticenaZonaID;
+                oldParcela.OdvodnjavanjeID = parcelaEntity.OdvodnjavanjeID;
+                oldParcela.ObradivostID = parcelaEntity.ObradivostID;
+                oldParcela.OblikSvojineID = parcelaEntity.OblikSvojineID;
+                oldParcela.KulturaID = parcelaEntity.KulturaID;
+                oldParcela.KlasaID = parcelaEntity.KlasaID;
+                oldParcela.KatastarskaOpstinaID = parcelaEntity.KatastarskaOpstinaID;
+                oldParcela.KupacID = parcelaEntity.KupacID;
 
                 parcelaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<ParcelaDto>(parcelaEntity));
+                return Ok(mapper.Map<ParcelaDto>(oldParcela));
             }
             catch (Exception)
             {

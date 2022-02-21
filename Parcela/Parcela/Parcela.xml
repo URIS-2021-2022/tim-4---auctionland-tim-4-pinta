@@ -556,6 +556,11 @@
             ID parcele
             </summary>
         </member>
+        <member name="P:Parcela.Entities.DeoParceleEntity.Parcela">
+            <summary>
+            Parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Entities.KlasaEntity">
             <summary>
             Predstavlja model klase
@@ -569,6 +574,11 @@
         <member name="P:Parcela.Entities.KlasaEntity.KlasaOznaka">
             <summary>
             Oznaka klase
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.KlasaEntity.Parcele">
+            <summary>
+            Parcele
             </summary>
         </member>
         <member name="T:Parcela.Entities.KulturaEntity">
@@ -586,6 +596,11 @@
             Naziv kulture
             </summary>
         </member>
+        <member name="P:Parcela.Entities.KulturaEntity.Parcele">
+            <summary>
+            Parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Entities.OblikSvojineEntity">
             <summary>
             Predstavlja model za oblik svojine
@@ -599,6 +614,11 @@
         <member name="P:Parcela.Entities.OblikSvojineEntity.OblikSvojineNaziv">
             <summary>
             Naziv tipa oblika svojine
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.OblikSvojineEntity.Parcele">
+            <summary>
+            Parcele
             </summary>
         </member>
         <member name="T:Parcela.Entities.ObradivostEntity">
@@ -616,6 +636,11 @@
             Naziv tipa obradivosti
             </summary>
         </member>
+        <member name="P:Parcela.Entities.ObradivostEntity.Parcele">
+            <summary>
+            Parcele
+            </summary>
+        </member>
         <member name="T:Parcela.Entities.OdvodnjavanjeEntity">
             <summary>
             Predstavlja model za odvodnjavanje
@@ -630,6 +655,68 @@
             <summary>
             Naziv tipa odvodnjavanja
             </summary>
+        </member>
+        <member name="P:Parcela.Entities.OdvodnjavanjeEntity.Parcele">
+            <summary>
+            Parcele
+            </summary>
+        </member>
+        <member name="T:Parcela.Entities.ParcelaContext">
+            <summary>
+            Context za bazu podataka
+            </summary>
+        </member>
+        <member name="M:Parcela.Entities.ParcelaContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{Parcela.Entities.ParcelaContext})">
+            <summary>
+            Konstruktor
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.Parcele">
+            <summary>
+            DbSet Parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.ZasticeneZone">
+            <summary>
+            DbSet ZasticeneZone
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.Odvodnjavanja">
+            <summary>
+            DbSet Odvodnjavanja
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.Obradivosti">
+            <summary>
+            DbSet Obradivosti
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.ObliciSvojine">
+            <summary>
+            DbSet ObliciSvojine
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.Kulture">
+            <summary>
+            DbSet Kulture
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.Klase">
+            <summary>
+            DbSet Klase
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaContext.DeloviParcela">
+            <summary>
+            DbSet DeloviParcela
+            </summary>
+        </member>
+        <member name="M:Parcela.Entities.ParcelaContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Kreiranje modela
+            </summary>
+            <param name="builder"></param>
         </member>
         <member name="T:Parcela.Entities.ParcelaEntity">
             <summary>
@@ -686,9 +773,19 @@
             ID zasticene zone
             </summary>
         </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.ZasticenaZona">
+            <summary>
+            Zasticena zona
+            </summary>
+        </member>
         <member name="P:Parcela.Entities.ParcelaEntity.OdvodnjavanjeID">
             <summary>
             ID odvodnjavanja
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.Odvodnjavanje">
+            <summary>
+            Odvodnjavanje
             </summary>
         </member>
         <member name="P:Parcela.Entities.ParcelaEntity.ObradivostID">
@@ -696,9 +793,19 @@
             ID obradivosti
             </summary>
         </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.Obradivost">
+            <summary>
+            Obradivost
+            </summary>
+        </member>
         <member name="P:Parcela.Entities.ParcelaEntity.OblikSvojineID">
             <summary>
             ID oblika svojine
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.OblikSvojine">
+            <summary>
+            Oblik svojine
             </summary>
         </member>
         <member name="P:Parcela.Entities.ParcelaEntity.KulturaID">
@@ -706,9 +813,24 @@
             ID kulture
             </summary>
         </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.Kultura">
+            <summary>
+            Kultura
+            </summary>
+        </member>
         <member name="P:Parcela.Entities.ParcelaEntity.KlasaID">
             <summary>
             ID klase
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.Klasa">
+            <summary>
+            Klasa
+            </summary>
+        </member>
+        <member name="P:Parcela.Entities.ParcelaEntity.DeloviParcele">
+            <summary>
+            Delovi parcele
             </summary>
         </member>
         <member name="P:Parcela.Entities.ParcelaEntity.KatastarskaOpstinaID">
@@ -776,6 +898,36 @@
             Oznaka zasticene zone
             </summary>
         </member>
+        <member name="P:Parcela.Entities.ZasticenaZonaEntity.Parcele">
+            <summary>
+            Parcele
+            </summary>
+        </member>
+        <member name="T:Parcela.Models.AdresaKupcaDto">
+            <summary>
+            DTO za adresu kupca
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.AdresaKupcaDto.Ulica">
+            <summary>
+            Ulica kupca
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.AdresaKupcaDto.Broj">
+            <summary>
+            Broj kupca
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.AdresaKupcaDto.Mesto">
+            <summary>
+            Mesto kupca
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.AdresaKupcaDto.PostanskiBroj">
+            <summary>
+            Postanski broj kupca
+            </summary>
+        </member>
         <member name="T:Parcela.Models.DeoParceleDto">
             <summary>
             DTO za deo parcele
@@ -794,6 +946,16 @@
         <member name="P:Parcela.Models.DeoParceleDto.ParcelaID">
             <summary>
             ID parcele
+            </summary>
+        </member>
+        <member name="T:Parcela.Models.GatewayDto">
+            <summary>
+            DTO za Gateway
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.GatewayDto.Url">
+            <summary>
+            Url
             </summary>
         </member>
         <member name="T:Parcela.Models.KlasaDto">
@@ -821,54 +983,29 @@
             DTO za kupca parcele
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParceleDto.Naziv">
+        <member name="T:Parcela.Models.LogDto">
             <summary>
-            Naziv kupca parcele
+            DTO za Log
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParceleDto.BrojTelefona1">
+        <member name="P:Parcela.Models.LogDto.HttpMethod">
             <summary>
-            Prvi broj telefona kupca parcele
+            Http metoda
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParceleDto.BrojTelefona2">
+        <member name="P:Parcela.Models.LogDto.NameOfTheService">
             <summary>
-            Drugi broj telefona kupca parcele
+            Naziv servisa
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParceleDto.Email">
+        <member name="P:Parcela.Models.LogDto.Level">
             <summary>
-            Email kupca parcele
+            Level loga
             </summary>
         </member>
-        <member name="P:Parcela.Models.KupacParceleDto.OstvarenaPovrsina">
+        <member name="P:Parcela.Models.LogDto.Message">
             <summary>
-            Ostvarena povrsina kupca parcele
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.KupacParceleDto.BrojRacuna">
-            <summary>
-            Broj racuna kupca parcele
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.KupacParceleDto.ImaZabranu">
-            <summary>
-            Da li kupac parcele ima zabranu
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.KupacParceleDto.DatumPocetkaZabrane">
-            <summary>
-            Datum pocetka zabrane kupca parcele
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.KupacParceleDto.DuzinaTrajanjaZabraneUGodinama">
-            <summary>
-            Duzina trajanja zabrane u godinama
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.KupacParceleDto.DatumPrestankaZabrane">
-            <summary>
-            Datum prestanka zabrane kupca parcele
+            Poruka
             </summary>
         </member>
         <member name="T:Parcela.Models.OblikSvojineDto">
@@ -991,6 +1128,31 @@
             Lozinka korisnika
             </summary>
         </member>
+        <member name="T:Parcela.Models.UplataKupcaDto">
+            <summary>
+            DTO za uplatu kupca
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.UplataKupcaDto.Iznos">
+            <summary>
+            Iznos uplate
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.UplataKupcaDto.SvrhaUplate">
+            <summary>
+            Svrha uplate
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.UplataKupcaDto.Datum">
+            <summary>
+            Datum uplate
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.UplataKupcaDto.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate
+            </summary>
+        </member>
         <member name="T:Parcela.Models.ZasticenaZonaDto">
             <summary>
             DTO za zasticenu zonu
@@ -1000,6 +1162,113 @@
             <summary>
             Oznaka zasticene zone
             </summary>
+        </member>
+        <member name="T:Parcela.Profiles.DeoParceleProfile">
+            <summary>
+            Profil za mapiranje dela parcele
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.DeoParceleProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Parcela.Profiles.KlasaProfile">
+            <summary>
+            Profil za mapiranje klase
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.KlasaProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Parcela.Profiles.KulturaProfile">
+            <summary>
+            Profil za mapiranje kulture
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.KulturaProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Parcela.Profiles.OblikSvojineProfile">
+            <summary>
+            Profil za mapiranje oblika svojine
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.OblikSvojineProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Parcela.Profiles.ObradivostProfile">
+            <summary>
+            Profil za mapiranje obradivosti
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.ObradivostProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Parcela.Profiles.OdvodnjavanjeProfile">
+            <summary>
+            Profil za mapiranje odvodnjavanja
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.OdvodnjavanjeProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Parcela.Profiles.ParcelaProfile">
+            <summary>
+            Profil za mapiranje parcele
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.ParcelaProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="T:Parcela.Profiles.ZasticenaZonaProfile">
+            <summary>
+            Profil za mapiranje zasticene zone
+            </summary>
+        </member>
+        <member name="M:Parcela.Profiles.ZasticenaZonaProfile.#ctor">
+            <summary>
+            Konstruktor
+            </summary>
+        </member>
+        <member name="M:Parcela.ServiceCals.IGatewayService.GetUrl(System.String)">
+            <summary>
+            Zahtev za gateway servis
+            </summary>
+            <param name="servis"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parcela.ServiceCals.IKatastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(System.Guid)">
+            <summary>
+            Zahtev za katastarskom opstinom po ID-ju
+            </summary>
+            <param name="katastarskaOpstinaID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parcela.ServiceCals.IKupacService.GetKupacByIdAsync(System.Guid)">
+            <summary>
+            Zahtev za kupca po ID-ju
+            </summary>
+            <param name="kupacID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Parcela.ServiceCals.ILoggerService.CreateLog(Parcela.Models.LogDto)">
+            <summary>
+            Zahttev za kreiranje novog loga
+            </summary>
+            <param name="log"></param>
         </member>
     </members>
 </doc>

@@ -199,12 +199,12 @@ namespace Parcela.Controllers
                 }
                 ObradivostEntity obradivostEntity = mapper.Map<ObradivostEntity>(obradivost);
 
-                mapper.Map(obradivostEntity, oldObradivost);
+                oldObradivost.ObradivostNaziv = obradivostEntity.ObradivostNaziv;
 
                 obradivostRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<ObradivostDto>(obradivostEntity));
+                return Ok(mapper.Map<ObradivostDto>(oldObradivost));
             }
             catch (Exception)
             {

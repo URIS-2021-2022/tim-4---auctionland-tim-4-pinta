@@ -202,12 +202,14 @@ namespace Parcela.Controllers
                 }
                 DeoParceleEntity deoParceleEntity = mapper.Map<DeoParceleEntity>(deoParcele);
 
-                mapper.Map(deoParceleEntity, oldDeoParcele);
+                oldDeoParcele.PovrsinaDelaParcele = deoParceleEntity.PovrsinaDelaParcele;
+                oldDeoParcele.RedniBroj = deoParceleEntity.PovrsinaDelaParcele;
+                oldDeoParcele.ParcelaID = deoParceleEntity.ParcelaID;
 
                 deoParceleRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<DeoParceleDto>(deoParceleEntity));
+                return Ok(mapper.Map<DeoParceleDto>(oldDeoParcele));
             }
             catch (Exception)
             {

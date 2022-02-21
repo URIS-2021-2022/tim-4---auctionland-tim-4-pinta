@@ -202,13 +202,13 @@ namespace Parcela.Controllers
                     return NotFound(); 
                 }
                 KulturaEntity kulturaEntity = mapper.Map<KulturaEntity>(kultura);
-
-                mapper.Map(kulturaEntity, oldKultura);                
+           
+                oldKultura.KulturaNaziv = kulturaEntity.KulturaNaziv;
 
                 kulturaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<KulturaDto>(kulturaEntity));
+                return Ok(mapper.Map<KulturaDto>(oldKultura));
             }
             catch (Exception)
             {

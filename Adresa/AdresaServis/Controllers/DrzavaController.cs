@@ -192,7 +192,7 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<DrzavaDto> UpdateDrzava(DrzavaEntity drzava)
+        public ActionResult<DrzavaDto> UpdateDrzava(DrzavaUpdateDto drzava)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje drzave";
@@ -208,12 +208,12 @@ namespace AdresaServis.Controllers
                 }
                 DrzavaEntity drzavaEntity = mapper.Map<DrzavaEntity>(drzava);
 
-                mapper.Map(drzavaEntity, oldDrzava);
+                oldDrzava.NazivDrzave = drzavaEntity.NazivDrzave;
 
                 drzavaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<DrzavaDto>(drzavaEntity));
+                return Ok(mapper.Map<DrzavaDto>(oldDrzava));
             }
             catch (Exception)
             {
