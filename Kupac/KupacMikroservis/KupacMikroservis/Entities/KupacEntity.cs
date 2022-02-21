@@ -13,7 +13,10 @@ namespace KupacMikroservis.Models
     /// </summary>
     public class KupacEntity
     {
+        public KupacEntity()
+        {
 
+        }
         /// <summary>
         /// ID kupca
         /// </summary>

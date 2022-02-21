@@ -170,20 +170,28 @@ namespace KupacMikroservis.Controllers
             {
 
                 var oldOLice= oLiceRepository.GetOvlascenoLiceById(ol.OvlascenoLiceId);
+                oldOLice.OvlascenoLiceId = ol.OvlascenoLiceId;
+                oldOLice.Ime = ol.Ime;
+                oldOLice.Prezime = ol.Prezime;
+                oldOLice.BrojLicnogDokumenta = ol.BrojLicnogDokumenta;
+                oldOLice.BrojTable = ol.BrojTable;
+
+
                 if (oldOLice == null)
                 {
                     logDTO.Level = "Warn";
                     logger.Log(logDTO);
                     return NotFound();
                 }
-                OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
+                /*        OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
 
-                mapper.Map(olEntity, oldOLice);
+                        mapper.Map(olEntity, oldOLice);
 
-                oLiceRepository.SaveChanges();
-                logDTO.Level = "Info";
-                logger.Log(logDTO);
-                return Ok(mapper.Map<OvlascenoLiceDTO>(olEntity));
+                        oLiceRepository.SaveChanges();
+               */
+               logDTO.Level = "Info";
+               logger.Log(logDTO);
+                return Ok(mapper.Map<OvlascenoLiceDTO>(oldOLice));
             }
             catch (Exception)
             {

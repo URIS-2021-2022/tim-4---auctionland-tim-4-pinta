@@ -52,7 +52,7 @@ namespace Parcela.Data
             return false;
         }
 
-        private Tuple<string, string> HashPassword(string password)
+        private static Tuple<string, string> HashPassword(string password)
         {
             var sBytes = new byte[password.Length];
             new RNGCryptoServiceProvider().GetNonZeroBytes(sBytes);

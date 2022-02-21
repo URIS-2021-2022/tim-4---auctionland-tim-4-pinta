@@ -147,7 +147,7 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Azurira prioritet
         /// </summary>
-        [HttpPut]
+        [HttpPut("{PrioritetId}")]
         public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
         {
             logDTO.HttpMethod = "PUT";
@@ -157,20 +157,27 @@ namespace KupacMikroservis.Controllers
             {
 
                 var oldPrioritet = prioritetRepository.GetPrioritetById(prioritet.PrioritetId);
+                oldPrioritet.PrioritetId = prioritet.PrioritetId;
+                oldPrioritet.PrioritetOpis = prioritet.PrioritetOpis;
+
                 if (oldPrioritet == null)
                 {
                     logDTO.Level = "Warn";
                     logger.Log(logDTO);
                     return NotFound();
                 }
-                PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
+                /*     PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
 
-                mapper.Map(pEntity, oldPrioritet);
+                     mapper.Map(pEntity, oldPrioritet);
+
+                     prioritetRepository.SaveChanges();
+                     logDTO.Level = "Info";
+                     logger.Log(logDTO); */
+                // return Ok(mapper.Map<PrioritetDTO>(pEntity));
 
                 prioritetRepository.SaveChanges();
-                logDTO.Level = "Info";
-                logger.Log(logDTO);
-                return Ok(mapper.Map<PrioritetDTO>(pEntity));
+
+                return Ok(mapper.Map<PrioritetDTO>(oldPrioritet));
             }
             catch (Exception)
             {

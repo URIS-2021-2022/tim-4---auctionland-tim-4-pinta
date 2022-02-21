@@ -10,5 +10,7 @@ namespace ComplaintAggregate.ServiceCalls
     {
         public bool FileAComplaint(Guid kupacId);
         public bool ConnectLogger(LogModel model);
+
+     
     }
 }

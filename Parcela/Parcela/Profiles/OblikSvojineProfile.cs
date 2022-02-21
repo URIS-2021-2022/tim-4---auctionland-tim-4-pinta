@@ -20,6 +20,8 @@ namespace Parcela.Profiles
         {
             CreateMap<OblikSvojineEntity, OblikSvojineDto>();
             CreateMap<OblikSvojineDto, OblikSvojineEntity>();
+            CreateMap<OblikSvojineEntity, OblikSvojineUpdateDto>();
+            CreateMap<OblikSvojineUpdateDto, OblikSvojineEntity>();
         }
     }
 }

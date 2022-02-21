@@ -38,7 +38,9 @@ namespace ComplaintAggregate.ServiceCalls
             }
         }
 
-            public bool FileAComplaint(Guid kupacId)
+      
+
+        public bool FileAComplaint(Guid kupacId)
             {
                 using (HttpClient client = new HttpClient())
                 {
@@ -54,7 +56,9 @@ namespace ComplaintAggregate.ServiceCalls
                     return true;
                 }
             }
-        }
+
+       
+    }
     }
 
 

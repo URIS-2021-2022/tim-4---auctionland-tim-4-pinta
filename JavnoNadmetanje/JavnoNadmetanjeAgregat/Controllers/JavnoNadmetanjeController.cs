@@ -11,6 +11,8 @@ using JavnoNadmetanjeAgregat.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using JavnoNadmetanjeAgregat.ServiceCalls;
+using System.Net;
+using System.Net.Http;
 
 namespace JavnoNadmetanjeAgregat.Controllers
 {
@@ -29,7 +31,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
 
     {
         private readonly IKatastarskaOpstinaService katastarskaOpstinaService;
-       // private readonly IKupacService kupacService;
+        private readonly IKupacService kupacService;
         private readonly IAdresaService adresaService;
         private readonly IParcelaService parcelaService;
         private readonly ILoggerService loggerService;
@@ -40,12 +42,12 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IMapper mapper;
         //injektovanje zavisnosti- kad se kreira obj kontrolera mora da se prosledi nesto sto implementira interfejs tj confirmation
 
-        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService/*, IKupacService kupacService*/, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService)
+        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService)
         {
             this.javnoNadmetanjeRepository = javnoNadmetanjeRepository;
             this.linkGenerator = linkGenerator;
             this.katastarskaOpstinaService = katastarskaOpstinaService;
-            //this.kupacService = kupacService;
+            this.kupacService = kupacService;
             this.parcelaService = parcelaService;
             this.adresaService = adresaService;
             this.mapper = mapper;
@@ -54,18 +56,22 @@ namespace JavnoNadmetanjeAgregat.Controllers
             logDto.NameOfTheService = "JavnoNadmetanje";
         }
 
-        /// <summary>
-        /// Vraca sva javna nadmetanja na osnovu odredjenih filtera
-        /// </summary>
-        /// <returns>Lista javnih nadmetanja</returns>
-        /// <response code = "200">Vraca listu javnih nadmetanja</response>
-        /// <response code = "404">Nije pronadjeno nijedno javno nadmetanje</response>
-        [HttpGet]
+        
+
+    /// <summary>
+    /// Vraca sva javna nadmetanja na osnovu odredjenih filtera
+    /// </summary>
+    /// <returns>Lista javnih nadmetanja</returns>
+    /// <response code = "200">Vraca listu javnih nadmetanja</response>
+    /// <response code = "404">Nije pronadjeno nijedno javno nadmetanje</response>
+    [HttpGet]
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<JavnoNadmetanjeDto>> GetJavnoNadmetanje()
         {
+           
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih javnih nadmetanja";
 
@@ -80,9 +86,12 @@ namespace JavnoNadmetanjeAgregat.Controllers
             List<JavnoNadmetanjeDto> javnoNadmetanjeDto = mapper.Map<List<JavnoNadmetanjeDto>>(javnoNadmetanje);
             foreach (JavnoNadmetanjeDto j in javnoNadmetanjeDto) 
             {
-                //j.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(j.KatastarskaOpstinaID).Result;
+                j.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(j.KatastarskaOpstinaID).Result;
+                j.Kupac = kupacService.GetKupacByIdAsync(j.KupacID).Result;
                 j.Adresa = adresaService.GetAdresaByIdAsync(j.AdresaID).Result;
                 j.Parcela = parcelaService.GetParcelaByIdAsync(j.ParcelaID).Result;
+               
+
             }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
@@ -113,10 +122,10 @@ namespace JavnoNadmetanjeAgregat.Controllers
             }
 
             KatastarskaOpstinaJavnoNadmetanjeDto katastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(javnoNadmetanje.KatastarskaOpstinaID).Result;
-            
             //KupacJavnoNadmetanjeDto kupac = kupacService.GetKupacByIdAsync(javnoNadmetanje.KupacID).Result;
             ParcelaJavnoNadmetanjeDto parcela = parcelaService.GetParcelaByIdAsync(javnoNadmetanje.ParcelaID).Result;
             AdresaJavnoNadmetanjeDto adresa = adresaService.GetAdresaByIdAsync(javnoNadmetanje.AdresaID).Result;
+
             JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje);
             javnoNadmetanjeDto.KatastarskaOpstina = katastarskaOpstina;
             //javnoNadmetanjeDto.Kupac = kupac;
@@ -155,6 +164,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<JavnoNadmetanjeDto> CreateJavnoNadmetanje([FromBody] JavnoNadmetanjeDto javnoNadmetanje)
         {
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje novog javnog nadmetanja";
             try
@@ -229,7 +239,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<JavnoNadmetanjeDto> UpdateJavnoNadmetanje(JavnoNadmetanjeEntity javnoNadmetanje)
+        public ActionResult<JavnoNadmetanjeDto> UpdateJavnoNadmetanje(JavnoNadmetanjeUpdateDto javnoNadmetanje)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje javnog nadmetanja";
@@ -250,7 +260,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
 
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanjeEntity));
+                return Ok(mapper.Map<JavnoNadmetanjeDto>(oldJavnoNadmetanje));
             }
             catch (Exception)
             {

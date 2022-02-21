@@ -20,6 +20,10 @@ namespace Parcela.Profiles
         {
             CreateMap<ParcelaEntity, ParcelaDto>();
             CreateMap<ParcelaDto, ParcelaEntity>();
+            CreateMap<ParcelaEntity, ParcelaCreateDto>();
+            CreateMap<ParcelaCreateDto, ParcelaEntity>();
+            CreateMap<ParcelaEntity, ParcelaUpdateDto>();
+            CreateMap<ParcelaUpdateDto, ParcelaEntity>();
         }
     }
 }

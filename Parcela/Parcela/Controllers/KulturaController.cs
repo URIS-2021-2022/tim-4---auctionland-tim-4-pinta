@@ -47,10 +47,16 @@ namespace Parcela.Controllers
         /// <response code = "404">Nije pronadjena nijedna kultura</response>
         [HttpGet]
         [HttpHead]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KulturaDto>> GetKulture()
         {
+            if (Request.Headers["token"].ToString() == null) 
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih kultura";
 
@@ -187,7 +193,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KulturaDto> UpdateKultura(KulturaEntity kultura)
+        public ActionResult<KulturaDto> UpdateKultura(KulturaUpdateDto kultura)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje kulture";
@@ -202,13 +208,13 @@ namespace Parcela.Controllers
                     return NotFound(); 
                 }
                 KulturaEntity kulturaEntity = mapper.Map<KulturaEntity>(kultura);
-
-                mapper.Map(kulturaEntity, oldKultura);                
+           
+                oldKultura.KulturaNaziv = kulturaEntity.KulturaNaziv;
 
                 kulturaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<KulturaDto>(kulturaEntity));
+                return Ok(mapper.Map<KulturaDto>(oldKultura));
             }
             catch (Exception)
             {

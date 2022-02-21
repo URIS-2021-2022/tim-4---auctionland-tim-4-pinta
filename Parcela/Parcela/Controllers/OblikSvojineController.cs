@@ -185,7 +185,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<OblikSvojineDto> UpdateOblikSvojine(OblikSvojineEntity oblikSvojine)
+        public ActionResult<OblikSvojineDto> UpdateOblikSvojine(OblikSvojineUpdateDto oblikSvojine)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje oblika svojine";
@@ -201,12 +201,12 @@ namespace Parcela.Controllers
                 }
                 OblikSvojineEntity oblikSvojineEntity = mapper.Map<OblikSvojineEntity>(oblikSvojine);
 
-                mapper.Map(oblikSvojineEntity, oldOblikSvojine);
+                oldOblikSvojine.OblikSvojineNaziv = oblikSvojineEntity.OblikSvojineNaziv;
 
                 oblikSvojineRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<OblikSvojineDto>(oblikSvojineEntity));
+                return Ok(mapper.Map<OblikSvojineDto>(oldOblikSvojine));
             }
             catch (Exception)
             {

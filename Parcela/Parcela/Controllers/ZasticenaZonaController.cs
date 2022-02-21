@@ -180,7 +180,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ZasticenaZonaDto> UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
+        public ActionResult<ZasticenaZonaDto> UpdateZasticenaZona(ZasticenaZonaUpdateDto zasticenaZona)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje zasticene zone";

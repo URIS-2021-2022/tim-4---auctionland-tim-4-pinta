@@ -10,12 +10,10 @@ namespace Parcela.Data
     public class OblikSvojineRepository : IOblikSvojineRepository
     {
         private readonly ParcelaContext context;
-        private readonly IMapper mapper;
 
-        public OblikSvojineRepository(ParcelaContext context, IMapper mapper)
+        public OblikSvojineRepository(ParcelaContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()

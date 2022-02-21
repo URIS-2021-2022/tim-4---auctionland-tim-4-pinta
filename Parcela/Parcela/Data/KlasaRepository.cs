@@ -10,12 +10,10 @@ namespace Parcela.Data
     public class KlasaRepository : IKlasaRepository
     {
         private readonly ParcelaContext context;
-        private readonly IMapper mapper;
 
-        public KlasaRepository(ParcelaContext context, IMapper mapper)
+        public KlasaRepository(ParcelaContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()

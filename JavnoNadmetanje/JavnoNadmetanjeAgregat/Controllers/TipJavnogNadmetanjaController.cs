@@ -184,7 +184,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<TipJavnogNadmetanjaDto> TipJavnogNadmetanjaObradivost(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)
+        public ActionResult<TipJavnogNadmetanjaDto> TipJavnogNadmetanjaObradivost(TipJavnogNadmetanjaUpdateDto tipJavnogNadmetanja)
         {
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje tipa javnog nadmetanja";
