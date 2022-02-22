@@ -44,15 +44,15 @@ namespace ComplaintAggregate.Controllers
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
-                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            if (split[1] != "administrator" || split[1] != "menadzer" || split[1] != "licitant"
+                || split[1] != "tehnicki sektetar" || split[1] != "prva komisija" || split[1] != "operator nadmetanja")
             {
                 return Unauthorized();
             }
             HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
             if (res.ToString() != "OK")
             {
-                return Unauthorized();
+               return Unauthorized();
             }
 
             var types = typeOfComplaintRepository.GetTypesOfComplaints();
@@ -73,8 +73,8 @@ namespace ComplaintAggregate.Controllers
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
-                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            if (split[1] != "administrator" || split[1] != "menadzer" || split[1] != "licitant"
+                || split[1] != "tehnicki sektetar" || split[1] != "prva komisija" || split[1] != "operator nadmetanja")
             {
                 return Unauthorized();
             }
@@ -101,8 +101,8 @@ namespace ComplaintAggregate.Controllers
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
-                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            if (split[1] != "administrator" || split[1] != "menadzer" || split[1] != "licitant"
+                || split[1] != "tehnicki sektetar" || split[1] != "prva komisija" || split[1] != "operator nadmetanja")
             {
                 return Unauthorized();
             }
@@ -139,8 +139,8 @@ namespace ComplaintAggregate.Controllers
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
-                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            if (split[1] != "administrator" || split[1] != "menadzer" || split[1] != "licitant"
+                || split[1] != "tehnicki sektetar" || split[1] != "prva komisija" || split[1] != "operator nadmetanja")
             {
                 return Unauthorized();
             }
@@ -178,8 +178,8 @@ namespace ComplaintAggregate.Controllers
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
-                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            if (split[1] != "administrator" || split[1] != "menadzer" || split[1] != "licitant"
+                || split[1] != "tehnicki sektetar" || split[1] != "prva komisija" || split[1] != "operator nadmetanja")
             {
                 return Unauthorized();
             }
