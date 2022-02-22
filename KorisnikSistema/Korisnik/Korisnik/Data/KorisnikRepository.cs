@@ -58,8 +58,13 @@ namespace Korisnik.Data
 
         public bool Authorize(String token)
         {
-
-            return context.Tokens.FirstOrDefault(e => e.token == token)!=null;
+            var retToken = context.Tokens.FirstOrDefault(e => e.token == token);
+            TimeSpan difference = DateTime.Now - retToken.time;
+            if (difference.TotalMinutes > 60) 
+            {
+                return false;
+            }
+            return retToken!=null;
            
         }
 

@@ -27,7 +27,7 @@ namespace Korisnik.Controllers
         /// </summary>
         /// <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
         /// <returns></returns>
-        [HttpPost("authenticate")]
+        [HttpPost("api/authenticate")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
