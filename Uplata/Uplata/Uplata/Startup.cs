@@ -48,6 +48,7 @@ namespace Uplata
             services.AddScoped<IUserRepository, UserMockRepository>();
             services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
             services.AddScoped<IJavnoNadmetanjeService, JavnoNadmetanjeService>();
+            services.AddScoped<IKorisnikSistemaService, KorisnikSistemaService>();
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
             services.AddScoped<IKursRepository, KursRepository>();
@@ -56,9 +57,8 @@ namespace Uplata
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            //Konfigurisanje Jwt autentifikacije za projekat
-            //Registrujemo Jwt autentifikacionu shemu i definisemo sve potrebne Jwt opcije
-            /*services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+          
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -70,10 +70,9 @@ namespace Uplata
                     ValidAudience = Configuration["Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
-            });*/
+            });
 
-            // Znaci da cim se napravi objekat ExamRegistrationController-a i inject-uje IExamRegistrationRepository, kreira se jedna instanca objekta klase ExamRegistrationRepository
-            // Kada se radi sa konkretnom bazom, umesto AddSingleton treba koristiti AddScopped
+  
 
             services.AddSwaggerGen(setupAction =>
             {
@@ -108,7 +107,7 @@ namespace Uplata
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
 
-            services.AddDbContext<UplataContext>();
+            services.AddDbContextPool<UplataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UplataDB")));
 
         }
 

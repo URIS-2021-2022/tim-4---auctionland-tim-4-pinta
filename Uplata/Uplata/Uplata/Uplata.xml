@@ -17,15 +17,18 @@
             </summary>
             <returns>Lista kurseva</returns>
             <response code="200">Vraca listu kurseva</response>
-            <response code="404">Nije pronadjen ni jedan kurs</response>
+            <response code="204">Nije pronadjen ni jedan kurs</response>
+            <response code="401">Nije autorizovan korisnik</response>
         </member>
         <member name="M:Uplata.Controllers.KursController.GetKurs(System.Guid)">
             <summary>
             Vraća jedan kurs na osnovu ID-ja kurs.
             </summary>
             <param name="kursID">ID kursa</param>
-            <returns></returns>
+            <returns>Trazen kurs</returns>
             <response code="200">Vraća trazen kurs</response>
+            <response code="404">Nije pronadjen trazen kurs</response>
+            <response code="401">Korisnik nije autorizovan</response>
         </member>
         <member name="M:Uplata.Controllers.KursController.CreateKurs(Uplata.Models.KursDto)">
             <summary>
@@ -43,8 +46,9 @@
                 }      \
             }
             </remarks>
-            <response code="200">Vraća kurs</response>
-            <response code="500">Došlo je do greške na serveru prilikom dodavnja kursa</response>
+            <response code = "201">Vraca kreiran kurs</response>
+            <response code="401">Korisnik nije autorizovan</response>
+            <response code = "500">Doslo je do greske na serveru prilikom kreiranja kursa</response>
         </member>
         <member name="M:Uplata.Controllers.KursController.UpdateKurs(Uplata.Models.KursDtoUpdate)">
             <summary>
@@ -52,11 +56,12 @@
             </summary>
             <param name="kurs">Model kursa koji se ažurira</param>
             <returns>Potvrdu o modifikovanom kursu.</returns>
-            <response code="200">Vraća ažurirani kurs</response>
-            <response code="400">Kurs koja se ažurira nije pronadjen</response>
-            <response code="500">Došlo je do greške na serveru prilikom ažuriranja kursa</response>
+            <response code="200">Vraca azurirani kurs</response>
+            <response code="400">Kurs koji se azurira nije pronadjena</response>
+            <response code="401">Korisnik nije autorizovan</response>
+            <response code="500">Doslo je do greske prilikom azuriranja uplate</response>    
         </member>
-        <member name="M:Uplata.Controllers.KursController.DeleteUplata(System.Guid)">
+        <member name="M:Uplata.Controllers.KursController.DeleteKurs(System.Guid)">
             <summary>
             Vrši brisanje jednog kursa na osnovu ID-ja.
             </summary>
@@ -72,21 +77,29 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Uplata.Controllers.UplataController">
+            <summary>
+            Sadrzi CRUD operacije za uplate
+            </summary>
+        </member>
         <member name="M:Uplata.Controllers.UplataController.GetUplate">
             <summary>
             Vraća sve uplate 
             </summary>
             <returns>Lista uplati</returns>
-            <response code="200">Vraca listu uplati</response>
-            <response code="404">Nije pronađena ni jedna uplata</response>
+            <response code = "200">Vraca listu uplata</response>
+            <response code="401">Korisnik nije autorizovan</response>
+            <response code = "404">Nije pronadjena nijedna uplata</response>
         </member>
         <member name="M:Uplata.Controllers.UplataController.GetUplate(System.Guid)">
             <summary>
             Vraća jednu uplatu na osnovu ID-ja uplate.
             </summary>
             <param name="uplataID">ID uplate</param>
-            <returns></returns>
-            <response code="200">Vraća traženu uplatu</response>
+            <returns>Trazena parcela</returns>
+            <response code = "200">Vraca trazenu uplatu</response>
+            <response code="401">Korisnik nije autorizovan</response>
+            <response code = "404">Trazena uplata nije pronadjena</response>
         </member>
         <member name="M:Uplata.Controllers.UplataController.CreateUplata(Uplata.Models.UplataCreateDto)">
             <summary>
@@ -108,8 +121,9 @@
                 }      \
             }
             </remarks>
-            <response code="200">Vraća uplatu</response>
-            <response code="500">Došlo je do greške na serveru prilikom uplate</response>
+            <response code = "201">Vraca kreiranu uplatu</response>
+            <response code="401">Korisnik nije autorizovan</response>
+            <response code = "500">Doslo je do greske na serveru prilikom kreiranja uplate</response>
         </member>
         <member name="M:Uplata.Controllers.UplataController.UpdateUplata(Uplata.Models.UplataDtoUpdate)">
             <summary>
@@ -117,9 +131,10 @@
             </summary>
             <param name="uplata">Model uplate koji se ažurira</param>
             <returns>Potvrdu o modifikovanoj uplati.</returns>
-            <response code="200">Vraća ažuriranu uplatu</response>
-            <response code="400">Uplata koja se ažurira nije pronađena</response>
-            <response code="500">Došlo je do greške na serveru prilikom ažuriranja uplate</response>
+            <response code="200">Vraca azuriranu uuplatu</response>
+            <response code="400">Uplata koja se azurira nije pronadjena</response>
+            <response code="401">Korisnik nije autorizovan</response>
+            <response code="500">Doslo je do greske prilikom azuriranja uplate</response>
         </member>
         <member name="M:Uplata.Controllers.UplataController.DeleteUplata(System.Guid)">
             <summary>
@@ -127,9 +142,10 @@
             </summary>
             <param name="uplataID">ID uplate</param>
             <returns>Status 204 (NoContent)</returns>
-            <response code="204">Uplata uspešno obrisana</response>
-            <response code="404">Nije pronađena uplata za brisanje</response>
-            <response code="500">Došlo je do greške na serveru prilikom brisanja uplate</response>
+            <response code="204">Uplata uspesno obrisana</response>
+            <response code="401">Korisnik nije autorizovan</response>
+            <response code="404">Nije pronadjena uplata za brisanje</response>
+            <response code="500">Doslo je do greske na serveru prilikom brisanja uplate</response>
         </member>
         <member name="M:Uplata.Controllers.UplataController.GetUplataOptions">
             <summary>
@@ -168,7 +184,7 @@
         </member>
         <member name="M:Uplata.Entities.UplataContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
-            Popunjava bazu sa nekim inicijalnim podacima
+            Kreiranje modela 
             </summary>
         </member>
         <member name="P:Uplata.Entities.UplataEntity.UplataID">
