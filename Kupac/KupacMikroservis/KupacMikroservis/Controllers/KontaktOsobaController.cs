@@ -25,7 +25,7 @@ namespace KupacMikroservis.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILogger logger;
-        private LogDTO logDTO;
+        private readonly LogDTO logDTO;
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
 
@@ -273,12 +273,6 @@ namespace KupacMikroservis.Controllers
                 oldKOsoba.Prezime = ko.Prezime;
                 oldKOsoba.Telefon = ko.Telefon;
                 
-              /*  KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
-
-                
-
-                mapper.Map(koEntity, oldKOsoba);  */              
-
                 koRepository.SaveChanges();
                 logDTO.Level = "Info";
                 logger.Log(logDTO);

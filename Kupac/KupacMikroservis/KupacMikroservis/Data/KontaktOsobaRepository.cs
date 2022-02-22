@@ -7,71 +7,63 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class KontaktOsobaRepository : IKontaktOsobaRepository
+namespace KupacMikroservis.Data
 {
-    //    public static List<KontaktOsobaEntity> KontaktOsobe { get; set; } = new List<KontaktOsobaEntity>();
-
-    private readonly KupacContext context;
-
-    private readonly IMapper mapper;
-
-
-    public KontaktOsobaRepository(KupacContext context, IMapper mapper)
-    {
-        this.context = context;
-        this.mapper = mapper;
-    }
-    public bool SaveChanges()
-    {
-        return context.SaveChanges() > 0;
-    }
-
-   
-    public KontaktOsobaEntity CreateKontaktOsoba(KontaktOsobaEntity kontaktosoba)
+    public class KontaktOsobaRepository : IKontaktOsobaRepository
     {
 
-        var createdEntity = context.Add(kontaktosoba);
-        return mapper.Map<KontaktOsobaEntity>(createdEntity.Entity);
 
-      /*  kontaktosoba.KontaktOsobaId = Guid.NewGuid();
-        KontaktOsobe.Add(kontaktosoba);
-        KontaktOsobaEntity ko = GetKontaktOsoba(kontaktosoba.KontaktOsobaId);
-        return ko; */
-    }
+        private readonly KupacContext context;
 
-    public void DeleteKontaktOsoba(Guid kontaktosobaID)
-    {
+        private readonly IMapper mapper;
 
-        var ko = GetKontaktOsoba(kontaktosobaID);
-        context.Remove(ko);
 
-        //  KontaktOsobe.Remove(KontaktOsobe.FirstOrDefault(ko => ko.KontaktOsobaId == kontaktosobaID));
-    }
+        public KontaktOsobaRepository(KupacContext context, IMapper mapper)
+        {
+            this.context = context;
+            this.mapper = mapper;
+        }
+        public bool SaveChanges()
+        {
+            return context.SaveChanges() > 0;
+        }
 
-    public List<KontaktOsobaEntity> GetKontaktOsobe()
-    {
 
-        return context.kOsobe.ToList();
+        public KontaktOsobaEntity CreateKontaktOsoba(KontaktOsobaEntity kontaktOsoba)
+        {
 
-        //  return (from ko in KontaktOsobe select ko).ToList();
-    }
+            var createdEntity = context.Add(kontaktOsoba);
+            return mapper.Map<KontaktOsobaEntity>(createdEntity.Entity);
 
-    public KontaktOsobaEntity GetKontaktOsoba(Guid kontaktosobaID)
-    {
-        return context.kOsobe.FirstOrDefault(ko => ko.KontaktOsobaId == kontaktosobaID);
+        }
 
-        // return KontaktOsobe.FirstOrDefault(ko => ko.KontaktOsobaId == kontaktosobaID);
-    }
+        public void DeleteKontaktOsoba(Guid kontaktOsobaID)
+        {
 
-    public void UpdateKontaktOsoba(KontaktOsobaEntity kontaktosoba)
-    {
-     /*   KontaktOsobaEntity ko = GetKontaktOsoba(kontaktosoba.KontaktOsobaId);
+            var ko = GetKontaktOsoba(kontaktOsobaID);
+            context.Remove(ko);
 
-        ko.Ime = kontaktosoba.Ime;
-        ko.Prezime = kontaktosoba.Prezime;
-        ko.Funkcija = kontaktosoba.Funkcija;
-        ko.Telefon = kontaktosoba.Telefon;
 
-        return ko;*/
+        }
+
+        public List<KontaktOsobaEntity> GetKontaktOsobe()
+        {
+
+            return context.kOsobe.ToList();
+
+
+        }
+
+        public KontaktOsobaEntity GetKontaktOsoba(Guid kontaktOsobaID)
+        {
+            return context.kOsobe.FirstOrDefault(ko => ko.KontaktOsobaId == kontaktOsobaID);
+
+
+        }
+
+        public void UpdateKontaktOsoba(KontaktOsobaEntity kontaktOsoba)
+        {
+
+        }
     }
 }

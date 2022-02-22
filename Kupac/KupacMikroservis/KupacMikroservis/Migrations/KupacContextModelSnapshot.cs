@@ -92,7 +92,7 @@ namespace KupacMikroservis.Migrations
                             JMBG = "6765432484",
                             KontaktOsoba = new Guid("1a411c13-a195-3337-8dbd-44444c3974c0"),
                             Naziv = "Pera Peric",
-                            OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3974c8"),
+                            OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         },
@@ -110,7 +110,7 @@ namespace KupacMikroservis.Migrations
                             JMBG = "7654321234",
                             KontaktOsoba = new Guid("1a411c13-a195-3337-8dbd-33333c3974c0"),
                             Naziv = "Jova Jovic",
-                            OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
+                            OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         });
@@ -276,7 +276,7 @@ namespace KupacMikroservis.Migrations
                             IsFizickoLice = false,
                             MaticniBroj = "455643231",
                             Naziv = "NS DOO",
-                            OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
+                            OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         },
@@ -294,7 +294,7 @@ namespace KupacMikroservis.Migrations
                             IsFizickoLice = false,
                             MaticniBroj = "455643231",
                             Naziv = "SN AD",
-                            OvlascenoLice = new Guid("1a411c13-a185-48f7-8dbd-67596c3975c8"),
+                            OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
                         });

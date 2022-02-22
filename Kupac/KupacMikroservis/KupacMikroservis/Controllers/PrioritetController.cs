@@ -26,7 +26,7 @@ namespace KupacMikroservis.Controllers
         private readonly IMapper mapper;
 
         private readonly ILogger logger;
-        private LogDTO logDTO;
+        private readonly LogDTO logDTO;
 
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
@@ -73,7 +73,7 @@ namespace KupacMikroservis.Controllers
             logDTO.Message = "Vracanje svih prioriteta";
 
             List<PrioritetEntity> prioriteti = prioritetRepository.GetPrioriteti();
-            if (prioriteti == null || prioriteti.Count == 0)
+            if (prioriteti.Count == 0 || prioriteti == null)
             {
                 logDTO.Level = "Warn";
                 logger.Log(logDTO);
@@ -264,8 +264,7 @@ namespace KupacMikroservis.Controllers
             {
 
                 var oldPrioritet = prioritetRepository.GetPrioritetById(prioritet.PrioritetId);
-                oldPrioritet.PrioritetId = prioritet.PrioritetId;
-                oldPrioritet.PrioritetOpis = prioritet.PrioritetOpis;
+
 
                 if (oldPrioritet == null)
                 {
@@ -273,14 +272,11 @@ namespace KupacMikroservis.Controllers
                     logger.Log(logDTO);
                     return NotFound();
                 }
-                /*     PrioritetEntity pEntity = mapper.Map<PrioritetEntity>(prioritet);
 
-                     mapper.Map(pEntity, oldPrioritet);
 
-                     prioritetRepository.SaveChanges();
-                     logDTO.Level = "Info";
-                     logger.Log(logDTO); */
-                // return Ok(mapper.Map<PrioritetDTO>(pEntity));
+                oldPrioritet.PrioritetId = prioritet.PrioritetId;
+                oldPrioritet.PrioritetOpis = prioritet.PrioritetOpis;
+               
 
                 prioritetRepository.SaveChanges();
 

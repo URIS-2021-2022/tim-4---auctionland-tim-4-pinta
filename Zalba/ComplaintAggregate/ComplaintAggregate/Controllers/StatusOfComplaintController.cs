@@ -42,8 +42,8 @@ namespace ComplaintAggregate.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator" || split[1] != "menadzer" || split[1] != "licitant"
-                || split[1] != "tehnicki sektetar" || split[1] != "prva komisija" || split[1] != "operator nadmetanja")
+            if (token == "" || (split[1] !="administrator" && split[1] !="menadzer" && split[1] != "licitant"
+                && split[1] != "tehnicki sektetar" && split[1] != "prva komisija" && split[1] != "operator nadmetanja"))
             {
                 return Unauthorized();
             }

@@ -9,22 +9,16 @@ namespace Uplata.Entities
 {
     public class UplataContext : DbContext
     {
-        private readonly IConfiguration _configuration;
-        public UplataContext(DbContextOptions options, IConfiguration configuration) : base(options)
+        public UplataContext(DbContextOptions options) : base(options)
         {
-            _configuration = configuration;
         }
 
         public DbSet<UplataEntity> Uplate { get; set; }
         public DbSet<KursEntity> Kursevi { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("UplataDB"));
-        }
 
         /// <summary>
-        /// Popunjava bazu sa nekim inicijalnim podacima
+        /// Kreiranje modela 
         /// </summary>
         protected override void OnModelCreating(ModelBuilder builder)
         {

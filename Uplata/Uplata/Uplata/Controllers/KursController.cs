@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using JavnoNadmetanjeAgregat.Models;
+using System.Net;
 
 namespace Uplata.Controllers
 {
@@ -24,11 +25,13 @@ namespace Uplata.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
 
-        public KursController(IKursRepository kursRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public KursController(IKursRepository kursRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService)
         {
             this.kursRepository = kursRepository;
             this.linkGenerator = linkGenerator;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.mapper = mapper;
             this.loggerService = loggerService;
             logDto = new LogDto();
@@ -40,13 +43,28 @@ namespace Uplata.Controllers
         /// </summary>
         /// <returns>Lista kurseva</returns>
         /// <response code="200">Vraca listu kurseva</response>
-        /// <response code="404">Nije pronadjen ni jedan kurs</response>
+        /// <response code="204">Nije pronadjen ni jedan kurs</response>
+        /// <response code="401">Nije autorizovan korisnik</response>
         [HttpGet]
         [HttpHead] //Podržavamo i HTTP head zahtev koji nam vraća samo zaglavlja u odgovoru    
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<KursDto>> GetKurs()
         {
+
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih kurseva";
 
@@ -68,14 +86,32 @@ namespace Uplata.Controllers
         /// Vraća jedan kurs na osnovu ID-ja kurs.
         /// </summary>
         /// <param name="kursID">ID kursa</param>
-        /// <returns></returns>
+        /// <returns>Trazen kurs</returns>
         /// <response code="200">Vraća trazen kurs</response>
+        /// <response code="404">Nije pronadjen trazen kurs</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        [HttpGet("{kursID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UplataModel))] //Kada se koristi IActionResult
-        [HttpGet("{kursID}")] //Dodatak na rutu koja je definisana na nivou kontroler
         public ActionResult<KursDto> GetKurs(Guid kursID)
         {
+
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje kursa po ID-ju";
             KursEntity kurs = kursRepository.GetKursByID(kursID);
@@ -91,7 +127,6 @@ namespace Uplata.Controllers
             loggerService.CreateLog(logDto);
             return Ok(kursDto);
 
-            //return Ok((mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje)));
         }
         /// <summary>
         /// Kreira novi kurs.
@@ -108,14 +143,30 @@ namespace Uplata.Controllers
         ///     }      \
         /// }
         /// </remarks>
-        /// <response code="200">Vraća kurs</response>
-        /// <response code="500">Došlo je do greške na serveru prilikom dodavnja kursa</response>
+        /// <response code = "201">Vraca kreiran kurs</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja kursa</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KursDto> CreateKurs([FromBody] KursDto kurs)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje novog kursa";
 
@@ -143,16 +194,33 @@ namespace Uplata.Controllers
         /// </summary>
         /// <param name="kurs">Model kursa koji se ažurira</param>
         /// <returns>Potvrdu o modifikovanom kursu.</returns>
-        /// <response code="200">Vraća ažurirani kurs</response>
-        /// <response code="400">Kurs koja se ažurira nije pronadjen</response>
-        /// <response code="500">Došlo je do greške na serveru prilikom ažuriranja kursa</response>
+        /// <response code="200">Vraca azurirani kurs</response>
+        /// <response code="400">Kurs koji se azurira nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        /// <response code="500">Doslo je do greske prilikom azuriranja uplate</response>    
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
+        [HttpHead]
         public ActionResult<KursDto> UpdateKurs(KursDtoUpdate kurs)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikacija kursa";
 
@@ -197,8 +265,21 @@ namespace Uplata.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpDelete("{kursID}")]
-        public IActionResult DeleteUplata(Guid kursID)
+        public IActionResult DeleteKurs(Guid kursID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje kursa";
 

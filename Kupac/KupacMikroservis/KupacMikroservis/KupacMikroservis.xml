@@ -4,13 +4,6 @@
         <name>KupacMikroservis</name>
     </assembly>
     <members>
-        <member name="M:KupacMikroservis.Controllers.AuthenticationController.Authenticate(KupacMikroservis.Models.Principal)">
-            <summary>
-            Sluzi za autentifikaciju korisnika
-            </summary>
-            <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
-            <returns></returns>
-        </member>
         <member name="T:KupacMikroservis.Controllers.KontaktOsobaController">
             <summary>
             Sadrzi CRUD operacije za kontakt osobe
@@ -234,35 +227,6 @@
             <summary>
             Vraca HTTP opcije
             </summary>
-        </member>
-        <member name="M:KupacMikroservis.Data.UserMockRepository.FillData">
-            <summary>
-            Metoda koja upisuje testne podatke
-            </summary>
-        </member>
-        <member name="M:KupacMikroservis.Data.UserMockRepository.UserWithCredentialsExists(System.String,System.String)">
-            <summary>
-            Proverava da li postoji korisnik sa prosleđenim kredencijalima
-            </summary>
-            <param name="username"></param>
-            <param name="password"></param>
-            <returns></returns>
-        </member>
-        <member name="M:KupacMikroservis.Data.UserMockRepository.HashPassword(System.String)">
-            <summary>
-            Vrši hash-ovanje korisničke lozinke
-            </summary>
-            <param name="password">Korisnička lozinka</param>
-            <returns>Generisan hash i salt</returns>
-        </member>
-        <member name="M:KupacMikroservis.Data.UserMockRepository.VerifyPassword(System.String,System.String,System.String)">
-            <summary>
-            Proverava validnost prosleđene lozinke sa prosleđenim hash-om
-            </summary>
-            <param name="password">Korisnička lozinka</param>
-            <param name="savedHash">Sačuvan hash</param>
-            <param name="savedSalt">Sačuvan salt</param>
-            <returns></returns>
         </member>
         <member name="T:KupacMikroservis.Models.FizickoLiceEntity">
             <summary>
@@ -529,21 +493,6 @@
              Lozinka
             </summary>
         </member>
-        <member name="T:KupacMikroservis.Models.Principal">
-            <summary>
-            Predstavlja model za autentifikaciju
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Models.Principal.Username">
-            <summary>
-            Korisnicko ime
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Models.Principal.Password">
-            <summary>
-            Lozinka korisnika
-            </summary>
-        </member>
         <member name="T:KupacMikroservis.Models.UplataKupcaDTO">
             <summary>
             DTO za uplatu kupca
@@ -582,46 +531,6 @@
         <member name="M:KupacMikroservis.Entities.KupacContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             Popunjava bazu sa nekim inicijalnim podacima
-            </summary>
-        </member>
-        <member name="T:KupacMikroservis.Entities.User">
-            <summary>
-            Predstavlja model korisnika
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Entities.User.ID">
-            <summary>
-            ID korisnika
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Entities.User.FirstName">
-            <summary>
-            Ime korisnika
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Entities.User.LastName">
-            <summary>
-            Prezime korinsika
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Entities.User.UserName">
-            <summary>
-            Korisnicko ime
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Entities.User.Email">
-            <summary>
-            Email korisnika
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Entities.User.Password">
-            <summary>
-            Hash-ovana lozinka korinsika
-            </summary>
-        </member>
-        <member name="P:KupacMikroservis.Entities.User.Salt">
-            <summary>
-            Salt
             </summary>
         </member>
         <!-- Badly formed XML comment ignored for member "M:KupacMikroservis.ServiceCalls.IKorisnikSistemaService.AuthorizeAsync(System.String)" -->
