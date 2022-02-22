@@ -10,8 +10,11 @@ namespace Uplata.Entities
     {
         [Key]
         public Guid KursID { get; set; }
+
         public double VrednostKursa { get; set; } 
+
         public DateTime Datum { get; set; } 
+
         public string Valuta { get; set; }
 
     }

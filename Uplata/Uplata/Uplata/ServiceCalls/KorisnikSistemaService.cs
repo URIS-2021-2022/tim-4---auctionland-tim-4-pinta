@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Uplata.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace JavnoNadmetanjeAgregat.ServiceCalls
+namespace Uplata.ServiceCalls
 {
     public class KorisnikSistemaService : IKorisnikSistemaService
     {

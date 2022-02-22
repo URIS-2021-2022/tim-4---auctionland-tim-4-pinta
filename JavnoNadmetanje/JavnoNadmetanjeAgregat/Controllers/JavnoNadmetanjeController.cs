@@ -103,7 +103,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
             foreach (JavnoNadmetanjeDto j in javnoNadmetanjeDto) 
             {
                 j.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(j.KatastarskaOpstinaID).Result;
-                //j.Kupac = kupacService.GetKupacByIdAsync(j.KupacID).Result;
+                j.Kupac = kupacService.GetKupacByIdAsync(j.KupacID).Result;
                 j.Adresa = adresaService.GetAdresaByIdAsync(j.AdresaID).Result;
                 j.Parcela = parcelaService.GetParcelaByIdAsync(j.ParcelaID).Result;
                

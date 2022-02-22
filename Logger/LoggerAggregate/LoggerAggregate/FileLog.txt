@@ -159,3 +159,9 @@
 2022-02-22 10:37:42.0375 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
 2022-02-22 10:49:41.0037 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
 2022-02-22 12:26:29.2105 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-22 17:53:48.1769 INFO Naziv metode: GET,Naziv servisa: JavnoNadmetanje,poruka: Vracanje svih javnih nadmetanja
+2022-02-22 18:16:19.2950 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 18:17:13.4013 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje svih kupaca
+2022-02-22 18:19:28.6193 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-22 18:19:29.2349 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-22 18:19:29.4352 INFO Naziv metode: GET,Naziv servisa: JavnoNadmetanje,poruka: Vracanje svih javnih nadmetanja

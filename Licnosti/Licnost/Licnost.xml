@@ -234,6 +234,11 @@
             Ličnost
             </summary>
         </member>
+        <member name="P:Licnost.Entities.Komisija.ClanoviKomisije">
+            <summary>
+            Clanovi komisije
+            </summary>
+        </member>
         <member name="M:Licnost.Entities.LicnostContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             Popunjava bazu sa nekim inicijalnim podacima

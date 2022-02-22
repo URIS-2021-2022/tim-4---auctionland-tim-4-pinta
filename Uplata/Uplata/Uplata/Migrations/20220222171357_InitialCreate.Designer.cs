@@ -10,7 +10,7 @@ using Uplata.Entities;
 namespace Uplata.Migrations
 {
     [DbContext(typeof(UplataContext))]
-    [Migration("20220221230409_InitialCreate")]
+    [Migration("20220222171357_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,14 +44,14 @@ namespace Uplata.Migrations
                         new
                         {
                             KursID = new Guid("b06a4284-44e2-46af-8d74-b79c8b0c6017"),
-                            Datum = new DateTime(2022, 2, 22, 0, 4, 9, 318, DateTimeKind.Local).AddTicks(170),
+                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 661, DateTimeKind.Local).AddTicks(9715),
                             Valuta = "EUR",
                             VrednostKursa = 117.8
                         },
                         new
                         {
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
-                            Datum = new DateTime(2022, 2, 22, 0, 4, 9, 320, DateTimeKind.Local).AddTicks(2118),
+                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(5875),
                             Valuta = "GBT",
                             VrednostKursa = 150.5
                         });
@@ -95,7 +95,7 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 22, 0, 4, 9, 320, DateTimeKind.Local).AddTicks(2260),
+                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(6132),
                             Iznos = "200",
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
                             PozivNaBroj = "3121-424324523-444",
@@ -105,7 +105,7 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 22, 0, 4, 9, 320, DateTimeKind.Local).AddTicks(3120),
+                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(7318),
                             Iznos = "100",
                             KursID = new Guid("b06a4284-44e2-46af-8d74-b79c8b0c6017"),
                             PozivNaBroj = "0242-424324523-444",
@@ -115,7 +115,7 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("1d2ed242-5059-4a1b-aeab-eee99404284f"),
                             BrojRacuna = "115-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 22, 0, 4, 9, 320, DateTimeKind.Local).AddTicks(3151),
+                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(7363),
                             Iznos = "50",
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
                             PozivNaBroj = "3221-424324523-444",
