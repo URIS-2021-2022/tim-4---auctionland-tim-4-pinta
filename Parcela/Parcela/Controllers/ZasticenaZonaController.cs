@@ -9,6 +9,7 @@ using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Parcela.Controllers
@@ -24,14 +25,16 @@ namespace Parcela.Controllers
         private readonly IZasticenaZonaRepository zasticenaZonaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public ZasticenaZonaController(IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public ZasticenaZonaController(IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService)
         {
             this.zasticenaZonaRepository = zasticenaZonaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.loggerService = loggerService;
             logDto = new LogDto();
             logDto.NameOfTheService = "Parcela";
@@ -41,13 +44,28 @@ namespace Parcela.Controllers
         /// </summary>
         /// <returns>Lista zasticenih zona</returns>
         /// <response code = "200">Vraca listu zasticenih zona</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Nije pronadjena nijedna zasticena zona</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<ZasticenaZonaDto>> GetZasticeneZone()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih zasticenih zona";
 
@@ -69,12 +87,28 @@ namespace Parcela.Controllers
         /// <param name="zasticenaZonaID">ID zasticene zone</param>
         /// <returns>Trazena zasticena zona</returns>
         /// <response code = "200">Vraca trazenu zasticenu zonu</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Trazena zasticena zona nije pronadjena</response>
         [HttpGet("{zasticenaZonaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ZasticenaZonaDto> GetZasticenaZona(Guid zasticenaZonaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje zasticene zone po ID-ju";
 
@@ -103,13 +137,29 @@ namespace Parcela.Controllers
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu zasticenu zonu</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja zasticene zone</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ZasticenaZonaDto> CreateZasticenaZona([FromBody] ZasticenaZonaDto zasticenaZona)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove zasticene zone";
 
@@ -137,11 +187,30 @@ namespace Parcela.Controllers
         /// <param name="zasticenaZonaID">ID zasticene zone</param>
         /// <returns>Status 204 (NoContent)</returns>
         /// <response code="204">Zasticena zona uspesno obrisana</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="404">Nije pronadjena zasticena zona za brisanje</response>
         /// <response code="500">Doslo je do greske na serveru prilikom brisanja zasticene zone</response>
         [HttpDelete("{zasticenaZonaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteZasticenaZona(Guid zasticenaZonaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje zasticene zone";
             try
@@ -174,14 +243,30 @@ namespace Parcela.Controllers
         /// <returns>Potvrda o modifikovanoj zasticenoj zoni</returns>
         /// /// <response code="200">Vraca azuriranu zasticenu zonu</response>
         /// <response code="400">Zasticena zona koja se azurira nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja zasticene zone</response>
         [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ZasticenaZonaDto> UpdateZasticenaZona(ZasticenaZonaEntity zasticenaZona)
+        public ActionResult<ZasticenaZonaDto> UpdateZasticenaZona(ZasticenaZonaUpdateDto zasticenaZona)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje zasticene zone";
 

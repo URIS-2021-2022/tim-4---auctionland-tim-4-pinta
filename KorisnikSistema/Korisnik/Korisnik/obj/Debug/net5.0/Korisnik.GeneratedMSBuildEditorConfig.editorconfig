@@ -7,8 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = Korisnik
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\Andrija\Source\Repos\tim-4---auctionland-tim-4-pinta\KorisnikSistema\Korisnik\Korisnik\
-=======
-build_property.ProjectDir = C:\Users\Stefan\source\repos\tim-4---auctionland-tim-4-pinta\KorisnikSistema\Korisnik\Korisnik\
->>>>>>> d321625f7a7814d636de5073cc7cf63f13e3a78b
+build_property.ProjectDir = C:\Users\PC\Source\Repos\tim-4---auctionland-tim-4-pinta\KorisnikSistema\Korisnik\Korisnik\

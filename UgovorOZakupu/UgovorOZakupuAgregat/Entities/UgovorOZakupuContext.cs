@@ -80,7 +80,10 @@ namespace UgovorOZakupuAgregat.Entities
                     DatumZavodjenja= DateTime.Parse("24-01-2021"),
                     RokZaVracanjeZemljista= DateTime.Parse("24-05-2021"),
                     MestoPotpisivanja="Novi Sad",
-                    DatumPotpisa =    DateTime.Parse("25-01-2021")
+                    DatumPotpisa = DateTime.Parse("25-01-2021"),
+                    LicnostId= Guid.Parse("E91B29CC-79A5-4DE8-8030-77DF6E514DEF"),
+                    KupacId= Guid.Parse("1a411c13-a195-48f7-8dbd-67596c3974c0"),
+                    JavnoNadmetanjeId= Guid.Parse("3BD80C2A-C790-402F-B214-E3EBBC29D89F")
                 });
 
             builder.Entity<RokoviDospeca>()

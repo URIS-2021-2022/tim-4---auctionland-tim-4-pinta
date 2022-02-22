@@ -4,13 +4,6 @@
         <name>ComplaintAggregate</name>
     </assembly>
     <members>
-        <member name="M:ComplaintAggregate.Controllers.AuthenticationController.Authenticate(ComplaintAggregate.Models.Principal)">
-            <summary>
-            Sluzi za autentifikaciju korisnika
-            </summary>
-            <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
-            <returns></returns>
-        </member>
         <member name="M:ComplaintAggregate.Data.UserRepository.FillData">
             <summary>
             Metoda koja upisuje testne podatke

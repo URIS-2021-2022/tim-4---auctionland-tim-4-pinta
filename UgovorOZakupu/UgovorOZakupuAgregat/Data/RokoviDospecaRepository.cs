@@ -39,15 +39,13 @@ namespace UgovorOZakupuAgregat.Data
         {
             rok.RokId = Guid.NewGuid();
             context.RokoviDospeca.Add(rok);
-            RokoviDospeca r = GetRokById(rok.RokId);
-            return r;
+            return rok;
 
         }
 
         public void UpdateRok(RokoviDospeca rok)
         {
-            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
-            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
+            
         }
 
         public void DeleteRok(Guid rokId)

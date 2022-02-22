@@ -24,5 +24,10 @@ namespace Parcela.Models
         /// ID parcele
         /// </summary>
         public Guid ParcelaID { get; set; }
+
+        /// <summary>
+        /// Parcela kojoj pripada deo parcele
+        /// </summary>
+        public ParcelaDto Parcela { get; set; }
     }
 }

@@ -52,7 +52,7 @@
             <response code="404">Nije pronadjena katastarska opstina za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja katastarske opstine</response>
         </member>
-        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.UpdateKatastarskaOpstina(KatastarskaOpstinaAgregat.Entities.KatastarskaOpstinaEntity)">
+        <member name="M:KatastarskaOpstinaAgregat.Controllers.KatastarskaOpstinaController.UpdateKatastarskaOpstina(KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaUpdateDto)">
             <summary>
             Azurira jednu katastarsku opstinu
             </summary>
@@ -89,6 +89,16 @@
             </summary>
         </member>
         <member name="P:KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaDto.NazivKatastarskeOpstine">
+            <summary>
+            Nazvi katastarske opstine
+            </summary>
+        </member>
+        <member name="P:KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaUpdateDto.KatastarskaOpstinaID">
+            <summary>
+            ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:KatastarskaOpstinaAgregat.Models.KatastarskaOpstinaUpdateDto.NazivKatastarskeOpstine">
             <summary>
             Nazvi katastarske opstine
             </summary>

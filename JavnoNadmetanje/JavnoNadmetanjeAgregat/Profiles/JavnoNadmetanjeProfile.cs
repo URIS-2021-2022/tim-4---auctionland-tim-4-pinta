@@ -15,6 +15,9 @@ namespace JavnoNadmetanjeAgregat.Profiles
             //plitko kopiranje
             CreateMap<JavnoNadmetanjeEntity, JavnoNadmetanjeDto>();
             CreateMap<JavnoNadmetanjeDto, JavnoNadmetanjeEntity>();
+            CreateMap<JavnoNadmetanjeUpdateDto, JavnoNadmetanjeEntity>();
+            CreateMap<JavnoNadmetanjeEntity, JavnoNadmetanjeEntity>();
+            CreateMap<JavnoNadmetanjeCreationDto, JavnoNadmetanjeEntity>();
 
             
         }

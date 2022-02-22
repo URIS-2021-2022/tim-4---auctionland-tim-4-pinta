@@ -20,6 +20,10 @@ namespace AdresaServis.Profiles
         {
             CreateMap<AdresaEntity, AdresaDto>();
             CreateMap<AdresaDto, AdresaEntity>();
+            CreateMap<AdresaEntity, AdresaCreateDto>();
+            CreateMap<AdresaCreateDto, AdresaEntity>();
+            CreateMap<AdresaEntity, AdresaUpdateDto>();
+            CreateMap<AdresaUpdateDto, AdresaEntity>();
         }
     }
 }

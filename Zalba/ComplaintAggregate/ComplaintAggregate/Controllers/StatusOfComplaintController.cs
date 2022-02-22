@@ -2,30 +2,35 @@
 using ComplaintAggregate.Data;
 using ComplaintAggregate.Entities;
 using ComplaintAggregate.Models;
+using ComplaintAggregate.ServiceCalls;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ComplaintAggregate.Controllers
 {
     [ApiController]
     [Route("api/status")]
+    [Produces("application/json", "application/xml")]
     public class StatusOfComplaintController:ControllerBase
     {
+        private readonly IFileAComplaintService fileService;
         private readonly IStatusOfComplaintRepository complainStatusRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
 
 
-        public StatusOfComplaintController(IStatusOfComplaintRepository complainStatusRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public StatusOfComplaintController(IStatusOfComplaintRepository complainStatusRepository, LinkGenerator linkGenerator, IMapper mapper,IFileAComplaintService fileService)
         {
             this.complainStatusRepository = complainStatusRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.fileService = fileService;
         }
 
         [HttpGet]
@@ -35,6 +40,19 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<List<StatusOfComplaintDTO>> GetStatus()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             var status = complainStatusRepository.GetStatus();
             if (status == null || status.Count == 0)
             {
@@ -50,6 +68,19 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<StatusOfComplaintDTO> GetStatusById(Guid Status_zalbe)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             var complainAggregate = complainStatusRepository.GetStatusById(Status_zalbe);
             if (complainAggregate == null)
             {
@@ -64,6 +95,20 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<StatusOfComplaintDTO> CreateStatus([FromBody] StatusOfComplaintDTO complain)
         {
+
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             try
             {
                 StatusOfComplaint comp = mapper.Map<StatusOfComplaint>(complain);
@@ -87,6 +132,20 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public IActionResult DeleteStatus(Guid Status_zalbe)
         {
+
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             try
             {
                 var complaintModel = complainStatusRepository.GetStatusById(Status_zalbe);
@@ -112,6 +171,20 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<StatusOfComplaintDTO> UpdateStatus(StatusOfComplaintDTO status)
         {
+
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             try
             {
                 //Proveriti da li uopšte postoji prijava koju pokušavamo da ažuriramo.

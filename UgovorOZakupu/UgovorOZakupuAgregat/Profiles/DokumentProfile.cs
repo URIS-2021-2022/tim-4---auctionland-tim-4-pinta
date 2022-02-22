@@ -4,8 +4,14 @@ using UgovorOZakupuAgregat.Models;
 
 namespace UgovorOZakupuAgregat.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje dokumenta
+    /// </summary>
     public class DokumentProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor profila
+        /// </summary>
         public DokumentProfile()
         {
             CreateMap<Dokument, DokumentDto>();

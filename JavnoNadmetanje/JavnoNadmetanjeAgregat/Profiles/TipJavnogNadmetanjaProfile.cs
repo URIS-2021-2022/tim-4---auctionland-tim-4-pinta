@@ -14,6 +14,9 @@ namespace JavnoNadmetanjeAgregat.Profiles
         {
             CreateMap<TipJavnogNadmetanjaEntity, TipJavnogNadmetanjaDto>();
             CreateMap<TipJavnogNadmetanjaDto, TipJavnogNadmetanjaEntity>();
+            CreateMap<TipJavnogNadmetanjaUpdateDto, TipJavnogNadmetanjaEntity>();
+            CreateMap<TipJavnogNadmetanjaEntity, TipJavnogNadmetanjaEntity>();
+
         }
     }
 }

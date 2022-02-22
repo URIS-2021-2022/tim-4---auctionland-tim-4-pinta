@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace Korisnik.Models
         /// <summary>
         /// Id korisnika
         /// </summary>
+        /// 
+        [Key]
         public int KorisnikId { get; set; }
         /// <summary>
         /// Ime korisnika
@@ -34,5 +37,10 @@ namespace Korisnik.Models
         /// Salt
         /// </summary>
         public string Salt { get; set; }
+
+        /// <summary>
+        /// Tip korisnika
+        /// </summary>
+        public string TipKorisnika { get; set; }
     }
 }

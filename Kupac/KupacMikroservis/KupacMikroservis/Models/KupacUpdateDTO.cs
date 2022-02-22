@@ -25,6 +25,8 @@ namespace KupacMikroservis.Models
 
         public bool ImaZabranu { get; set; }
 
+        public Guid Prioritet { get; set; }
+
         public DateTime DatumPocetkaZabrane { get; set; }
 
         public int DuzinaTrajanjaZabraneUGodinama { get; set; }

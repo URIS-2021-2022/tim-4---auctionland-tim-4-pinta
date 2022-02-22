@@ -10,10 +10,7 @@ namespace Korisnik.Models
     /// </summary>
     public class KorisnikDto
     {
-        /// <summary>
-        /// ID studenta.
-        /// </summary>
-        public int KorisnikId { get; set; }
+    
         /// <summary>
         /// Ime studenta.
         /// </summary>

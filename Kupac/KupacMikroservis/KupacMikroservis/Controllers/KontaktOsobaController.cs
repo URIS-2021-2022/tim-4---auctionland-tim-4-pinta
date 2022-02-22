@@ -9,6 +9,7 @@ using KupacMikroservis.Data;
 using KupacMikroservis.Models;
 using AutoMapper;
 using KupacMikroservis.ServiceCalls;
+using System.Net;
 
 namespace KupacMikroservis.Controllers
 {
@@ -17,6 +18,7 @@ namespace KupacMikroservis.Controllers
     /// </summary>
     [ApiController]
     [Route("api/kontaktosoba")]
+    [Produces("application/json", "application/xml")]
     public class KontaktOsobaController : ControllerBase
     {
         private readonly IKontaktOsobaRepository koRepository;
@@ -24,9 +26,11 @@ namespace KupacMikroservis.Controllers
         private readonly IMapper mapper;
         private readonly ILogger logger;
         private LogDTO logDTO;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
 
 
-        public KontaktOsobaController(IKontaktOsobaRepository koRepository, LinkGenerator linkGenerator, IMapper mapper, ILogger logger)
+
+        public KontaktOsobaController(IKontaktOsobaRepository koRepository, LinkGenerator linkGenerator, IMapper mapper, ILogger logger, IKorisnikSistemaService korisnikSistemaService)
         {
             this.koRepository = koRepository;
             this.linkGenerator = linkGenerator;
@@ -34,14 +38,36 @@ namespace KupacMikroservis.Controllers
             this.logger = logger;
             this.logDTO = new LogDTO();
             logDTO.NameOfTheService = "KontaktOsoba";
+            this.korisnikSistemaService = korisnikSistemaService;
         }
 
         /// <summary>
         /// Vraca kontakt osobe
         /// </summary>
+        /// <returns>Lista kontakt osoba</returns>
+        /// <response code = "200">Vraca listu kontakt osoba</response>
+        /// <response code = "404">Nije pronadjena nijedna kontakt osoba</response>
         [HttpGet]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KontaktOsobaDTO>> GetKontaktOsobe()
         {
+            string token = Request.Headers["token"].ToString();
+
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje svih kontakt osoba";
 
@@ -60,9 +86,27 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Vraca kontakt osobu po ID
         /// </summary>
+        /// <param name="KontaktOsobaId">ID kontakt osobe</param>
+        /// <returns>Trazena kontakt osoba</returns>
+        /// <response code = "200">Vraca trazenu kontakt osobu</response>
+        /// <response code = "404">Trazena kontakt osoba nije pronadjena</response>
         [HttpGet("{KontaktOsobaId}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KontaktOsobaDTO> GetKontaktOsoba(Guid koID)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
 
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje kontakt osobe po ID";
@@ -82,9 +126,31 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Dodaje novu kontakt osobu
         /// </summary>
+        /// <param name="ko">Model kontakt osobe</param>
+        /// <returns>Potvrda o kreiranoj kontakt osobi</returns>
+        /// <response code = "201">Vraca kreiranu kontakt osobu</response>
+        /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KontaktOsobaDTO> CreateKontaktOsoba([FromBody] KontaktOsobaCreateDTO ko)    //confirmation implementirati
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
+
+
             logDTO.HttpMethod = "POST";
             logDTO.Message = "Dodavanje nove kontakt osobe";
             try
@@ -112,9 +178,30 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         ///Vraca kontakt osobu po ID
         /// </summary>
+        /// <param name="KontaktOsobaId">ID kontakt osobe</param>
+        /// <returns>Status 204 (NoContent)</returns>
+        /// <response code="204">Kontakt osoba uspesno obrisana</response>
+        /// <response code="404">Nije pronadjena kontakt osoba</response>
+        /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{KontaktOsobaId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteKontaktOsoba(Guid koID)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "DELETE";
             logDTO.Message = "Brisanje klase";
             try
@@ -142,9 +229,31 @@ namespace KupacMikroservis.Controllers
         /// <summary>
         /// Azurira kontakt osobu
         /// </summary>
-        [HttpPut]
+        /// <param name="ko">Model kontakt osobe za azuriranje</param>
+        /// <returns>Potvrda o modifikovanoj kontakt osobi</returns>
+        /// <response code="200">Vraca azuriranu kontakt osobu</response>
+        /// <response code="400">Kontakt osoba nije pronadjena</response>
+        /// <response code="500">Doslo je do greske</response>
+        [HttpPut("{KontaktOsobaId}")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KontaktOsobaDTO> UpdateKontaktOsoba(KontaktOsobaUpdateDTO ko)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "PUT";
             logDTO.Message = "Brisanje kontakt osobe";
 
@@ -158,14 +267,22 @@ namespace KupacMikroservis.Controllers
                     logger.Log(logDTO);
                     return NotFound(); 
                 }
-                KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
 
-                mapper.Map(koEntity, oldKOsoba);                
+                oldKOsoba.KontaktOsobaId = ko.KontaktOsobaId;
+                oldKOsoba.Ime = ko.Ime;
+                oldKOsoba.Prezime = ko.Prezime;
+                oldKOsoba.Telefon = ko.Telefon;
+                
+              /*  KontaktOsobaEntity koEntity = mapper.Map<KontaktOsobaEntity>(ko);
+
+                
+
+                mapper.Map(koEntity, oldKOsoba);  */              
 
                 koRepository.SaveChanges();
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Ok(mapper.Map<KontaktOsobaDTO>(koEntity));
+                return Ok(mapper.Map<KontaktOsobaDTO>(ko));
             }
             catch (Exception)
             {

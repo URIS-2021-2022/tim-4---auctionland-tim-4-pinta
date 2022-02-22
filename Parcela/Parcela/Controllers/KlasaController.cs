@@ -9,6 +9,7 @@ using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Parcela.Controllers
@@ -24,14 +25,16 @@ namespace Parcela.Controllers
         private readonly IKlasaRepository klasaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public KlasaController(IKlasaRepository klasaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public KlasaController(IKlasaRepository klasaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService)
         {
             this.klasaRepository = klasaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.loggerService = loggerService;
             logDto = new LogDto();
             logDto.NameOfTheService = "Parcela";
@@ -42,13 +45,28 @@ namespace Parcela.Controllers
         /// </summary>
         /// <returns>Lista klasa</returns>
         /// <response code = "200">Vraca listu klasa</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Nije pronadjena nijedna klasa</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KlasaDto>> GetKlase()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih klasa";
 
@@ -70,12 +88,28 @@ namespace Parcela.Controllers
         /// <param name="klasaID">ID klase</param>
         /// <returns>Trazena klasa</returns>
         /// <response code = "200">Vraca trazenu klasa</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Trazena klasa nije pronadjena</response>
         [HttpGet("{klasaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KlasaDto> GetKlasa(Guid klasaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje klase po ID-ju";
 
@@ -100,17 +134,33 @@ namespace Parcela.Controllers
         /// Primer zahteva za kreiranje nove klase \
         /// POST /api/klase \
         /// { \
-        /// "klasaOznaka": 1, \
+        /// "klasaOznaka": "I", \
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu klasu</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja klase</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KlasaDto> CreateKlasa([FromBody] KlasaDto klasa)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove klase";
 
@@ -138,14 +188,30 @@ namespace Parcela.Controllers
         /// <param name="klasaID">ID klase</param>
         /// <returns>Status 204 (NoContent)</returns>
         /// <response code="204">Klasa uspesno obrisana</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="404">Nije pronadjena klasa za brisanje</response>
         /// <response code="500">Doslo je do greske na serveru prilikom brisanja klase</response>
         [HttpDelete("{klasaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteKlasa(Guid klasaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje klase";
 
@@ -179,14 +245,30 @@ namespace Parcela.Controllers
         /// <returns>Potvrda o modifikovanoj klasi</returns>
         /// <response code="200">Vraca azuriranu klasu</response>
         /// <response code="400">Klasa koja se azurira nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja klase</response>
         [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KlasaDto> UpdateKlasa(KlasaEntity klasa)
+        public ActionResult<KlasaDto> UpdateKlasa(KlasaUpdateDto klasa)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje klase";
 
@@ -201,12 +283,12 @@ namespace Parcela.Controllers
                 }
                 KlasaEntity klasaEntity = mapper.Map<KlasaEntity>(klasa);
 
-                mapper.Map(klasaEntity, oldKlasa);
+                oldKlasa.KlasaOznaka = klasaEntity.KlasaOznaka;
 
                 klasaRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<KlasaDto>(klasaEntity));
+                return Ok(mapper.Map<KlasaDto>(oldKlasa));
             }
             catch (Exception)
             {

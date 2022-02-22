@@ -9,6 +9,7 @@ using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Parcela.Controllers
@@ -22,16 +23,20 @@ namespace Parcela.Controllers
     public class DeoParceleController : ControllerBase
     {
         private readonly IDeoParceleRepository deoParceleRepository;
+        private readonly IParcelaRepository parcelaRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly LoggerService loggerService;
         private readonly LogDto logDto;
 
-        public DeoParceleController(IDeoParceleRepository deoParceleRepository, LinkGenerator linkGenerator, IMapper mapper, LoggerService loggerService)
+        public DeoParceleController(IDeoParceleRepository deoParceleRepository, IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, LoggerService loggerService)
         {
             this.deoParceleRepository = deoParceleRepository;
+            this.parcelaRepository = parcelaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.loggerService = loggerService;
             logDto = new LogDto();
             logDto.NameOfTheService = "Parcela";
@@ -42,13 +47,28 @@ namespace Parcela.Controllers
         /// </summary>
         /// <returns>Lista deolova parcela</returns>
         /// <response code = "200">Vraca listu delova parcela</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Nije pronadjen nijedan deo parcele</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<DeoParceleDto>> GetDeloviParcela ()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih delova parcela";
 
@@ -59,9 +79,16 @@ namespace Parcela.Controllers
                 loggerService.CreateLog(logDto);
                 return NoContent();
             }
+            List<DeoParceleDto> deloviParcelaDto = new List<DeoParceleDto>();
+            foreach (DeoParceleEntity dp in deloviParcela)
+            {
+                DeoParceleDto deoParceleDto = mapper.Map<DeoParceleDto>(dp);
+                deoParceleDto.Parcela = mapper.Map<ParcelaDto>(parcelaRepository.GetParcelaById(dp.ParcelaID));
+                deloviParcelaDto.Add(deoParceleDto);
+            }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<List<DeoParceleDto>>(deloviParcela));
+            return Ok(deloviParcelaDto);
         }
 
         /// <summary>
@@ -70,12 +97,28 @@ namespace Parcela.Controllers
         /// <param name="deoParceleID">ID dela parcele</param>
         /// <returns>Trazeni deo parcele</returns>
         /// <response code = "200">Vraca trazeni deo parcele</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Trazeni deo parcele nije pronadjen</response>
         [HttpGet("{deoParceleID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<DeoParceleDto> GetDeoParcele(Guid deoParceleID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje dela parcele po ID-ju";
 
@@ -86,9 +129,11 @@ namespace Parcela.Controllers
                 loggerService.CreateLog(logDto);
                 return NotFound();
             }
+            DeoParceleDto deoParceleDto = mapper.Map<DeoParceleDto>(deoParcele);
+            deoParceleDto.Parcela = mapper.Map<ParcelaDto>(parcelaRepository.GetParcelaById(deoParcele.ParcelaID));
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<DeoParceleDto>(deoParcele));
+            return Ok(deoParceleDto);
         }
 
         /// <summary>
@@ -102,16 +147,33 @@ namespace Parcela.Controllers
         /// { \
         /// "redniBroj": 1, \
         /// "povrsinaDelaParcele": 1000, \
+        /// "parcelaID": "03b0da3e-2604-4a9a-9e80-ad192727a3e9"
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreirani deo parcele</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja dela parcele</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<DeoParceleDto> CreateDeoParcele([FromBody] DeoParceleDto deoParcele)
+        public ActionResult<DeoParceleDto> CreateDeoParcele([FromBody] DeoParceleCreateDto deoParcele)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje novog dela parcele";
 
@@ -121,9 +183,11 @@ namespace Parcela.Controllers
                 DeoParceleEntity dp = deoParceleRepository.CreateDeoParcele(deop);
                 deoParceleRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetDeoParcele", "DeoParcele", new { deoParceleID = dp.DeoParceleID });
+                DeoParceleDto deoParceleDto = mapper.Map<DeoParceleDto>(dp);
+                deoParceleDto.Parcela = mapper.Map<ParcelaDto>(parcelaRepository.GetParcelaById(dp.ParcelaID));
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<DeoParceleDto>(dp));
+                return Created(location, deoParceleDto);
             }
             catch
             {
@@ -139,14 +203,30 @@ namespace Parcela.Controllers
         /// <param name="deoParceleID">Id dela parcele</param>
         /// <returns>Status 204 (NoContent)</returns>
         /// <response code="204">Deo parcele uspesno obrisan</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="404">Nije pronadjen deo parcele za brisanje</response>
         /// <response code="500">Doslo je do greske na serveru prilikom brisanja dela parcele</response>
         [HttpDelete("{deoParceleID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteDeoParcele(Guid deoParceleID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje dela parcele";
 
@@ -180,14 +260,30 @@ namespace Parcela.Controllers
         /// <returns>Potvrda o modifikovanom delu parcele</returns>
         /// <response code="200">Vraca azurirani deo parcele</response>
         /// <response code="400">Deo parcele koji se azurira nije pronadjen</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja dela parcele</response>
         [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleEntity deoParcele)
+        public ActionResult<DeoParceleDto> UpdateDeoParcele(DeoParceleUpdateDto deoParcele)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje dela parcele";
 
@@ -202,12 +298,16 @@ namespace Parcela.Controllers
                 }
                 DeoParceleEntity deoParceleEntity = mapper.Map<DeoParceleEntity>(deoParcele);
 
-                mapper.Map(deoParceleEntity, oldDeoParcele);
+                oldDeoParcele.PovrsinaDelaParcele = deoParceleEntity.PovrsinaDelaParcele;
+                oldDeoParcele.RedniBroj = deoParceleEntity.PovrsinaDelaParcele;
+                oldDeoParcele.ParcelaID = deoParceleEntity.ParcelaID;
 
                 deoParceleRepository.SaveChanges();
+                DeoParceleDto deoParceleDto = mapper.Map<DeoParceleDto>(oldDeoParcele);
+                deoParceleDto.Parcela = mapper.Map<ParcelaDto>(parcelaRepository.GetParcelaById(oldDeoParcele.ParcelaID));
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<DeoParceleDto>(deoParceleEntity));
+                return Ok(deoParceleDto);
             }
             catch (Exception)
             {

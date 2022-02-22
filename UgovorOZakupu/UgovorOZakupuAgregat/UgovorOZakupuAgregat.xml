@@ -4,6 +4,11 @@
         <name>UgovorOZakupuAgregat</name>
     </assembly>
     <members>
+        <member name="T:UgovorOZakupuAgregat.Controllers.DokumentController">
+            <summary>
+            Sadrži CRUD operacije za dokumente
+            </summary>
+        </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.DokumentController.GetDokumenti">
             <summary>
             Vraća sve dokumente na osnovu prosleđenih filtera
@@ -28,7 +33,7 @@
              <returns>Potvrdu o kreiranom novom dokumentu</returns>
              <remarks>
              Primer zahteva za kreiranje novog dokumenta \
-             POST /api/Dokument \
+             POST /api/dokumenti \
              {     \
                  "ZavodniBroj = "1234a", \
                  "Datum = "25-01-2021", \
@@ -65,6 +70,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:UgovorOZakupuAgregat.Controllers.RokoviDospecaController">
+            <summary>
+            Sadrzi CRUD operacije za rokove dospeća
+            </summary>
+        </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.GetRokovi">
             <summary>
             Vraća sve rokove dospeća na osnovu prosleđenih filtera
@@ -82,23 +92,21 @@
             <response code="200">Vraća tražen rok dospeća</response>
         </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.CreateRok(UgovorOZakupuAgregat.Models.RokoviDospecaDto)">
-             <summary>
-             Kreira novi rok dospeća
-             </summary>
-             <param name="rok">Model roka dospeća</param>
-             <returns>Potvrdu o kreiranom novom roku dospeća</returns>
-             <remarks>
-             Primer zahteva za kreiranje novog roka dospeća \
-             POST /api/Dokument \
-             {     \
-                 "ZavodniBroj = "1234a", \
-                 "Datum = "25-01-2021", \
-                 "DatumDonosenjaDokumenta = "25-01-2021"\
-            
+            <summary>
+            Kreira novi rok dospeća
+            </summary>
+            <param name="rok">Model roka dospeća</param>
+            <returns>Potvrdu o kreiranom novom roku dospeća</returns>
+            <remarks>
+            Primer zahteva za kreiranje novog roka dospeća \
+            POST /api/Dokument \
+            {     \
+                "UgovorId =407C6E21-0765-44E9-A34B-B2C387814E55", \
+                " RokDospeca=1" \
             }
-             </remarks>
-              <response code="201">Vraća kreiran rok dospeća</response>
-             <response code="500">Došlo je do greške na serveru prilikom kreiranja roka dospeća</response>
+            </remarks>
+             <response code="201">Vraća kreiran rok dospeća</response>
+            <response code="500">Došlo je do greške na serveru prilikom kreiranja roka dospeća</response>
         </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.DeleteRok(System.Guid)">
             <summary>
@@ -122,9 +130,14 @@
         </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.RokoviDospecaController.GetRokOptions">
             <summary>
-            Vraća opcije za rad sa dokumentima
+            Vraća opcije za rad sa rokovima dospeća
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Controllers.TipGarancijeController">
+            <summary>
+            Sadrži CRUD operacije za tipove garancije
+            </summary>
         </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.GetTipovi">
             <summary>
@@ -143,23 +156,20 @@
             <response code="200">Vraća tražen tip garancije</response>
         </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.CreateTipGarancije(UgovorOZakupuAgregat.Models.TipGarancijeDto)">
-             <summary>
-             Kreira novi tip garancije
-             </summary>
-             <param name="tipGarancije">Model tipa garancije</param>
-             <returns>Potvrdu o kreiranom novom tipu garancije</returns>
-             <remarks>
-             Primer zahteva za kreiranje novog tipa garancije \
-             POST /api/tipoviGarancije \
-             {     \
-                 "ZavodniBroj = "1234a", \
-                 "Datum = "25-01-2021", \
-                 "DatumDonosenjaDokumenta = "25-01-2021"\
-                 
+            <summary>
+            Kreira novi tip garancije
+            </summary>
+            <param name="tipGarancije">Model tipa garancije</param>
+            <returns>Potvrdu o kreiranom novom tipu garancije</returns>
+            <remarks>
+            Primer zahteva za kreiranje novog tipa garancije \
+            POST /api/tipoviGarancije \
+            {     \
+                 Naziv= "Jemstvo" \
             }     
-             </remarks>
-              <response code="201">Vraća kreiran tip garancije</response>
-             <response code="500">Došlo je do greške na serveru prilikom kreiranja  tipa garancije</response>
+            </remarks>
+             <response code="201">Vraća kreiran tip garancije</response>
+            <response code="500">Došlo je do greške na serveru prilikom kreiranja  tipa garancije</response>
         </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.TipGarancijeController.DeleteTipGarancije(System.Guid)">
             <summary>
@@ -187,6 +197,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController">
+            <summary>
+            Sadrži CRUD operacije za ugovore o zakupu
+            </summary>
+        </member>
         <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.GetUgovori">
             <summary>
             Vraća sve ugovore na osnovu prosleđenih filtera
@@ -203,24 +218,24 @@
             <returns></returns>
             <response code="200">Vraća tražen ugovor</response>
         </member>
-        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.CreateUgovor(UgovorOZakupuAgregat.Models.UgovorOZakupuDto)">
+        <member name="M:UgovorOZakupuAgregat.Controllers.UgovorOZakupuController.CreateUgovor(UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto)">
              <summary>
              Kreira novi ugovor
              </summary>
              <param name="ugovor">Model ugovora</param>
              <returns>Potvrdu o kreiranom novom ugovoru</returns>
              <remarks>
-             Primer zahteva za kreiranje nove ličnosti \
-             POST /api/Ugovor \
+             Primer zahteva za kreiranje novog ugovora \
+             POST /api/ugovori \
              {     \
-                 " DokumentId= Guid.Parse("D1209104-7358-4C22-9F4F-415203563A25")", \
+                 "DokumentId= Guid.Parse("D1209104-7358-4C22-9F4F-415203563A25")", \
                  "TipId= Guid.Parse("E1F134E5-25F9-4B00-8B96-A809D11CD33B")", \
                  "RokId= Guid.Parse("234D1ADA-07B8-4789-9C87-86B83118FED0")", \
-                 " ZavodniBroj="11a", \
-                 " DatumZavodjenja= "24-01-2021", \
-                 " RokZaVracanjeZemljista= "24-05-2021", \
-                 "  MestoPotpisivanja="Novi Sad"", \
-                 "  DatumPotpisa ="25-01-2021", \
+                 "ZavodniBroj="11a", \
+                 "DatumZavodjenja= "24-01-2021", \
+                 "RokZaVracanjeZemljista= "24-05-2021", \
+                 "MestoPotpisivanja="Novi Sad"", \
+                 "DatumPotpisa ="25-01-2021", \
             }
                   
              </remarks>
@@ -253,9 +268,609 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:UgovorOZakupuAgregat.Entities.Dokument">
+            <summary>
+            Predstavlja model entiteta dokument
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.Dokument.DokumentId">
+            <summary>
+            ID dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.Dokument.ZavodniBroj">
+            <summary>
+            Zavodni broj dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.Dokument.Datum">
+            <summary>
+            Datum dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.Dokument.DatumDonosenjaDokumenta">
+            <summary>
+            Datum donošenja dokumnta
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Entities.RokoviDospeca">
+            <summary>
+            Predstavlja model entiteta rokovi dospeća
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.RokoviDospeca.RokId">
+            <summary>
+            ID roka dospeća
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.RokoviDospeca.UgovorId">
+            <summary>
+            ID ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.RokoviDospeca.UgovorOZakupu">
+            <summary>
+            Ugovor o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.RokoviDospeca.RokDospeca">
+            <summary>
+            Rok dospeća
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Entities.TipGarancije">
+            <summary>
+            Predstavlja model entiteta tip garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.TipGarancije.TipId">
+            <summary>
+            ID tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.TipGarancije.Naziv">
+            <summary>
+            Naziv tipa garancije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Entities.UgovorOZakupu">
+            <summary>
+            Predstavlja model entiteta ugovor o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.UgovorId">
+            <summary>
+            ID ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.DokumentId">
+            <summary>
+            ID odluke (dokumenta) ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.Dokument">
+            <summary>
+            Model dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.TipId">
+            <summary>
+            ID tipa garancije ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.TipGarancije">
+            <summary>
+            Model tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.ZavodniBroj">
+            <summary>
+            Zavodni broj ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.DatumZavodjenja">
+            <summary>
+            Datum zavodjenja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.RokZaVracanjeZemljista">
+            <summary>
+            Rok za vraćanje zemljišta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.MestoPotpisivanja">
+            <summary>
+            Mesto potpisivanja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.DatumPotpisa">
+            <summary>
+            Datum potpisa ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.LicnostId">
+            <summary>
+             ID ministra (ličnost) ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.KupacId">
+            <summary>
+            ID lica (kupac) ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Entities.UgovorOZakupu.JavnoNadmetanjeId">
+             <summary>
+            ID javnog nadmetanja
+             </summary>
+        </member>
         <member name="M:UgovorOZakupuAgregat.Entities.UgovorOZakupuContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             Popunjava bazu sa nekim inicijalnim podacima
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.DokumentDto">
+            <summary>
+            DTO dokumeta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.DokumentDto.ZavodniBroj">
+            <summary>
+            Zavodni broj dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.DokumentDto.Datum">
+            <summary>
+            Datum dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.DokumentDto.DatumDonosenjaDokumenta">
+            <summary>
+            Datum donošenja dokumnta
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.DokumentUpdateDto">
+            <summary>
+            DTO za ažuriranje dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.DokumentUpdateDto.DokumentId">
+            <summary>
+            ID dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.DokumentUpdateDto.ZavodniBroj">
+            <summary>
+            Zavodni broj dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.DokumentUpdateDto.Datum">
+            <summary>
+            Datum dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.DokumentUpdateDto.DatumDonosenjaDokumenta">
+            <summary>
+            Datum donošenja dokumnta
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.GatewayDto">
+            <summary>
+            DTO za gateway
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.GatewayDto.Url">
+            <summary>
+            URL
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto">
+            <summary>
+            DTO za javno nadmetanje ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.Datum">
+            <summary>
+            Datum odrzavanja javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.VremePocetka">
+            <summary>
+            Vreme pocetka javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.VremeKraja">
+            <summary>
+            Vreme kraja javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.PocetnaCenaPoHektaru">
+            <summary>
+            Pocetna cena po hektaru javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.PeriodZakupa">
+            <summary>
+            Period zakupa javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.Izuzeto">
+            <summary>
+            Izuzetos javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.TipID">
+            <summary>
+            Tip javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.StatusID">
+            <summary>
+            Status javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.Krug">
+            <summary>
+            Krug javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.JavnoNadmetanjeUgovoraDto.VisinaDopuneDepozita">
+            <summary>
+            Visina dopune depozita javnog nadmetanja
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.KupacUgovoraDto">
+            <summary>
+            DTO kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.Naziv">
+            <summary>
+            Naziv lica ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.BrojTelefona1">
+            <summary>
+            Prvi broj telefona lica ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.BrojTelefona2">
+            <summary>
+            Drugi broj telefona lica ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.Email">
+            <summary>
+            Email lica ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.OstvarenaPovrsina">
+            <summary>
+            Ostvarena povrsina lica ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.BrojRacuna">
+            <summary>
+            Broj racuna lica ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.ImaZabranu">
+            <summary>
+            Da li lice ugovora ima zabranu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.DatumPocetkaZabrane">
+            <summary>
+            Datum pocetka zabrane lica ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.DuzinaTrajanjaZabraneUGodinama">
+            <summary>
+            Duzina trajanja zabrane u godinama
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.DatumPrestankaZabrane">
+            <summary>
+            Datum prestanka zabrane lica ugovora
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.LicnostUgovoraDto">
+            <summary>
+            DTO ličnosti ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.LicnostUgovoraDto.LicnostImePrezime">
+            <summary>
+            Ime i prezime ličnosti
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.LicnostUgovoraDto.LicnostFunkcija">
+            <summary>
+            Funkcija ličnosti
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.RokoviDospecaDto">
+            <summary>
+            DTO rokova dospeća
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.RokoviDospecaDto.UgovorId">
+            <summary>
+            ID ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.RokoviDospecaDto.RokDospeca">
+            <summary>
+            Rok dospeća
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.RokoviDospecaUpdateDto">
+            <summary>
+            DTO za ažuriranje rokova dospeća
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.RokoviDospecaUpdateDto.RokId">
+            <summary>
+            ID roka dospeća
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.RokoviDospecaUpdateDto.UgovorId">
+            <summary>
+            ID ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.RokoviDospecaUpdateDto.RokDospeca">
+            <summary>
+            Rok dospeća
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.TipGarancijeDto">
+            <summary>
+            DTO tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.TipGarancijeDto.Naziv">
+            <summary>
+            Naziv tipa garancije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.TipGarancijeUpdateDto">
+            <summary>
+            DTO za ažuriranje tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.TipGarancijeUpdateDto.TipId">
+            <summary>
+            ID tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.TipGarancijeUpdateDto.Naziv">
+            <summary>
+            Naziv tipa garancije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto">
+            <summary>
+            Model za kreiranje novog ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.DokumentId">
+            <summary>
+            ID dokumenta(odluka)
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.TipId">
+            <summary>
+            ID tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.ZavodniBroj">
+            <summary>
+            Zavodni broj ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.DatumZavodjenja">
+            <summary>
+            Datum zavođenja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.RokZaVracanjeZemljista">
+            <summary>
+            Rok za vraćanje zemljišta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.MestoPotpisivanja">
+            <summary>
+            Mesto potpisivanja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.DatumPotpisa">
+            <summary>
+            Datum potpisa ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.LicnostId">
+            <summary>
+            ID ministra (ličnost)
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.KupacId">
+            <summary>
+            ID lica (kupac)
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuCreateDto.JavnoNadmetanjeId">
+             <summary>
+            ID javnog nadmetanja
+             </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.UgovorOZakupuDto">
+            <summary>
+            Model ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.DokumentId">
+            <summary>
+            ID dokumenta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.TipId">
+            <summary>
+            ID tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.ZavodniBroj">
+            <summary>
+            Zavodni broj ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.DatumZavodjenja">
+            <summary>
+            Datum zavodjenja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.RokZaVracanjeZemljista">
+            <summary>
+            Rok za vraćanje zemljišta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.MestoPotpisivanja">
+            <summary>
+            Mesto potpisivanja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.DatumPotpisa">
+            <summary>
+            Datum potpisivanja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.LicnostId">
+            <summary>
+            ID licnosti
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.Licnost">
+            <summary>
+            Model ličnosti
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.KupacId">
+            <summary>
+            ID lica (kupac) ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.Kupac">
+            <summary>
+            Model lica (kupac) ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.JavnoNadmetanjeId">
+             <summary>
+            ID javnog nadmetanja
+             </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.JavnoNadmetanje">
+            <summary>
+            Model javnog nadmetanja
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto">
+            <summary>
+            Model za ažuriranje ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.UgovorId">
+            <summary>
+            ID ugovora o zakupu
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.DokumentId">
+            <summary>
+            ID dokumenta(odluka)
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.TipId">
+            <summary>
+            ID tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.ZavodniBroj">
+            <summary>
+            Zavodni broj ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.DatumZavodjenja">
+            <summary>
+            Datum zavođenja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.RokZaVracanjeZemljista">
+            <summary>
+            Rok za vraćanje zemljišta
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.MestoPotpisivanja">
+            <summary>
+            Mesto potpisivanja ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.DatumPotpisa">
+            <summary>
+            Datum potpisa ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.LicnostId">
+            <summary>
+            ID ličnosti (ministar)
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.KupacId">
+            <summary>
+            ID kupca (lice)
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuUpdateDto.JavnoNadmetanjeId">
+             <summary>
+            ID javnog nadmetanja
+             </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Profiles.DokumentProfile">
+            <summary>
+            Profil za mapiranje dokumenta
+            </summary>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Profiles.DokumentProfile.#ctor">
+            <summary>
+            Konstruktor profila
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Profiles.RokoviDospecaProfile">
+            <summary>
+            Profil za mapiranje rokova dospeća
+            </summary>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Profiles.RokoviDospecaProfile.#ctor">
+            <summary>
+            Konstruktor profila
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Profiles.TipGarancijeProfile">
+            <summary>
+            Profil za mapiranje tipa garancije
+            </summary>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Profiles.TipGarancijeProfile.#ctor">
+            <summary>
+            Knstruktor profila za mapiranje tipa garancije
+            </summary>
+        </member>
+        <member name="T:UgovorOZakupuAgregat.Profiles.UgovorOZakupuProfile">
+            <summary>
+            Profil za mapiranje ugovora o zakupu
+            </summary>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.Profiles.UgovorOZakupuProfile.#ctor">
+            <summary>
+            Konstruktor profila za mapiranje ugovora o zakupu
             </summary>
         </member>
     </members>

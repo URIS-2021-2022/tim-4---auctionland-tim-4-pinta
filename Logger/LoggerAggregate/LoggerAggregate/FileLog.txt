@@ -84,6 +84,7 @@
 2022-02-19 19:48:45.6789 INFO Naziv metode: GET,Naziv servisa: JavnoNadmetanje,poruka: Vracanje svih javnih nadmetanja
 2022-02-19 20:01:27.9318 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina
 >>>>>>> d321625f7a7814d636de5073cc7cf63f13e3a78b
+<<<<<<< HEAD
 2022-02-21 20:53:15.7378 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
 2022-02-21 20:57:19.9898 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje javnog nadmetanja po ID-ju
 2022-02-21 21:03:34.9482 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
@@ -146,3 +147,7 @@
 2022-02-22 01:35:34.1858 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
 2022-02-22 01:36:07.2183 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
 2022-02-22 01:36:07.2727 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+=======
+2022-02-21 17:50:03.6638 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih parcela
+2022-02-21 19:13:22.8546 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih kultura
+>>>>>>> 96dd1a3aff64717196c6c089791c93164373e9e3

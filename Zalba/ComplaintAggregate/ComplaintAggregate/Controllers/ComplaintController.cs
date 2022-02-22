@@ -11,12 +11,15 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ComplaintAggregate.Controllers
 {
     [ApiController]
     [Route("api/zalba")]
+    [Produces("application/json", "application/xml")]
     public class ComplaintController:ControllerBase
     {
         private readonly IComplaintRepository complainAggregateRepository;
@@ -35,15 +38,28 @@ namespace ComplaintAggregate.Controllers
         }
 
 
-
-        [HttpGet]
+       
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
+        [Consumes("application/json")]
         public ActionResult<List<ComplaintDTO>> GetComplaints()
         {
-          //  fileService.FileAComplaint(Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0")); //pozivanje Mikroservisa kupac
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] !="licitant"
+                || split[0] != "tehnicki sektetar" || split[0] !="prva komisija" || split[0] !="operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            //  fileService.FileAComplaint(Guid.Parse("2a411c13-a195-48f7-8dbc-67596c3974c0")); //pozivanje Mikroservisa kupac
             model.HttpMethod = "GET metoda";
             model.NameOfTheService = "Zalba mikroservis";
                       
@@ -63,11 +79,25 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpGet("{complaintId}")]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
         public ActionResult<ComplaintDTO> GetComplaint(Guid ZalbaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             model.HttpMethod = "GET/id metoda";
             model.NameOfTheService = "Zalba mikroservis";
 
@@ -86,11 +116,25 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPost]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
         public ActionResult<ComplaintDTO> CreateComplaint([FromBody] ComplaintDTO complain)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             model.HttpMethod = "POST metoda";
             model.NameOfTheService = "Zalba mikroservis";
             
@@ -117,12 +161,26 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpDelete("{DComplaintId}")]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
         public IActionResult DeleteComplaint(Guid ZalbaId)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             model.HttpMethod = "DELETE metoda";
             model.NameOfTheService = "Zalba mikroservis";
             fileService.ConnectLogger(model);
@@ -155,12 +213,26 @@ namespace ComplaintAggregate.Controllers
         }
 
         [HttpPut]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(string), StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
         public ActionResult<ComplaintDTO> UpdateComplaint(ComplaintDTO complain)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[0] != "administrator" || split[0] != "menadzer" || split[0] != "licitant"
+                || split[0] != "tehnicki sektetar" || split[0] != "prva komisija" || split[0] != "operator nadmetanja")
+            {
+                return Unauthorized();
+            }
+            HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             model.HttpMethod = "UPDATE metoda";
             model.NameOfTheService = "Zalba mikroservis";
            

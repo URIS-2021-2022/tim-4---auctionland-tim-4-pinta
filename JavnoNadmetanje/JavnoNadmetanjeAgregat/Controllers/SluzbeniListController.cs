@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using JavnoNadmetanjeAgregat.Entities;
 using JavnoNadmetanjeAgregat.ServiceCalls;
+using System.Net;
 
 namespace JavnoNadmetanjeAgregat.Controllers
 {
@@ -26,13 +27,17 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
+        private readonly IGatewayService gatewayService;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
 
-        public SluzbeniListController(ISluzbeniListRepository sluzbeniListRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public SluzbeniListController(ISluzbeniListRepository sluzbeniListRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService)
         {
             this.sluzbeniListRepository = sluzbeniListRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
+            this.gatewayService = gatewayService;
+            this.korisnikSistemaService = korisnikSistemaService;
             logDto = new LogDto();
             logDto.NameOfTheService = "SluzbeniList";
         }
@@ -48,8 +53,22 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<SluzbeniListDto>> GetSluzbeneListove()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih sluzbenih listova";
             List<SluzbeniListEntity> sluzbeniList = sluzbeniListRepository.GetSluzbeniList();
@@ -74,8 +93,22 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [HttpGet("{sluzbeniListID}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<SluzbeniListDto> GetSluzbeniList(Guid sluzbeniListID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje sluzbenog lista po ID-ju";
             SluzbeniListEntity sluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniListID);
@@ -110,8 +143,22 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<SluzbeniListDto> CreateSluzbeniList([FromBody] SluzbeniListDto sluzbeniList)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje novog sluzbenog lista";
 
@@ -146,8 +193,22 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult DeleteSluzbeniList(Guid sluzbeniListID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje sluzbenog lista";
 
@@ -186,27 +247,44 @@ namespace JavnoNadmetanjeAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<SluzbeniListDto> UpdateSluzbeniList(SluzbeniListEntity sluzbeniList)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult<SluzbeniListDto> UpdateSluzbeniList(SluzbeniListUpdateDto sluzbeniList)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje sluzbenog lista";
 
             try
             {
                 var oldSluzbeniList = sluzbeniListRepository.GetSluzbeniListById(sluzbeniList.SluzbeniListID);
-                if (oldSluzbeniList == null)
+                if (sluzbeniListRepository.GetSluzbeniListById(sluzbeniList.SluzbeniListID) == null)
                 {
                     logDto.Level = "Warn";
                     loggerService.CreateLog(logDto);
                     return NotFound();
                 }
+               
                 SluzbeniListEntity sluzbeniListEntity = mapper.Map<SluzbeniListEntity>(sluzbeniList);
                 mapper.Map(sluzbeniListEntity, oldSluzbeniList); //Update objekta koji treba da sačuvamo u bazi                
 
                 sluzbeniListRepository.SaveChanges(); //Perzistiramo promene
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
+             
                 return Ok(mapper.Map<SluzbeniListDto>(sluzbeniListEntity));
+               
             }
             catch (Exception)
             {

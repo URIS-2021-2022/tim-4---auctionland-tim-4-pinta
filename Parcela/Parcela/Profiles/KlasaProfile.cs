@@ -20,6 +20,8 @@ namespace Parcela.Profiles
         {
             CreateMap<KlasaEntity, KlasaDto>();
             CreateMap<KlasaDto, KlasaEntity>();
+            CreateMap<KlasaEntity, KlasaUpdateDto>();
+            CreateMap<KlasaUpdateDto, KlasaEntity>();
         }
     }
 }

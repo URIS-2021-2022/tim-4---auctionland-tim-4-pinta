@@ -48,6 +48,9 @@ namespace KupacMikroservis
             services.AddScoped<IKontaktOsobaRepository, KontaktOsobaRepository>();
             services.AddScoped<IAdresaService,AdresaService>();
             services.AddScoped<IUplataService, UplataService>();
+            services.AddScoped<ServiceCalls.ILogger, Logger>();
+            services.AddScoped<IGateway, Gateway>();
+            services.AddScoped<IKorisnikSistemaService, KorisnikSistemaService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
