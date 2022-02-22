@@ -12,7 +12,7 @@ namespace KupacMikroservis.Profiles
     {
         public PravnoLiceProfile()
         {
-            CreateMap<PravnoLiceEntity, PravnoLiceDTO>();
+            CreateMap<PravnoLiceEntity, PravnoLiceDto>();
           //  CreateMap<PravnoLiceEntity, PravnoLiceCreateDTO>();
           //  CreateMap<PravnoLiceEntity, PravnoLiceCreateDTO>();
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class OvlascenoLiceDTO
+    public class OvlascenoLiceDto
     {
 
     
@@ -20,7 +20,7 @@ namespace KupacMikroservis.Models
 
         public Guid AdresaID { get; set; }
 
-        public AdresaOvlascenogLicaDTO Adresa { get; set; }
+        public AdresaOvlascenogLicaDto Adresa { get; set; }
 
 
     }

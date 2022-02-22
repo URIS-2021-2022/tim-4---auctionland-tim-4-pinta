@@ -14,28 +14,28 @@ namespace KupacMikroservis.Profiles
         {
 
 
-            CreateMap<KupacEntity, KupacDTO>();
+            CreateMap<KupacEntity, KupacDto>();
             
 
-            CreateMap<PravnoLiceEntity, PravnoLiceDTO>();
-            CreateMap<FizickoLiceEntity, FizickoLiceDTO>();
+            CreateMap<PravnoLiceEntity, PravnoLiceDto>();
+            CreateMap<FizickoLiceEntity, FizickoLiceDto>();
 
-            CreateMap<PravnoLiceEntity, KupacDTO>()
+            CreateMap<PravnoLiceEntity, KupacDto>()
                 .ForMember(
                 dest => dest.JedinstveniBroj,
                 opt => opt.MapFrom(src => src.MaticniBroj));
 
-            CreateMap<FizickoLiceEntity, KupacDTO>()
+            CreateMap<FizickoLiceEntity, KupacDto>()
               .ForMember(
               dest => dest.JedinstveniBroj,
               opt => opt.MapFrom(src => src.JMBG));
 
 
-            CreateMap<KupacEntity, KupacCreateDTO>();
-            CreateMap<KupacEntity, KupacUpdateDTO>();
-            CreateMap<KupacDTO,KupacEntity>();
-            CreateMap<KupacCreateDTO, KupacEntity>();
-            CreateMap<KupacUpdateDTO, KupacEntity>();
+            CreateMap<KupacEntity, KupacCreateDto>();
+            CreateMap<KupacEntity, KupacUpdateDto>();
+            CreateMap<KupacDto,KupacEntity>();
+            CreateMap<KupacCreateDto, KupacEntity>();
+            CreateMap<KupacUpdateDto, KupacEntity>();
 
             
 

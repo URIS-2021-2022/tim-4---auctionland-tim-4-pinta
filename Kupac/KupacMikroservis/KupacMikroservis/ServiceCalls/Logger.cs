@@ -22,7 +22,7 @@ namespace KupacMikroservis.ServiceCalls
             this.gateway = gateway;
         }
 
-        public void Log(LogDTO log)
+        public void Log(LogDto log)
         {
             using (HttpClient client = new HttpClient())
             {

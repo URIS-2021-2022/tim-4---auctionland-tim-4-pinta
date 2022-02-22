@@ -22,11 +22,13 @@ using Microsoft.AspNetCore.Http;
 using KupacMikroservis.Entities;
 using Microsoft.EntityFrameworkCore;
 using KupacMikroservis.ServiceCalls;
+using Microsoft.Extensions.Configuration;
 
 namespace KupacMikroservis
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,7 +36,7 @@ namespace KupacMikroservis
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+   
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -79,14 +81,14 @@ namespace KupacMikroservis
                         {
                             Name = "Stefan Fink",
                             Email = "stefan.fink123@gmail.com",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Links:FTN"])
                         },
                         License = new Microsoft.OpenApi.Models.OpenApiLicense
                         {
                             Name = "FTN licence",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Links: FTN"])
                         },
-                        TermsOfService = new Uri("http://www.ftn.uns.ac.rs/")
+                        TermsOfService = new Uri(Configuration["Links:FTN"])
                     });
 
                
@@ -98,15 +100,12 @@ namespace KupacMikroservis
                
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
-            //    services.AddSwaggerGen(c =>
-            //   {
-            //        c.SwaggerDoc("v1", new OpenApiInfo { Title = "KupacMikroservis", Version = "v1" });
-            //   });
+           
 
             services.AddDbContextPool<KupacContext>(options => options.UseSqlServer(Configuration.GetConnectionString("KupacDB")));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+      
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -114,8 +113,7 @@ namespace KupacMikroservis
                 app.UseDeveloperExceptionPage();
 
 
-                //  app.UseSwagger();
-                // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KupacMikroservis v1"));
+             
             }
             else 
             {

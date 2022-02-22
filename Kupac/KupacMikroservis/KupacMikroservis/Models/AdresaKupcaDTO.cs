@@ -8,7 +8,7 @@ namespace KupacMikroservis.Models
     /// <summary>
     /// DTO za adresu kupca
     /// </summary>
-    public class AdresaKupcaDTO
+    public class AdresaKupcaDto
     {
         /// <summary>
         /// Ulica kupca

@@ -12,12 +12,12 @@ namespace KupacMikroservis.Profiles
     {
         public OvlascenoLiceProfile()
         {
-            CreateMap<OvlascenoLiceEntity, OvlascenoLiceDTO>();
-            CreateMap<OvlascenoLiceEntity, OvlascenoLiceCreateDTO>();
-            CreateMap<OvlascenoLiceEntity, OvlascenoLiceUpdateDTO>();
-            CreateMap<OvlascenoLiceDTO,OvlascenoLiceEntity>();
-            CreateMap<OvlascenoLiceCreateDTO, OvlascenoLiceEntity>();
-            CreateMap<OvlascenoLiceUpdateDTO, OvlascenoLiceEntity>();
+            CreateMap<OvlascenoLiceEntity, OvlascenoLiceDto>();
+            CreateMap<OvlascenoLiceEntity, OvlascenoLiceCreateDto>();
+            CreateMap<OvlascenoLiceEntity, OvlascenoLiceUpdateDto>();
+            CreateMap<OvlascenoLiceDto,OvlascenoLiceEntity>();
+            CreateMap<OvlascenoLiceCreateDto, OvlascenoLiceEntity>();
+            CreateMap<OvlascenoLiceUpdateDto, OvlascenoLiceEntity>();
 
 
         }

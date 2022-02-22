@@ -19,7 +19,7 @@ namespace KupacMikroservis.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<GatewayDTO> GetUrl(string servis)
+        public async Task<GatewayDto> GetUrl(string servis)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -29,7 +29,7 @@ namespace KupacMikroservis.ServiceCalls
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var gateway = JsonConvert.DeserializeObject<GatewayDTO>(responseContent);
+                var gateway = JsonConvert.DeserializeObject<GatewayDto>(responseContent);
 
                 return gateway;
             }
