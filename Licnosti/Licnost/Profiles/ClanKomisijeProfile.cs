@@ -4,8 +4,14 @@ using Licnost.Models;
 
 namespace Licnost.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje članova komisije
+    /// </summary>
     public class ClanKomisijeProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor profila
+        /// </summary>
         public ClanKomisijeProfile()
         {
             CreateMap<ClanKomisije, ClanKomisijeDto>();

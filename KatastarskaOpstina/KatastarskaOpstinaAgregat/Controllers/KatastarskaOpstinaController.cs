@@ -167,11 +167,11 @@ namespace KatastarskaOpstinaAgregat.Controllers
                 KatastarskaOpstinaEntity obj = mapper.Map<KatastarskaOpstinaEntity>(katastarskaOpstina);
                 KatastarskaOpstinaEntity s = katastarskaOpstinaRepository.CreateKatastarskaOpstina(obj);
                 katastarskaOpstinaRepository.SaveChanges();
-                // string location = linkGenerator.GetPathByAction("GetKatastarskaOpstina", "KatastarskaOpstina", new { katastarskaOpstinaID = s.KatastarskaOpstinaID });
-                // return Created(location, mapper.Map<KatastarskaOpstinaDto>(s));
+                string location = linkGenerator.GetPathByAction("GetKatastarskaOpstina", "KatastarskaOpstina", new { katastarskaOpstinaID = s.KatastarskaOpstinaID });
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created("", mapper.Map<KatastarskaOpstinaDto>(s));
+                return Created(location, mapper.Map<KatastarskaOpstinaDto>(s));
+               
             }
             catch
             {

@@ -8,7 +8,7 @@ namespace KatastarskaOpstinaAgregat.Entities
 {
     public class KatastarskaOpstinaContext : DbContext
     {
-        //private readonly IConfiguration configuration;
+        
 
         public KatastarskaOpstinaContext(DbContextOptions options) : base(options)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Licnost.Models
 {
     /// <summary>
-    /// Predstavlja model jedne licnosti
+    /// Predstavlja model jedne ličnosti
     /// </summary>
     public class LicnostDto
     {
