@@ -45,7 +45,7 @@ namespace Korisnik.Controllers
                 return Ok(token);
             }
 
-            //Ukoliko autentifikacija nije uspela vraća se status 401
+            
             return Unauthorized();
         }
 

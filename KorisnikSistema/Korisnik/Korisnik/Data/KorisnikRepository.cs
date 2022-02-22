@@ -70,7 +70,7 @@ namespace Korisnik.Data
 
         public bool UserWithCredentialsExists(string username, string password)
         {
-            //Ukoliko je username jedinstveno ovo je uredu
+           
             KorisnikModel user = context.KorisnikModels.FirstOrDefault(u => u.KorisnickoIme == username);
 
             if (user == null)
@@ -79,7 +79,7 @@ namespace Korisnik.Data
             }
 
             return true;
-            //Ako smo našli korisnika sa tim korisničkim imenom proveravamo lozinku
+          
             if (VerifyPassword(password, user.Lozinka, user.Salt))
             {
                 return true;
