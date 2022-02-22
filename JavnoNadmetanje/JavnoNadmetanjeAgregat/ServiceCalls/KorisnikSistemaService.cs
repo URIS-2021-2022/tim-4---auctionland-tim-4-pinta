@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,7 +10,7 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
 {
     public class KorisnikSistemaService
     {
-       private readonly IConfiguration configuration;
+        private readonly IConfiguration configuration;
 
         public KorisnikSistemaService(IConfiguration configuration)
         {
