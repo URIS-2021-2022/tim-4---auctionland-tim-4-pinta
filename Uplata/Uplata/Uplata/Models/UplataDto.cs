@@ -48,8 +48,10 @@ namespace Uplata.Models
         public JavnoNadmetanjeUplateDto JavnoNadmetanje { get; set; }
 
         /// <summary>
-        /// Kurs
+        /// Kurs id
         /// </summary>
-        public Kurs Kurs { get; set; }
+        public Guid KursID { get; set; }
+
+        public KursDto Kurs { get; set; }
     }
 }

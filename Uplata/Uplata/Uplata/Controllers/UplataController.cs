@@ -42,7 +42,7 @@ namespace Uplata.Controllers
         /// </summary>
         /// <returns>Lista uplati</returns>
         /// <response code="200">Vraca listu uplati</response>
-        /// <response code="404">Nije pronađena ni jedna jedina uplata</response>
+        /// <response code="404">Nije pronađena ni jedna uplata</response>
         [HttpGet]
         [HttpHead] //Podržavamo i HTTP head zahtev koji nam vraća samo zaglavlja u odgovoru    
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -59,9 +59,15 @@ namespace Uplata.Controllers
                 loggerService.CreateLog(logDto);
                 return NoContent();
             }
+
+            List<UplataDto> uplataDto = mapper.Map<List<UplataDto>>(uplate);
+            foreach (UplataDto u in uplataDto)
+            {
+               // u.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(u.JavnoNadmetanjeID).Result;
+            }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<List<UplataDto>>(uplate));
+            return Ok(uplataDto);
         }
 
         /// <summary>
@@ -74,11 +80,10 @@ namespace Uplata.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UplataModel))] //Kada se koristi IActionResult
         [HttpGet("{uplataID}")] //Dodatak na rutu koja je definisana na nivou kontroler
-        public ActionResult<UplataDto> GetUplata(Guid uplataID)
+        public ActionResult<UplataDto> GetUplate(Guid uplataID)
         {
             logDto.HttpMethod = "GET";
-            logDto.Message = "Vracanje uplate po ID-ju";
-
+            logDto.Message = "Vracanje javnog nadmetanja po ID-ju";
             UplataEntity uplata = uplataRepository.GetUplataByID(uplataID);
             if (uplata == null)
             {
@@ -88,13 +93,15 @@ namespace Uplata.Controllers
             }
 
             //JavnoNadmetanjeUplateDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID).Result;
+
             UplataDto uplataDto = mapper.Map<UplataDto>(uplata);
             //uplataDto.JavnoNadmetanje = javnoNadmetanje;
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(uplataDto);
-        }
 
+            //return Ok((mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje)));
+        }
         /// <summary>
         /// Kreira novu uplatu.
         /// </summary>
@@ -104,15 +111,13 @@ namespace Uplata.Controllers
         /// Primer zahteva za kreiranje nove uplate \
         /// POST /api/uplate \
         /// {     \
-        ///     "iznos": "150000", \
-        ///     "datum": "2841defc-761e-40d8-b8a3-d3e58516dca7", \
+        ///     "iznos": "150", \
+        ///     "datum": "2020-01-01", \
         ///     "svrhaUplate": "ucesce na licitaciji", \
         ///     "pozivNaBroj": "3121-424324523-444", \
+        ///     "javnoNadmetanjeID": "7C7764E0-27A2-4123-9EB4-081C4E9BCDBF", \
+        ///     "kursID": ""411C4082-CC5E-4F5F-8946-4086EBCA08D0"", \
         ///     "brojRacuna": "155-5528599695-55", \
-        ///     "kurs": {
-        ///     "vrednostKursa": 120, \
-        ///     "datum": "2020-05-05", \
-        ///     "valuta": "RSD" \
         ///     }      \
         /// }
         /// </remarks>
@@ -122,7 +127,7 @@ namespace Uplata.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<UplataDto> CreateUplata([FromBody] UplataDto uplata)
+        public ActionResult<UplataDto> CreateUplata([FromBody] UplataCreateDto uplata)
         {
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove uplate";
@@ -159,14 +164,14 @@ namespace Uplata.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpPut]
-        public ActionResult<UplataDto> UpdateUplata(UplataEntity uplata)
+        public ActionResult<UplataDto> UpdateUplata(UplataDtoUpdate uplata)
         {
             logDto.HttpMethod = "PUT";
-            logDto.Message = "Modifikovanje uplate";
+            logDto.Message = "Modifikacija uplate";
 
             try
             {
-                var oldUplata = uplataRepository.GetUplataByID(uplata.UplataID);
+                UplataEntity oldUplata = uplataRepository.GetUplataByID(uplata.UplataID);
                 if (oldUplata == null)
                 {
                     logDto.Level = "Warn";
@@ -174,13 +179,20 @@ namespace Uplata.Controllers
                     return NotFound();
                 }
                 UplataEntity uplataEntity = mapper.Map<UplataEntity>(uplata);
-                mapper.Map(uplataEntity, oldUplata); //Update objekta koji treba da sačuvamo u bazi                
 
-                uplataRepository.SaveChanges(); //Perzistiramo promene
+                oldUplata.Iznos = uplataEntity.Iznos;
+                oldUplata.KursID = uplataEntity.KursID;
+                oldUplata.PozivNaBroj = uplataEntity.PozivNaBroj;
+                oldUplata.SvrhaUplate = uplataEntity.SvrhaUplate;
+                oldUplata.Datum = uplataEntity.Datum;
+                oldUplata.BrojRacuna = uplataEntity.BrojRacuna;
+                oldUplata.JavnoNadmetanjeID = uplataEntity.JavnoNadmetanjeID;
+                oldUplata.Kurs = uplataEntity.Kurs;
 
+                uplataRepository.SaveChanges();
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<UplataDto>(uplataEntity));
+                return Ok(mapper.Map<UplataDto>(oldUplata));
             }
             catch (Exception)
             {
@@ -188,7 +200,6 @@ namespace Uplata.Controllers
                 loggerService.CreateLog(logDto);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
             }
-
         }
 
 
