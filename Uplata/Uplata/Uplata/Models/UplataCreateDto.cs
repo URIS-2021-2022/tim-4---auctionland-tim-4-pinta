@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using JavnoNadmetanjeAgregat.Models;
+using Uplata.Entities;
 
-namespace Uplata.Entities
+namespace Uplata.Models
 {
-    public class UplataEntity
+    /// <summary>
+    /// Dto uplate.
+    /// </summary>
+    public class UplataCreateDto
     {
-        /// <summary>
-        /// ID Uplate.
-        /// </summary>
-        [Key]
-        public Guid UplataID { get; set; } = Guid.NewGuid();
-
         /// <summary>
         /// Iznos uplate.
         /// </summary>
@@ -35,8 +32,9 @@ namespace Uplata.Entities
         /// Poziv na broj uplate.
         /// </summary>
         public string PozivNaBroj { get; set; }
+
         /// <summary>
-        ///  Broj racuna
+        /// Broj racuna
         /// </summary>
         public string BrojRacuna { get; set; }
 
@@ -45,11 +43,10 @@ namespace Uplata.Entities
         /// </summary>
 
         public Guid? JavnoNadmetanjeID { get; set; }
+
         /// <summary>
-        /// Id kursa
+        /// Kurs id
         /// </summary>
         public Guid KursID { get; set; }
-        public KursEntity Kurs { get; set; }
     }
-
 }

@@ -50,6 +50,8 @@ namespace Uplata
             services.AddScoped<IJavnoNadmetanjeService, JavnoNadmetanjeService>();
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IKursRepository, KursRepository>();
+
 
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
