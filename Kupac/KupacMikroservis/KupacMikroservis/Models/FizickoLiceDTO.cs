@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class FizickoLiceDTO : KupacDTO
+    public class FizickoLiceDto : KupacDto
     {
 
         public string JMBG { get; set; }

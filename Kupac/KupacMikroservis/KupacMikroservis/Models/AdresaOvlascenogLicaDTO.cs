@@ -8,7 +8,7 @@ namespace KupacMikroservis.Models
     /// <summary>
     /// DTO za adresu ovlascenog lica
     /// </summary>
-    public class AdresaOvlascenogLicaDTO
+    public class AdresaOvlascenogLicaDto
     {
         /// <summary>
         /// Ulica ovlascenog lica

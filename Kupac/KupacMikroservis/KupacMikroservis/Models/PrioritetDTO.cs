@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class PrioritetDTO
+    public class PrioritetDto
     {
 
         

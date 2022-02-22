@@ -60,7 +60,8 @@ namespace Korisnik.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex);
+                throw;
 
             }
         }
@@ -95,7 +96,8 @@ namespace Korisnik.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.WriteLine(ex);
+                throw;
 
             }
         }

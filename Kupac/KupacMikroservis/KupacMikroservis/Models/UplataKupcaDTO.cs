@@ -9,7 +9,7 @@ namespace KupacMikroservis.Models
     /// <summary>
     /// DTO za uplatu kupca
     /// </summary>
-    public class UplataKupcaDTO
+    public class UplataKupcaDto
     {
 
         /// <summary>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class OvlascenoLiceCreateDTO
+    public class OvlascenoLiceCreateDto
     {
 
         public Guid OvlascenoLiceId { get; set; }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class LogDTO
+    public class LogDto
     {
         public string HttpMethod { get; set; }
 

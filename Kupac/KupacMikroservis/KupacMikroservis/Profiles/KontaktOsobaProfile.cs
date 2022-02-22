@@ -12,12 +12,12 @@ namespace KupacMikroservis.Profiles
     {
         public KontaktOsobaProfile()
         {
-            CreateMap<KontaktOsobaEntity, KontaktOsobaDTO>();
-            CreateMap<KontaktOsobaEntity, KontaktOsobaCreateDTO>();
-            CreateMap<KontaktOsobaEntity, KontaktOsobaUpdateDTO>();
-            CreateMap<KontaktOsobaUpdateDTO,KontaktOsobaEntity>();
-            CreateMap<KontaktOsobaCreateDTO, KontaktOsobaEntity>();
-            CreateMap<KontaktOsobaDTO, KontaktOsobaEntity>();
+            CreateMap<KontaktOsobaEntity, KontaktOsobaDto>();
+            CreateMap<KontaktOsobaEntity, KontaktOsobaCreateDto>();
+            CreateMap<KontaktOsobaEntity, KontaktOsobaUpdateDto>();
+            CreateMap<KontaktOsobaUpdateDto,KontaktOsobaEntity>();
+            CreateMap<KontaktOsobaCreateDto, KontaktOsobaEntity>();
+            CreateMap<KontaktOsobaDto, KontaktOsobaEntity>();
 
 
 

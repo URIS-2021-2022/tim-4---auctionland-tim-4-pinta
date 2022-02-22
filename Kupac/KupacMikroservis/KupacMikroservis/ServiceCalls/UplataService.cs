@@ -18,17 +18,17 @@ namespace KupacMikroservis.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<UplataKupcaDTO> GetUplataKupcaAsync(Guid uplataID)
+        public async Task<UplataKupcaDto> GetUplataKupcaAsync(Guid UplataID)
         {
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:UplataService"];
-                Uri url = new Uri($"{ configuration["Services:UplataService"] }api/uplate/{uplataID}");
+                Uri url = new Uri($"{ configuration["Services:UplataService"] }api/uplate/{UplataID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var uplata = JsonConvert.DeserializeObject<UplataKupcaDTO>(responseContent);
+                var uplata = JsonConvert.DeserializeObject<UplataKupcaDto>(responseContent);
 
                 return uplata;
             }
