@@ -151,3 +151,12 @@
 2022-02-21 17:50:03.6638 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih parcela
 2022-02-21 19:13:22.8546 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih kultura
 >>>>>>> 96dd1a3aff64717196c6c089791c93164373e9e3
+2022-02-22 10:33:47.9675 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-22 10:34:00.8048 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 10:34:14.3677 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje drazve po ID-ju
+2022-02-22 10:35:19.8558 INFO Naziv metode: POST,Naziv servisa: Adresa,poruka: Dodavanje nove drzave
+2022-02-22 10:35:25.9380 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 10:37:42.0375 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 10:49:41.0037 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 12:26:29.2105 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-22 17:53:48.1769 INFO Naziv metode: GET,Naziv servisa: JavnoNadmetanje,poruka: Vracanje svih javnih nadmetanja

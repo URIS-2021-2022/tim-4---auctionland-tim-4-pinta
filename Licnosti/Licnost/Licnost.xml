@@ -4,13 +4,6 @@
         <name>Licnost</name>
     </assembly>
     <members>
-        <member name="M:Licnost.Controllers.AuthenticationController.Authenticate(Licnost.Models.Principal)">
-            <summary>
-            Sluzi za autentifikaciju korisnika
-            </summary>
-            <param name="principal">Model sa podacima na osnovu kojih se vrsi autentifikacija</param>
-            <returns></returns>
-        </member>
         <member name="M:Licnost.Controllers.ClanKomisijeController.GetClanoviKomisije">
             <summary>
             Vraća sve clanove komisije na osnovu prosleđenih filtera
@@ -191,44 +184,149 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Licnost.Entities.ClanKomisije">
+            <summary>
+            Model entiteta član komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.ClanKomisije.ClanKomisijeId">
+            <summary>
+            ID člana komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.ClanKomisije.LicnostId">
+            <summary>
+            ID ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.ClanKomisije.Licnost">
+            <summary>
+            Ličnost
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.ClanKomisije.KomisijaId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.ClanKomisije.Komisija">
+            <summary>
+            Komisija
+            </summary>
+        </member>
+        <member name="T:Licnost.Entities.Komisija">
+            <summary>
+            Model entiteta komisija
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.Komisija.KomisijaId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.Komisija.LicnostId">
+            <summary>
+            ID predsednika(ličnost)
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.Komisija.Licnost">
+            <summary>
+            Ličnost
+            </summary>
+        </member>
+        <member name="P:Licnost.Entities.Komisija.ClanoviKomisije">
+            <summary>
+            Clanovi komisije
+            </summary>
+        </member>
         <member name="M:Licnost.Entities.LicnostContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             Popunjava bazu sa nekim inicijalnim podacima
             </summary>
         </member>
-        <member name="P:Licnost.Entities.User.UserID">
+        <member name="T:Licnost.Entities.LicnostEntity">
             <summary>
-            ID korisnika
+            Model entiteta ličnost
             </summary>
         </member>
-        <member name="P:Licnost.Entities.User.FirstName">
+        <member name="P:Licnost.Entities.LicnostEntity.LicnostId">
             <summary>
-            Ime korisnika
+            ID ličnosti
             </summary>
         </member>
-        <member name="P:Licnost.Entities.User.LastName">
+        <member name="P:Licnost.Entities.LicnostEntity.LicnostIme">
             <summary>
-            Prezime korinsika
+            Ime ličnosti
             </summary>
         </member>
-        <member name="P:Licnost.Entities.User.UserName">
+        <member name="P:Licnost.Entities.LicnostEntity.LicnostPrezime">
             <summary>
-            Korisnicko ime
+            Prezime ličnosti
             </summary>
         </member>
-        <member name="P:Licnost.Entities.User.Email">
+        <member name="P:Licnost.Entities.LicnostEntity.LicnostFunkcija">
             <summary>
-            Email korisnika
+            Funkcija ličnosti
             </summary>
         </member>
-        <member name="P:Licnost.Entities.User.Password">
+        <member name="T:Licnost.Models.ClanKomisijeDto">
             <summary>
-            Hash-ovana lozinka korinsika
+            DTO clana komisije
             </summary>
         </member>
-        <member name="P:Licnost.Entities.User.Salt">
+        <member name="P:Licnost.Models.ClanKomisijeDto.LicnostId">
             <summary>
-            Salt
+            ID ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeDto.Licnost">
+            <summary>
+            Ličnost
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeDto.KomisijaId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeDto.Komisija">
+            <summary>
+            Komisija
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.ClanKomisijeUpdateDto">
+            <summary>
+            DTO za ažuriraje člana komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeUpdateDto.ClanKomisijeId">
+            <summary>
+            ID člana komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeUpdateDto.LicnostId">
+            <summary>
+            ID ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeUpdateDto.KomisijaId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.GatewayDto">
+            <summary>
+            DTO za Gateway
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.GatewayDto.Url">
+            <summary>
+            Url
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.KomisijaDto">
+            <summary>
+            DTO komisije
             </summary>
         </member>
         <member name="P:Licnost.Models.KomisijaDto.LicnostId">
@@ -236,9 +334,29 @@
             Predsednik komisije
             </summary>
         </member>
+        <member name="P:Licnost.Models.KomisijaDto.Licnost">
+            <summary>
+            Ličnost
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.KomisijaUpdateDto">
+            <summary>
+            DTO za ažuriranje komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.KomisijaUpdateDto.KomisijaId">
+            <summary>
+            ID komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.KomisijaUpdateDto.LicnostId">
+            <summary>
+            ID predsednika(ličnost)
+            </summary>
+        </member>
         <member name="T:Licnost.Models.LicnostCreateDto">
             <summary>
-            Model za kreiranje licnosti
+            Model za kreiranje ličnosti
             </summary>
         </member>
         <member name="P:Licnost.Models.LicnostCreateDto.LicnostIme">
@@ -258,7 +376,7 @@
         </member>
         <member name="T:Licnost.Models.LicnostDto">
             <summary>
-            Predstavlja model jedne licnosti
+            Predstavlja model jedne ličnosti
             </summary>
         </member>
         <member name="P:Licnost.Models.LicnostDto.LicnostImePrezime">
@@ -295,6 +413,56 @@
             <summary>
             Funkcija ličnosti
             </summary>
+        </member>
+        <member name="T:Licnost.Profiles.ClanKomisijeProfile">
+            <summary>
+            Profil za mapiranje članova komisije
+            </summary>
+        </member>
+        <member name="M:Licnost.Profiles.ClanKomisijeProfile.#ctor">
+            <summary>
+            Konstruktor profila
+            </summary>
+        </member>
+        <member name="T:Licnost.Profiles.KomisijaProfile">
+            <summary>
+            Profil za mapiranje komisije
+            </summary>
+        </member>
+        <member name="M:Licnost.Profiles.KomisijaProfile.#ctor">
+            <summary>
+            Konstruktor profila
+            </summary>
+        </member>
+        <member name="T:Licnost.Profiles.LicnostProfile">
+            <summary>
+            Profil za mapiranje ličnosti
+            </summary>
+        </member>
+        <member name="M:Licnost.Profiles.LicnostProfile.#ctor">
+            <summary>
+            Konstruktor profila
+            </summary>
+        </member>
+        <member name="M:Licnost.ServiceCalls.IGatewayService.GetUrl(System.String)">
+            <summary>
+            Zahtev za gateway servis
+            </summary>
+            <param name="servis"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Licnost.ServiceCalls.IKorisnikSistemaService.AuthorizeAsync(System.String)">
+            <summary>
+            Zahtev za korisnik servis
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Licnost.ServiceCalls.ILoggerService.CreateLog(Licnost.Models.LogDto)">
+            <summary>
+            Zahttev za kreiranje novog loga
+            </summary>
+            <param name="log"></param>
         </member>
     </members>
 </doc>

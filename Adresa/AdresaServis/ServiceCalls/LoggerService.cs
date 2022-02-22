@@ -22,13 +22,12 @@ namespace AdresaServis.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:LoggerService"];
                 Uri url = new Uri($"{ configuration["Services:LoggerService"] }api/logger");
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(log));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                HttpResponseMessage response = client.PostAsync(url, content).Result;
+                _ = client.PostAsync(url, content).Result;
             }
         }
     }

@@ -13,7 +13,6 @@ namespace JavnoNadmetanjeAgregat.Models
     /// </summary>
     public class JavnoNadmetanjeUplateDto
     {
-        public Guid JavnoNadmetanjeID { get; set; }
         /// <summary>
         /// Vreme pocetka
         /// </summary>

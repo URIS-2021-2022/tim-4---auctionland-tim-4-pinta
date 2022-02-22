@@ -12,7 +12,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Parcela.Data;
 using Parcela.Entities;
-using Parcela.Helpers;
 using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
@@ -21,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Quickwire;
 
 namespace Parcela
 {
@@ -41,8 +41,8 @@ namespace Parcela
                 setup.ReturnHttpNotAcceptable = true
             ).AddXmlDataContractSerializerFormatters();
 
-            services.AddSingleton<IUserRepository, UserMockRepository>();
-            services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            services.ScanCurrentAssembly();
+
             services.AddScoped<IParcelaRepository, ParcelaRepository>();
             services.AddScoped<IDeoParceleRepository, DeoParceleRepository>();
             services.AddScoped<IKlasaRepository, KlasaRepository>();
@@ -53,7 +53,6 @@ namespace Parcela
             services.AddScoped<IZasticenaZonaRepository, ZasticenaZonaRepository>();
             services.AddScoped<IKatastarskaOpstinaService, KatastarskaOpstinaService>();
             services.AddScoped<IKupacService, KupacService>();
-            services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
             services.AddScoped<IKorisnikSistemaService, KorisnikSistemaService>();
 

@@ -10,29 +10,36 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using JavnoNadmetanjeAgregat.Models;
+using System.Net;
 
 namespace Uplata.Controllers
 {
-    // Omogucava dodavanje dodatnih stvari, npr. status kodova
+    /// <summary>
+    /// Sadrzi CRUD operacije za uplate
+    /// </summary>
     [ApiController]
     [Route("api/uplate")]
-    [Produces("application/json", "application/xml")] //Sve akcije kontrolera mogu da vraćaju definisane formate
+    [Produces("application/json", "application/xml")] 
     public class UplataController : ControllerBase 
     {
         private readonly IUplataRepository uplataRepository;
+        private readonly IKursRepository kursRepository;
         private readonly IJavnoNadmetanjeService javnoNadmetanjeService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
 
-        public UplataController(IUplataRepository uplataRepository, IJavnoNadmetanjeService javnoNadmetanjeService, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public UplataController(IUplataRepository uplataRepository, IJavnoNadmetanjeService javnoNadmetanjeService, IKursRepository kursRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService)
         {
             this.uplataRepository = uplataRepository;
             this.javnoNadmetanjeService = javnoNadmetanjeService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
+            this.korisnikSistemaService=korisnikSistemaService;
+            this.kursRepository = kursRepository;
             logDto = new LogDto();
             logDto.NameOfTheService = "Uplata";
         }
@@ -41,14 +48,29 @@ namespace Uplata.Controllers
         /// Vraća sve uplate 
         /// </summary>
         /// <returns>Lista uplati</returns>
-        /// <response code="200">Vraca listu uplati</response>
-        /// <response code="404">Nije pronađena ni jedna uplata</response>
+        /// <response code = "200">Vraca listu uplata</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        /// <response code = "404">Nije pronadjena nijedna uplata</response>
         [HttpGet]
         [HttpHead] //Podržavamo i HTTP head zahtev koji nam vraća samo zaglavlja u odgovoru    
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<UplataDto>> GetUplate()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih uplata";
 
@@ -60,30 +82,50 @@ namespace Uplata.Controllers
                 return NoContent();
             }
 
-            List<UplataDto> uplataDto = mapper.Map<List<UplataDto>>(uplate);
-            foreach (UplataDto u in uplataDto)
+            List<UplataDto> uplateDto = new List<UplataDto>();
+            foreach (UplataEntity u in uplate)
             {
-               // u.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(u.JavnoNadmetanjeID).Result;
+                UplataDto uplataDto = mapper.Map<UplataDto>(u);
+                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(u.JavnoNadmetanjeID).Result;
+                uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(u.KursID));
+                uplateDto.Add(uplataDto);
             }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(uplataDto);
+            return Ok(uplateDto);
         }
 
         /// <summary>
         /// Vraća jednu uplatu na osnovu ID-ja uplate.
         /// </summary>
         /// <param name="uplataID">ID uplate</param>
-        /// <returns></returns>
-        /// <response code="200">Vraća traženu uplatu</response>
+        /// <returns>Trazena parcela</returns>
+        /// <response code = "200">Vraca trazenu uplatu</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        /// <response code = "404">Trazena uplata nije pronadjena</response>
+        [HttpGet("{uplataID}")] //Dodatak na rutu koja je definisana na nivou kontroler
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UplataModel))] //Kada se koristi IActionResult
-        [HttpGet("{uplataID}")] //Dodatak na rutu koja je definisana na nivou kontroler
         public ActionResult<UplataDto> GetUplate(Guid uplataID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje javnog nadmetanja po ID-ju";
+
             UplataEntity uplata = uplataRepository.GetUplataByID(uplataID);
             if (uplata == null)
             {
@@ -92,15 +134,15 @@ namespace Uplata.Controllers
                 return NotFound();
             }
 
-            //JavnoNadmetanjeUplateDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID).Result;
-
             UplataDto uplataDto = mapper.Map<UplataDto>(uplata);
-            //uplataDto.JavnoNadmetanje = javnoNadmetanje;
+            uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(uplata.KursID));
+            uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID).Result;
+
+
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(uplataDto);
 
-            //return Ok((mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje)));
         }
         /// <summary>
         /// Kreira novu uplatu.
@@ -121,14 +163,30 @@ namespace Uplata.Controllers
         ///     }      \
         /// }
         /// </remarks>
-        /// <response code="200">Vraća uplatu</response>
-        /// <response code="500">Došlo je do greške na serveru prilikom uplate</response>
+        /// <response code = "201">Vraca kreiranu uplatu</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja uplate</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<UplataDto> CreateUplata([FromBody] UplataCreateDto uplata)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove uplate";
 
@@ -138,9 +196,13 @@ namespace Uplata.Controllers
                 UplataEntity u = uplataRepository.CreateUplata(upl);
                 uplataRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetUplata", "Uplata", new { uplataID = u.UplataID });
+                UplataDto uplataDto = mapper.Map<UplataDto>(u);
+                uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(uplata.KursID));
+                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID).Result;
+
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<UplataDto>(u));
+                return Created(location, uplataDto);
             }
             catch
             {
@@ -156,14 +218,17 @@ namespace Uplata.Controllers
         /// </summary>
         /// <param name="uplata">Model uplate koji se ažurira</param>
         /// <returns>Potvrdu o modifikovanoj uplati.</returns>
-        /// <response code="200">Vraća ažuriranu uplatu</response>
-        /// <response code="400">Uplata koja se ažurira nije pronađena</response>
-        /// <response code="500">Došlo je do greške na serveru prilikom ažuriranja uplate</response>
+        /// <response code="200">Vraca azuriranu uuplatu</response>
+        /// <response code="400">Uplata koja se azurira nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        /// <response code="500">Doslo je do greske prilikom azuriranja uplate</response>
+        [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut]
         public ActionResult<UplataDto> UpdateUplata(UplataDtoUpdate uplata)
         {
             logDto.HttpMethod = "PUT";
@@ -187,12 +252,16 @@ namespace Uplata.Controllers
                 oldUplata.Datum = uplataEntity.Datum;
                 oldUplata.BrojRacuna = uplataEntity.BrojRacuna;
                 oldUplata.JavnoNadmetanjeID = uplataEntity.JavnoNadmetanjeID;
-                oldUplata.Kurs = uplataEntity.Kurs;
 
                 uplataRepository.SaveChanges();
+
+                UplataDto uplataDto = mapper.Map<UplataDto>(oldUplata);
+                uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(oldUplata.KursID));
+                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(oldUplata.JavnoNadmetanjeID).Result;
+
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<UplataDto>(oldUplata));
+                return Ok(uplataDto);
             }
             catch (Exception)
             {
@@ -208,15 +277,31 @@ namespace Uplata.Controllers
         /// </summary>
         /// <param name="uplataID">ID uplate</param>
         /// <returns>Status 204 (NoContent)</returns>
-        /// <response code="204">Uplata uspešno obrisana</response>
-        /// <response code="404">Nije pronađena uplata za brisanje</response>
-        /// <response code="500">Došlo je do greške na serveru prilikom brisanja uplate</response>
+        /// <response code="204">Uplata uspesno obrisana</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
+        /// <response code="404">Nije pronadjena uplata za brisanje</response>
+        /// <response code="500">Doslo je do greske na serveru prilikom brisanja uplate</response>
+        [HttpDelete("{uplataID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("{uplataID}")]
         public IActionResult DeleteUplata(Guid uplataID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje uplate";
 
@@ -248,7 +333,6 @@ namespace Uplata.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpOptions]
-        [AllowAnonymous]
         public IActionResult GetUplataOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");
