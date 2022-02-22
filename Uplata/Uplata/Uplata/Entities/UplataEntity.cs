@@ -46,10 +46,10 @@ namespace Uplata.Entities
 
         public Guid? JavnoNadmetanjeID { get; set; }
         /// <summary>
-        /// Kurs
+        /// Id kursa
         /// </summary>
-        public Kurs Kurs { get; set; }
+        public Guid KursID { get; set; }
+        public KursEntity Kurs { get; set; }
     }
 
-    public record Kurs(double VrednostKursa, DateTime Datum, string Valuta);
 }

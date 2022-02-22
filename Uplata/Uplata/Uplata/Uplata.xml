@@ -11,15 +11,76 @@
             <param name="principal">Model sa podacima na osnovu kojih se vrši autentifikacija</param>
             <returns></returns>
         </member>
+        <member name="M:Uplata.Controllers.KursController.GetKurs">
+            <summary>
+            Vraća sve kurseve 
+            </summary>
+            <returns>Lista kurseva</returns>
+            <response code="200">Vraca listu kurseva</response>
+            <response code="404">Nije pronadjen ni jedan kurs</response>
+        </member>
+        <member name="M:Uplata.Controllers.KursController.GetKurs(System.Guid)">
+            <summary>
+            Vraća jedan kurs na osnovu ID-ja kurs.
+            </summary>
+            <param name="kursID">ID kursa</param>
+            <returns></returns>
+            <response code="200">Vraća trazen kurs</response>
+        </member>
+        <member name="M:Uplata.Controllers.KursController.CreateKurs(Uplata.Models.KursDto)">
+            <summary>
+            Kreira novi kurs.
+            </summary>
+            <param name="kurs">Model kursa</param>
+            <returns>Potvrdu o kreiranom kursu.</returns>
+            <remarks>
+            Primer zahteva za kreiranje novog kursa \
+            POST /api/kursevi \
+            {     \
+                "vrednostKursa": "117.53", \
+                "datum": "2020-01-01", \
+                "valuta": "EUR", \
+                }      \
+            }
+            </remarks>
+            <response code="200">Vraća kurs</response>
+            <response code="500">Došlo je do greške na serveru prilikom dodavnja kursa</response>
+        </member>
+        <member name="M:Uplata.Controllers.KursController.UpdateKurs(Uplata.Models.KursDtoUpdate)">
+            <summary>
+            Ažurira jedan kurs.
+            </summary>
+            <param name="kurs">Model kursa koji se ažurira</param>
+            <returns>Potvrdu o modifikovanom kursu.</returns>
+            <response code="200">Vraća ažurirani kurs</response>
+            <response code="400">Kurs koja se ažurira nije pronadjen</response>
+            <response code="500">Došlo je do greške na serveru prilikom ažuriranja kursa</response>
+        </member>
+        <member name="M:Uplata.Controllers.KursController.DeleteUplata(System.Guid)">
+            <summary>
+            Vrši brisanje jednog kursa na osnovu ID-ja.
+            </summary>
+            <param name="kursID">ID kursa</param>
+            <returns>Status 204 (NoContent)</returns>
+            <response code="204">Kurs uspešno obrisan</response>
+            <response code="404">Nije pronađen kurs za brisanje</response>
+            <response code="500">Došlo je do greške na serveru prilikom brisanja kursa</response>
+        </member>
+        <member name="M:Uplata.Controllers.KursController.GetKursOptions">
+            <summary>
+            Vraca opcije za rad sa uplatama
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Uplata.Controllers.UplataController.GetUplate">
             <summary>
             Vraća sve uplate 
             </summary>
             <returns>Lista uplati</returns>
             <response code="200">Vraca listu uplati</response>
-            <response code="404">Nije pronađena ni jedna jedina uplata</response>
+            <response code="404">Nije pronađena ni jedna uplata</response>
         </member>
-        <member name="M:Uplata.Controllers.UplataController.GetUplata(System.Guid)">
+        <member name="M:Uplata.Controllers.UplataController.GetUplate(System.Guid)">
             <summary>
             Vraća jednu uplatu na osnovu ID-ja uplate.
             </summary>
@@ -27,7 +88,7 @@
             <returns></returns>
             <response code="200">Vraća traženu uplatu</response>
         </member>
-        <member name="M:Uplata.Controllers.UplataController.CreateUplata(Uplata.Models.UplataDto)">
+        <member name="M:Uplata.Controllers.UplataController.CreateUplata(Uplata.Models.UplataCreateDto)">
             <summary>
             Kreira novu uplatu.
             </summary>
@@ -37,22 +98,20 @@
             Primer zahteva za kreiranje nove uplate \
             POST /api/uplate \
             {     \
-                "iznos": "150000", \
-                "datum": "2841defc-761e-40d8-b8a3-d3e58516dca7", \
+                "iznos": "150", \
+                "datum": "2020-01-01", \
                 "svrhaUplate": "ucesce na licitaciji", \
                 "pozivNaBroj": "3121-424324523-444", \
+                "javnoNadmetanjeID": "7C7764E0-27A2-4123-9EB4-081C4E9BCDBF", \
+                "kursID": ""411C4082-CC5E-4F5F-8946-4086EBCA08D0"", \
                 "brojRacuna": "155-5528599695-55", \
-                "kurs": {
-                "vrednostKursa": 120, \
-                "datum": "2020-05-05", \
-                "valuta": "RSD" \
                 }      \
             }
             </remarks>
             <response code="200">Vraća uplatu</response>
             <response code="500">Došlo je do greške na serveru prilikom uplate</response>
         </member>
-        <member name="M:Uplata.Controllers.UplataController.UpdateUplata(Uplata.Entities.UplataEntity)">
+        <member name="M:Uplata.Controllers.UplataController.UpdateUplata(Uplata.Models.UplataDtoUpdate)">
             <summary>
             Ažurira jednu uplatu.
             </summary>
@@ -147,9 +206,9 @@
             ID javnog nadmetanja.
             </summary>
         </member>
-        <member name="P:Uplata.Entities.UplataEntity.Kurs">
+        <member name="P:Uplata.Entities.UplataEntity.KursID">
             <summary>
-            Kurs
+            Id kursa
             </summary>
         </member>
         <member name="P:Uplata.Entities.User.Id">
@@ -202,6 +261,46 @@
             Korisnička lozinka
             </summary>
         </member>
+        <member name="T:Uplata.Models.UplataCreateDto">
+            <summary>
+            Dto uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataCreateDto.Iznos">
+            <summary>
+            Iznos uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataCreateDto.SvrhaUplate">
+            <summary>
+            Svrhu uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataCreateDto.Datum">
+            <summary>
+            Datum uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataCreateDto.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataCreateDto.BrojRacuna">
+            <summary>
+            Broj racuna
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataCreateDto.JavnoNadmetanjeID">
+            <summary>
+            ID javnog nadmetanja.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataCreateDto.KursID">
+            <summary>
+            Kurs id
+            </summary>
+        </member>
         <member name="T:Uplata.Models.UplataDto">
             <summary>
             Dto uplate.
@@ -237,9 +336,54 @@
             ID javnog nadmetanja.
             </summary>
         </member>
-        <member name="P:Uplata.Models.UplataDto.Kurs">
+        <member name="P:Uplata.Models.UplataDto.KursID">
             <summary>
-            Kurs
+            Kurs id
+            </summary>
+        </member>
+        <member name="T:Uplata.Models.UplataDtoUpdate">
+            <summary>
+            Dto uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.UplataID">
+            <summary>
+            ID Uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.Iznos">
+            <summary>
+            Iznos uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.SvrhaUplate">
+            <summary>
+            Svrhu uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.Datum">
+            <summary>
+            Datum uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.BrojRacuna">
+            <summary>
+            Broj racuna
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.JavnoNadmetanjeID">
+            <summary>
+            ID javnog nadmetanja.
+            </summary>
+        </member>
+        <member name="P:Uplata.Models.UplataDtoUpdate.Kurs">
+            <summary>
+            Kurs id
             </summary>
         </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto">

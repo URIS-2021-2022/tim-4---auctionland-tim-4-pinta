@@ -12,12 +12,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace KatastarskaOpstinaAgregat
@@ -31,16 +33,13 @@ namespace KatastarskaOpstinaAgregat
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddControllers();
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "KatastarskaOpstinaAgregat", Version = "v1" });
-            //});
+         
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IKatastarskaOpstinaRepository, KatastarskaOpstinaRepository>();
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
@@ -58,24 +57,21 @@ namespace KatastarskaOpstinaAgregat
                         {
                             Name = "Dajana Jelic",
                             Email = "dajanajelic05@gmail.com",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
                         License = new Microsoft.OpenApi.Models.OpenApiLicense
                         {
                             Name = "FTN licence",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
-                        TermsOfService = new Uri("http://www.ftn.uns.ac.rs/")
+                        TermsOfService = new Uri(Configuration["Uri:Ftn"])
                     });
-                var xmlComments = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";//refleksija
-                //omogucava da manipulisemo sa putanjom
+                var xmlComments = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsPath = Path.Combine(AppContext.BaseDirectory, xmlComments);
                 setupAction.IncludeXmlComments(xmlCommentsPath);
             });
             services.AddDbContextPool<KatastarskaOpstinaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("KatastarskaOpstinaDB")));
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -103,10 +99,10 @@ namespace KatastarskaOpstinaAgregat
             app.UseSwaggerUI(setupAction =>
             {
 
-                //Podesavamo endpoint gde Swagger UI moze da pronadje OpenAPI specifikaciju
+                
                 setupAction.SwaggerEndpoint("/swagger/KatastarskaOpstinaOpenApiSpecification/swagger.json", "Katastarska opstina Agregat API");
 
-                setupAction.RoutePrefix = "swagger"; //Dokumentacija ce sada biti dostupna na root-u (ne mora da se pise /swagger)
+                setupAction.RoutePrefix = "swagger"; 
             });
 
             app.UseEndpoints(endpoints =>

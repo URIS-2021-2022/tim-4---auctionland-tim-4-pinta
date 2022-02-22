@@ -14,6 +14,10 @@ namespace Uplata.Profiles
         {
             CreateMap<UplataEntity, UplataDto>();
             CreateMap<UplataDto, UplataEntity>();
+            CreateMap<UplataEntity, UplataCreateDto>();
+            CreateMap<UplataCreateDto, UplataEntity>();
+            CreateMap<UplataEntity, UplataDtoUpdate>();
+            CreateMap<UplataDtoUpdate, UplataEntity>();
 
         }
     }
