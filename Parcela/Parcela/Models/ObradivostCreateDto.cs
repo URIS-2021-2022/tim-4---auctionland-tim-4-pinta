@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za modifikovanje obradivosti
+    /// DTO za kreiranje obradivosti
     /// </summary>
-    public class ObradivostUpdateDto
+    public class ObradivostCreateDto
     {
-        /// <summary>
-        /// ID obradivosti
-        /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti id obradivosti")]
-        public Guid ObradivostID { get; set; }
-
         /// <summary>
         /// Naziv tipa obradivosti
         /// </summary>

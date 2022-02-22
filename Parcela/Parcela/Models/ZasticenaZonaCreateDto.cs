@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za modifikovanje zasticene zone
+    /// DTO za kreiranje zasticene zone
     /// </summary>
-    public class ZasticenaZonaUpdateDto
+    public class ZasticenaZonaCreateDto
     {
-        /// <summary>
-        /// ID zasticene zone
-        /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti id zasticene zone")]
-        public Guid ZasticenaZonaID { get; set; }
-
         /// <summary>
         /// Oznaka zasticene zone
         /// </summary>

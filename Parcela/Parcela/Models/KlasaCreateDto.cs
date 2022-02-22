@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za modifikovanje klase
+    /// DTO za kreiranje klase
     /// </summary>
-    public class KlasaUpdateDto
+    public class KlasaCreateDto
     {
-        /// <summary>
-        /// ID klase
-        /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti id klase")]
-        public Guid KlasaID { get; set; }
-
         /// <summary>
         /// Naziv klase
         /// </summary>

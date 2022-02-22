@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za modifikovanje oblika svojine
+    /// DTO za kreiranje oblika svojine
     /// </summary>
-    public class OblikSvojineUpdateDto
+    public class OblikSvojineCreateDto
     {
-        /// <summary>
-        /// ID oblika svojine
-        /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti id oblika svojine")]
-        public Guid OblikSvojineID { get; set; }
-
         /// <summary>
         /// Naziv oblika svojine
         /// </summary>

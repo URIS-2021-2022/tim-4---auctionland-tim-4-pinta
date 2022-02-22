@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za modifikovanje odvodnjavanja
+    /// DTO za kreiranje odvodnjavanja
     /// </summary>
-    public class OdvodnjavanjeUpdateDto
+    public class OdvodnjavanjeCreateDto
     {
-        /// <summary>
-        /// ID odvodnjavanja
-        /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti id odvodnjavanja")]
-        public Guid OdvodnjavanjeID { get; set; }
-
         /// <summary>
         /// Naziv tipa odvodnjavanja
         /// </summary>

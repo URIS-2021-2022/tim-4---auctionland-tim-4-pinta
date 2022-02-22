@@ -20,6 +20,8 @@ namespace Parcela.Profiles
         {
             CreateMap<ObradivostEntity, ObradivostDto>();
             CreateMap<ObradivostDto, ObradivostEntity>();
+            CreateMap<ObradivostEntity, ObradivostCreateDto>();
+            CreateMap<ObradivostCreateDto, ObradivostEntity>();
             CreateMap<ObradivostEntity, ObradivostUpdateDto>();
             CreateMap<ObradivostUpdateDto, ObradivostEntity>();
         }

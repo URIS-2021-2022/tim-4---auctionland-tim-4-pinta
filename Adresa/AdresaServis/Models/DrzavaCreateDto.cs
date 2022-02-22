@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 namespace AdresaServis.Models
 {
     /// <summary>
-    /// DTO za modifikovanje drzave
+    /// DTO za kreiranje drzave
     /// </summary>
-    public class DrzavaUpdateDto
+    public class DrzavaCreateDto
     {
-        /// <summary>
-        /// ID drzave
-        /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti id drzave")]
-        public Guid DrzavaID { get; set; }
-
         /// <summary>
         /// Naziv drzave
         /// </summary>

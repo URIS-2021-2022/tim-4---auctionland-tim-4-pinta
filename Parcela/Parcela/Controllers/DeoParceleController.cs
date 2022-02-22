@@ -141,7 +141,7 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="deoParcele">Model dela parcele</param>
         /// <returns>Potvrda o kreiranom delu parcele</returns>
-        /// /// <remarks>
+        /// <remarks>
         /// Primer zahteva za kreiranje novog dela parcele \
         /// POST /api/deloviParcela \
         /// { \
@@ -258,6 +258,16 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="deoParcele">Model dela parcele koji se azurira</param>
         /// <returns>Potvrda o modifikovanom delu parcele</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje dela parcele \
+        /// PUT /api/deloviParcela \
+        /// { \
+        /// "deoParceleID": "1c7ea607-8ddb-493a-87fa-4bf5893e965b"
+        /// "redniBroj": 1, \
+        /// "povrsinaDelaParcele": 1000, \
+        /// "parcelaID": "03b0da3e-2604-4a9a-9e80-ad192727a3e9"
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azurirani deo parcele</response>
         /// <response code="400">Deo parcele koji se azurira nije pronadjen</response>
         /// <response code="401">Korisnik nije autorizovan</response>

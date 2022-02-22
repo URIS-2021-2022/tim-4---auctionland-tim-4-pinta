@@ -146,7 +146,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<OblikSvojineDto> CreateOblikSvojine([FromBody] OblikSvojineDto oblikSvojine)
+        public ActionResult<OblikSvojineDto> CreateOblikSvojine([FromBody] OblikSvojineCreateDto oblikSvojine)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -243,6 +243,14 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="oblikSvojine">Model oblika svojine za azuriranje</param>
         /// <returns>Potvrda o modifikovanom obliku svojine</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje oblika svojine \
+        /// PUT /api/obliciSvojine \
+        /// { \
+        /// "oblikSvojineID": "0051339e-4bf1-4d63-89f9-d5f744016a2b", \
+        /// "oblikSvoijenNaziv": "Privatna svojina", \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azuriran oblik svojine</response>
         /// <response code="400">Oblik svojine koji se azurira nije pronadjen</response>
         /// <response code="401">Korisnik nije autorizovan</response>

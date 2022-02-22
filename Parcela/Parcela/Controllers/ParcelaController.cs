@@ -23,12 +23,6 @@ namespace Parcela.Controllers
     public class ParcelaController : ControllerBase
     {
         private readonly IParcelaRepository parcelaRepository;
-        private readonly IKlasaRepository klasaRepository;
-        private readonly IKulturaRepository kulturaRepository;
-        private readonly IOblikSvojineRepository oblikSvojineRepository;
-        private readonly IObradivostRepository obradivostRepository;
-        private readonly IOdvodnjavanjeRepository odvodnjavanjeRepository;
-        private readonly IZasticenaZonaRepository zasticenaZonaRepository;
         private readonly IKatastarskaOpstinaService katastarskaOpstinaService;
         private readonly IKupacService kupacService;
         private readonly LinkGenerator linkGenerator;
@@ -37,15 +31,9 @@ namespace Parcela.Controllers
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public ParcelaController(IParcelaRepository parcelaRepository, IKlasaRepository klasaRepository, IKulturaRepository kulturaRepository, IOblikSvojineRepository oblikSvojineRepository, IObradivostRepository obradivostRepository, IOdvodnjavanjeRepository odvodnjavanjeRepository, IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, ILoggerService loggerService)
+        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, ILoggerService loggerService)
         {
             this.parcelaRepository = parcelaRepository;
-            this.klasaRepository = klasaRepository;
-            this.kulturaRepository = kulturaRepository;
-            this.oblikSvojineRepository = oblikSvojineRepository;
-            this.obradivostRepository = obradivostRepository;
-            this.odvodnjavanjeRepository = odvodnjavanjeRepository;
-            this.zasticenaZonaRepository = zasticenaZonaRepository;
             this.katastarskaOpstinaService = katastarskaOpstinaService;
             this.kupacService = kupacService;
             this.linkGenerator = linkGenerator;
@@ -68,7 +56,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public ActionResult<List<ParcelaDto>> GetParcele()
+        public ActionResult<List<ParcelaDto>> GetParcele([FromServices] IKlasaRepository klasaRepository, [FromServices] IKulturaRepository kulturaRepository, [FromServices] IOblikSvojineRepository oblikSvojineRepository, [FromServices] IObradivostRepository obradivostRepository, [FromServices] IOdvodnjavanjeRepository odvodnjavanjeRepository, [FromServices] IZasticenaZonaRepository zasticenaZonaRepository)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -126,7 +114,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<ParcelaDto> GetParcela(Guid parcelaID)
+        public ActionResult<ParcelaDto> GetParcela(Guid parcelaID, [FromServices] IKlasaRepository klasaRepository, [FromServices] IKulturaRepository kulturaRepository, [FromServices] IOblikSvojineRepository oblikSvojineRepository, [FromServices] IObradivostRepository obradivostRepository, [FromServices] IOdvodnjavanjeRepository odvodnjavanjeRepository, [FromServices] IZasticenaZonaRepository zasticenaZonaRepository)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -183,12 +171,13 @@ namespace Parcela.Controllers
         /// "zasticenaZonaStvarnoStanje": 1, \
         /// "odvodnjavanjeStvarnoStanje": "Podzemno" \
         /// "kulturaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-        /// "klasaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-        /// "obradivostID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-        /// "zasticenaZonaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-        /// "odvodnjavanjeID": "a873025a-b4bc-440d-8e65-dc63fb9025d7" \
-        /// "opstinaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-        /// "kupacID": "a873025a-b4bc-440d-8e65-dc63fb9025d7" \
+        /// "klasaID": "32cf50d2-ab1a-45fb-a5de-f6c4fd646775", \
+        /// "oblikSvojineID": "1c7ea607-8ddb-493a-87fa-4bf5893e965b", \
+        /// "obradivostID": "1fbc26e0-a797-45b8-bfb2-75d6799237ba", \
+        /// "zasticenaZonaID": "0051339e-4bf1-4d63-89f9-d5f744016a2b", \
+        /// "odvodnjavanjeID": "149b65ca-47aa-433c-8dbe-cdcf5e74a4ed" \
+        /// "opstinaID": "829f5f3f-6159-4e15-ab52-d4c78ce944dc", \
+        /// "kupacID": "2a411c13-a195-48f7-8dbc-67596c3974c0" \
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu parcelu</response>
@@ -200,7 +189,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ParcelaDto> CreateParcela([FromBody] ParcelaCreateDto parcela)
+        public ActionResult<ParcelaDto> CreateParcela([FromBody] ParcelaCreateDto parcela, [FromServices] IKlasaRepository klasaRepository, [FromServices] IKulturaRepository kulturaRepository, [FromServices] IOblikSvojineRepository oblikSvojineRepository, [FromServices] IObradivostRepository obradivostRepository, [FromServices] IOdvodnjavanjeRepository odvodnjavanjeRepository, [FromServices] IZasticenaZonaRepository zasticenaZonaRepository)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -260,7 +249,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult DeleteParcela(Guid parcelaID)
+        public IActionResult DeleteParcela(Guid parcelaID, [FromServices] IKlasaRepository klasaRepository, [FromServices] IKulturaRepository kulturaRepository, [FromServices] IOblikSvojineRepository oblikSvojineRepository, [FromServices] IObradivostRepository obradivostRepository, [FromServices] IOdvodnjavanjeRepository odvodnjavanjeRepository, [FromServices] IZasticenaZonaRepository zasticenaZonaRepository)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -306,6 +295,29 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="parcela">Model parcele koja se azurira</param>
         /// <returns>Potvrdu o modifikovanoj parceli</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje parcele \
+        /// PUT /api/parcele \
+        /// { \
+        /// "parcelaID": "6a411c13-a195-48f7-8dbd-67596c3974c0", \
+        /// "povrsina": 3000, \
+        /// "brojParcele": "333", \
+        /// "brojListaNepokretnosti": "333", \
+        /// "kulturaStvarnoStanje": "Njive", \
+        /// "klasaStvarnoStanje": "II", \
+        /// "obradivostStvarnoStanje": "Obradivo", \
+        /// "zasticenaZonaStvarnoStanje": 1, \
+        /// "odvodnjavanjeStvarnoStanje": "Podzemno" \
+        /// "kulturaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+        /// "klasaID": "32cf50d2-ab1a-45fb-a5de-f6c4fd646775", \
+        /// "oblikSvojineID": "1c7ea607-8ddb-493a-87fa-4bf5893e965b", \
+        /// "obradivostID": "1fbc26e0-a797-45b8-bfb2-75d6799237ba", \
+        /// "zasticenaZonaID": "0051339e-4bf1-4d63-89f9-d5f744016a2b", \
+        /// "odvodnjavanjeID": "149b65ca-47aa-433c-8dbe-cdcf5e74a4ed" \
+        /// "opstinaID": "829f5f3f-6159-4e15-ab52-d4c78ce944dc", \
+        /// "kupacID": "2a411c13-a195-48f7-8dbc-67596c3974c0" \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azuriranu parcelu</response>
         /// <response code="400">Parcela koja se azurira nije pronadjena</response>
         /// <response code="401">Korisnik nije autorizovan</response>
@@ -317,7 +329,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ParcelaDto> UpdateParcela(ParcelaUpdateDto parcela)
+        public ActionResult<ParcelaDto> UpdateParcela(ParcelaUpdateDto parcela, [FromServices] IKlasaRepository klasaRepository, [FromServices] IKulturaRepository kulturaRepository, [FromServices] IOblikSvojineRepository oblikSvojineRepository, [FromServices] IObradivostRepository obradivostRepository, [FromServices] IOdvodnjavanjeRepository odvodnjavanjeRepository, [FromServices] IZasticenaZonaRepository zasticenaZonaRepository)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');

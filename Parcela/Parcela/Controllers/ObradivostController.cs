@@ -146,7 +146,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ObradivostDto> CreateObradivost([FromBody] ObradivostDto obradivost)
+        public ActionResult<ObradivostDto> CreateObradivost([FromBody] ObradivostCreateDto obradivost)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -241,6 +241,14 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="obradivost">Model obradivosti koja se azurira</param>
         /// <returns>Potvrda o modifikovanoj obradivosti</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje obradivosti \
+        /// PUT /api/obradivosti \
+        /// { \
+        /// "obradivostID": "1fbc26e0-a797-45b8-bfb2-75d6799237ba", \
+        /// "obradivostNaziv": "Obradivo", \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azuriranu obradivost</response>
         /// <response code="400">Obradivost koja se azurira nije pronadjena</response>
         /// <response code="401">Korisnik nije autorizovan</response>

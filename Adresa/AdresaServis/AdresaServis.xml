@@ -76,6 +76,18 @@
             </summary>
             <param name="adresa">Model adrese koja se azurira</param>
             <returns>Potvrdu o modifikovanoj adresi</returns>
+            <remarks>
+            Primer zahteva za modifikovanje adrese \
+            PUT /api/adrese \
+            { \
+            "adresaID": "723123b1-3ab1-4741-9437-c8a1d6ad20da", \
+            "ulica": "Fruskogorska", \
+            "broj": "20", \
+            "mesto": "Beograd", \
+            "postanskiBroj": "11000", \
+            "drzavaID": "fd5e46de-290f-4844-a004-4a94ae24f654" \
+            } 
+            </remarks>
             <response code="200">Vraca azuriranu adresu</response>
             <response code="400">Adresa koja se azurira nije pronadjena</response>
             <response code = "401">Korisnik nije autorizovan</response>
@@ -120,7 +132,7 @@
             <response code = "401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena drzava nije pronadjena</response>
         </member>
-        <member name="M:AdresaServis.Controllers.DrzavaController.CreateDrzava(AdresaServis.Models.DrzavaDto)">
+        <member name="M:AdresaServis.Controllers.DrzavaController.CreateDrzava(AdresaServis.Models.DrzavaCreateDto)">
             <summary>
             Kreira novu drzavu
             </summary>
@@ -154,6 +166,14 @@
             </summary>
             <param name="drzava">Model drzave koja se azurira</param>
             <returns>Potvrdu o modifikovanoj drzavi</returns>
+            <remarks>
+            Primer zahteva za modifikovanje drzave \
+            PUT /api/drzave \
+            { \
+            "drazvaID": "fd5e46de-290f-4844-a004-4a94ae24f654" \
+            "nazivDrzave": "Srbija" \
+            } 
+            </remarks>
             <response code="200">Vraca azuriranu drzavu</response>
             <response code="400">Drzava koja se azurira nije pronadjena</response>
             <response code = "401">Korisnik nije autorizovan</response>
@@ -452,6 +472,16 @@
         <member name="P:AdresaServis.Models.AdresaUpdateDto.DrzavaID">
             <summary>
             ID drzave
+            </summary>
+        </member>
+        <member name="T:AdresaServis.Models.DrzavaCreateDto">
+            <summary>
+            DTO za kreiranje drzave
+            </summary>
+        </member>
+        <member name="P:AdresaServis.Models.DrzavaCreateDto.NazivDrzave">
+            <summary>
+            Naziv drzave
             </summary>
         </member>
         <member name="T:AdresaServis.Models.DrzavaDto">

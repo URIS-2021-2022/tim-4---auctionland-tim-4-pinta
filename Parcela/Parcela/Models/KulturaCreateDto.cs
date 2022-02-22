@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 namespace Parcela.Models
 {
     /// <summary>
-    /// DTO za modifikovanje kulture
+    /// DTO za kreiranje kulture
     /// </summary>
-    public class KulturaUpdateDto
+    public class KulturaCreateDto
     {
-        /// <summary>
-        /// ID kulture
-        /// </summary>
-        [Required(ErrorMessage = "Obavezno je uneti id kulture")]
-        public Guid KulturaID { get; set; }
-
         /// <summary>
         /// Naziv kulture
         /// </summary>
