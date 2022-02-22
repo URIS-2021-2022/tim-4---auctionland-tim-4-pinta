@@ -1,6 +1,6 @@
 ﻿using Licnost.Data;
 using Licnost.Entities;
-using Licnost.Helpers;
+//using Licnost.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.SqlServer;
+using Licnost.ServiceCalls;
 
 namespace Licnost
 {
@@ -91,28 +92,32 @@ namespace Licnost
 
 
             //services.AddSingleton<ILicnostRepository, LicnostMockRepository>();
-            services.AddSingleton<IUserRepository, UserMockRepository>();
-            services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            //services.AddSingleton<IUserRepository, UserMockRepository>();
+            //services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
             services.AddScoped<ILicnostRepository, LicnostRepository>();
             services.AddScoped<IKomisijaRepository, KomisijaRepository>();
             services.AddScoped<IClanKomisijeRepository, ClanKomisijeRepository>();
+            services.AddScoped<IGatewayService, GatewayService>();
+            services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IKorisnikSistemaService, KorisnikSistemaService>();
             
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                };
-            });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidIssuer = Configuration["Jwt:Issuer"],
+            //        ValidAudience = Configuration["Jwt:Issuer"],
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+            //    };
+            //});
 
             //services.AddControllers(setup =>
             //{
@@ -149,7 +154,7 @@ namespace Licnost
                 app.UseDeveloperExceptionPage();
                 
             }
-            app.UseAuthentication();
+           // app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseSwagger();

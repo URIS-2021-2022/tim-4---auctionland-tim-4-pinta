@@ -75,11 +75,11 @@ namespace Parcela.Controllers
             if (kulture == null || kulture.Count == 0)
             {
                 logDto.Level = "Warn";
-                //loggerService.CreateLog(logDto);
+                loggerService.CreateLog(logDto);
                 return NoContent();
             }
             logDto.Level = "Info";
-            //loggerService.CreateLog(logDto);
+            loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<KulturaDto>>(kulture));
         }
 

@@ -84,5 +84,78 @@
 2022-02-19 19:48:45.6789 INFO Naziv metode: GET,Naziv servisa: JavnoNadmetanje,poruka: Vracanje svih javnih nadmetanja
 2022-02-19 20:01:27.9318 INFO Naziv metode: GET,Naziv servisa: KatastarskaOpstina,poruka: Vracanje svih opstina
 >>>>>>> d321625f7a7814d636de5073cc7cf63f13e3a78b
+<<<<<<< HEAD
+2022-02-21 20:53:15.7378 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-21 20:57:19.9898 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje javnog nadmetanja po ID-ju
+2022-02-21 21:03:34.9482 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-21 21:08:40.2392 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-21 21:09:11.9378 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-21 21:11:03.9968 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:11:04.0581 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:15:29.9632 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:15:30.0481 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:17:15.3734 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-21 21:24:33.5372 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-21 21:27:48.8572 INFO Naziv metode: DELETE,Naziv servisa: Uplata,poruka: Brisanje uplate
+2022-02-21 21:30:53.4117 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-21 21:42:32.2446 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:42:32.3064 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:43:20.5472 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:43:20.5984 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:52:10.8111 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 21:52:10.8708 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-21 22:02:03.0188 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-21 22:02:51.7150 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 00:06:15.7854 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 00:07:40.1754 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 00:08:03.2824 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih kurseva
+2022-02-22 00:12:07.8317 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 00:12:23.0031 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih kurseva
+2022-02-22 00:12:31.0975 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 00:13:42.7119 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 00:15:57.1734 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje javnog nadmetanja po ID-ju
+2022-02-22 00:17:36.5669 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 00:18:04.0187 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 00:20:27.1005 INFO Naziv metode: DELETE,Naziv servisa: Uplata,poruka: Brisanje uplate
+2022-02-22 00:21:06.2315 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 00:21:54.9678 WARN Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 00:22:41.4862 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 00:22:53.6481 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 00:23:02.1229 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 00:25:35.6602 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih kurseva
+2022-02-22 00:26:25.7386 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje novog kursa
+2022-02-22 00:27:36.5263 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija kursa
+2022-02-22 00:30:49.2300 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija kursa
+2022-02-22 00:42:43.3295 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje novog kursa
+2022-02-22 00:48:14.2469 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 00:49:03.3089 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 00:49:20.1346 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 00:56:47.5330 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih kurseva
+2022-02-22 00:57:47.2363 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija kursa
+2022-02-22 01:02:28.4607 INFO Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija kursa
+2022-02-22 01:05:32.7133 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje svih uplata
+2022-02-22 01:05:51.0986 INFO Naziv metode: GET,Naziv servisa: Uplata,poruka: Vracanje javnog nadmetanja po ID-ju
+2022-02-22 01:06:23.8467 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 01:06:23.9300 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 01:07:18.4915 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 01:07:28.9039 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 01:21:35.6883 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 01:21:35.7533 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 01:22:46.4963 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 01:31:43.6325 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 01:33:46.9686 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 01:35:34.1858 ERROR Naziv metode: PUT,Naziv servisa: Uplata,poruka: Modifikacija uplate
+2022-02-22 01:36:07.2183 INFO Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+2022-02-22 01:36:07.2727 ERROR Naziv metode: POST,Naziv servisa: Uplata,poruka: Dodavanje nove uplate
+=======
 2022-02-21 17:50:03.6638 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih parcela
 2022-02-21 19:13:22.8546 INFO Naziv metode: GET,Naziv servisa: Parcela,poruka: Vracanje svih kultura
+>>>>>>> 96dd1a3aff64717196c6c089791c93164373e9e3
+2022-02-22 10:33:47.9675 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-22 10:34:00.8048 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 10:34:14.3677 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje drazve po ID-ju
+2022-02-22 10:35:19.8558 INFO Naziv metode: POST,Naziv servisa: Adresa,poruka: Dodavanje nove drzave
+2022-02-22 10:35:25.9380 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 10:37:42.0375 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 10:49:41.0037 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 12:26:29.2105 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa

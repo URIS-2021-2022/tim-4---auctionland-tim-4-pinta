@@ -60,7 +60,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator" && split[2] != "menadzer")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
             {
                 return Unauthorized();
             }
@@ -100,7 +100,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator" && split[2] != "menadzer")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
             {
                 return Unauthorized();
             }
@@ -148,7 +148,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
             {
                 return Unauthorized();
             }
@@ -167,11 +167,11 @@ namespace KatastarskaOpstinaAgregat.Controllers
                 KatastarskaOpstinaEntity obj = mapper.Map<KatastarskaOpstinaEntity>(katastarskaOpstina);
                 KatastarskaOpstinaEntity s = katastarskaOpstinaRepository.CreateKatastarskaOpstina(obj);
                 katastarskaOpstinaRepository.SaveChanges();
-                // string location = linkGenerator.GetPathByAction("GetKatastarskaOpstina", "KatastarskaOpstina", new { katastarskaOpstinaID = s.KatastarskaOpstinaID });
-                // return Created(location, mapper.Map<KatastarskaOpstinaDto>(s));
+                string location = linkGenerator.GetPathByAction("GetKatastarskaOpstina", "KatastarskaOpstina", new { katastarskaOpstinaID = s.KatastarskaOpstinaID });
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created("", mapper.Map<KatastarskaOpstinaDto>(s));
+                return Created(location, mapper.Map<KatastarskaOpstinaDto>(s));
+               
             }
             catch
             {
@@ -198,7 +198,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
             {
                 return Unauthorized();
             }
@@ -252,7 +252,7 @@ namespace KatastarskaOpstinaAgregat.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if (split[1] != "administrator")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
             {
                 return Unauthorized();
             }

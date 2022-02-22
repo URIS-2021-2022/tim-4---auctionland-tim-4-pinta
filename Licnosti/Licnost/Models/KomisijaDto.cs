@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Licnost.Models
 {
+    /// <summary>
+    /// DTO komisije
+    /// </summary>
     public class KomisijaDto
     {
 
@@ -12,6 +15,11 @@ namespace Licnost.Models
         /// Predsednik komisije
         /// </summary>
         public Guid LicnostId { get; set; }
-       
+
+        /// <summary>
+        /// Ličnost
+        /// </summary>
+        public LicnostDto Licnost { get; set; }
+
     }
 }

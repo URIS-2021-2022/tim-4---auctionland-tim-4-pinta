@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Licnost.Profiles
 {
+    /// <summary>
+    /// Profil za mapiranje komisije
+    /// </summary>
     public class KomisijaProfile : Profile
     {
+        /// <summary>
+        /// Konstruktor profila
+        /// </summary>
         public KomisijaProfile()
         {
             CreateMap<Komisija, KomisijaDto>();

@@ -25,7 +25,7 @@ namespace ComplaintAggregate.Controllers
             private readonly IActionBasedOnComplaintRepository actionBasedOnComplaintRepository;
             private readonly LinkGenerator linkGenerator;
             private readonly IMapper mapper;
-
+        public LogModel logModel = new();
 
             public ActionBasedOnComplaintController(IActionBasedOnComplaintRepository actionBasedOnComplaintRepository, LinkGenerator linkGenerator, IMapper mapper,IFileAComplaintService fileService)
             {
@@ -43,6 +43,9 @@ namespace ComplaintAggregate.Controllers
         public ActionResult<List<ActionBasedOnComplaintDTO>> GetActions()
             {
 
+            logModel.HttpMethod = "GET";
+            logModel.NameOfTheService = "Zalba mikroservis";
+
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
             if (split[1] != "administrator" || split[1] != "menadzer" || split[1] != "licitant"
@@ -59,9 +62,15 @@ namespace ComplaintAggregate.Controllers
             var actions = actionBasedOnComplaintRepository.GetActions();
                 if (actions == null || actions.Count == 0)
                 {
+                logModel.Level = "Warn";
+                logModel.Message = "Nema sadrzaja";
+                fileService.ConnectLogger(logModel);
                     return NoContent();
                 }
-                return Ok(mapper.Map<List<ActionBasedOnComplaintDTO>>(actions));
+            logModel.Level = "Info";
+            logModel.Message = "Uspijesan zahtijev";
+            fileService.ConnectLogger(logModel);
+            return Ok(mapper.Map<List<ActionBasedOnComplaintDTO>>(actions));
             }
 
 
@@ -71,6 +80,9 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<ActionBasedOnComplaintDTO> GetActionById(Guid action)
             {
+
+            logModel.HttpMethod = "GET/id";
+            logModel.NameOfTheService = "Zalba mikroservis";
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -88,8 +100,14 @@ namespace ComplaintAggregate.Controllers
             var complainAggregate = actionBasedOnComplaintRepository.GetActionById(action);
                 if (complainAggregate == null)
                 {
+                logModel.Level = "Warn";
+                logModel.Message = "Nema sadrzaja";
+                fileService.ConnectLogger(logModel);
                     return NotFound();
                 }
+            logModel.Level = "Info";
+            logModel.Message = "Uspijesan zahtijev";
+            fileService.ConnectLogger(logModel);
                 return Ok(mapper.Map<ActionBasedOnComplaintDTO>(complainAggregate));
             }
 
@@ -99,6 +117,9 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<ActionBasedOnComplaintDTO> CreateAction([FromBody] ActionBasedOnComplaintDTO action)
             {
+
+            logModel.HttpMethod = "POST";
+            logModel.NameOfTheService = "Zalba mikroservis";
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -121,10 +142,16 @@ namespace ComplaintAggregate.Controllers
                     actionBasedOnComplaintRepository.SaveChanges();
 
                     string location = linkGenerator.GetPathByAction("GetActionById", "ActionBasedOnComplaint", new { Radnja_id = confirmation.Radnja_na_osnovu_zalbe_ID });
+                logModel.Level = "Info";
+                logModel.Message = "Uspijesan zahtjev";
+                fileService.ConnectLogger(logModel);
                     return Created(location, mapper.Map<ActionBasedOnComplaintDTO>(confirmation));
                 }
                 catch
                 {
+                logModel.Level = "Error";
+                logModel.Message = "Greska";
+                fileService.ConnectLogger(logModel);
                     return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
                 }
             }
@@ -136,6 +163,8 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public IActionResult DeleteTypeOfComplaint(Guid action)
             {
+            logModel.HttpMethod = "DELETE";
+            logModel.NameOfTheService = "Zalba mikroservis";
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -154,8 +183,14 @@ namespace ComplaintAggregate.Controllers
                     var complaintModel = actionBasedOnComplaintRepository.GetActionById(action);
                     if (complaintModel == null)
                     {
+                    logModel.Level = "Warn";
+                    logModel.Message = "Nema sadrzaja";
+                    fileService.ConnectLogger(logModel);
                         return NotFound();
                     }
+                logModel.Level = "Info";
+                logModel.Message = "Uspijesan zahtjev";
+                fileService.ConnectLogger(logModel);
                     actionBasedOnComplaintRepository.DeleteAction(action);
                     actionBasedOnComplaintRepository.SaveChanges();
                     // Status iz familije 2xx koji se koristi kada se ne vraca nikakav objekat, ali naglasava da je sve u redu
@@ -163,6 +198,9 @@ namespace ComplaintAggregate.Controllers
                 }
                 catch
                 {
+                logModel.Level = "Error";
+                logModel.Message = "Greska";
+                fileService.ConnectLogger(logModel);
                     return StatusCode(StatusCodes.Status500InternalServerError, "Delete Error");
                 }
             }
@@ -174,6 +212,9 @@ namespace ComplaintAggregate.Controllers
         [ProducesDefaultResponseType]
         public ActionResult<ActionBasedOnComplaintDTO> UpdateTypeOfComplaint(ActionBasedOnComplaintDTO action)
             {
+
+            logModel.HttpMethod = "PUT";
+            logModel.NameOfTheService = "Zalba mikroservis";
 
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -193,16 +234,25 @@ namespace ComplaintAggregate.Controllers
                 var actions = actionBasedOnComplaintRepository.GetActionById(action.Radnja_na_osnovu_zalbe_ID);
                     if (actions == null)
                     {
-                        return NotFound();
+                    logModel.Level = "Warn";
+                    logModel.Message = "Nema sadrzaja";
+                    fileService.ConnectLogger(logModel);
+                    return NotFound();
                     }
-                    ActionBasedOnComplaint cmp = mapper.Map<ActionBasedOnComplaint>(action);
+                logModel.Level = "Info";
+                logModel.Message = "Uspijesan zahtjev";
+                fileService.ConnectLogger(logModel);
+                ActionBasedOnComplaint cmp = mapper.Map<ActionBasedOnComplaint>(action);
                     mapper.Map(cmp, actions);
                     actionBasedOnComplaintRepository.SaveChanges();
                     return Ok(mapper.Map<ActionBasedOnComplaintDTO>(actions));
                 }
                 catch (Exception)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
+                logModel.Level = "Error";
+                logModel.Message = "Greska";
+                fileService.ConnectLogger(logModel);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Update error");
                 }
             }
 

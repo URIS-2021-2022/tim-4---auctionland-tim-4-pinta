@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Data;
 using UgovorOZakupuAgregat.Entities;
@@ -25,15 +26,17 @@ namespace UgovorOZakupuAgregat.Controllers
         private readonly IDokumentRepository dokumentRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
-        private readonly LoggerService loggerService;
+        private readonly ILoggerService loggerService;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly LogDto logDto;
 
-        public DokumentController(IDokumentRepository dokumentRepository, LinkGenerator linkGenerator, IMapper mapper, LoggerService loggerService)
+        public DokumentController(IDokumentRepository dokumentRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService)
         {
             this.dokumentRepository = dokumentRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
+            this.korisnikSistemaService = korisnikSistemaService;
             logDto = new LogDto();
             logDto.NameOfTheService = "UgovorOZakupu";
         }
@@ -44,12 +47,26 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <returns>Listu dokumenata</returns>
         /// <response code="200">Vraća listu dokumenata</response>
         /// <response code="404">Nije pronađena ni jedan jedini dokument</response>
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<DokumentDto>> GetDokumenti()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih dokumenata";
 
@@ -73,12 +90,28 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <param name="dokumentId">ID dokumenta</param>
         /// <returns></returns>
         /// <response code="200">Vraća tražen dokument</response>
+        [HttpGet("{dokumentId}")]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [HttpGet("{dokumentId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        
         public ActionResult<DokumentDto> GetDokument(Guid dokumentId)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje dokumenta po ID-ju";
 
@@ -112,12 +145,27 @@ namespace UgovorOZakupuAgregat.Controllers
         /// </remarks>
         ///  <response code="201">Vraća kreiran dokument</response>
         /// <response code="500">Došlo je do greške na serveru prilikom kreiranja dokumenta</response>
+        [HttpPost]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Consumes("application/json")]
-        [HttpPost]
         public ActionResult<DokumentDto> CreateDokument([FromBody] DokumentDto dokument)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje novog dokumenta";
 
@@ -149,12 +197,28 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="204">Dokument uspešno obrisan</response>
         /// <response code="404">Nije pronađen dokument za brisanje</response>
         /// <response code="500">Došlo je do greške na serveru prilikom brisanja dokumenta</response>
+        [HttpDelete("{dokumentId}")]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpDelete("{dokumentId}")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        
         public IActionResult DeleteDokument(Guid dokumentId)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje dokumenta";
 
@@ -189,13 +253,29 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="200">Vraća ažuriran dokument</response>
         /// <response code="400">Dokument koji se ažurira nije pronađen</response>
         /// <response code="500">Došlo je do greške na serveru prilikom ažuriranja dokumenta</response>
+        [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        
         public ActionResult<DokumentDto> UpdateDokument(DokumentUpdateDto dokument)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje dela parcele";
 
@@ -229,7 +309,6 @@ namespace UgovorOZakupuAgregat.Controllers
         /// Vraća opcije za rad sa dokumentima
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous] //Dozvoljavamo pristup anonimnim korisnicima
         [HttpOptions]
         public IActionResult GetDokumentOptions()
         {

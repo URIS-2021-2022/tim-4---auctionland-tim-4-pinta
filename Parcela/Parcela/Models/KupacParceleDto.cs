@@ -14,7 +14,12 @@ namespace Parcela.Models
         /// Naziv kupca parcele
         /// </summary>
         public string Naziv { get; set; }
-        
+
+        /// <summary>
+        /// JMBG/PIB kupca parcele
+        /// </summary>
+        public string JedinstveniBroj { get; set; }
+
         /// <summary>
         /// Da li je kupac fizicko ili pravno lice
         /// </summary>

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
 
-namespace Licnost.Data
-{
-    public interface IUserRepository
-    {
-        public bool UserWithCredentialsExists(string username, string password);
-    }
-}
+//namespace Licnost.Data
+//{
+//    public interface IUserRepository
+//    {
+//        public bool UserWithCredentialsExists(string username, string password);
+//    }
+//}

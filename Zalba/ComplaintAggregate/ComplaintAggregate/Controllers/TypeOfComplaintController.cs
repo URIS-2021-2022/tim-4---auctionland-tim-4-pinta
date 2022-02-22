@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace ComplaintAggregate.Controllers
 {
     [ApiController]
-    [Route("api/zalba/tip")]
+    [Route("api/tip")]
     [Produces("application/json", "application/xml")]
     public class TypeOfComplaintController:ControllerBase
     {
@@ -52,7 +52,7 @@ namespace ComplaintAggregate.Controllers
             HttpStatusCode res = fileService.AuthorizeAsync(token).Result;
             if (res.ToString() != "OK")
             {
-                return Unauthorized();
+               return Unauthorized();
             }
 
             var types = typeOfComplaintRepository.GetTypesOfComplaints();

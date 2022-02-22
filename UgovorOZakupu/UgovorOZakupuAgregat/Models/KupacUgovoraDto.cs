@@ -59,5 +59,35 @@ namespace UgovorOZakupuAgregat.Models
         /// Datum prestanka zabrane lica ugovora
         /// </summary>
         public DateTime DatumPrestankaZabrane { get; set; }
+
+        /// <summary>
+        /// Prioritet kupca
+        /// </summary>
+        public Guid Prioritet { get; set; }
+
+        /// <summary>
+        /// ID ovlascenog lica
+        /// </summary>
+        public Guid OvlascenoLice { get; set; }
+
+        /// <summary>
+        /// ID adrese kupca
+        /// </summary>
+        public Guid AdresaID { get; set; }
+
+        /// <summary>
+        /// ID uplate kupca
+        /// </summary>
+        public Guid UplataID { get; set; }
+
+        /// <summary>
+        /// Adresa kupca
+        /// </summary>
+        public AdresaKupcaUgovoraDto Adresa { get; set; }
+
+        /// <summary>
+        /// Uplata kupca
+        /// </summary>
+        public UplataKupcaUgovoraDto Uplata { get; set; }
     }
 }
