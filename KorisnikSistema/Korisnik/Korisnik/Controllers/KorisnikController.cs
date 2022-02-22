@@ -19,13 +19,12 @@ namespace Korisnik.Controllers
     {
         private readonly IKorisnikRepository korisnikRepository;
         private readonly IMapper mapper;
-        private readonly LinkGenerator linkGenerator;
+        
 
-        public KorisnikController(IKorisnikRepository korisnikRepository, LinkGenerator linkGenerator, IMapper mapper)
+        public KorisnikController(IKorisnikRepository korisnikRepository, IMapper mapper)
         {
             this.korisnikRepository = korisnikRepository;
             this.mapper = mapper;
-            this.linkGenerator = linkGenerator;
 
         }
 
