@@ -4,13 +4,6 @@
         <name>Parcela</name>
     </assembly>
     <members>
-        <member name="M:Parcela.Controllers.AuthenticationController.Authenticate(Parcela.Models.Principal)">
-            <summary>
-            Sluzi za autentifikaciju korisnika
-            </summary>
-            <param name="principal">Model sa podacima na osnovu kojih se vrsi autentifikacija</param>
-            <returns></returns>
-        </member>
         <member name="T:Parcela.Controllers.DeoParceleController">
             <summary>
             Sadrzi CRUD operacije za delove parcela
@@ -891,46 +884,6 @@
             ID kupca parcele
             </summary>
         </member>
-        <member name="T:Parcela.Entities.UserEntity">
-            <summary>
-            Predstavlja model korisnika
-            </summary>
-        </member>
-        <member name="P:Parcela.Entities.UserEntity.UserID">
-            <summary>
-            ID korisnika
-            </summary>
-        </member>
-        <member name="P:Parcela.Entities.UserEntity.FirstName">
-            <summary>
-            Ime korisnika
-            </summary>
-        </member>
-        <member name="P:Parcela.Entities.UserEntity.LastName">
-            <summary>
-            Prezime korinsika
-            </summary>
-        </member>
-        <member name="P:Parcela.Entities.UserEntity.UserName">
-            <summary>
-            Korisnicko ime
-            </summary>
-        </member>
-        <member name="P:Parcela.Entities.UserEntity.Email">
-            <summary>
-            Email korisnika
-            </summary>
-        </member>
-        <member name="P:Parcela.Entities.UserEntity.Password">
-            <summary>
-            Hash-ovana lozinka korinsika
-            </summary>
-        </member>
-        <member name="P:Parcela.Entities.UserEntity.Salt">
-            <summary>
-            Salt
-            </summary>
-        </member>
         <member name="T:Parcela.Entities.ZasticenaZonaEntity">
             <summary>
             Predstavlja model zasticene zone
@@ -1046,16 +999,6 @@
             ID parcele
             </summary>
         </member>
-        <member name="T:Parcela.Models.GatewayDto">
-            <summary>
-            DTO za Gateway
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.GatewayDto.Url">
-            <summary>
-            Url
-            </summary>
-        </member>
         <member name="T:Parcela.Models.KlasaDto">
             <summary>
             DTO za klasu
@@ -1139,6 +1082,11 @@
         <member name="P:Parcela.Models.KupacParceleDto.Naziv">
             <summary>
             Naziv kupca parcele
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KupacParceleDto.JedinstveniBroj">
+            <summary>
+            JMBG/PIB kupca parcele
             </summary>
         </member>
         <member name="P:Parcela.Models.KupacParceleDto.IsFizickoLice">
@@ -1626,21 +1574,6 @@
             ID kupca parcele
             </summary>
         </member>
-        <member name="T:Parcela.Models.Principal">
-            <summary>
-            Predstavlja model za autentifikaciju
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.Principal.Username">
-            <summary>
-            Korisnicko ime
-            </summary>
-        </member>
-        <member name="P:Parcela.Models.Principal.Password">
-            <summary>
-            Lozinka korisnika
-            </summary>
-        </member>
         <member name="T:Parcela.Models.UplataKupcaDto">
             <summary>
             DTO za uplatu kupca
@@ -1770,13 +1703,6 @@
             <summary>
             Konstruktor
             </summary>
-        </member>
-        <member name="M:Parcela.ServiceCals.IGatewayService.GetUrl(System.String)">
-            <summary>
-            Zahtev za gateway servis
-            </summary>
-            <param name="servis"></param>
-            <returns></returns>
         </member>
         <member name="M:Parcela.ServiceCals.IKatastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(System.Guid)">
             <summary>

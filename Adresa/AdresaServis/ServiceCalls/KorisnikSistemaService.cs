@@ -22,11 +22,11 @@ namespace AdresaServis.ServiceCalls
             using (HttpClient client = new HttpClient())
             {
                 Uri url = new Uri($"{ configuration["Services:KorisnikSistemaService"] }api/korisnik/authorize/{token}");
-                HttpResponseMessage response = client.GetAsync(url).Result;
 
+                HttpResponseMessage response = client.GetAsync(url).Result;
                 var responseContent = response.StatusCode;
 
-                return responseContent;
+                return await Task.FromResult(responseContent);
             }
         }
     }

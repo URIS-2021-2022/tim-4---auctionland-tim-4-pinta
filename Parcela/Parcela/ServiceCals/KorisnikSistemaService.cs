@@ -28,7 +28,7 @@ namespace Parcela.ServiceCals
 
                 var responseContent = response.StatusCode;
 
-                return responseContent;
+                return await Task.FromResult(responseContent);
             }
         }
     }

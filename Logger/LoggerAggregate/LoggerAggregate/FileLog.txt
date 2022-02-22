@@ -158,3 +158,4 @@
 2022-02-22 10:35:25.9380 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
 2022-02-22 10:37:42.0375 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
 2022-02-22 10:49:41.0037 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-22 12:26:29.2105 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa

@@ -317,7 +317,7 @@ namespace AdresaServis.Controllers
 
                 adresaRepository.SaveChanges();
                 AdresaDto adresaDto = mapper.Map<AdresaDto>(oldAdresa);
-                adresaDto.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(oldAdresa.DrzavaID)); ;
+                adresaDto.Drzava = mapper.Map<DrzavaDto>(drzavaRepository.GetDrzavaById(oldAdresa.DrzavaID));
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Ok(adresaDto);

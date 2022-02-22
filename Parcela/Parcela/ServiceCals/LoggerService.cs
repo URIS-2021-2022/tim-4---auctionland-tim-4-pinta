@@ -12,12 +12,10 @@ namespace Parcela.ServiceCals
     public class LoggerService : ILoggerService
     {
         private readonly IConfiguration configuration;
-        private readonly IGatewayService gatewayService;
 
-        public LoggerService(IConfiguration configuration, IGatewayService gatewayService)
+        public LoggerService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.gatewayService = gatewayService;
         }
 
         public void CreateLog(LogDto log)
@@ -29,7 +27,7 @@ namespace Parcela.ServiceCals
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(log));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                HttpResponseMessage response = client.PostAsync(url, content).Result;
+                _ = client.PostAsync(url, content).Result;
             }
         }
     }

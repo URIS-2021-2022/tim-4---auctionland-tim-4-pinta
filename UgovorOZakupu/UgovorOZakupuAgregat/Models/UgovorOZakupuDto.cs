@@ -16,13 +16,22 @@ namespace UgovorOZakupuAgregat.Models
         public Guid DokumentId { get; set; }
 
         /// <summary>
+        /// Odluka (dokument)
+        /// </summary>
+        public DokumentDto Dokument { get; set; }
+
+        /// <summary>
         /// ID tipa garancije
         /// </summary>
         public Guid TipId { get; set; }
-      
+        /// <summary>
+        /// Tip garancije
+        /// </summary>
+        public TipGarancijeDto TipGarancije { get; set; }
+
         /// <summary>
         /// Zavodni broj ugovora
-         /// </summary>
+        /// </summary>
         public string ZavodniBroj { get; set; }
 
         /// <summary>

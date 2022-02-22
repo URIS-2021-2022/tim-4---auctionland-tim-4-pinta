@@ -38,10 +38,8 @@ namespace Licnost.Data
         {
             komisija.KomisijaId = Guid.NewGuid();
             context.Komisije.Add(komisija);
-            Komisija k = GetKomisijaById(komisija.KomisijaId);
-            return k;
-            //var createdEntity = context.Add(komisija);
-            //return mapper.Map<Komisija>(createdEntity.Entity);
+            return komisija;
+          
         }
 
         public void UpdateKomisija(Komisija komisija)
