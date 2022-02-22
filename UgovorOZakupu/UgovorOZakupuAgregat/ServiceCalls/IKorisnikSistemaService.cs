@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
-using UgovorOZakupuAgregat.Models;
 
 namespace UgovorOZakupuAgregat.ServiceCalls
 {
-    public interface IGatewayService
+    public interface IKorisnikSistemaService
     {
         /// <summary>
-        /// Zahtev za gateway servis
+        /// Zahtev za korisnik servis
         /// </summary>
-        /// <param name="servis"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        Task<GatewayDto> GetUrl(string servis);
+        Task<HttpStatusCode> AuthorizeAsync(string token);
     }
 }
