@@ -16,9 +16,8 @@ namespace Licnost.Profiles
         {
             CreateMap<ClanKomisije, ClanKomisijeDto>();
             CreateMap<ClanKomisijeDto,ClanKomisije>();
-
+            CreateMap<ClanKomisijeCreateDto, ClanKomisije>();
             CreateMap<ClanKomisijeUpdateDto, ClanKomisije>();
-
             CreateMap<ClanKomisije, ClanKomisije>();
         }
     }

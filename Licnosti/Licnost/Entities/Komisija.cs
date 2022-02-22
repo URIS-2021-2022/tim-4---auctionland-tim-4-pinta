@@ -28,11 +28,6 @@ namespace Licnost.Entities
         /// Ličnost
         /// </summary>
         public LicnostEntity Licnost { get; set; }
-
-        /// <summary>
-        /// Clanovi komisije
-        /// </summary>
-        public List<ClanKomisije> ClanoviKomisije { get; set; }
     
     }
 }

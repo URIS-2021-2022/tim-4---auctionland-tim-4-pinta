@@ -88,6 +88,7 @@ namespace Licnost.Controllers
                 ClanKomisijeDto clanKomisijeDto = mapper.Map<ClanKomisijeDto>(c);
                 clanKomisijeDto.Komisija = mapper.Map<KomisijaDto>(komisijaRepository.GetKomisijaById(c.KomisijaId));
                 clanKomisijeDto.Licnost= mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(c.LicnostId));
+                clanKomisijeDto.Komisija.Licnost = mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(c.Komisija.LicnostId));
                 clanoviKomisijeDto.Add(clanKomisijeDto);
             }
             logDto.Level = "Info";
@@ -134,10 +135,12 @@ namespace Licnost.Controllers
             }
             ClanKomisijeDto clanDto = mapper.Map<ClanKomisijeDto>(clan);
             clanDto.Licnost = mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(clan.LicnostId));
+            clanDto.Komisija = mapper.Map<KomisijaDto>(komisijaRepository.GetKomisijaById(clan.KomisijaId));
+            clanDto.Komisija.Licnost = mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(clan.Komisija.LicnostId));
             logDto.Level = "Info";
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<ClanKomisijeDto>(clan));
+            return Ok(clanDto);
         }
 
 
@@ -162,7 +165,7 @@ namespace Licnost.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Consumes("application/json")]
         [HttpPost]
-        public ActionResult<ClanKomisijeDto> CreateClanKomisije([FromBody] ClanKomisijeDto clan)
+        public ActionResult<ClanKomisijeDto> CreateClanKomisije([FromBody] ClanKomisijeCreateDto clan)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -186,9 +189,13 @@ namespace Licnost.Controllers
                 ClanKomisije clanCreate = clanRepository.CreateClanKomisije(clanEntity);
                 clanRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetClanKomisije", "ClanKomisije", new { clanId = clanCreate.ClanKomisijeId});
+                ClanKomisijeDto clanDto = mapper.Map<ClanKomisijeDto>(clanCreate);
+                clanDto.Licnost = mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(clan.LicnostId));
+                clanDto.Komisija = mapper.Map<KomisijaDto>(komisijaRepository.GetKomisijaById(clan.KomisijaId));
+                clanDto.Komisija.Licnost = mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(clanCreate.Komisija.LicnostId));
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<ClanKomisijeDto>(clanCreate));
+                return Created(location, clanDto);
             }
             catch
             {
@@ -297,9 +304,13 @@ namespace Licnost.Controllers
                 ClanKomisije clanEntity = mapper.Map<ClanKomisije>(clan);
                 mapper.Map(clanEntity, stariClan);
                 clanRepository.SaveChanges();
+                ClanKomisijeDto clanDto = mapper.Map<ClanKomisijeDto>(clanEntity);
+                clanDto.Licnost = mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(clan.LicnostId));
+                clanDto.Komisija = mapper.Map<KomisijaDto>(komisijaRepository.GetKomisijaById(clan.KomisijaId));
+                clanDto.Komisija.Licnost = mapper.Map<LicnostDto>(licnostRepository.GetLicnostById(clanDto.Komisija.LicnostId));
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<ClanKomisijeDto>(clanEntity));
+                return Ok(clanDto);
             }
             catch (Exception)
             {
