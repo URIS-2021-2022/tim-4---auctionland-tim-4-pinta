@@ -126,6 +126,7 @@ namespace JavnoNadmetanjeAgregat
             services.AddScoped<IAdresaService, AdresaService>();
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<ILoggerService, LoggerService>();
+            services.AddScoped<IKorisnikSistemaService, KorisnikSistemaService>();
 
             services.AddSwaggerGen(setupAction =>
             {

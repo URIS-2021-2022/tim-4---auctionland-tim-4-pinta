@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Licnost.Migrations
 {
     [DbContext(typeof(LicnostContext))]
-    [Migration("20220207132954_InitialCreate")]
+    [Migration("20220222161411_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -112,7 +112,7 @@ namespace Licnost.Migrations
             modelBuilder.Entity("Licnost.Entities.ClanKomisije", b =>
                 {
                     b.HasOne("Licnost.Entities.Komisija", "Komisija")
-                        .WithMany()
+                        .WithMany("ClanoviKomisije")
                         .HasForeignKey("KomisijaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -137,6 +137,11 @@ namespace Licnost.Migrations
                         .IsRequired();
 
                     b.Navigation("Licnost");
+                });
+
+            modelBuilder.Entity("Licnost.Entities.Komisija", b =>
+                {
+                    b.Navigation("ClanoviKomisije");
                 });
 #pragma warning restore 612, 618
         }

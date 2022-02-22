@@ -55,7 +55,7 @@ namespace Licnost.Migrations
                         column: x => x.KomisijaId,
                         principalTable: "Komisije",
                         principalColumn: "KomisijaId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ClanoviKomisije_Licnosti_LicnostId",
                         column: x => x.LicnostId,
