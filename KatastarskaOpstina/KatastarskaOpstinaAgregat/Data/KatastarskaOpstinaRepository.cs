@@ -25,17 +25,17 @@ namespace KatastarskaOpstinaAgregat.Data
         }
 
 
-        public KatastarskaOpstinaEntity CreateKatastarskaOpstina(KatastarskaOpstinaEntity KatastarskaOpstina)
+        public KatastarskaOpstinaEntity CreateKatastarskaOpstina(KatastarskaOpstinaEntity katastarskaOpstina)
         {
-            KatastarskaOpstina.KatastarskaOpstinaID = Guid.NewGuid();
-            context.KatastarskeOpstine.Add(KatastarskaOpstina);
-            KatastarskaOpstinaEntity j = GetKatastarskaOpstinaById(KatastarskaOpstina.KatastarskaOpstinaID);
-            return j;
+            katastarskaOpstina.KatastarskaOpstinaID = Guid.NewGuid();
+            context.KatastarskeOpstine.Add(katastarskaOpstina);
+            KatastarskaOpstinaEntity j = GetKatastarskaOpstinaById(katastarskaOpstina.KatastarskaOpstinaID);
+            return katastarskaOpstina;
         }
 
-        public void DeleteKatastarskaOpstina(Guid KatastarskaOpstinaID)
+        public void DeleteKatastarskaOpstina(Guid katastarskaOpstinaID)
         {
-            context.KatastarskeOpstine.Remove(context.KatastarskeOpstine.FirstOrDefault(j => j.KatastarskaOpstinaID == KatastarskaOpstinaID));
+            context.KatastarskeOpstine.Remove(context.KatastarskeOpstine.FirstOrDefault(j => j.KatastarskaOpstinaID == katastarskaOpstinaID));
         }
 
         public KatastarskaOpstinaEntity GetKatastarskaOpstinaById(Guid KatastarskaOpstinaID)
@@ -48,7 +48,7 @@ namespace KatastarskaOpstinaAgregat.Data
             return (from j in context.KatastarskeOpstine select j).ToList();
         }
 
-        public void UpdateKatastarskaOpstina(KatastarskaOpstinaEntity KatastarskaOpstina)
+        public void UpdateKatastarskaOpstina(KatastarskaOpstinaEntity katastarskaOpstina)
         {
             throw new NotImplementedException();
         }
