@@ -22,7 +22,7 @@ namespace KatastarskaOpstinaAgregat.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:GatewayService"];
+               
                 Uri url = new Uri($"{ configuration["Services:GatewayService"] }{servis}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;

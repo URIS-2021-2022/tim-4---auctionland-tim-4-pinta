@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/korisnik/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -24,7 +24,7 @@
       },
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
-
+    /*
     {
       "DownstreamPathTemplate": "/api/korisnik",
       "DownstreamScheme": "http",
@@ -50,9 +50,9 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
+    */
 
-
-
+    /*
     {
       "DownstreamPathTemplate": "/api/javnaNadmetanja",
       "DownstreamScheme": "http",
@@ -78,9 +78,9 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
-
+    */
     {
-      "DownstreamPathTemplate": "/api/javnaNadmetanja/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -107,7 +107,7 @@
 
 
 
-
+    /*
     {
       "DownstreamPathTemplate": "/api/parcele",
       "DownstreamScheme": "http",
@@ -133,36 +133,10 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
+    */
 
     {
-      "DownstreamPathTemplate": "/api/logger",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44202
-        }
-      ],
-      "UpstreamPathTemplate": "/logger",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
-      "AuthenticationOptions": {
-
-        "AllowedScopes": []
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "5s",
-        "PeriodTimespan": 1,
-        "Limit": 1
-      },
-      "FileCacheOptions": { "TtlSeconds": 30 }
-    },
-
-
-
-    {
-      "DownstreamPathTemplate": "/api/parcele/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -188,7 +162,7 @@
 
 
 
-
+    /*
 
     {
       "DownstreamPathTemplate": "/api/katastarskeOpstine",
@@ -214,11 +188,11 @@
       },
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
-
+    */
 
 
     {
-      "DownstreamPathTemplate": "/api/katastarskeOpstine/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -245,7 +219,7 @@
 
 
 
-
+    /*
 
     {
       "DownstreamPathTemplate": "/api/zalba",
@@ -272,10 +246,10 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
-
+    */
 
     {
-      "DownstreamPathTemplate": "/api/zalba/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -304,7 +278,7 @@
 
 
 
-
+    /*
     {
       "DownstreamPathTemplate": "/api/uplate",
       "DownstreamScheme": "http",
@@ -330,10 +304,10 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
-
+    */
 
     {
-      "DownstreamPathTemplate": "/api/uplate/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -365,34 +339,7 @@
 
 
     {
-      "DownstreamPathTemplate": "/api/adrese",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44301
-        }
-      ],
-      "UpstreamPathTemplate": "/adresa",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
-      "AuthenticationOptions": {
-
-        "AllowedScopes": []
-      },
-      "RateLimitOptions": {
-        "ClientWhitelist": [],
-        "EnableRateLimiting": true,
-        "Period": "5s",
-        "PeriodTimespan": 1,
-        "Limit": 1
-      },
-      "FileCacheOptions": { "TtlSeconds": 30 }
-    },
-
-
-
-    {
-      "DownstreamPathTemplate": "/api/adrese/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -417,9 +364,36 @@
     },
 
 
+    /*
+    {
+      "DownstreamPathTemplate": "/api/adrese/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44301
+        }
+      ],
+      "UpstreamPathTemplate": "/adresa/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options", "Head" ],
+      "AuthenticationOptions": {
+
+        "AllowedScopes": []
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "5s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "FileCacheOptions": { "TtlSeconds": 30 }
+    },
+  */
 
 
 
+    /*
 
 
     {
@@ -447,10 +421,10 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
-
+    */
 
     {
-      "DownstreamPathTemplate": "/api/licnost/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -479,7 +453,7 @@
 
 
 
-
+    /*
     {
       "DownstreamPathTemplate": "/api/ugovor",
       "DownstreamScheme": "http",
@@ -506,9 +480,9 @@
     },
 
 
-
+  */
     {
-      "DownstreamPathTemplate": "/api/ugovor/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -538,7 +512,7 @@
 
 
 
-
+    /*
     {
       "DownstreamPathTemplate": "/api/licitacija",
       "DownstreamScheme": "http",
@@ -565,9 +539,9 @@
     },
 
 
-
+  */
     {
-      "DownstreamPathTemplate": "/api/licitacija/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -596,7 +570,7 @@
 
 
 
-
+    /*
     {
       "DownstreamPathTemplate": "/api/kupac",
       "DownstreamScheme": "http",
@@ -622,10 +596,10 @@
       "FileCacheOptions": { "TtlSeconds": 30 }
     },
 
-
+  */
 
     {
-      "DownstreamPathTemplate": "/api/kupac/{everything}",
+      "DownstreamPathTemplate": "/api/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
