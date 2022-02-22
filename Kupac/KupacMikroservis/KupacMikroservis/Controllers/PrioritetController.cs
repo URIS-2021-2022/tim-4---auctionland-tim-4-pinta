@@ -9,6 +9,7 @@ using KupacMikroservis.Data;
 using KupacMikroservis.Models;
 using AutoMapper;
 using KupacMikroservis.ServiceCalls;
+using System.Net;
 
 namespace KupacMikroservis.Controllers
 {
@@ -27,8 +28,10 @@ namespace KupacMikroservis.Controllers
         private readonly ILogger logger;
         private LogDTO logDTO;
 
+        private readonly IKorisnikSistemaService korisnikSistemaService;
 
-        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator, IMapper mapper,ILogger logger)
+
+        public PrioritetController(IPrioritetRepository prioritetRepository, LinkGenerator linkGenerator, IMapper mapper, ILogger logger, IKorisnikSistemaService korisnikSistemaService)
         {
             this.prioritetRepository = prioritetRepository;
             this.linkGenerator = linkGenerator;
@@ -36,6 +39,7 @@ namespace KupacMikroservis.Controllers
             this.logger = logger;
             logDTO = new LogDTO();
             logDTO.NameOfTheService = "Prioritet";
+            this.korisnikSistemaService = korisnikSistemaService;
         }
 
 
@@ -46,8 +50,25 @@ namespace KupacMikroservis.Controllers
         /// <response code = "200">Vraca listu prioriteta</response>
         /// <response code = "404">Nije pronadjen nijedan prioritet</response>
         [HttpGet]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<PrioritetDTO>> GetPrioriteti()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje svih prioriteta";
 
@@ -71,8 +92,23 @@ namespace KupacMikroservis.Controllers
         /// <response code = "200">Vraca trazeni prioritet</response>
         /// <response code = "404">Trazeni prioritet nije pronadjen</response>
         [HttpGet("{PrioritetId}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<PrioritetDTO> GetPrioritet(Guid PrioritetId)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje prioriteta po ID";
 
@@ -97,8 +133,24 @@ namespace KupacMikroservis.Controllers
         /// <response code = "201">Vraca kreirani prioritet</response>
         /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)   
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "CREATE";
             logDTO.Message = "Dodavanje novog prioriteta";
 
@@ -133,8 +185,24 @@ namespace KupacMikroservis.Controllers
         /// <response code="404">Nije pronadjen prioritet</response>
         /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{PrioritetId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeletePrioritet(Guid prioritetID)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "DELETE";
             logDTO.Message = "Brisanje prioriteta";
 
@@ -170,8 +238,25 @@ namespace KupacMikroservis.Controllers
         /// <response code="400">Prioritet nije pronadjen</response>
         /// <response code="500">Doslo je do greske</response>
         [HttpPut("{PrioritetId}")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "PUT";
             logDTO.Message = "Azuriranje prioriteta";
 

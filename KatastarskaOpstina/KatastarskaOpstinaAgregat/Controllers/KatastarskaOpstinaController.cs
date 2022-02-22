@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KatastarskaOpstinaAgregat.ServiceCalls;
+using System.Net;
 
 namespace KatastarskaOpstinaAgregat.Controllers
 {
@@ -23,15 +24,20 @@ namespace KatastarskaOpstinaAgregat.Controllers
     public class KatastarskaOpstinaController : ControllerBase
     {
         private readonly IKatastarskaOpstinaRepository katastarskaOpstinaRepository;
+        private readonly IGatewayService gatewayService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
+        private readonly IKorisnikService korisnikSistemaService;
+       
 
-        public KatastarskaOpstinaController(IKatastarskaOpstinaRepository katastarskaOpstinaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public KatastarskaOpstinaController(IKatastarskaOpstinaRepository katastarskaOpstinaRepository, IGatewayService gatewayService, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IKorisnikService korisnikSistemaService)
         {
             this.katastarskaOpstinaRepository = katastarskaOpstinaRepository;
             this.linkGenerator = linkGenerator;
+            this.gatewayService = gatewayService;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.mapper = mapper;
             this.loggerService = loggerService;
             logDto = new LogDto();
@@ -49,8 +55,22 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<KatastarskaOpstinaDto>> GetSluzbeneListove()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih opstina";
             List<KatastarskaOpstinaEntity> katastarskaOpstina = katastarskaOpstinaRepository.GetKatastarskaOpstina();
@@ -75,8 +95,22 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [HttpGet("{katastarskaOpstinaID}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KatastarskaOpstinaDto> GetKatastarskaOpstina(Guid katastarskaOpstinaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje opstine po ID-ju";
             KatastarskaOpstinaEntity katastarskaOpstina = katastarskaOpstinaRepository.GetKatastarskaOpstinaById(katastarskaOpstinaID);
@@ -109,8 +143,22 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KatastarskaOpstinaDto> CreateKatastarskaOpstina([FromBody] KatastarskaOpstinaDto katastarskaOpstina)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove opstine";
 
@@ -145,8 +193,22 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult DeleteKatastarskaOpstina(Guid katastarskaOpstinaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje opstine";
 
@@ -185,27 +247,44 @@ namespace KatastarskaOpstinaAgregat.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KatastarskaOpstinaDto> UpdateKatastarskaOpstina(KatastarskaOpstinaEntity katastarskaOpstina)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public ActionResult<KatastarskaOpstinaDto> UpdateKatastarskaOpstina(KatastarskaOpstinaUpdateDto katastarskaOpstina)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
-            logDto.Message = "Modifikovanje opstine";
+            logDto.Message = "Modifikovanje katastarske opstine ";
+
             try
             {
                 var oldKatastarskaOpstina = katastarskaOpstinaRepository.GetKatastarskaOpstinaById(katastarskaOpstina.KatastarskaOpstinaID);
-                if (oldKatastarskaOpstina == null)
+                if (katastarskaOpstinaRepository.GetKatastarskaOpstinaById(katastarskaOpstina.KatastarskaOpstinaID) == null)
                 {
                     logDto.Level = "Warn";
                     loggerService.CreateLog(logDto);
                     return NotFound();
                 }
+
                 KatastarskaOpstinaEntity katastarskaOpstinaEntity = mapper.Map<KatastarskaOpstinaEntity>(katastarskaOpstina);
-                katastarskaOpstinaRepository.SaveChanges();
                 mapper.Map(katastarskaOpstinaEntity, oldKatastarskaOpstina); //Update objekta koji treba da sačuvamo u bazi                
 
-              
+                katastarskaOpstinaRepository.SaveChanges(); //Perzistiramo promene
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
+
                 return Ok(mapper.Map<KatastarskaOpstinaDto>(katastarskaOpstinaEntity));
+
             }
             catch (Exception)
             {

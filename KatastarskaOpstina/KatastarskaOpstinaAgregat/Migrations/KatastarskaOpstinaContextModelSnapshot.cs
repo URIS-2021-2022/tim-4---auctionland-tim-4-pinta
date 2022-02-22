@@ -26,7 +26,9 @@ namespace KatastarskaOpstinaAgregat.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("NazivKatastarskeOpstine")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("KatastarskaOpstinaID");
 

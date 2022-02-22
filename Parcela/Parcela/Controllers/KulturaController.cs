@@ -24,19 +24,15 @@ namespace Parcela.Controllers
     public class KulturaController : ControllerBase
     {
         private readonly IKulturaRepository kulturaRepository;
-        private readonly IGatewayService gatewayService;
         private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-  
-
-        public KulturaController(IKulturaRepository kulturaRepository, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
+        public KulturaController(IKulturaRepository kulturaRepository, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService, LinkGenerator linkGenerator, IMapper mapper)
         {
             this.kulturaRepository = kulturaRepository;
-            this.gatewayService = gatewayService;
             this.korisnikSistemaService = korisnikSistemaService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
@@ -51,6 +47,7 @@ namespace Parcela.Controllers
         /// <returns>Lista kultura</returns>
         /// <response code = "200">Vraca listu kultura</response>
         /// <response code = "404">Nije pronadjena nijedna kultura</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         [HttpGet]
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -60,7 +57,7 @@ namespace Parcela.Controllers
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
-            if(split[1] != "administrator")
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
             {
                 return Unauthorized();
             }
@@ -71,7 +68,6 @@ namespace Parcela.Controllers
                 return Unauthorized();
             }
        
-
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih kultura";
 
@@ -79,11 +75,11 @@ namespace Parcela.Controllers
             if (kulture == null || kulture.Count == 0)
             {
                 logDto.Level = "Warn";
-                loggerService.CreateLog(logDto);
+                //loggerService.CreateLog(logDto);
                 return NoContent();
             }
             logDto.Level = "Info";
-            loggerService.CreateLog(logDto);
+            //loggerService.CreateLog(logDto);
             return Ok(mapper.Map<List<KulturaDto>>(kulture));
         }
 
@@ -93,12 +89,28 @@ namespace Parcela.Controllers
         /// <param name="kulturaID">ID kulture</param>
         /// <returns>Trazena kultura</returns>
         /// <response code = "200">Vraca trazenu kulturu</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         /// <response code = "404">Trazena kultura nije pronadjena</response>
         [HttpGet("{kulturaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KulturaDto> GetKultura(Guid kulturaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje kulture po ID-ju";
 
@@ -123,17 +135,33 @@ namespace Parcela.Controllers
         /// Primer zahteva za kreiranje nove kulture \
         /// POST /api/kulture \
         /// { \
-        /// "kulturaNaziv": "Kultura1", \
+        /// "kulturaNaziv": "Njive", \
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu kulturu</response>
+        /// <response code = "401">Korisnik nije autorizovan</response>
         /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja kulture</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KulturaDto> CreateKultura([FromBody] KulturaDto kultura)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove kulture";
 
@@ -161,14 +189,30 @@ namespace Parcela.Controllers
         /// <param name="kulturaID">ID kulture</param>
         /// <returns>Status 204 (NoContent)</returns>
         /// <response code="204">Kultura uspesno obrisana</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="404">Nije pronadjena kultura za brisanje</response>
         /// <response code="500">Doslo je do greske na serveru prilikom brisanja kulture</response>
         [HttpDelete("{kulturaID}")]
+        [HttpHead]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteKultura(Guid kulturaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje kulture";
 
@@ -202,14 +246,30 @@ namespace Parcela.Controllers
         /// <returns>Potvrda o modifikovanoj kulturi</returns>
         /// <response code="200">Vraca azuriranu kulturu</response>
         /// <response code="400">Kultura koja se azurira nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja kultura</response>
         [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KulturaDto> UpdateKultura(KulturaUpdateDto kultura)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje kulture";
 

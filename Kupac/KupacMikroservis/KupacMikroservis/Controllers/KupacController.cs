@@ -9,6 +9,7 @@ using KupacMikroservis.Data;
 using KupacMikroservis.Models;
 using AutoMapper;
 using KupacMikroservis.ServiceCalls;
+using System.Net;
 
 namespace KupacMikroservis.Controllers
 {
@@ -17,6 +18,7 @@ namespace KupacMikroservis.Controllers
     /// </summary>
     [ApiController]
     [Route("api/kupac")]
+    [Produces("application/json", "application/xml")]
     public class KupacController : ControllerBase
     {
         // private readonly IKupacRepository kupacRepository;
@@ -30,8 +32,10 @@ namespace KupacMikroservis.Controllers
 
         private readonly ILogger logger;
         private LogDTO logDTO;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
 
-        public KupacController(IPravnoLiceRepository pLiceRepository, IFizickoLiceRepository fLiceRepository, IAdresaService adresaService, IUplataService uplataService, LinkGenerator linkGenerator, IMapper mapper, ILogger logger)
+
+        public KupacController(IPravnoLiceRepository pLiceRepository, IFizickoLiceRepository fLiceRepository, IAdresaService adresaService, IUplataService uplataService, LinkGenerator linkGenerator, IMapper mapper, ILogger logger, IKorisnikSistemaService korisnikSistemaService)
         {
             this.pLiceRepository = pLiceRepository;
             this.fLiceRepository = fLiceRepository;
@@ -42,6 +46,7 @@ namespace KupacMikroservis.Controllers
             this.logger = logger;
             logDTO = new LogDTO();
             logDTO.NameOfTheService = "Kupac";
+            this.korisnikSistemaService = korisnikSistemaService;
         }
 
 
@@ -52,9 +57,24 @@ namespace KupacMikroservis.Controllers
         /// <response code = "200">Vraca listu kupaca</response>
         /// <response code = "404">Nije pronadjen nijedan kupac</response>
         [HttpGet]
-        [Produces("application/json", "application/xml")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<KupacDTO>> GetKupci()
         {
+        /*    string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja" && split[1] != "menadzer")
+            {
+                return Unauthorized();
+            }*/
+
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje svih kupaca";
 
@@ -103,8 +123,23 @@ namespace KupacMikroservis.Controllers
         /// <response code = "200">Vraca trazenog kupca</response>
         /// <response code = "404">Trazeni kupac nije pronadjen</response>
         [HttpGet("{KupacId}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KupacDTO> GetKupac(Guid kupacID)
         {
+         /*   string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja" && split[1] != "menadzer")
+            {
+                return Unauthorized();
+            } */
+
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje kupca po ID";
 
@@ -126,10 +161,10 @@ namespace KupacMikroservis.Controllers
             }
 
             AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(kupacModel.AdresaID).Result;
-          //  UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
+            UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(kupacModel.UplataID).Result;
             KupacDTO kupacDto = mapper.Map<KupacDTO>(kupacModel);
             kupacDto.Adresa = adresa;
-          //  kupacDto.Uplata = uplata;
+            kupacDto.Uplata = uplata;
 
             logDTO.Level = "Info";
             logger.Log(logDTO);
@@ -144,8 +179,25 @@ namespace KupacMikroservis.Controllers
         /// <response code = "201">Vraca kreiranog kupca</response>
         /// <response code = "500">Doslo je do greske</response>
         [HttpPost]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)   
         {
+
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "POST";
             logDTO.Message = "Dodavanje novog kupca";
 
@@ -195,8 +247,23 @@ namespace KupacMikroservis.Controllers
         /// <response code="404">Nije pronadjen kupac</response>
         /// <response code="500">Doslo je do greske</response>
         [HttpDelete("{KupacId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteKupac(Guid kupacID)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "DELETE";
             logDTO.Message = "Brisanje kupca";
 
@@ -245,8 +312,25 @@ namespace KupacMikroservis.Controllers
         /// <response code="400">Kupac nije pronadjen</response>
         /// <response code="500">Doslo je do greske</response>
         [HttpPut("{KupacId}")]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<KupacDTO> UpdateKupac([FromBody]KupacUpdateDTO kupac)
         {
+            string token = Request.Headers["token"].ToString();
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
+            string[] split = token.Split('#');
+            if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja")
+            {
+                return Unauthorized();
+            }
+
             logDTO.HttpMethod = "PUT";
             logDTO.Message = "Azuriranje kupca";
 
@@ -348,6 +432,10 @@ namespace KupacMikroservis.Controllers
         /// Vraca HTTP opcije
         /// </summary>
         [HttpOptions]
+        [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetKupacOptions()
         {
             Response.Headers.Add("Allow", "GET, POST, PUT, DELETE");

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using AutoMapper;
 using Parcela.Entities;
 using Parcela.ServiceCals;
+using System.Net;
 
 namespace Parcela.Controllers
 {
@@ -22,20 +23,34 @@ namespace Parcela.Controllers
     public class ParcelaController : ControllerBase
     {
         private readonly IParcelaRepository parcelaRepository;
+        private readonly IKlasaRepository klasaRepository;
+        private readonly IKulturaRepository kulturaRepository;
+        private readonly IOblikSvojineRepository oblikSvojineRepository;
+        private readonly IObradivostRepository obradivostRepository;
+        private readonly IOdvodnjavanjeRepository odvodnjavanjeRepository;
+        private readonly IZasticenaZonaRepository zasticenaZonaRepository;
         private readonly IKatastarskaOpstinaService katastarskaOpstinaService;
         private readonly IKupacService kupacService;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public ParcelaController(IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, ILoggerService loggerService)
+        public ParcelaController(IParcelaRepository parcelaRepository, IKlasaRepository klasaRepository, IKulturaRepository kulturaRepository, IOblikSvojineRepository oblikSvojineRepository, IObradivostRepository obradivostRepository, IOdvodnjavanjeRepository odvodnjavanjeRepository, IZasticenaZonaRepository zasticenaZonaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, ILoggerService loggerService)
         {
             this.parcelaRepository = parcelaRepository;
+            this.klasaRepository = klasaRepository;
+            this.kulturaRepository = kulturaRepository;
+            this.oblikSvojineRepository = oblikSvojineRepository;
+            this.obradivostRepository = obradivostRepository;
+            this.odvodnjavanjeRepository = odvodnjavanjeRepository;
+            this.zasticenaZonaRepository = zasticenaZonaRepository;
             this.katastarskaOpstinaService = katastarskaOpstinaService;
             this.kupacService = kupacService;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.loggerService = loggerService;
             logDto = new LogDto();
             logDto.NameOfTheService = "Parcela";
@@ -46,13 +61,28 @@ namespace Parcela.Controllers
         /// </summary>
         /// <returns>Lista parcela</returns>
         /// <response code = "200">Vraca listu parcela</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Nije pronadjena nijedna parcela</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<ParcelaDto>> GetParcele()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih parcela";
 
@@ -63,16 +93,24 @@ namespace Parcela.Controllers
                 loggerService.CreateLog(logDto);
                 return NoContent();
             }
-            List<ParcelaDto> parceleDto = mapper.Map<List<ParcelaDto>>(parcele);
-            foreach(ParcelaDto p in parceleDto)
+            List<ParcelaDto> parceleDto = new List<ParcelaDto>();
+            foreach(ParcelaEntity p in parcele)
             {
-                //p.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
-                //p.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
+                ParcelaDto parcelaDto = mapper.Map<ParcelaDto>(p);
+                parcelaDto.Klasa = mapper.Map<KlasaDto>(klasaRepository.GetKlasaById(p.KlasaID));
+                parcelaDto.Kultura = mapper.Map<KulturaDto>(kulturaRepository.GetKulturaById(p.KulturaID));
+                parcelaDto.OblikSvojine = mapper.Map<OblikSvojineDto>(oblikSvojineRepository.GetOblikSvojineById(p.OblikSvojineID));
+                parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(p.ObradivostID));
+                parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(p.OdvodnjavanjeID));
+                parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(p.ZasticenaZonaID));
+                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
+                parceleDto.Add(parcelaDto);
             }
+        
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(parceleDto);
-            //return Ok(mapper.Map<List<ParcelaDto>>(parcele));
         }
 
         /// <summary>
@@ -81,12 +119,28 @@ namespace Parcela.Controllers
         /// <param name="parcelaID">ID parcele</param>
         /// <returns>Trazena parcela</returns>
         /// <response code = "200">Vraca trazenu parcelu</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Trazena parcela nije pronadjena</response>
         [HttpGet("{parcelaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ParcelaDto> GetParcela(Guid parcelaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje parcele po ID-ju";
 
@@ -98,12 +152,17 @@ namespace Parcela.Controllers
                 return NotFound();
             }
             ParcelaDto parcelaDto = mapper.Map<ParcelaDto>(parcela);
+            parcelaDto.Klasa = mapper.Map<KlasaDto>(klasaRepository.GetKlasaById(parcela.KlasaID));
+            parcelaDto.Kultura = mapper.Map<KulturaDto>(kulturaRepository.GetKulturaById(parcela.KulturaID));
+            parcelaDto.OblikSvojine = mapper.Map<OblikSvojineDto>(oblikSvojineRepository.GetOblikSvojineById(parcela.OblikSvojineID));
+            parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(parcela.ObradivostID));
+            parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(parcela.OdvodnjavanjeID));
+            parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(parcela.ZasticenaZonaID));
             parcelaDto.Kupac = kupacService.GetKupacByIdAsync(parcela.KupacID).Result;
-            parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(parcelaDto.KatastarskaOpstinaID).Result;
+            parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(parcela.KatastarskaOpstinaID).Result;
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(parcelaDto);
-            //return Ok(mapper.Map<ParcelaDto>(parcela));
         }
 
         /// <summary>
@@ -118,11 +177,11 @@ namespace Parcela.Controllers
         /// "povrsina": 3000, \
         /// "brojParcele": "333", \
         /// "brojListaNepokretnosti": "333", \
-        /// "kulturaStvarnoStanje": "Kukuruz", \
-        /// "klasaStvarnoStanje": "Klasa1", \
-        /// "obradivostStvarnoStanje": "Obradivost1", \
-        /// "zasticenaZonaStvarnoStanje": "ZasticenaZona1", \
-        /// "odvodnjavanjeStvarnoStanje": "Odvodnjavanje1" \
+        /// "kulturaStvarnoStanje": "Njive", \
+        /// "klasaStvarnoStanje": "II", \
+        /// "obradivostStvarnoStanje": "Obradivo", \
+        /// "zasticenaZonaStvarnoStanje": 1, \
+        /// "odvodnjavanjeStvarnoStanje": "Podzemno" \
         /// "kulturaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
         /// "klasaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
         /// "obradivostID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
@@ -133,13 +192,29 @@ namespace Parcela.Controllers
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu parcelu</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja parcele</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ParcelaDto> CreateParcela([FromBody] ParcelaCreateDto parcela)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove parcele";
 
@@ -149,9 +224,18 @@ namespace Parcela.Controllers
                 ParcelaEntity p = parcelaRepository.CreateParcela(par);
                 parcelaRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetParcela", "Parcela", new { parcelaID = p.ParcelaID });
+                ParcelaDto parcelaDto = mapper.Map<ParcelaDto>(p);
+                parcelaDto.Klasa = mapper.Map<KlasaDto>(klasaRepository.GetKlasaById(p.KlasaID));
+                parcelaDto.Kultura = mapper.Map<KulturaDto>(kulturaRepository.GetKulturaById(p.KulturaID));
+                parcelaDto.OblikSvojine = mapper.Map<OblikSvojineDto>(oblikSvojineRepository.GetOblikSvojineById(p.OblikSvojineID));
+                parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(p.ObradivostID));
+                parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(p.OdvodnjavanjeID));
+                parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(p.ZasticenaZonaID));
+                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<ParcelaDto>(p));
+                return Created(location, parcelaDto);
             }
             catch
             {
@@ -167,14 +251,30 @@ namespace Parcela.Controllers
         /// <param name="parcelaID">ID parcele</param>
         /// <returns>Status 204 (NoContent)</returns>
         /// <response code="204">Parcela uspesno obrisana</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="404">Nije pronadjena parcela za brisanje</response>
         /// <response code="500">Doslo je do greske na serveru prilikom brisanja parcele</response>
         [HttpDelete("{parcelaID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteParcela(Guid parcelaID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje parcele";
 
@@ -208,14 +308,30 @@ namespace Parcela.Controllers
         /// <returns>Potvrdu o modifikovanoj parceli</returns>
         /// <response code="200">Vraca azuriranu parcelu</response>
         /// <response code="400">Parcela koja se azurira nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja parcele</response>
         [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ParcelaDto> UpdateParcela(ParcelaUpdateDto parcela)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikacija parcele";
 
@@ -247,9 +363,18 @@ namespace Parcela.Controllers
                 oldParcela.KupacID = parcelaEntity.KupacID;
 
                 parcelaRepository.SaveChanges();
+                ParcelaDto parcelaDto = mapper.Map<ParcelaDto>(oldParcela);
+                parcelaDto.Klasa = mapper.Map<KlasaDto>(klasaRepository.GetKlasaById(oldParcela.KlasaID));
+                parcelaDto.Kultura = mapper.Map<KulturaDto>(kulturaRepository.GetKulturaById(oldParcela.KulturaID));
+                parcelaDto.OblikSvojine = mapper.Map<OblikSvojineDto>(oblikSvojineRepository.GetOblikSvojineById(oldParcela.OblikSvojineID));
+                parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(oldParcela.ObradivostID));
+                parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(oldParcela.OdvodnjavanjeID));
+                parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(oldParcela.ZasticenaZonaID));
+                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(oldParcela.KupacID).Result;
+                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(oldParcela.KatastarskaOpstinaID).Result;
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<ParcelaDto>(oldParcela));
+                return Ok(parcelaDto);
             }
             catch (Exception)
             {

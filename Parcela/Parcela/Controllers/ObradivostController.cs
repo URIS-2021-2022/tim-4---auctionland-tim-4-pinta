@@ -9,6 +9,7 @@ using Parcela.ServiceCals;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Parcela.Controllers
@@ -24,14 +25,16 @@ namespace Parcela.Controllers
         private readonly IObradivostRepository obradivostRepository;
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
+        private readonly IKorisnikSistemaService korisnikSistemaService;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public ObradivostController(IObradivostRepository obradivostRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService)
+        public ObradivostController(IObradivostRepository obradivostRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService)
         {
             this.obradivostRepository = obradivostRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
+            this.korisnikSistemaService = korisnikSistemaService;
             this.loggerService = loggerService;
             logDto = new LogDto();
             logDto.NameOfTheService = "Parcela";
@@ -42,13 +45,28 @@ namespace Parcela.Controllers
         /// </summary>
         /// <returns>Lista obradivosti</returns>
         /// <response code = "200">Vraca listu obradivosti</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Nije pronadjena nijedna obradivost</response>
         [HttpGet]
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<ObradivostDto>> GetObradivosti()
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih obradivosti";
 
@@ -70,12 +88,28 @@ namespace Parcela.Controllers
         /// <param name="obradivostID">ID obradivosti</param>
         /// <returns>Trazena obradivost</returns>
         /// <response code = "200">Vraca trazenu obradivost</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "404">Trazena obradivost nije pronadjena</response>
         [HttpGet("{obradivostID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ObradivostDto> GetObradivost(Guid obradivostID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje obradivosti po ID-ju";
 
@@ -100,17 +134,33 @@ namespace Parcela.Controllers
         /// Primer zahteva za kreiranje nove obradivosti \
         /// POST /api/obradivosti \
         /// { \
-        /// "obradivostNaziv": "Obradivost1", \
+        /// "obradivostNaziv": "Obradivo", \
         /// } 
         /// </remarks>
         /// <response code = "201">Vraca kreiranu obradivost</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code = "500">Doslo je do greske na serveru prilikom kreiranja obradivosti</response>
         [HttpPost]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ObradivostDto> CreateObradivost([FromBody] ObradivostDto obradivost)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "POST";
             logDto.Message = "Dodavanje nove obradivosti";
 
@@ -138,14 +188,30 @@ namespace Parcela.Controllers
         /// <param name="obradivostID">ID obradivosti</param>
         /// <returns>Status 204 (NoContent)</returns>
         /// <response code="204">Obradivost uspesno obrisana</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="404">Nije pronadjena obradivost za brisanje</response>
         /// <response code="500">Doslo je do greske na serveru prilikom brisanja obradivosti</response>
         [HttpDelete("{obradivostID}")]
+        [HttpHead]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult DeleteObradivost(Guid obradivostID)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "DELETE";
             logDto.Message = "Brisanje obradivosti";
 
@@ -177,14 +243,30 @@ namespace Parcela.Controllers
         /// <returns>Potvrda o modifikovanoj obradivosti</returns>
         /// <response code="200">Vraca azuriranu obradivost</response>
         /// <response code="400">Obradivost koja se azurira nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja obradivosti</response>
         [HttpPut]
+        [HttpHead]
         [Consumes("application/json")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<ObradivostDto> UpdateObradivost(ObradivostUpdateDto obradivost)
         {
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
+
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikovanje obradivosti";
 

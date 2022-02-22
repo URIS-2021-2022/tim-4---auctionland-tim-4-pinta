@@ -15,7 +15,8 @@ namespace KatastarskaOpstinaAgregat.Profiles
             //plitko kopiranje
             CreateMap<KatastarskaOpstinaEntity, KatastarskaOpstinaDto>();
             CreateMap<KatastarskaOpstinaDto, KatastarskaOpstinaEntity>();
-
+            CreateMap<KatastarskaOpstinaUpdateDto, KatastarskaOpstinaEntity>();
+            CreateMap<KatastarskaOpstinaEntity, KatastarskaOpstinaEntity>();
 
         }
     }
