@@ -112,7 +112,7 @@ namespace ComplaintAggregate
             
 
 
-            services.AddSingleton<IUserRepository, UserRepository>();
+          //  services.AddSingleton<IUserRepository, UserRepository>();
 
         //    services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
             services.AddScoped<IFileAComplaintService, FileAComplaintService>();

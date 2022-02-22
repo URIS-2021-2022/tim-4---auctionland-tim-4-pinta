@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace Licnost.Models
 {
     /// <summary>
-    /// Model za kreiranje licnosti
+    /// Model za kreiranje ličnosti
     /// </summary>
     public class LicnostCreateDto
     {

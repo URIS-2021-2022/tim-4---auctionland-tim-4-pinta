@@ -31,10 +31,15 @@ namespace KupacMikroservis.Models
 
         public DateTime DatumPrestankaZabrane { get; set; }
 
+        public string JedinstveniBroj { get; set; }
+
         public Guid Prioritet { get; set; }
 
+        public PrioritetEntity PrioritetO { get; set; }
         
         public Guid OvlascenoLice { get; set; }
+
+        public OvlascenoLiceEntity OvlascenoLiceO { get; set; }
 
         public Guid AdresaID { get; set; }
 

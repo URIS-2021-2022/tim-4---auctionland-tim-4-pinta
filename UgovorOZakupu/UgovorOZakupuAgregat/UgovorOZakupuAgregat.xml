@@ -408,6 +408,31 @@
             Popunjava bazu sa nekim inicijalnim podacima
             </summary>
         </member>
+        <member name="T:UgovorOZakupuAgregat.Models.AdresaKupcaUgovoraDto">
+            <summary>
+            DTO za adresu kupca ugovora
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.AdresaKupcaUgovoraDto.Ulica">
+            <summary>
+            Ulica kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.AdresaKupcaUgovoraDto.Broj">
+            <summary>
+            Broj kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.AdresaKupcaUgovoraDto.Mesto">
+            <summary>
+            Mesto kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.AdresaKupcaUgovoraDto.PostanskiBroj">
+            <summary>
+            Postanski broj kupca
+            </summary>
+        </member>
         <member name="T:UgovorOZakupuAgregat.Models.DokumentDto">
             <summary>
             DTO dokumeta
@@ -573,6 +598,36 @@
             Datum prestanka zabrane lica ugovora
             </summary>
         </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.Prioritet">
+            <summary>
+            Prioritet kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.OvlascenoLice">
+            <summary>
+            ID ovlascenog lica
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.AdresaID">
+            <summary>
+            ID adrese kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.UplataID">
+            <summary>
+            ID uplate kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.Adresa">
+            <summary>
+            Adresa kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.KupacUgovoraDto.Uplata">
+            <summary>
+            Uplata kupca
+            </summary>
+        </member>
         <member name="T:UgovorOZakupuAgregat.Models.LicnostUgovoraDto">
             <summary>
             DTO ličnosti ugovora
@@ -713,9 +768,19 @@
             ID dokumenta
             </summary>
         </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.Dokument">
+            <summary>
+            Odluka (dokument)
+            </summary>
+        </member>
         <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.TipId">
             <summary>
             ID tipa garancije
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.TipGarancije">
+            <summary>
+            Tip garancije
             </summary>
         </member>
         <member name="P:UgovorOZakupuAgregat.Models.UgovorOZakupuDto.ZavodniBroj">
@@ -833,6 +898,31 @@
             ID javnog nadmetanja
              </summary>
         </member>
+        <member name="T:UgovorOZakupuAgregat.Models.UplataKupcaUgovoraDto">
+            <summary>
+            DTO za uplatu kupca
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UplataKupcaUgovoraDto.Iznos">
+            <summary>
+            Iznos uplate
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UplataKupcaUgovoraDto.SvrhaUplate">
+            <summary>
+            Svrha uplate
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UplataKupcaUgovoraDto.Datum">
+            <summary>
+            Datum uplate
+            </summary>
+        </member>
+        <member name="P:UgovorOZakupuAgregat.Models.UplataKupcaUgovoraDto.PozivNaBroj">
+            <summary>
+            Poziv na broj uplate
+            </summary>
+        </member>
         <member name="T:UgovorOZakupuAgregat.Profiles.DokumentProfile">
             <summary>
             Profil za mapiranje dokumenta
@@ -872,6 +962,20 @@
             <summary>
             Konstruktor profila za mapiranje ugovora o zakupu
             </summary>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.ServiceCalls.IGatewayService.GetUrl(System.String)">
+            <summary>
+            Zahtev za gateway servis
+            </summary>
+            <param name="servis"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UgovorOZakupuAgregat.ServiceCalls.IKorisnikSistemaService.AuthorizeAsync(System.String)">
+            <summary>
+            Zahtev za korisnik servis
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

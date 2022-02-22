@@ -60,7 +60,7 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public ActionResult<List<DrzavaDto>> GetDrzave()
-        {/*
+        {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
             if (token == "" || (split[1] != "administrator" && split[1] != "superuser" && split[1] != "menadzer"))
@@ -73,7 +73,7 @@ namespace AdresaServis.Controllers
             {
                 return Unauthorized();
             }
-            */
+
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih drzava";
 

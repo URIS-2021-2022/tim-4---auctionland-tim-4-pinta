@@ -7,74 +7,63 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class OvlascenoLiceRepository : IOvlascenoLiceRepository
+namespace KupacMikroservis.Data
 {
-    // public static List<OvlascenoLiceEntity> OvlascenaLica { get; set; } = new List<OvlascenoLiceEntity>();
-
-    private readonly KupacContext context;
-
-    private readonly IMapper mapper;
-
-
-    public bool SaveChanges()
-    {
-        return context.SaveChanges() > 0;
-    }
-
-
-    public OvlascenoLiceEntity CreateOvlascenoLice(OvlascenoLiceEntity ovlascenolice)
+    public class OvlascenoLiceRepository : IOvlascenoLiceRepository
     {
 
-        var createdEntity = context.Add(ovlascenolice);
-        return mapper.Map<OvlascenoLiceEntity>(createdEntity.Entity);
+
+        private readonly KupacContext context;
+
+        private readonly IMapper mapper;
+
+        public OvlascenoLiceRepository(KupacContext context, IMapper mapper)
+        {
+            this.context = context;
+            this.mapper = mapper;
+        }
+
+        public bool SaveChanges()
+        {
+            return context.SaveChanges() > 0;
+        }
 
 
-     /*   ovlascenolice.OvlascenoLiceId = Guid.NewGuid();
-        OvlascenaLica.Add(ovlascenolice);
-        OvlascenoLiceEntity ol = GetOvlascenoLiceById(ovlascenolice.OvlascenoLiceId);
-        return ol;*/
-    }
+        public OvlascenoLiceEntity CreateOvlascenoLice(OvlascenoLiceEntity ovlascenoLice)
+        {
 
-    public void DeleteOvlascenoLice(Guid ovlascenoliceID)
-    {
+            var createdEntity = context.Add(ovlascenoLice);
+            return mapper.Map<OvlascenoLiceEntity>(createdEntity.Entity);
 
-        var ovlascenolice = GetOvlascenoLiceById(ovlascenoliceID);
-        context.Remove(ovlascenolice);
+        }
 
-        // OvlascenaLica.Remove(OvlascenaLica.FirstOrDefault(ol => ol.OvlascenoLiceId == ovlascenoliceID));
-    }
+        public void DeleteOvlascenoLice(Guid ovlascenoLiceID)
+        {
 
-    public List<OvlascenoLiceEntity> GetOvlascenaLica()
-    {
-
-        return context.oLica.ToList();
-
-        //  return (from ol in OvlascenaLica select ol).ToList();
-    }
-
-    public OvlascenoLiceEntity GetOvlascenoLiceById(Guid ovlascenoliceID)
-    {
-        return context.oLica.FirstOrDefault(ol => ol.OvlascenoLiceId == ovlascenoliceID);
-
-        //  return OvlascenaLica.FirstOrDefault(ol => ol.OvlascenoLiceId == ovlascenoliceID);
-    }
+            var ovlascenolice = GetOvlascenoLiceById(ovlascenoLiceID);
+            context.Remove(ovlascenolice);
 
 
-    public OvlascenoLiceRepository(KupacContext context, IMapper mapper)
-    {
-        this.context = context;
-        this.mapper = mapper;
-    }
-    public void UpdateOvlascenoLice(OvlascenoLiceEntity ovlascenolice)
-    {
-      /*  OvlascenoLiceEntity ol = GetOvlascenoLiceById(ovlascenolice.OvlascenoLiceId);
+        }
 
-        ol.Ime = ovlascenolice.Ime;
-        ol.Prezime = ovlascenolice.Prezime;
-        ol.BrojLicnogDokumenta = ovlascenolice.BrojLicnogDokumenta;
-        ol.BrojTable = ovlascenolice.BrojTable;
+        public List<OvlascenoLiceEntity> GetOvlascenaLica()
+        {
+
+            return context.oLica.ToList();
 
 
-        return ol;*/
+        }
+
+        public OvlascenoLiceEntity GetOvlascenoLiceById(Guid ovlascenoLiceID)
+        {
+            return context.oLica.FirstOrDefault(ol => ol.OvlascenoLiceId == ovlascenoLiceID);
+
+
+        }
+
+        public void UpdateOvlascenoLice(OvlascenoLiceEntity ovlascenolice)
+        {
+
+        }
     }
 }

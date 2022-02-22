@@ -1,4 +1,4 @@
-﻿using AdresaServis.Models;
+﻿using Licnost.Models;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -7,27 +7,29 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace AdresaServis.ServiceCalls
+namespace Licnost.ServiceCalls
 {
     public class LoggerService : ILoggerService
     {
         private readonly IConfiguration configuration;
+        private readonly IGatewayService gatewayService;
 
-        public LoggerService(IConfiguration configuration)
+        public LoggerService(IConfiguration configuration, IGatewayService gatewayService)
         {
             this.configuration = configuration;
+            this.gatewayService = gatewayService;
         }
 
         public void CreateLog(LogDto log)
         {
             using (HttpClient client = new HttpClient())
             {
-                Uri url = new Uri($"{ configuration["Services:LoggerService"] }api/logger");
+                Uri url = new Uri($"{configuration["Services:LoggerService"]}");
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(log));
                 content.Headers.ContentType.MediaType = "application/json";
 
-                _ = client.PostAsync(url, content).Result;
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
             }
         }
     }
