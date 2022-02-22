@@ -22,7 +22,7 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:ParcelaService"];
+                
                 Uri url = new Uri($"{ configuration["Services:ParcelaService"] }api/parcele/{parcelaID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;

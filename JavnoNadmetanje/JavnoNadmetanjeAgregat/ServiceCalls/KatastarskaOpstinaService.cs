@@ -22,7 +22,7 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:KatastarskaOpstinaService"];
+             
                 Uri url = new Uri($"{ configuration["Services:KatastarskaOpstinaService"] }api/katastarskeOpstine/{katastarskaOpstinaID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;

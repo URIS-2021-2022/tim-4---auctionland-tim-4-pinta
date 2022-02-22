@@ -11,19 +11,22 @@ namespace JavnoNadmetanjeAgregat.Models
     public class AdresaJavnoNadmetanjeDto
     {
         /// <summary>
-        /// Ulica adrese
+        /// Ulica javnog nadmetanja
         /// </summary>
         public string Ulica { get; set; }
+
         /// <summary>
-        /// Broj adrese
+        /// Broj ulice 
         /// </summary>
         public string Broj { get; set; }
+
         /// <summary>
-        /// Mesto adrese
+        /// Mesto ulice
         /// </summary>
         public string Mesto { get; set; }
+
         /// <summary>
-        /// Postanski broj adrese
+        /// Postanski broj javnog nadmetanja
         /// </summary>
         public string PostanskiBroj { get; set; }
 

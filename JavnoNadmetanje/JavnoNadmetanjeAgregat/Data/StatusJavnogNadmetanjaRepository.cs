@@ -11,13 +11,12 @@ namespace JavnoNadmetanjeAgregat.Data
     public class StatusJavnogNadmetanjaRepository : IStatusJavnogNadmetanjaRepository
     {
         private readonly JavnoNadmetanjeContext context;
-        private readonly IMapper mapper;
+        
 
-        public StatusJavnogNadmetanjaRepository(JavnoNadmetanjeContext context, IMapper mapper)
+        public StatusJavnogNadmetanjaRepository(JavnoNadmetanjeContext context)
         {
 
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -28,7 +27,6 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             statusJavnogNadmetanja.StatusJavnogNadmetanjaID = Guid.NewGuid();
             context.StatusiJavnihNadmetanja.Add(statusJavnogNadmetanja);
-            //StatusJavnogNadmetanjaEntity s = GetStatusJavnogNadmetanjaById(statusJavnogNadmetanja.StatusJavnogNadmetanjaID);
             return statusJavnogNadmetanja;
         }
 

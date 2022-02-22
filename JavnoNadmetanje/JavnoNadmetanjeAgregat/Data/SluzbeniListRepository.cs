@@ -11,13 +11,12 @@ namespace JavnoNadmetanjeAgregat.Data
     public class SluzbeniListRepository : ISluzbeniListRepository
     {
         private readonly JavnoNadmetanjeContext context;
-        private readonly IMapper mapper;
+     
 
-        public SluzbeniListRepository(JavnoNadmetanjeContext context, IMapper mapper)
+        public SluzbeniListRepository(JavnoNadmetanjeContext context)
         {
 
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -40,7 +39,6 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             sluzbeniList.SluzbeniListID = Guid.NewGuid();
             context.SluzbeniListovi.Add(sluzbeniList);
-            //SluzbeniListEntity sl = GetSluzbeniListById(sluzbeniList.SluzbeniListID);
             return sluzbeniList;
         }
 

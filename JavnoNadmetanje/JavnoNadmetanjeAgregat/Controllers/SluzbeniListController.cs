@@ -27,16 +27,14 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
-        private readonly IGatewayService gatewayService;
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
-        public SluzbeniListController(ISluzbeniListRepository sluzbeniListRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService)
+        public SluzbeniListController(ISluzbeniListRepository sluzbeniListRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService)
         {
             this.sluzbeniListRepository = sluzbeniListRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
-            this.gatewayService = gatewayService;
             this.korisnikSistemaService = korisnikSistemaService;
             logDto = new LogDto();
             logDto.NameOfTheService = "SluzbeniList";

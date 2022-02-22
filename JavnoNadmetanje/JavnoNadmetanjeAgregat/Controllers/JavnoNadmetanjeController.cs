@@ -40,11 +40,12 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
         private readonly IJavnoNadmetanjeRepository javnoNadmetanjeRepository;
+        private readonly ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository;
         private readonly LinkGenerator linkGenerator; //Služi za generisanje putanje do neke akcije (videti primer u metodu CreateExamRegistration)
         private readonly IMapper mapper;
         //injektovanje zavisnosti- kad se kreira obj kontrolera mora da se prosledi nesto sto implementira interfejs tj confirmation
 
-        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService)
+        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService, ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository)
         {
             this.javnoNadmetanjeRepository = javnoNadmetanjeRepository;
             this.linkGenerator = linkGenerator;
@@ -56,6 +57,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
             this.loggerService = loggerService;
             this.gatewayService = gatewayService;
             this.korisnikSistemaService = korisnikSistemaService;
+            this.tipJavnogNadmetanjaRepository = tipJavnogNadmetanjaRepository;
             logDto = new LogDto();
             logDto.NameOfTheService = "JavnoNadmetanje";
         }
@@ -100,19 +102,18 @@ namespace JavnoNadmetanjeAgregat.Controllers
             }
 
             List<JavnoNadmetanjeDto> javnoNadmetanjeDto = mapper.Map<List<JavnoNadmetanjeDto>>(javnoNadmetanje);
-            foreach (JavnoNadmetanjeDto j in javnoNadmetanjeDto) 
+            foreach (JavnoNadmetanjeDto j in javnoNadmetanjeDto)
             {
+
                 j.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(j.KatastarskaOpstinaID).Result;
                 j.Kupac = kupacService.GetKupacByIdAsync(j.KupacID).Result;
                 j.Adresa = adresaService.GetAdresaByIdAsync(j.AdresaID).Result;
                 j.Parcela = parcelaService.GetParcelaByIdAsync(j.ParcelaID).Result;
-               
 
             }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(javnoNadmetanjeDto);
-            //return Ok(mapper.Map<List<JavnoNadmetanjeDto>>(javnoNadmetanje));
         }
 
         /// <summary>
@@ -151,20 +152,19 @@ namespace JavnoNadmetanjeAgregat.Controllers
             }
 
             KatastarskaOpstinaJavnoNadmetanjeDto katastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(javnoNadmetanje.KatastarskaOpstinaID).Result;
-            //KupacJavnoNadmetanjeDto kupac = kupacService.GetKupacByIdAsync(javnoNadmetanje.KupacID).Result;
+            KupacJavnoNadmetanjeDto kupac = kupacService.GetKupacByIdAsync(javnoNadmetanje.KupacID).Result;
             ParcelaJavnoNadmetanjeDto parcela = parcelaService.GetParcelaByIdAsync(javnoNadmetanje.ParcelaID).Result;
             AdresaJavnoNadmetanjeDto adresa = adresaService.GetAdresaByIdAsync(javnoNadmetanje.AdresaID).Result;
 
             JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje);
             javnoNadmetanjeDto.KatastarskaOpstina = katastarskaOpstina;
-            //javnoNadmetanjeDto.Kupac = kupac;
+            javnoNadmetanjeDto.Kupac = kupac;
             javnoNadmetanjeDto.Parcela = parcela;
             javnoNadmetanjeDto.Adresa = adresa;
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(javnoNadmetanjeDto);
 
-            //return Ok((mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje)));
         }
         /// <summary>
         /// Kreira novu javno nadmetanje
