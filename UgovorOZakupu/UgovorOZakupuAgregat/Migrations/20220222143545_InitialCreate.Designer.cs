@@ -10,7 +10,7 @@ using UgovorOZakupuAgregat.Entities;
 namespace UgovorOZakupuAgregat.Migrations
 {
     [DbContext(typeof(UgovorOZakupuContext))]
-    [Migration("20220222154650_InitialCreate")]
+    [Migration("20220222143545_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
