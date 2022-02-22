@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Entities;
 
 namespace UgovorOZakupuAgregat.Data
@@ -10,12 +8,10 @@ namespace UgovorOZakupuAgregat.Data
     public class DokumentRepository : IDokumentRepository
     {
         private readonly UgovorOZakupuContext context;
-        private readonly IMapper mapper;
 
-        public DokumentRepository(UgovorOZakupuContext context, IMapper mapper)
+        public DokumentRepository(UgovorOZakupuContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -26,26 +22,24 @@ namespace UgovorOZakupuAgregat.Data
         public List<Dokument> GetDokumenti()
         {
             return (from d in context.Dokumenti select d).ToList();
-
-
         }
 
         public Dokument GetDokumentById(Guid dokumentId)
         {
-            return context.Dokumenti.FirstOrDefault(d => d.DokumentId== dokumentId);
+            return context.Dokumenti.FirstOrDefault(d => d.DokumentId == dokumentId);
         }
 
-        public Dokument CreateDokument(Dokument dokument)
+        public Dokument CreateDokument(Dokument dokumentModel)
         {
-            dokument.DokumentId = Guid.NewGuid();
-            context.Dokumenti.Add(dokument);
-            return dokument;
-
+            dokumentModel.DokumentId = Guid.NewGuid();
+            context.Dokumenti.Add(dokumentModel);
+            return dokumentModel;
         }
 
-        public void UpdateDokument(Dokument dokument)
+        public void UpdateDokument(Dokument dokumentModel)
         {
-
+            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
+            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
         }
 
         public void DeleteDokument(Guid dokumentId)

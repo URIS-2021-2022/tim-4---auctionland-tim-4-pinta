@@ -101,7 +101,7 @@ namespace UgovorOZakupuAgregat.Controllers
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(ugovoriDto);
-            //return Ok(mapper.Map<List<UgovorOZakupuDto>>(ugovori));
+            
         }
 
 
@@ -154,7 +154,7 @@ namespace UgovorOZakupuAgregat.Controllers
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(ugovorDto);
-            //return Ok(mapper.Map<UgovorOZakupuDto>(ugovor));
+           
         }
 
 
@@ -221,7 +221,6 @@ namespace UgovorOZakupuAgregat.Controllers
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Created(location,ugovorDto);
-                //return Created("", mapper.Map<UgovorOZakupuDto>(ugovorCreate));
             }
             catch
             {

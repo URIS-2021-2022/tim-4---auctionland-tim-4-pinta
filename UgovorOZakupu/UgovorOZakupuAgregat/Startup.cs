@@ -36,8 +36,7 @@ namespace UgovorOZakupuAgregat
                setup.ReturnHttpNotAcceptable = true
            ).AddXmlDataContractSerializerFormatters();
 
-            //services.AddSingleton<IUserRepository, UserMockRepository>();
-            //services.AddScoped<IAuthenticationHelper, AuthenticationHelper>();
+            
             services.AddScoped<IUgovorOZakupuRepository, UgovorOZakupuRepository>();
             services.AddScoped<IDokumentRepository, DokumentRepository>();
             services.AddScoped<ITipGarancijeRepository, TipGarancijeRepository>();
@@ -69,7 +68,7 @@ namespace UgovorOZakupuAgregat
 
 
             });
-            //services.AddDbContext<LicnostContext>();
+            
             services.AddDbContextPool<UgovorOZakupuContext>(options => options.UseSqlServer(Configuration.GetConnectionString("UgovorDB")));
         }
 
