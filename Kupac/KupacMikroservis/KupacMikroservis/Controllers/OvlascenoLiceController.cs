@@ -28,7 +28,7 @@ namespace KupacMikroservis.Controllers
         public readonly IAdresaService adresaService;
 
         private readonly ILogger logger;
-        private LogDTO logDTO;
+        private readonly LogDTO logDTO;
 
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
@@ -276,11 +276,6 @@ namespace KupacMikroservis.Controllers
             {
 
                 var oldOLice= oLiceRepository.GetOvlascenoLiceById(ol.OvlascenoLiceId);
-                oldOLice.OvlascenoLiceId = ol.OvlascenoLiceId;
-                oldOLice.Ime = ol.Ime;
-                oldOLice.Prezime = ol.Prezime;
-                oldOLice.BrojLicnogDokumenta = ol.BrojLicnogDokumenta;
-                oldOLice.BrojTable = ol.BrojTable;
 
 
                 if (oldOLice == null)
@@ -289,12 +284,15 @@ namespace KupacMikroservis.Controllers
                     logger.Log(logDTO);
                     return NotFound();
                 }
-                /*        OvlascenoLiceEntity olEntity = mapper.Map<OvlascenoLiceEntity>(ol);
 
-                        mapper.Map(olEntity, oldOLice);
+                oldOLice.OvlascenoLiceId = ol.OvlascenoLiceId;
+                oldOLice.Ime = ol.Ime;
+                oldOLice.Prezime = ol.Prezime;
+                oldOLice.BrojLicnogDokumenta = ol.BrojLicnogDokumenta;
+                oldOLice.BrojTable = ol.BrojTable;
 
-                        oLiceRepository.SaveChanges();
-               */
+
+                
                logDTO.Level = "Info";
                logger.Log(logDTO);
                 return Ok(mapper.Map<OvlascenoLiceDTO>(oldOLice));
