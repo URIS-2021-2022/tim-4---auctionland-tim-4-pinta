@@ -38,10 +38,7 @@ namespace Licnost.Data
         {
             clan.ClanKomisijeId = Guid.NewGuid();
             context.ClanoviKomisije.Add(clan);
-            ClanKomisije c = GetClanKomisijeById(clan.ClanKomisijeId);
-            return c;
-            //var createdEntity = context.Add(clan);
-            //return mapper.Map<ClanKomisije>(createdEntity.Entity);
+            return clan;
         }
 
         public void UpdateClanKomisije(ClanKomisije clan)

@@ -7,17 +7,27 @@ using System.Threading.Tasks;
 
 namespace Licnost.Entities
 {
+    /// <summary>
+    /// Model entiteta komisija
+    /// </summary>
     public class Komisija
     {
+        /// <summary>
+        /// ID komisije
+        /// </summary>
         [Key]
         public Guid KomisijaId { get; set; }
 
-
+        /// <summary>
+        /// ID predsednika(ličnost)
+        /// </summary>
         [ForeignKey("Licnost")]
         public Guid LicnostId { get; set; }
+
+        /// <summary>
+        /// Ličnost
+        /// </summary>
         public LicnostEntity Licnost { get; set; }
-       
-
-
+    
     }
 }
