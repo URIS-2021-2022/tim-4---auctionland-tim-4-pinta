@@ -87,14 +87,14 @@ namespace Uplata
                         {
                             Name = "Andrija Stanojkovic",
                             Email = "andrija11@gmail.com",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
                         License = new Microsoft.OpenApi.Models.OpenApiLicense
                         {
                             Name = "FTN licence",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
-                        TermsOfService = new Uri("http://www.ftn.uns.ac.rs/examRegistrationTermsOfService")
+                        TermsOfService = new Uri(Configuration["Uri:Ftn"])
                     });
 
                 //Pomocu refleksije dobijamo ime XML fajla sa komentarima (ovako smo ga nazvali u Project -> Properties)
