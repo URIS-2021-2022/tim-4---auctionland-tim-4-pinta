@@ -80,11 +80,6 @@ namespace Korisnik.Data
 
             return true;
           
-            if (VerifyPassword(password, user.Lozinka, user.Salt))
-            {
-                return true;
-            }
-            return false;
         }
 
 

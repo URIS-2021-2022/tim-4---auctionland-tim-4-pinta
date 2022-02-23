@@ -28,13 +28,6 @@
             <param name="password"></param>
             <returns></returns>
         </member>
-        <member name="M:Korisnik.Data.UserMockRepository.HashPassword(System.String)">
-            <summary>
-            Vrši hash-ovanje korisničke lozinke
-            </summary>
-            <param name="password">Korisnička lozinka</param>
-            <returns>Generisan hash i salt</returns>
-        </member>
         <member name="M:Korisnik.Data.UserMockRepository.VerifyPassword(System.String,System.String,System.String)">
             <summary>
             Proverava validnost prosleđene lozinke sa prosleđenim hash-om

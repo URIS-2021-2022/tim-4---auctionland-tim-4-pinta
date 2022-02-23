@@ -1,10 +1,14 @@
 ﻿using Uplata.Data;
 using Uplata.Models;
+using JavnoNadmetanjeAgregat.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Uplata.Helpers
 {

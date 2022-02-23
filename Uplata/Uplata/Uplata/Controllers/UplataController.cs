@@ -86,7 +86,7 @@ namespace Uplata.Controllers
             foreach (UplataEntity u in uplate)
             {
                 UplataDto uplataDto = mapper.Map<UplataDto>(u);
-                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(u.JavnoNadmetanjeID).Result;
+                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(u.JavnoNadmetanjeID, token).Result;
                 uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(u.KursID));
                 uplateDto.Add(uplataDto);
             }
@@ -136,7 +136,7 @@ namespace Uplata.Controllers
 
             UplataDto uplataDto = mapper.Map<UplataDto>(uplata);
             uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(uplata.KursID));
-            uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID).Result;
+            uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID, token).Result;
 
 
             logDto.Level = "Info";
@@ -198,7 +198,7 @@ namespace Uplata.Controllers
                 string location = linkGenerator.GetPathByAction("GetUplata", "Uplata", new { uplataID = u.UplataID });
                 UplataDto uplataDto = mapper.Map<UplataDto>(u);
                 uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(uplata.KursID));
-                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID).Result;
+                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(uplata.JavnoNadmetanjeID, token).Result;
 
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
@@ -231,6 +231,19 @@ namespace Uplata.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<UplataDto> UpdateUplata(UplataDtoUpdate uplata)
         {
+
+            string token = Request.Headers["token"].ToString();
+            string[] split = token.Split('#');
+            if (token == "" || (split[1] != "administrator" && split[1] != "superuser"))
+            {
+                return Unauthorized();
+            }
+
+            HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
+            if (res.ToString() != "OK")
+            {
+                return Unauthorized();
+            }
             logDto.HttpMethod = "PUT";
             logDto.Message = "Modifikacija uplate";
 
@@ -257,7 +270,7 @@ namespace Uplata.Controllers
 
                 UplataDto uplataDto = mapper.Map<UplataDto>(oldUplata);
                 uplataDto.Kurs = mapper.Map<KursDto>(kursRepository.GetKursByID(oldUplata.KursID));
-                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(oldUplata.JavnoNadmetanjeID).Result;
+                uplataDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(oldUplata.JavnoNadmetanjeID, token).Result;
 
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);

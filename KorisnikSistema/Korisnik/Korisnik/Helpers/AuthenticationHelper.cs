@@ -56,7 +56,7 @@ namespace Korisnik.Helpers
             tokenTime.time = DateTime.Now;
             tokenTime.token = new JwtSecurityTokenHandler().WriteToken(token).ToString();
 
-            var createdEntity = context.Add(tokenTime);
+            context.Add(tokenTime);
 
             var tokenResult = new JwtSecurityTokenHandler().WriteToken(token);
             string finalToken = tokenResult.ToString() + "#" + korisnik.TipKorisnika; 
