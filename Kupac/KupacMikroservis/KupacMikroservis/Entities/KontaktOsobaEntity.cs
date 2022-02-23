@@ -9,7 +9,7 @@ namespace KupacMikroservis.Models
 {
 
     /// <summary>
-    /// Modela realnog entiteta Kontakt Osoba
+    /// Model realnog entiteta Kontakt Osoba
     /// </summary>
     public class KontaktOsobaEntity
     {

@@ -47,10 +47,12 @@ namespace KupacMikroservis.Controllers
         /// <returns>Lista kontakt osoba</returns>
         /// <response code = "200">Vraca listu kontakt osoba</response>
         /// <response code = "404">Nije pronadjena nijedna kontakt osoba</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpGet]
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<KontaktOsobaDto>> GetKontaktOsobe()
         {
             string token = Request.Headers["token"].ToString();
@@ -66,7 +68,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser")
             {
                 return Unauthorized();
-            }
+            } 
 
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje svih kontakt osoba";
@@ -90,9 +92,11 @@ namespace KupacMikroservis.Controllers
         /// <returns>Trazena kontakt osoba</returns>
         /// <response code = "200">Vraca trazenu kontakt osobu</response>
         /// <response code = "404">Trazena kontakt osoba nije pronadjena</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpGet("{KontaktOsobaId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KontaktOsobaDto> GetKontaktOsoba(Guid koID)
         {
             string token = Request.Headers["token"].ToString();
@@ -130,10 +134,12 @@ namespace KupacMikroservis.Controllers
         /// <returns>Potvrda o kreiranoj kontakt osobi</returns>
         /// <response code = "201">Vraca kreiranu kontakt osobu</response>
         /// <response code = "500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KontaktOsobaDto> CreateKontaktOsoba([FromBody] KontaktOsobaCreateDto ko)    //confirmation implementirati
         {
             string token = Request.Headers["token"].ToString();
@@ -183,10 +189,12 @@ namespace KupacMikroservis.Controllers
         /// <response code="204">Kontakt osoba uspesno obrisana</response>
         /// <response code="404">Nije pronadjena kontakt osoba</response>
         /// <response code="500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpDelete("{KontaktOsobaId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult DeleteKontaktOsoba(Guid koID)
         {
             string token = Request.Headers["token"].ToString();
@@ -234,11 +242,13 @@ namespace KupacMikroservis.Controllers
         /// <response code="200">Vraca azuriranu kontakt osobu</response>
         /// <response code="400">Kontakt osoba nije pronadjena</response>
         /// <response code="500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpPut("{KontaktOsobaId}")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KontaktOsobaDto> UpdateKontaktOsoba(KontaktOsobaUpdateDto ko)
         {
             string token = Request.Headers["token"].ToString();

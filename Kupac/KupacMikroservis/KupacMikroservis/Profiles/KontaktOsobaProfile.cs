@@ -18,6 +18,10 @@ namespace KupacMikroservis.Profiles
             CreateMap<KontaktOsobaUpdateDto,KontaktOsobaEntity>();
             CreateMap<KontaktOsobaCreateDto, KontaktOsobaEntity>();
             CreateMap<KontaktOsobaDto, KontaktOsobaEntity>();
+            CreateMap<KontaktOsobaCreateDto, KontaktOsobaDto>();
+            CreateMap<KontaktOsobaUpdateDto, KontaktOsobaDto>();
+            CreateMap<KontaktOsobaDto, KontaktOsobaCreateDto>();
+            CreateMap<KontaktOsobaDto, KontaktOsobaUpdateDto>();
 
 
 

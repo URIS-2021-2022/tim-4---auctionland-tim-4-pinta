@@ -62,10 +62,12 @@ namespace KupacMikroservis.Controllers
         /// <returns>Lista klasa</returns>
         /// <response code = "200">Vraca listu kupaca</response>
         /// <response code = "404">Nije pronadjen nijedan kupac</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpGet]
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<List<KupacDto>> GetKupci()
         {
             string token = Request.Headers["token"].ToString();
@@ -146,9 +148,11 @@ namespace KupacMikroservis.Controllers
         /// <returns>Trazeni kupac</returns>
         /// <response code = "200">Vraca trazenog kupca</response>
         /// <response code = "404">Trazeni kupac nije pronadjen</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpGet("{KupacId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KupacDto> GetKupac(Guid kupacID)
         {
             string token = Request.Headers["token"].ToString();
@@ -211,10 +215,12 @@ namespace KupacMikroservis.Controllers
         /// <returns>Potvrda o kreiranom kupcu</returns>
         /// <response code = "201">Vraca kreiranog kupca</response>
         /// <response code = "500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KupacDto> CreateKupac([FromBody] KupacCreateDto kupac)   
         {
 
@@ -229,7 +235,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja")
             {
                 return Unauthorized();
-            }
+            } 
 
             logDTO.HttpMethod = "POST";
             logDTO.Message = "Dodavanje novog kupca";
@@ -243,7 +249,7 @@ namespace KupacMikroservis.Controllers
                 if (kp.IsFizickoLice)
                 {
                     
-                    FizickoLiceEntity flCreated = kp as FizickoLiceEntity;
+                    FizickoLiceEntity flCreated = new FizickoLiceEntity(kp);
                     kpCreated = fLiceRepository.CreateFizickoLice(flCreated);
                 }
                 else
@@ -267,7 +273,7 @@ namespace KupacMikroservis.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Create Error");
 
             }
-
+        
         }
 
 
@@ -279,10 +285,12 @@ namespace KupacMikroservis.Controllers
         /// <response code="204">Kupac uspesno obrisana</response>
         /// <response code="404">Nije pronadjen kupac</response>
         /// <response code="500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpDelete("{KupacId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult DeleteKupac(Guid kupacID)
         {
             string token = Request.Headers["token"].ToString();
@@ -295,7 +303,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja")
             {
                 return Unauthorized();
-            }
+            } 
 
             logDTO.HttpMethod = "DELETE";
             logDTO.Message = "Brisanje kupca";
@@ -308,6 +316,11 @@ namespace KupacMikroservis.Controllers
                 kupacModel = pLiceRepository.GetPravnoLiceById(kupacID);
 
                 
+                if (kupacModel == null)
+                {
+                    kupacModel = fLiceRepository.GetFizickoLiceById(kupacID);
+                }
+
                 if (kupacModel == null)
                 {
                     logDTO.Level = "Warn";
@@ -344,11 +357,13 @@ namespace KupacMikroservis.Controllers
         /// <response code="200">Vraca azuriranog kupca</response>
         /// <response code="400">Kupac nije pronadjen</response>
         /// <response code="500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpPut("{KupacId}")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<KupacDto> UpdateKupac([FromBody]KupacUpdateDto kupac)
         {
             string token = Request.Headers["token"].ToString();
@@ -362,7 +377,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja")
             {
                 return Unauthorized();
-            }
+            } 
 
             logDTO.HttpMethod = "PUT";
             logDTO.Message = "Azuriranje kupca";
@@ -395,18 +410,13 @@ namespace KupacMikroservis.Controllers
                 oldFizLice.DatumPrestankaZabrane = kupac.DatumPrestankaZabrane;
                 oldFizLice.IsFizickoLice = kupac.IsFizickoLice;
                 
-
-                
-                    KupacEntity kpEntity = mapper.Map<KupacEntity>(kupac);
-
-                    FizickoLiceEntity fLice = (FizickoLiceEntity)kpEntity;
-
-                    mapper.Map(fLice, oldFizLice);             
+           
 
                     fLiceRepository.SaveChanges();
+
                     logDTO.Level = "Info";
                     logger.Log(logDTO);
-                    return Ok(mapper.Map<KupacDto>(kpEntity));
+                    return Ok();
 
                 }
                 else

@@ -94,7 +94,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "Pera Peric",
                             OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
+                            UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff")
                         },
                         new
                         {
@@ -112,7 +112,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "Jova Jovic",
                             OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
+                            UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff")
                         });
                 });
 
@@ -278,7 +278,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "NS DOO",
                             OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
+                            UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff")
                         },
                         new
                         {
@@ -296,7 +296,7 @@ namespace KupacMikroservis.Migrations
                             Naziv = "SN AD",
                             OvlascenoLice = new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"),
                             Prioritet = new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"),
-                            UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70")
+                            UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff")
                         });
                 });
 

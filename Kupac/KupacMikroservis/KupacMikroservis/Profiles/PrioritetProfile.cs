@@ -18,6 +18,11 @@ namespace KupacMikroservis.Profiles
             CreateMap<PrioritetEntity, PrioritetUpdateDto>();
             CreateMap<PrioritetUpdateDto,PrioritetEntity>();
             CreateMap<PrioritetCreateDto,PrioritetEntity>();
+            CreateMap<PrioritetCreateDto, PrioritetDto>();
+            CreateMap<PrioritetUpdateDto, PrioritetDto>();
+            CreateMap<PrioritetDto, PrioritetCreateDto>();
+            CreateMap<PrioritetDto, PrioritetUpdateDto>();
+            
 
         }
     }

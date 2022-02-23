@@ -49,6 +49,7 @@ namespace KupacMikroservis.Controllers
         ///  /// <returns>Lista prioriteta</returns>
         /// <response code = "200">Vraca listu prioriteta</response>
         /// <response code = "404">Nije pronadjen nijedan prioritet</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpGet]
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -67,7 +68,7 @@ namespace KupacMikroservis.Controllers
             if (res.ToString() != "OK")
             {
                 return Unauthorized();
-            }
+            } 
 
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje svih prioriteta";
@@ -91,6 +92,7 @@ namespace KupacMikroservis.Controllers
         /// <returns>Trazeni prioritet</returns>
         /// <response code = "200">Vraca trazeni prioritet</response>
         /// <response code = "404">Trazeni prioritet nije pronadjen</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpGet("{PrioritetId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -132,6 +134,7 @@ namespace KupacMikroservis.Controllers
         /// <returns>Potvrda o kreiranom prioritetu</returns>
         /// <response code = "201">Vraca kreirani prioritet</response>
         /// <response code = "500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpPost]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -149,7 +152,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser")
             {
                 return Unauthorized();
-            }
+            } 
 
             logDTO.HttpMethod = "CREATE";
             logDTO.Message = "Dodavanje novog prioriteta";
@@ -184,6 +187,7 @@ namespace KupacMikroservis.Controllers
         /// <response code="204">Prioritet uspesno obrisan</response>
         /// <response code="404">Nije pronadjen prioritet</response>
         /// <response code="500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpDelete("{PrioritetId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -237,6 +241,7 @@ namespace KupacMikroservis.Controllers
         /// <response code="200">Vraca azuriran prioritet</response>
         /// <response code="400">Prioritet nije pronadjen</response>
         /// <response code="500">Doslo je do greske</response>
+        /// <response code="401">Korisnik nije autorizovan</response>
         [HttpPut("{PrioritetId}")]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

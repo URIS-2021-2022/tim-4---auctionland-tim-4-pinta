@@ -36,8 +36,10 @@ namespace KupacMikroservis.Profiles
             CreateMap<KupacDto,KupacEntity>();
             CreateMap<KupacCreateDto, KupacEntity>();
             CreateMap<KupacUpdateDto, KupacEntity>();
+            CreateMap<KupacUpdateDto, KupacDto>();
+            CreateMap<KupacDto,KupacUpdateDto>();
 
-            
+
 
         }
     }

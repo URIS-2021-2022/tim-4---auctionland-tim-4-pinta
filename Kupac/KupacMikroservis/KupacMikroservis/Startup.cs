@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Http;
 using KupacMikroservis.Entities;
 using Microsoft.EntityFrameworkCore;
 using KupacMikroservis.ServiceCalls;
-using Microsoft.Extensions.Configuration;
+
 
 namespace KupacMikroservis
 {

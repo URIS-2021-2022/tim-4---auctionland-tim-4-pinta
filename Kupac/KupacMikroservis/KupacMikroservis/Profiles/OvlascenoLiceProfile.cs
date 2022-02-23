@@ -18,6 +18,10 @@ namespace KupacMikroservis.Profiles
             CreateMap<OvlascenoLiceDto,OvlascenoLiceEntity>();
             CreateMap<OvlascenoLiceCreateDto, OvlascenoLiceEntity>();
             CreateMap<OvlascenoLiceUpdateDto, OvlascenoLiceEntity>();
+            CreateMap<OvlascenoLiceCreateDto, OvlascenoLiceDto>();
+            CreateMap<OvlascenoLiceUpdateDto, OvlascenoLiceDto>();
+            CreateMap<OvlascenoLiceDto, OvlascenoLiceCreateDto>();
+            CreateMap<OvlascenoLiceDto, OvlascenoLiceUpdateDto>();
 
 
         }

@@ -31,7 +31,9 @@ namespace KupacMikroservis.Data
         public FizickoLiceEntity CreateFizickoLice(FizickoLiceEntity fizLice)
         {
             var createdEntity = context.Add(fizLice);
+            context.SaveChanges();
             return mapper.Map<FizickoLiceEntity>(createdEntity.Entity);
+            
 
 
 
@@ -41,6 +43,7 @@ namespace KupacMikroservis.Data
         {
             var fizlice = GetFizickoLiceById(fizLiceID);
             context.Remove(fizlice);
+            context.SaveChanges();
 
 
         }
