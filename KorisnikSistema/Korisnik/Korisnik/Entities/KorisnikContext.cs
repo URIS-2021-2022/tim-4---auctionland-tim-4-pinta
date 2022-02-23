@@ -31,9 +31,9 @@ namespace Korisnik.Entities
         /// <summary>
         /// Popunjava bazu sa nekim inicijalnim podacima
         /// </summary>
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<KorisnikModel>()
+            modelBuilder.Entity<KorisnikModel>()
                 .HasData(new
                 {
                     
@@ -46,7 +46,7 @@ namespace Korisnik.Entities
                     TipKorisnika = "administrator"
                 });
 
-            builder.Entity<KorisnikModel>()
+            modelBuilder.Entity<KorisnikModel>()
                 .HasData(new
                 {
 
@@ -59,7 +59,7 @@ namespace Korisnik.Entities
                     TipKorisnika = "licitant"
                 });
 
-            builder.Entity<TokenTime>()
+            modelBuilder.Entity<TokenTime>()
                 .HasData(new
                 {
                     tokenId = 1,
