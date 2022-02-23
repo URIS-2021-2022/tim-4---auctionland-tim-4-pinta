@@ -93,9 +93,9 @@ namespace UgovorOZakupuAgregat.Controllers
                 UgovorOZakupuDto ugovorDto = mapper.Map<UgovorOZakupuDto>(u);
                 ugovorDto.Dokument = mapper.Map<DokumentDto>(dokumentRepository.GetDokumentById(u.DokumentId));
                 ugovorDto.TipGarancije = mapper.Map<TipGarancijeDto>(tipGarancijeRepository.GetTipGarancijeById(u.TipId));
-                ugovorDto.Licnost = licnostService.GetLicnostByIdAsync(u.LicnostId).Result;
-                ugovorDto.Kupac = kupacService.GetKupacByIdAsync(u.KupacId).Result;
-                ugovorDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(u.JavnoNadmetanjeId).Result;
+                ugovorDto.Licnost = licnostService.GetLicnostByIdAsync(u.LicnostId, token).Result;
+                ugovorDto.Kupac = kupacService.GetKupacByIdAsync(u.KupacId, token).Result;
+                ugovorDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(u.JavnoNadmetanjeId, token).Result;
                 ugovoriDto.Add(ugovorDto);
             }
             logDto.Level = "Info";
@@ -142,9 +142,9 @@ namespace UgovorOZakupuAgregat.Controllers
                 return NotFound();
             }
            
-            LicnostUgovoraDto licnost = licnostService.GetLicnostByIdAsync(ugovor.LicnostId).Result;
-            KupacUgovoraDto kupac = kupacService.GetKupacByIdAsync(ugovor.KupacId).Result;
-            JavnoNadmetanjeUgovoraDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(ugovor.JavnoNadmetanjeId).Result;
+            LicnostUgovoraDto licnost = licnostService.GetLicnostByIdAsync(ugovor.LicnostId, token).Result;
+            KupacUgovoraDto kupac = kupacService.GetKupacByIdAsync(ugovor.KupacId, token).Result;
+            JavnoNadmetanjeUgovoraDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(ugovor.JavnoNadmetanjeId, token).Result;
             UgovorOZakupuDto ugovorDto = mapper.Map<UgovorOZakupuDto>(ugovor);
             ugovorDto.Dokument= mapper.Map<DokumentDto>(dokumentRepository.GetDokumentById(ugovor.DokumentId));
             ugovorDto.TipGarancije = mapper.Map<TipGarancijeDto>(tipGarancijeRepository.GetTipGarancijeById(ugovor.TipId));
@@ -209,9 +209,9 @@ namespace UgovorOZakupuAgregat.Controllers
                 UgovorOZakupu ugovorCreate = ugovorRepository.CreateUgovor(ugovorEntity);
                 ugovorRepository.SaveChanges();
                 string location = linkGenerator.GetPathByAction("GetUgovor", "UgovorOZakupu", new { ugovorId = ugovorCreate.UgovorId });
-                LicnostUgovoraDto licnost = licnostService.GetLicnostByIdAsync(ugovorCreate.LicnostId).Result;
-                KupacUgovoraDto kupac = kupacService.GetKupacByIdAsync(ugovorCreate.KupacId).Result;
-                JavnoNadmetanjeUgovoraDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(ugovorCreate.JavnoNadmetanjeId).Result;
+                LicnostUgovoraDto licnost = licnostService.GetLicnostByIdAsync(ugovorCreate.LicnostId, token).Result;
+                KupacUgovoraDto kupac = kupacService.GetKupacByIdAsync(ugovorCreate.KupacId, token).Result;
+                JavnoNadmetanjeUgovoraDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(ugovorCreate.JavnoNadmetanjeId, token).Result;
                 UgovorOZakupuDto ugovorDto = mapper.Map<UgovorOZakupuDto>(ugovorCreate);
                 ugovorDto.Dokument = mapper.Map<DokumentDto>(dokumentRepository.GetDokumentById(ugovor.DokumentId));
                 ugovorDto.TipGarancije = mapper.Map<TipGarancijeDto>(tipGarancijeRepository.GetTipGarancijeById(ugovor.TipId));
@@ -329,9 +329,9 @@ namespace UgovorOZakupuAgregat.Controllers
                 UgovorOZakupu ugovorEntity = mapper.Map<UgovorOZakupu>(ugovor);
                 mapper.Map(ugovorEntity, stariUgovor);
                 ugovorRepository.SaveChanges();
-                LicnostUgovoraDto licnost = licnostService.GetLicnostByIdAsync(ugovorEntity.LicnostId).Result;
-                KupacUgovoraDto kupac = kupacService.GetKupacByIdAsync(ugovorEntity.KupacId).Result;
-                JavnoNadmetanjeUgovoraDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(ugovorEntity.JavnoNadmetanjeId).Result;
+                LicnostUgovoraDto licnost = licnostService.GetLicnostByIdAsync(ugovorEntity.LicnostId, token).Result;
+                KupacUgovoraDto kupac = kupacService.GetKupacByIdAsync(ugovorEntity.KupacId, token).Result;
+                JavnoNadmetanjeUgovoraDto javnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(ugovorEntity.JavnoNadmetanjeId, token).Result;
                 UgovorOZakupuDto ugovorDto = mapper.Map<UgovorOZakupuDto>(ugovorEntity);
                 ugovorDto.Dokument = mapper.Map<DokumentDto>(dokumentRepository.GetDokumentById(ugovor.DokumentId));
                 ugovorDto.TipGarancije = mapper.Map<TipGarancijeDto>(tipGarancijeRepository.GetTipGarancijeById(ugovor.TipId));
