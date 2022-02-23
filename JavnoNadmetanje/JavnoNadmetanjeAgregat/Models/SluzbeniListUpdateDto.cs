@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,10 +8,11 @@ namespace JavnoNadmetanjeAgregat.Models
 {
     public class SluzbeniListUpdateDto
     {
-       
+
         /// <summary>
         /// ID sluzbeni list 
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti ID")]
         public Guid SluzbeniListID { get; set; }
         /// <summary>
         ///Opstina sluzbenog lista

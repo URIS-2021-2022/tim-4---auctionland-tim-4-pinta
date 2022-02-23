@@ -30,6 +30,8 @@ namespace JavnoNadmetanjeAgregat.Controllers
     public class JavnoNadmetanjeController : ControllerBase
 
     {
+        private readonly ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository;
+        private readonly IStatusJavnogNadmetanjaRepository statusJavnogNadmetanjaRepository;
         private readonly IKatastarskaOpstinaService katastarskaOpstinaService;
         private readonly IKupacService kupacService;
         private readonly IAdresaService adresaService;
@@ -45,10 +47,12 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IMapper mapper;
         //injektovanje zavisnosti- kad se kreira obj kontrolera mora da se prosledi nesto sto implementira interfejs tj confirmation
 
-        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService)
+        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService, ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository, IStatusJavnogNadmetanjaRepository statusJavnogNadmetanjaRepository)
         {
             this.javnoNadmetanjeRepository = javnoNadmetanjeRepository;
             this.linkGenerator = linkGenerator;
+            this.tipJavnogNadmetanjaRepository = tipJavnogNadmetanjaRepository;
+            this.statusJavnogNadmetanjaRepository = statusJavnogNadmetanjaRepository;
             this.katastarskaOpstinaService = katastarskaOpstinaService;
             this.kupacService = kupacService;
             this.parcelaService = parcelaService;
@@ -91,27 +95,31 @@ namespace JavnoNadmetanjeAgregat.Controllers
             logDto.HttpMethod = "GET";
             logDto.Message = "Vracanje svih javnih nadmetanja";
 
-            List<JavnoNadmetanjeEntity> javnoNadmetanje = javnoNadmetanjeRepository.GetJavnoNadmetanje();
-            if (javnoNadmetanje == null || javnoNadmetanje.Count == 0)
+            List<JavnoNadmetanjeEntity> javnaN = javnoNadmetanjeRepository.GetJavnoNadmetanje();
+            if (javnaN == null || javnaN.Count == 0)
             {
                 logDto.Level = "Warn";
                 loggerService.CreateLog(logDto);
                 return NoContent();
             }
-
-            List<JavnoNadmetanjeDto> javnoNadmetanjeDto = mapper.Map<List<JavnoNadmetanjeDto>>(javnoNadmetanje);
-            foreach (JavnoNadmetanjeDto j in javnoNadmetanjeDto)
+            List<JavnoNadmetanjeDto> javnaNDto = new List<JavnoNadmetanjeDto>();
+            foreach (JavnoNadmetanjeEntity j in javnaN)
             {
-
-                j.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(j.KatastarskaOpstinaID).Result;
-                j.Kupac = kupacService.GetKupacByIdAsync(j.KupacID).Result;
-                j.Adresa = adresaService.GetAdresaByIdAsync(j.AdresaID).Result;
-                j.Parcela = parcelaService.GetParcelaByIdAsync(j.ParcelaID).Result;
-
+                JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(j);
+                javnoNadmetanjeDto.Tip = mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(j.TipID));
+                javnoNadmetanjeDto.Status = mapper.Map<StatusJavnogNadmetanjaDto>(statusJavnogNadmetanjaRepository.GetStatusJavnogNadmetanjaById(j.StatusID));
+                javnoNadmetanjeDto.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(j.KatastarskaOpstinaID, token).Result;
+                javnoNadmetanjeDto.Kupac = kupacService.GetKupacByIdAsync(j.KupacID, token).Result;
+                javnoNadmetanjeDto.Adresa = adresaService.GetAdresaByIdAsync(j.AdresaID, token).Result;
+                javnoNadmetanjeDto.Parcela = parcelaService.GetParcelaByIdAsync(j.ParcelaID, token).Result;
+                javnaNDto.Add(javnoNadmetanjeDto);
             }
+
+            
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(javnoNadmetanjeDto);
+            // return Ok(javnoNadmetanjeDto);
+            return Ok(javnaNDto);
         }
 
         /// <summary>
@@ -149,16 +157,13 @@ namespace JavnoNadmetanjeAgregat.Controllers
                 return NotFound();
             }
 
-            KatastarskaOpstinaJavnoNadmetanjeDto katastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(javnoNadmetanje.KatastarskaOpstinaID).Result;
-            KupacJavnoNadmetanjeDto kupac = kupacService.GetKupacByIdAsync(javnoNadmetanje.KupacID).Result;
-            ParcelaJavnoNadmetanjeDto parcela = parcelaService.GetParcelaByIdAsync(javnoNadmetanje.ParcelaID).Result;
-            AdresaJavnoNadmetanjeDto adresa = adresaService.GetAdresaByIdAsync(javnoNadmetanje.AdresaID).Result;
-
-            JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje);
-            javnoNadmetanjeDto.KatastarskaOpstina = katastarskaOpstina;
-            javnoNadmetanjeDto.Kupac = kupac;
-            javnoNadmetanjeDto.Parcela = parcela;
-            javnoNadmetanjeDto.Adresa = adresa;
+                JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanje);
+                javnoNadmetanjeDto.Tip = mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(javnoNadmetanje.TipID));
+                javnoNadmetanjeDto.Status = mapper.Map<StatusJavnogNadmetanjaDto>(statusJavnogNadmetanjaRepository.GetStatusJavnogNadmetanjaById(javnoNadmetanje.StatusID));
+                javnoNadmetanjeDto.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(javnoNadmetanje.KatastarskaOpstinaID, token).Result;
+                javnoNadmetanjeDto.Kupac = kupacService.GetKupacByIdAsync(javnoNadmetanje.KupacID, token).Result;
+                javnoNadmetanjeDto.Adresa = adresaService.GetAdresaByIdAsync(javnoNadmetanje.AdresaID, token).Result;
+                javnoNadmetanjeDto.Parcela = parcelaService.GetParcelaByIdAsync(javnoNadmetanje.ParcelaID, token).Result;
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(javnoNadmetanjeDto);
@@ -213,9 +218,19 @@ namespace JavnoNadmetanjeAgregat.Controllers
                 JavnoNadmetanjeEntity j = javnoNadmetanjeRepository.CreateJavnoNadmetanje(obj);
                 javnoNadmetanjeRepository.SaveChanges();
                 String location = linkGenerator.GetPathByAction("GetJavnoNadmetanje", "JavnoNadmetanje", new { javnoNadmetanjeID = j.JavnoNadmetanjeID });
+
+                JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(j);
+                javnoNadmetanjeDto.Tip = mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(j.TipID));
+                javnoNadmetanjeDto.Status = mapper.Map<StatusJavnogNadmetanjaDto>(statusJavnogNadmetanjaRepository.GetStatusJavnogNadmetanjaById(j.StatusID));
+                javnoNadmetanjeDto.KatastarskaOpstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(j.KatastarskaOpstinaID, token).Result;
+                javnoNadmetanjeDto.Kupac = kupacService.GetKupacByIdAsync(j.KupacID, token).Result;
+                javnoNadmetanjeDto.Adresa = adresaService.GetAdresaByIdAsync(j.AdresaID, token).Result;
+                javnoNadmetanjeDto.Parcela = parcelaService.GetParcelaByIdAsync(j.ParcelaID, token).Result;
+
+
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<JavnoNadmetanjeDto>(j));
+                return Created(location, javnoNadmetanjeDto);
               
             }
             catch
@@ -325,10 +340,23 @@ namespace JavnoNadmetanjeAgregat.Controllers
                 mapper.Map(javnoNadmetanjeEntity, oldJavnoNadmetanje); //Update objekta koji treba da sačuvamo u bazi                
 
                 javnoNadmetanjeRepository.SaveChanges(); //Perzistiramo promene
+                
+                KatastarskaOpstinaJavnoNadmetanjeDto ko = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(javnoNadmetanjeEntity.KatastarskaOpstinaID, token).Result;
+                KupacJavnoNadmetanjeDto kupac = kupacService.GetKupacByIdAsync(javnoNadmetanjeEntity.KupacID, token).Result;
+                AdresaJavnoNadmetanjeDto adresa = adresaService.GetAdresaByIdAsync(javnoNadmetanjeEntity.AdresaID, token).Result;
+                ParcelaJavnoNadmetanjeDto parcela = parcelaService.GetParcelaByIdAsync(javnoNadmetanjeEntity.ParcelaID, token).Result;
+
+                JavnoNadmetanjeDto javnoNadmetanjeDto = mapper.Map<JavnoNadmetanjeDto>(javnoNadmetanjeEntity);
+                javnoNadmetanjeDto.Tip = mapper.Map<TipJavnogNadmetanjaDto>(tipJavnogNadmetanjaRepository.GetTipJavnogNadmetanjaById(javnoNadmetanjeEntity.TipID));
+                javnoNadmetanjeDto.Status = mapper.Map<StatusJavnogNadmetanjaDto>(statusJavnogNadmetanjaRepository.GetStatusJavnogNadmetanjaById(javnoNadmetanjeEntity.StatusID));
+                javnoNadmetanjeDto.KatastarskaOpstina = ko;
+                javnoNadmetanjeDto.Kupac = kupac;
+                javnoNadmetanjeDto.Adresa = adresa;
+                javnoNadmetanjeDto.Parcela = parcela;
 
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Ok(mapper.Map<JavnoNadmetanjeDto>(oldJavnoNadmetanje));
+                return Ok(javnoNadmetanjeDto);
             }
             catch (Exception)
             {

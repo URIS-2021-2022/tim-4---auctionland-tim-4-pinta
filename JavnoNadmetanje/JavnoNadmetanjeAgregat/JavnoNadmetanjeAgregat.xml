@@ -580,9 +580,19 @@
             Tip javnog nadmetanja
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Tip">
+            <summary>
+            Naziv tipa javnog nadmetanja
+            </summary>
+        </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.StatusID">
             <summary>
-            Status javnog nadmetanja
+            Status javnog nadmetanja ID
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Status">
+            <summary>
+            Status javnog nadmetanja ID
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.Krug">
@@ -602,7 +612,7 @@
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.KatastarskaOpstina">
             <summary>
-            ID kupca parcele
+            Katastarska opstina javnog nadmetanja
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeDto.KupacID">
@@ -1005,7 +1015,7 @@
             Poziv na broj uplate
             </summary>
         </member>
-        <member name="M:JavnoNadmetanjeAgregat.ServiceCalls.IKupacService.GetKupacByIdAsync(System.Guid)">
+        <member name="M:JavnoNadmetanjeAgregat.ServiceCalls.IKupacService.GetKupacByIdAsync(System.Guid,System.String)">
             <summary>
             Zahtev za kupca po ID-ju
             </summary>

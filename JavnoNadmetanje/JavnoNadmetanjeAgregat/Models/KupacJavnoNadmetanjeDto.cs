@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// Naziv kupca parcele
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti naziv kupca parcele")]
         public string Naziv { get; set; }
 
         /// <summary>
@@ -25,6 +27,7 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// Prvi broj telefona kupca parcele
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti broj telefona")]
         public string BrojTelefona1 { get; set; }
 
         /// <summary>

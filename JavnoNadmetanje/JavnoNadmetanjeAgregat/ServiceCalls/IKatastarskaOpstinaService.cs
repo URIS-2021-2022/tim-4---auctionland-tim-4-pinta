@@ -8,7 +8,7 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
 {
     public interface IKatastarskaOpstinaService
     {
-       Task< KatastarskaOpstinaJavnoNadmetanjeDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID);
+       Task< KatastarskaOpstinaJavnoNadmetanjeDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID , string token);
       
     }
 }

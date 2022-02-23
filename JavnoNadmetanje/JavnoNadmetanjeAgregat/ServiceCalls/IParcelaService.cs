@@ -8,6 +8,6 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
 {
      public interface IParcelaService
     {
-       Task <ParcelaJavnoNadmetanjeDto> GetParcelaByIdAsync(Guid parcelaID);
+       Task <ParcelaJavnoNadmetanjeDto> GetParcelaByIdAsync(Guid parcelaID, string token);
     }
 }
