@@ -18,12 +18,13 @@ namespace Parcela.ServiceCals
             this.configuration = configuration;
         }
 
-        public async Task<OpstinaParceleDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID)
+        public async Task<OpstinaParceleDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID, string token)
         {
             using (HttpClient client = new HttpClient())
             {
                 Uri url = new Uri($"{ configuration["Services:KatastarskaOpstinaService"] }api/katastarskeOpstine/{katastarskaOpstinaID}");
 
+                client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;
                 
                 var responseContent = await response.Content.ReadAsStringAsync();

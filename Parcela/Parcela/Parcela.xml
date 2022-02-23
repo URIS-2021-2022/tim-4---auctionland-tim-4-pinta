@@ -526,7 +526,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "500">Doslo je do greske na serveru prilikom kreiranja parcele</response>
         </member>
-        <member name="M:Parcela.Controllers.ParcelaController.DeleteParcela(System.Guid,Parcela.Data.IKlasaRepository,Parcela.Data.IKulturaRepository,Parcela.Data.IOblikSvojineRepository,Parcela.Data.IObradivostRepository,Parcela.Data.IOdvodnjavanjeRepository,Parcela.Data.IZasticenaZonaRepository)">
+        <member name="M:Parcela.Controllers.ParcelaController.DeleteParcela(System.Guid)">
             <summary>
             Vrsi brisanje jedne parcele na osnovu ID-ja
             </summary>
@@ -1846,7 +1846,7 @@
             Konstruktor
             </summary>
         </member>
-        <member name="M:Parcela.ServiceCals.IKatastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(System.Guid)">
+        <member name="M:Parcela.ServiceCals.IKatastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(System.Guid,System.String)">
             <summary>
             Zahtev za katastarskom opstinom po ID-ju
             </summary>
