@@ -8,7 +8,7 @@ namespace KupacMikroservis.ServiceCalls
 {
     public interface IAdresaService
     {
-        Task<AdresaKupcaDto> GetAdresaKupcaAsync(Guid AdresaID);
-        Task<AdresaOvlascenogLicaDto> GetAdresaOvlLicaAsync(Guid AdresaID);
+        Task<AdresaKupcaDto> GetAdresaKupcaAsync(Guid AdresaID,string token);
+        Task<AdresaOvlascenogLicaDto> GetAdresaOvlLicaAsync(Guid AdresaID,string token);
     }
 }

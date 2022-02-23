@@ -86,7 +86,7 @@ namespace KupacMikroservis
                         License = new Microsoft.OpenApi.Models.OpenApiLicense
                         {
                             Name = "FTN licence",
-                            Url = new Uri(Configuration["Links: FTN"])
+                            Url = new Uri(Configuration["Links:FTN"])
                         },
                         TermsOfService = new Uri(Configuration["Links:FTN"])
                     });
