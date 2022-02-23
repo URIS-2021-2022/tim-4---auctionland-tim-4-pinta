@@ -20,7 +20,7 @@ namespace Parcela.Entities
         /// <summary>
         /// Oznaka klase
         /// </summary>
-        public string KlasaOznaka { get; set; }
+        public String KlasaOznaka { get; set; }
 
         /// <summary>
         /// Parcele

@@ -8,6 +8,6 @@ namespace UgovorOZakupuAgregat.ServiceCalls
 {
     public interface IKupacService
     {
-        Task<KupacUgovoraDto> GetKupacByIdAsync(Guid kupacId);
+        Task<KupacUgovoraDto> GetKupacByIdAsync(Guid kupacId, string token);
     }
 }

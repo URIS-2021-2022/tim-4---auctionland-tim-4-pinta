@@ -182,6 +182,31 @@
             <param name="savedSalt">Sačuvan salt</param>
             <returns></returns>
         </member>
+        <member name="T:Uplata.Entities.KursEntity">
+            <summary>
+            Entitet kurs 
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.KursEntity.KursID">
+            <summary>
+            ID kursa
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.KursEntity.VrednostKursa">
+            <summary>
+            Vrednost kursa
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.KursEntity.Datum">
+            <summary>
+            Datum kursa
+            </summary>
+        </member>
+        <member name="P:Uplata.Entities.KursEntity.Valuta">
+            <summary>
+            Valuta kursa
+            </summary>
+        </member>
         <member name="M:Uplata.Entities.UplataContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             Kreiranje modela 

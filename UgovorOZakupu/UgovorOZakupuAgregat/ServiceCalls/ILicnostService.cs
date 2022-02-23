@@ -8,6 +8,6 @@ namespace UgovorOZakupuAgregat.ServiceCalls
 {
     public interface ILicnostService
     {
-        Task<LicnostUgovoraDto> GetLicnostByIdAsync(Guid licnostId);
+        Task<LicnostUgovoraDto> GetLicnostByIdAsync(Guid licnostId, string token);
     }
 }

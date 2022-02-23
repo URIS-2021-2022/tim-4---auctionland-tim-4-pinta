@@ -432,22 +432,22 @@
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.Ulica">
             <summary>
-            Ulica adrese
+            Ulica javnog nadmetanja
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.Broj">
             <summary>
-            Broj adrese
+            Broj ulice 
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.Mesto">
             <summary>
-            Mesto adrese
+            Mesto ulice
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.AdresaJavnoNadmetanjeDto.PostanskiBroj">
             <summary>
-            Postanski broj adrese
+            Postanski broj javnog nadmetanja
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.AdresaKupcaDto.Ulica">
@@ -838,6 +838,56 @@
         <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.OdvodnjavanjeStvarnoStanje">
             <summary>
             Stvarno stanje odvodnjavanja za parcelu
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.ZasticenaZonaID">
+            <summary>
+            ID zasticene zone
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.OdvodnjavanjeID">
+            <summary>
+            ID odvodnjavanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.ObradivostID">
+            <summary>
+            ID obradivosti
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.OblikSvojineID">
+            <summary>
+            ID oblika svojine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.KulturaID">
+            <summary>
+            ID kulture
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.KlasaID">
+            <summary>
+            ID klase
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.KatastarskaOpstinaID">
+            <summary>
+            ID katastarske opstine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.Opstina">
+            <summary>
+            Katastarska opstina parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.ParcelaJavnoNadmetanjeDto.Kupac">
+            <summary>
+            Kupac parcele
             </summary>
         </member>
         <member name="T:JavnoNadmetanjeAgregat.Models.Principal">

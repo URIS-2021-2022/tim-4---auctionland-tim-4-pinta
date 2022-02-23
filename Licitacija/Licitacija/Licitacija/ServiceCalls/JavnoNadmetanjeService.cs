@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Licitacija.Models;
 
 namespace Licitacija.ServiceCalls
 {
@@ -19,13 +18,14 @@ namespace Licitacija.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<JavnoNadmetanjeLicitacijeDto> GetJavnoNadmetanjeByIdAsync(Guid? javnoNadmetanjeID)
+        public async Task<JavnoNadmetanjeLicitacijeDto> GetJavnoNadmetanjeByIdAsync(Guid? javnoNadmetanjeID,string token)
         {
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:JavnoNadmetanjeService"];
                 Uri url = new Uri($"{ configuration["Services:JavnoNadmetanjeService"] }api/javnaNadmetanja/{javnoNadmetanjeID}");
 
+                client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();

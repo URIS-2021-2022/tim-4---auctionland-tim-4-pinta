@@ -135,19 +135,19 @@ namespace JavnoNadmetanjeAgregat
                     {
                         Title = "Javno nadmetanje Agregat API",
                         Version = "1",
-                        Description = "Pomoću ovog API-ja može da se vrši dodavanje, modifikacija i brisanje parcela, odnosno njenih delova, kao i pregled svih kreiranih parcela i delova parcela.",
+                        Description = "Pomoću ovog API-ja može da se vrši dodavanje, modifikacija i brisanje javnih nadmetanja, kao i pregled svih kreiranih javnih nadmetanja.",
                         Contact = new Microsoft.OpenApi.Models.OpenApiContact
                         {
                             Name = "Dajana Jelic",
                             Email = "dajanajelic05@gmail.com",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
                         License = new Microsoft.OpenApi.Models.OpenApiLicense
                         {
                             Name = "FTN licence",
-                            Url = new Uri("http://www.ftn.uns.ac.rs/")
+                            Url = new Uri(Configuration["Uri:Ftn"])
                         },
-                        TermsOfService = new Uri("http://www.ftn.uns.ac.rs/")
+                        TermsOfService = new Uri(Configuration["Uri:Ftn"])
                     });
                 var xmlComments = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";//refleksija
                 //omogucava da manipulisemo sa putanjom

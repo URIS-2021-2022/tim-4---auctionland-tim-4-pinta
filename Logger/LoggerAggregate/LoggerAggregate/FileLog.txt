@@ -165,3 +165,26 @@
 2022-02-22 18:19:28.6193 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
 2022-02-22 18:19:29.2349 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
 2022-02-22 18:19:29.4352 INFO Naziv metode: GET,Naziv servisa: JavnoNadmetanje,poruka: Vracanje svih javnih nadmetanja
+2022-02-23 13:31:17.4346 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-23 13:31:40.6199 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje adrese po ID-ju
+2022-02-23 13:31:51.5291 INFO Naziv metode: POST,Naziv servisa: Adresa,poruka: Dodavanje nove adrese
+2022-02-23 13:31:56.8623 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-23 13:32:11.9013 INFO Naziv metode: PUT,Naziv servisa: Adresa,poruka: Modifikovanje adrese
+2022-02-23 13:32:16.5267 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-23 13:34:16.7666 WARN Naziv metode: DELETE,Naziv servisa: Adresa,poruka: Brisanje adrese
+2022-02-23 13:34:35.0476 INFO Naziv metode: DELETE,Naziv servisa: Adresa,poruka: Brisanje adrese
+2022-02-23 13:34:38.0431 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih adresa
+2022-02-23 13:35:00.0416 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-23 13:35:07.5187 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje drazve po ID-ju
+2022-02-23 13:35:21.8146 INFO Naziv metode: POST,Naziv servisa: Adresa,poruka: Dodavanje nove drzave
+2022-02-23 13:35:26.0518 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-23 13:35:37.9726 INFO Naziv metode: PUT,Naziv servisa: Adresa,poruka: Modifikovanje drzave
+2022-02-23 13:35:41.1001 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-23 13:35:50.5297 INFO Naziv metode: DELETE,Naziv servisa: Adresa,poruka: Brisanje drzave
+2022-02-23 13:35:55.0644 INFO Naziv metode: GET,Naziv servisa: Adresa,poruka: Vracanje svih drzava
+2022-02-23 13:51:52.5985 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-23 13:52:00.5415 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-23 13:52:01.0603 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-23 13:52:01.3411 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-23 13:53:05.6176 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID
+2022-02-23 13:56:27.5284 INFO Naziv metode: GET,Naziv servisa: Kupac,poruka: Vracanje kupca po ID

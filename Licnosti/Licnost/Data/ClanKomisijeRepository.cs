@@ -1,21 +1,17 @@
-﻿using AutoMapper;
-using Licnost.Entities;
+﻿using Licnost.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Licnost.Data
 {
     public class ClanKomisijeRepository : IClanKomisijeRepository
     {
         private readonly LicnostContext context;
-        private readonly IMapper mapper;
 
-        public ClanKomisijeRepository(LicnostContext context, IMapper mapper)
+        public ClanKomisijeRepository(LicnostContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -26,31 +22,29 @@ namespace Licnost.Data
         public List<ClanKomisije> GetClanoviKomisije()
         {
             return (from c in context.ClanoviKomisije select c).ToList();
-
         }
 
-        public ClanKomisije GetClanKomisijeById(Guid clanId)
+        public ClanKomisije GetClanKomisijeById(Guid clanKomisijeId)
         {
-            return context.ClanoviKomisije.FirstOrDefault(c => c.ClanKomisijeId == clanId);
+            return context.ClanoviKomisije.FirstOrDefault(c => c.ClanKomisijeId == clanKomisijeId);
         }
 
-        public ClanKomisije CreateClanKomisije(ClanKomisije clan)
+        public ClanKomisije CreateClanKomisije(ClanKomisije clanKomisije)
         {
-            clan.ClanKomisijeId = Guid.NewGuid();
-            context.ClanoviKomisije.Add(clan);
-            return clan;
+            clanKomisije.ClanKomisijeId = Guid.NewGuid();
+            context.ClanoviKomisije.Add(clanKomisije);
+            return clanKomisije;
         }
 
-        public void UpdateClanKomisije(ClanKomisije clan)
+        public void UpdateClanKomisije(ClanKomisije clanKomisije)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteClanKomisije(Guid clanId)
+        public void DeleteClanKomisije(Guid clanKomisijeId)
         {
-            var clan = GetClanKomisijeById(clanId);
-            context.Remove(clanId);
+            var clan = GetClanKomisijeById(clanKomisijeId);
+            context.Remove(clan);
         }
     }
 }
-

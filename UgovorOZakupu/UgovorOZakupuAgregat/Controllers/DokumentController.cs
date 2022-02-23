@@ -47,11 +47,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <returns>Listu dokumenata</returns>
         /// <response code="200">Vraća listu dokumenata</response>
         /// <response code="404">Nije pronađena ni jedan jedini dokument</response>
-        [HttpGet]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet]
+        [HttpHead]
         public ActionResult<List<DokumentDto>> GetDokumenti()
         {
             string token = Request.Headers["token"].ToString();
@@ -90,13 +90,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <param name="dokumentId">ID dokumenta</param>
         /// <returns></returns>
         /// <response code="200">Vraća tražen dokument</response>
-        [HttpGet("{dokumentId}")]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        
+        [HttpGet("{dokumentId}")]
         public ActionResult<DokumentDto> GetDokument(Guid dokumentId)
         {
             string token = Request.Headers["token"].ToString();
@@ -145,12 +143,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// </remarks>
         ///  <response code="201">Vraća kreiran dokument</response>
         /// <response code="500">Došlo je do greške na serveru prilikom kreiranja dokumenta</response>
-        [HttpPost]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Consumes("application/json")]
+        [HttpPost]
         public ActionResult<DokumentDto> CreateDokument([FromBody] DokumentDto dokument)
         {
             string token = Request.Headers["token"].ToString();
@@ -197,13 +194,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="204">Dokument uspešno obrisan</response>
         /// <response code="404">Nije pronađen dokument za brisanje</response>
         /// <response code="500">Došlo je do greške na serveru prilikom brisanja dokumenta</response>
-        [HttpDelete("{dokumentId}")]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        
+        [HttpDelete("{dokumentId}")]
         public IActionResult DeleteDokument(Guid dokumentId)
         {
             string token = Request.Headers["token"].ToString();
@@ -253,14 +248,12 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="200">Vraća ažuriran dokument</response>
         /// <response code="400">Dokument koji se ažurira nije pronađen</response>
         /// <response code="500">Došlo je do greške na serveru prilikom ažuriranja dokumenta</response>
-        [HttpPut]
-        [HttpHead]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        
+        [HttpPut]
         public ActionResult<DokumentDto> UpdateDokument(DokumentUpdateDto dokument)
         {
             string token = Request.Headers["token"].ToString();

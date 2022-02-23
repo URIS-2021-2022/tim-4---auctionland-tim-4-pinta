@@ -25,10 +25,7 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                //var gateway = gatewayService.GetUrl("logger").Result;
-
-                var x = configuration["Services:LoggerService"];
-                //Uri url = new Uri(gateway.Url);
+               
                 Uri url = new Uri($"{configuration["Services:LoggerService"]}api/logger");
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(log));

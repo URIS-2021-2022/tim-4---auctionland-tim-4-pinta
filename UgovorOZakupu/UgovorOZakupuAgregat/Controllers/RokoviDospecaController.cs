@@ -45,11 +45,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <returns>Listu rokova dospeća</returns>
         /// <response code="200">Vraća listu rokova dospeća</response>
         /// <response code="404">Nije pronađena ni jedan jedini rok dospeća</response>
-        [HttpGet]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet]
+        [HttpHead]
         public ActionResult<List<RokoviDospecaDto>> GetRokovi()
         {
             string token = Request.Headers["token"].ToString();
@@ -86,12 +86,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <param name="rokId">ID roka dospeća</param>
         /// <returns></returns>
         /// <response code="200">Vraća tražen rok dospeća</response>
-        [HttpGet("{rokId}")]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("{rokId}")]
         public ActionResult<RokoviDospecaDto> GetRok(Guid rokId)
         {
             string token = Request.Headers["token"].ToString();
@@ -137,13 +136,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// </remarks>
         ///  <response code="201">Vraća kreiran rok dospeća</response>
         /// <response code="500">Došlo je do greške na serveru prilikom kreiranja roka dospeća</response>
-        [HttpPost]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Consumes("application/json")]
-       
+        [HttpPost]
         public ActionResult<RokoviDospecaDto> CreateRok([FromBody] RokoviDospecaDto rok)
         {
             string token = Request.Headers["token"].ToString();
@@ -187,12 +184,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="204">Rok dospeća uspešno obrisan</response>
         /// <response code="404">Nije pronađen rok dospeća za brisanje</response>
         /// <response code="500">Došlo je do greške na serveru prilikom brisanja roka dospeća</response>
-        [HttpDelete("{rokId}")]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpDelete("{rokId}")]
         public IActionResult DeleteRok(Guid rokId)
         {
             string token = Request.Headers["token"].ToString();
@@ -241,8 +237,6 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="200">Vraća ažuriran rok dospeća</response>
         /// <response code="404">Rok dospeća koji se ažurira nije pronađen</response>
         /// <response code="500">Došlo je do greške na serveru prilikom ažuriranja dokumenta</response>
-        [HttpPut]
-        [HttpHead]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

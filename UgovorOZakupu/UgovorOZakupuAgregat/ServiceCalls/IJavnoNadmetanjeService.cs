@@ -8,6 +8,6 @@ namespace UgovorOZakupuAgregat.ServiceCalls
 {
     public interface IJavnoNadmetanjeService
     {
-        Task<JavnoNadmetanjeUgovoraDto> GetJavnoNadmetanjeByIdAsync(Guid javnoNadmetanjeId);
+        Task<JavnoNadmetanjeUgovoraDto> GetJavnoNadmetanjeByIdAsync(Guid javnoNadmetanjeId, string token);
     }
 }

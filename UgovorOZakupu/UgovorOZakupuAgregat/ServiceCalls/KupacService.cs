@@ -18,13 +18,13 @@ namespace UgovorOZakupuAgregat.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<KupacUgovoraDto> GetKupacByIdAsync(Guid kupacId)
+        public async Task<KupacUgovoraDto> GetKupacByIdAsync(Guid kupacId, string token)
         {
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:KupacService"];
                 Uri url = new Uri($"{ configuration["Services:KupacService"] }api/kupac/{kupacId}");
-
+                client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();

@@ -43,7 +43,7 @@ namespace Korisnik
             {
                 setup.ReturnHttpNotAcceptable = true;
                 //Ovde sa setup.Filters mozemo dodati response tipove za sve kontrolere
-                //setup.Filters.Add(new ProducesResponseTypeAttribute(StatusCodes.Status200OK));                
+             
             }
             ).AddXmlDataContractSerializerFormatters() //Dodajemo podršku za XML tako da ukoliko klijent to traži u Accept header-u zahteva možemo da serializujemo payload u XML u odgovoru.
             .ConfigureApiBehaviorOptions(setupAction => //Deo koji se odnosi na podržavanje Problem Details for HTTP APIs
@@ -82,7 +82,7 @@ namespace Korisnik
                         {
                             ContentTypes = { "application/problem+json" }
                         };
-                    };
+                    }
 
                     //ukoliko postoji nešto što nije moglo da se parsira hoæemo da vraæamo status 400 kao i do sada
                     problemDetails.Status = StatusCodes.Status400BadRequest;
@@ -98,20 +98,6 @@ namespace Korisnik
             //Konfigurisanje Jwt autentifikacije za projekat
             //Registrujemo Jwt autentifikacionu shemu i definisemo sve potrebne Jwt opcije
 
-            /*ne radi nzm koji paket
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                };
-            });*/
                         /*
              * Izvor: https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-5.0#lifetime-and-registration-options
                 - Transient objects are always different. The transient OperationId value is different in the IndexModel and in the middleware.

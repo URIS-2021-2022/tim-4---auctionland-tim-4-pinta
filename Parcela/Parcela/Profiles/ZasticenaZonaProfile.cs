@@ -20,6 +20,8 @@ namespace Parcela.Profiles
         {
             CreateMap<ZasticenaZonaEntity, ZasticenaZonaDto>();
             CreateMap<ZasticenaZonaDto, ZasticenaZonaEntity>();
+            CreateMap<ZasticenaZonaEntity, ZasticenaZonaCreateDto>();
+            CreateMap<ZasticenaZonaCreateDto, ZasticenaZonaEntity>();
             CreateMap<ZasticenaZonaEntity, ZasticenaZonaUpdateDto>();
             CreateMap<ZasticenaZonaUpdateDto, ZasticenaZonaEntity>();
         }

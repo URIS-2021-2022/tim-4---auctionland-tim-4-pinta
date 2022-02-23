@@ -9,12 +9,10 @@ namespace UgovorOZakupuAgregat.ServiceCalls
     public class LoggerService : ILoggerService
     {
         private readonly IConfiguration configuration;
-        private readonly IGatewayService gatewayService;
 
-        public LoggerService(IConfiguration configuration, IGatewayService gatewayService)
+        public LoggerService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.gatewayService = gatewayService;
         }
 
         public void CreateLog(LogDto log)

@@ -146,7 +146,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KlasaDto> CreateKlasa([FromBody] KlasaDto klasa)
+        public ActionResult<KlasaDto> CreateKlasa([FromBody] KlasaCreateDto klasa)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -172,7 +172,7 @@ namespace Parcela.Controllers
                 string location = linkGenerator.GetPathByAction("GetKlasa", "Klasa", new { klasaID = k.KlasaID });
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<KlasaDto>(klasa));
+                return Created(location, mapper.Map<KlasaDto>(k));
             }
             catch
             {
@@ -243,6 +243,14 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="klasa">model klase koja se azurira</param>
         /// <returns>Potvrda o modifikovanoj klasi</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje klase \
+        /// PUT /api/klase \
+        /// { \
+        /// "klasaID": "829f5f3f-6159-4e15-ab52-d4c78ce944dc", \
+        /// "klasaOznaka": "I", \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azuriranu klasu</response>
         /// <response code="400">Klasa koja se azurira nije pronadjena</response>
         /// <response code="401">Korisnik nije autorizovan</response>

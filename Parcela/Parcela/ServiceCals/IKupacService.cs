@@ -13,6 +13,6 @@ namespace Parcela.ServiceCals
         /// </summary>
         /// <param name="kupacID"></param>
         /// <returns></returns>
-        Task<KupacParceleDto> GetKupacByIdAsync(Guid kupacID);
+        Task<KupacParceleDto> GetKupacByIdAsync(Guid kupacID, string token);
     }
 }

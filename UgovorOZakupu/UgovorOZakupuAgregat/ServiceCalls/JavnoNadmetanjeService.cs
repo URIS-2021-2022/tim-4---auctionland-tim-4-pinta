@@ -18,13 +18,14 @@ namespace UgovorOZakupuAgregat.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<JavnoNadmetanjeUgovoraDto> GetJavnoNadmetanjeByIdAsync(Guid javnoNadmetanjeId)
+        public async Task<JavnoNadmetanjeUgovoraDto> GetJavnoNadmetanjeByIdAsync(Guid javnoNadmetanjeId, string token)
         {
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:JavnoNadmetanjeService"];
                 Uri url = new Uri($"{ configuration["Services:JavnoNadmetanjeService"] }api/javnaNadmetanja/{javnoNadmetanjeId}");
-
+               
+                client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();

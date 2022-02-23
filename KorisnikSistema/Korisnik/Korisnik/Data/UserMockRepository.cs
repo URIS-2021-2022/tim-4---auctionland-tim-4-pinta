@@ -12,16 +12,6 @@ namespace Korisnik.Data
     {
         private readonly static int iterations = 1000;
 
-        /* //private readonly KorisnikContext context;
-
-         int a;
-         public UserMockRepository(int a)
-         {
-             //this.context = context;
-             this.a = a;
-         }
-        */
-
 
         /// <summary>
         /// Proverava da li postoji korisnik sa prosleđenim kredencijalima
@@ -31,42 +21,8 @@ namespace Korisnik.Data
         /// <returns></returns>
         public bool UserWithCredentialsExists(string username, string password)
         {
-            //Ukoliko je username jedinstveno ovo je uredu
-            //KorisnikModel user;// = context.KorisnikModels.FirstOrDefault(u => u.KorisnickoIme == username);
-
-            /* if (user == null)
-             {
-                 return false;
-             }
-
-             return true;
-             //Ako smo našli korisnika sa tim korisničkim imenom proveravamo lozinku
-             if (VerifyPassword(password, user.Lozinka, user.Salt))
-             {
-                 return true;
-             }
-             return false;*/
+            
             return false;
-        }
-
-        /// <summary>
-        /// Vrši hash-ovanje korisničke lozinke
-        /// </summary>
-        /// <param name="password">Korisnička lozinka</param>
-        /// <returns>Generisan hash i salt</returns>
-        private Tuple<string, string> HashPassword(string password)
-        {
-            var sBytes = new byte[password.Length];
-            new RNGCryptoServiceProvider().GetNonZeroBytes(sBytes);
-            var salt = Convert.ToBase64String(sBytes);
-
-            var derivedBytes = new Rfc2898DeriveBytes(password, sBytes, iterations);
-
-            return new Tuple<string, string>
-            (
-                Convert.ToBase64String(derivedBytes.GetBytes(256)),
-                salt
-            );
         }
 
         /// <summary>

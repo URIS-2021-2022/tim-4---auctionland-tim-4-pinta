@@ -12,22 +12,17 @@ namespace Uplata.ServiceCalls
     public class LoggerService : ILoggerService
     {
         private readonly IConfiguration configuration;
-        private readonly IGatewayService gatewayService;
 
-        public LoggerService(IConfiguration configuration, IGatewayService gatewayService)
+        public LoggerService(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.gatewayService = gatewayService;
         }
 
         public void CreateLog(LogDto log)
         {
             using (HttpClient client = new HttpClient())
             {
-                //var gateway = gatewayService.GetUrl("logger").Result;
 
-                var x = configuration["Services:LoggerService"];
-                //Uri url = new Uri(gateway.Url);
                 Uri url = new Uri($"{configuration["Services:LoggerService"]}api/logger");
 
                 HttpContent content = new StringContent(JsonConvert.SerializeObject(log));

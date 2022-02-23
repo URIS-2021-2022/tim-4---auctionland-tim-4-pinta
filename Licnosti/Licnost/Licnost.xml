@@ -20,7 +20,7 @@
             <returns></returns>
             <response code="200">Vraća traženog clana</response>
         </member>
-        <member name="M:Licnost.Controllers.ClanKomisijeController.CreateClanKomisije(Licnost.Models.ClanKomisijeDto)">
+        <member name="M:Licnost.Controllers.ClanKomisijeController.CreateClanKomisije(Licnost.Models.ClanKomisijeCreateDto)">
              <summary>
              Kreira novog člana komisije
              </summary>
@@ -234,11 +234,6 @@
             Ličnost
             </summary>
         </member>
-        <member name="P:Licnost.Entities.Komisija.ClanoviKomisije">
-            <summary>
-            Clanovi komisije
-            </summary>
-        </member>
         <member name="M:Licnost.Entities.LicnostContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
             Popunjava bazu sa nekim inicijalnim podacima
@@ -267,6 +262,21 @@
         <member name="P:Licnost.Entities.LicnostEntity.LicnostFunkcija">
             <summary>
             Funkcija ličnosti
+            </summary>
+        </member>
+        <member name="T:Licnost.Models.ClanKomisijeCreateDto">
+            <summary>
+            DTO za ažuriraje člana komisije
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeCreateDto.LicnostId">
+            <summary>
+            ID ličnosti
+            </summary>
+        </member>
+        <member name="P:Licnost.Models.ClanKomisijeCreateDto.KomisijaId">
+            <summary>
+            ID komisije
             </summary>
         </member>
         <member name="T:Licnost.Models.ClanKomisijeDto">

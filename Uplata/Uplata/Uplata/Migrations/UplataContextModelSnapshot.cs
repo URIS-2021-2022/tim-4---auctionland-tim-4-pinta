@@ -42,14 +42,14 @@ namespace Uplata.Migrations
                         new
                         {
                             KursID = new Guid("b06a4284-44e2-46af-8d74-b79c8b0c6017"),
-                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 661, DateTimeKind.Local).AddTicks(9715),
+                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 985, DateTimeKind.Local).AddTicks(2604),
                             Valuta = "EUR",
                             VrednostKursa = 117.8
                         },
                         new
                         {
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
-                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(5875),
+                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(5097),
                             Valuta = "GBT",
                             VrednostKursa = 150.5
                         });
@@ -93,7 +93,7 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(6132),
+                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(5328),
                             Iznos = "200",
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
                             PozivNaBroj = "3121-424324523-444",
@@ -103,7 +103,7 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(7318),
+                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(6307),
                             Iznos = "100",
                             KursID = new Guid("b06a4284-44e2-46af-8d74-b79c8b0c6017"),
                             PozivNaBroj = "0242-424324523-444",
@@ -113,7 +113,7 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("1d2ed242-5059-4a1b-aeab-eee99404284f"),
                             BrojRacuna = "115-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 22, 18, 13, 56, 666, DateTimeKind.Local).AddTicks(7363),
+                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(6345),
                             Iznos = "50",
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
                             PozivNaBroj = "3221-424324523-444",
