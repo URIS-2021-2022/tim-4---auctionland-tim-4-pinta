@@ -1,0 +1,1209 @@
+{
+	"info": {
+		"_postman_id": "2c6c893d-2170-4334-9f4f-dde4be167686",
+		"name": "URIS_Parcela_Agregat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetParcele",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/parcele",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"parcele"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetParcelaById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/parcele/6a411c13-a195-48f7-8dbd-67596c3974c0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"parcele",
+						"6a411c13-a195-48f7-8dbd-67596c3974c0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostParcela",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"povrsina\": 3000,\r\n        \"brojParcele\": \"333\",\r\n        \"brojListaNepokretnosti\": \"333\",\r\n        \"kulturaStvarnoStanje\": \"Njive\",\r\n        \"klasaStvarnoStanje\": \"II\",\r\n        \"obradivostStvarnoStanje\": \"Obradivo\",\r\n        \"zasticenaZonaStvarnoStanje\": \"1\",\r\n        \"odvodnjavanjeStvarnoStanje\": \"Podzemno\",\r\n        \"zasticenaZonaID\": \"9d994da6-a766-4d67-971b-3b589b1ecbf8\",\r\n        \"odvodnjavanjeID\": \"32cf50d2-ab1a-45fb-a5de-f6c4fd646775\",\r\n        \"obradivostID\": \"1fbc26e0-a797-45b8-bfb2-75d6799237ba\",\r\n        \"oblikSvojineID\": \"0051339e-4bf1-4d63-89f9-d5f744016a2b\",\r\n        \"kulturaID\": \"149b65ca-47aa-433c-8dbe-cdcf5e74a4ed\",\r\n        \"klasaID\": \"829f5f3f-6159-4e15-ab52-d4c78ce944dc\",\r\n        \"katastarskaOpstinaID\": \"829f5f3f-6159-4e15-ab52-d4c78ce944dc\",\r\n        \"kupacID\": \"829f5f3f-6159-4e15-ab52-d4c78ce944dc\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/parcele",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"parcele"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateParcela",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ParcelaID\": \"a913cb6f-9608-474a-88dc-4f38a51315ea\",\r\n    \"Povrsina\": 30000,\r\n    \"BrojParcele\": \"54321\",\r\n    \"BrojListaNepokretnosti\": \"54321\",\r\n    \"KulturaStvarnoStanje\": \"Vocnjaci\",\r\n    \"KlasaStvarnoStanje\": \"IV\",\r\n    \"ObradivostStvarnoStanje\": \"Obradivo\",\r\n    \"ZasticenaZonaStvarnoStanje\": \"2\",\r\n    \"OdvodnjavanjeStvarnoStanje\": \"Podzemno\",\r\n    \"ZasticenaZonaID\": \"a873025a-b4bc-440d-8e65-dc63fb9025d7\",\r\n    \"OdvodnjavanjeID\": \"32cf50d2-ab1a-45fb-a5de-f6c4fd646775\",\r\n    \"ObradivostID\": \"1fbc26e0-a797-45b8-bfb2-75d6799237ba\",\r\n    \"OblikSvojineID\": \"0051339e-4bf1-4d63-89f9-d5f744016a2b\",\r\n    \"KulturaID\": \"149b65ca-47aa-433c-8dbe-cdcf5e74a4ed\",\r\n    \"KlasaID\": \"829f5f3f-6159-4e15-ab52-d4c78ce944dc\",\r\n    \"KatastarskaOpstinaID\": \"177E64AD-2FF0-4A40-9C75-1F9B02FFE1E9\",\r\n    \"KupacID\": \"1a411c13-a195-48f7-8dbd-67596c3974c0\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/parcele",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"parcele"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteParcela",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/parcele/a913cb6f-9608-474a-88dc-4f38a51315ea",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"parcele",
+						"a913cb6f-9608-474a-88dc-4f38a51315ea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetZasticeneZone",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/zasticeneZone",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"zasticeneZone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetZasticenaZonaById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/zasticeneZone/a873025a-b4bc-440d-8e65-dc63fb9025d7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"zasticeneZone",
+						"a873025a-b4bc-440d-8e65-dc63fb9025d7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostZasticenaZona",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"zasticenaZonaOznaka\": \"5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/zasticeneZone",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"zasticeneZone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateZasticenaZona",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"zasticenaZonaID\": \"28ea362f-4e6c-4e0e-b853-b79c509a6b16\",\r\n    \"zasticenaZonaOznaka\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/zasticeneZone",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"zasticeneZone"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteZasticenaZona",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/zasticeneZone/28ea362f-4e6c-4e0e-b853-b79c509a6b16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"zasticeneZone",
+						"28ea362f-4e6c-4e0e-b853-b79c509a6b16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOdvodnjavanja",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/odvodnjavanja",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"odvodnjavanja"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOdvodnjavanjeById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/odvodnjavanja/32cf50d2-ab1a-45fb-a5de-f6c4fd646775",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"odvodnjavanja",
+						"32cf50d2-ab1a-45fb-a5de-f6c4fd646775"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostOdvodnjavanje",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"odvodnjavanjeNaziv\": \"Nadzemno\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/odvodnjavanja",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"odvodnjavanja"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateOdvodnjavanje",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"odvodnjavanjeID\": \"a2f44a7b-cdfb-4d69-b651-6d715afe8217\",\r\n    \"odvodnjavanjeNaziv\": \"Podzemno odvodnjavanje\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/odvodnjavanja",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"odvodnjavanja"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOdvodnjavanje",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/odvodnjavanja/32cf50d2-ab1a-45fb-a5de-f6c4fd646775",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"odvodnjavanja",
+						"32cf50d2-ab1a-45fb-a5de-f6c4fd646775"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetKulture",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/kulture",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"kulture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetKulturaById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/kulture/149b65ca-47aa-433c-8dbe-cdcf5e74a4ed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"kulture",
+						"149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostKultura",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"kulturaNaziv\": \"Njiva\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/kulture",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"kulture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateKultura",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"kulturaID\": \"149b65ca-47aa-433c-8dbe-cdcf5e74a4ed\",\r\n    \"kulturaNaziv\": \"Njiva\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/kulture",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"kulture"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteKultura",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/kulture/5f4a3a1e-3406-4991-abd4-0f095b59ac84",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"kulture",
+						"5f4a3a1e-3406-4991-abd4-0f095b59ac84"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetKlase",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/klase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"klase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetKlasaById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/klase/829f5f3f-6159-4e15-ab52-d4c78ce944dc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"klase",
+						"829f5f3f-6159-4e15-ab52-d4c78ce944dc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostKlasa",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"klasaOznaka\": \"IX\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/klase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"klase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateKlasa",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"klasaID\": \"51c6ad49-5b78-424d-9cf5-259cb7d9e0e0\",\r\n    \"klasaOznaka\": \"X\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/klase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"klase"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteKlasa",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/klase/9a011828-2b22-4666-b300-fe98e2c94d9a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"klase",
+						"9a011828-2b22-4666-b300-fe98e2c94d9a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDeloviParcela",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/deloviParcela",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"deloviParcela"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDeoParceleById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/deloviParcela/cae99a88-c6ee-4f4c-a463-419ac8fc1b85",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"deloviParcela",
+						"cae99a88-c6ee-4f4c-a463-419ac8fc1b85"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostDeoParcele",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"redniBroj\": 4,\r\n    \"povrsinaDelaParcele\": 2500,\r\n    \"parcelaID\": \"6a411c13-a195-48f7-8dbd-67596c3974c0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/deloviParcela",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"deloviParcela"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateDeoParcele",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deoParceleID\": \"cae99a88-c6ee-4f4c-a463-419ac8fc1b85\",\r\n    \"redniBroj\": 4,\r\n    \"povrsinaDelaParcele\": 4000,\r\n    \"parcelaID\": \"6a411c13-a195-48f7-8dbd-67596c3974c0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/deloviParcela",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"deloviParcela"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteDeoParcele",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/deloviParcela/2884b2b0-302c-4eac-847c-65e4c356132b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"deloviParcela",
+						"2884b2b0-302c-4eac-847c-65e4c356132b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetObradivosti",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/obradivosti",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obradivosti"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetObradivostById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/obradivosti/1fbc26e0-a797-45b8-bfb2-75d6799237ba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obradivosti",
+						"1fbc26e0-a797-45b8-bfb2-75d6799237ba"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostObradivost",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"obradivostNaziv\": \"Ostala obradivost\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/obradivosti",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obradivosti"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateObradivost",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"obradivostID\": \"bf45ffef-1166-44fb-a2e1-67824a6561f2\",\r\n    \"obradivostNaziv\": \"Ostala obradivost\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/obradivosti",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obradivosti"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteObradivost",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/obradivosti/bf45ffef-1166-44fb-a2e1-67824a6561f2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obradivosti",
+						"bf45ffef-1166-44fb-a2e1-67824a6561f2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetObliciSvojine",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/obliciSvojine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obliciSvojine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOblikSvojineById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/obliciSvojine/0051339e-4bf1-4d63-89f9-d5f744016a2b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obliciSvojine",
+						"0051339e-4bf1-4d63-89f9-d5f744016a2b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostOblikSvojine",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"oblikSvojineNaziv\": \"Privatni oblik svojine\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/obliciSvojine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obliciSvojine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateOblikSvojine",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"oblikSvojineID\": \"0051339e-4bf1-4d63-89f9-d5f744016a2b\",\r\n    \"oblikSvojineNaziv\": \"Privatan oblik svojine\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:44201/api/obliciSvojine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obliciSvojine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOblikSvojine",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"value": "token#administrator",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:44201/api/obliciSvojine/2d83379c-87e6-45a1-9f00-321b820062fc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44201",
+					"path": [
+						"api",
+						"obliciSvojine",
+						"2d83379c-87e6-45a1-9f00-321b820062fc"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
