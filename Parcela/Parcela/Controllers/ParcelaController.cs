@@ -91,8 +91,8 @@ namespace Parcela.Controllers
                 parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(p.ObradivostID));
                 parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(p.OdvodnjavanjeID));
                 parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(p.ZasticenaZonaID));
-                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
-                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
+                //parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID, token).Result;
                 parceleDto.Add(parcelaDto);
             }
         
@@ -147,7 +147,7 @@ namespace Parcela.Controllers
             parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(parcela.OdvodnjavanjeID));
             parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(parcela.ZasticenaZonaID));
             parcelaDto.Kupac = kupacService.GetKupacByIdAsync(parcela.KupacID).Result;
-            parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(parcela.KatastarskaOpstinaID).Result;
+            parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(parcela.KatastarskaOpstinaID, token).Result;
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(parcelaDto);
@@ -221,7 +221,7 @@ namespace Parcela.Controllers
                 parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(p.OdvodnjavanjeID));
                 parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(p.ZasticenaZonaID));
                 parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
-                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID).Result;
+                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID, token).Result;
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Created(location, parcelaDto);
@@ -249,7 +249,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult DeleteParcela(Guid parcelaID, [FromServices] IKlasaRepository klasaRepository, [FromServices] IKulturaRepository kulturaRepository, [FromServices] IOblikSvojineRepository oblikSvojineRepository, [FromServices] IObradivostRepository obradivostRepository, [FromServices] IOdvodnjavanjeRepository odvodnjavanjeRepository, [FromServices] IZasticenaZonaRepository zasticenaZonaRepository)
+        public IActionResult DeleteParcela(Guid parcelaID)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -383,7 +383,7 @@ namespace Parcela.Controllers
                 parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(oldParcela.OdvodnjavanjeID));
                 parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(oldParcela.ZasticenaZonaID));
                 parcelaDto.Kupac = kupacService.GetKupacByIdAsync(oldParcela.KupacID).Result;
-                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(oldParcela.KatastarskaOpstinaID).Result;
+                parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(oldParcela.KatastarskaOpstinaID, token).Result;
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Ok(parcelaDto);

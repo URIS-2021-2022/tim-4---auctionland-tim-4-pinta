@@ -13,6 +13,6 @@ namespace Parcela.ServiceCals
         /// </summary>
         /// <param name="katastarskaOpstinaID"></param>
         /// <returns></returns>
-        Task<OpstinaParceleDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID);
+        Task<OpstinaParceleDto> GetKatastarskaOpstinaByIdAsync(Guid katastarskaOpstinaID, string token);
     }
 }
