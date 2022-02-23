@@ -169,7 +169,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<SluzbeniListDto>(s));
-                //return Created("", mapper.Map<SluzbeniListDto>(s));
+              
             }
             catch
             {

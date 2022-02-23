@@ -13,13 +13,13 @@ namespace JavnoNadmetanjeAgregat.Data
     {
         
         private readonly JavnoNadmetanjeContext context;
-        private readonly IMapper mapper;
+       
 
-        public JavnoNadmetanjeRepository(JavnoNadmetanjeContext context, IMapper mapper)
+        public JavnoNadmetanjeRepository(JavnoNadmetanjeContext context)
         {
             
             this.context = context;
-            this.mapper = mapper;
+           
         }
 
         public bool SaveChanges()

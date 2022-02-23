@@ -36,16 +36,16 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IParcelaService parcelaService;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
-        private readonly IGatewayService gatewayService;
+        
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
         private readonly IJavnoNadmetanjeRepository javnoNadmetanjeRepository;
-        private readonly ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository;
+        
         private readonly LinkGenerator linkGenerator; //Služi za generisanje putanje do neke akcije (videti primer u metodu CreateExamRegistration)
         private readonly IMapper mapper;
         //injektovanje zavisnosti- kad se kreira obj kontrolera mora da se prosledi nesto sto implementira interfejs tj confirmation
 
-        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService, ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository)
+        public JavnoNadmetanjeController(IJavnoNadmetanjeRepository javnoNadmetanjeRepository, LinkGenerator linkGenerator, IMapper mapper, IKatastarskaOpstinaService katastarskaOpstinaService, IKupacService kupacService, IParcelaService parcelaService, IAdresaService adresaService, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService)
         {
             this.javnoNadmetanjeRepository = javnoNadmetanjeRepository;
             this.linkGenerator = linkGenerator;
@@ -55,9 +55,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
             this.adresaService = adresaService;
             this.mapper = mapper;
             this.loggerService = loggerService;
-            this.gatewayService = gatewayService;
             this.korisnikSistemaService = korisnikSistemaService;
-            this.tipJavnogNadmetanjaRepository = tipJavnogNadmetanjaRepository;
             logDto = new LogDto();
             logDto.NameOfTheService = "JavnoNadmetanje";
         }
@@ -218,7 +216,7 @@ namespace JavnoNadmetanjeAgregat.Controllers
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<JavnoNadmetanjeDto>(j));
-               // return Created("", mapper.Map<JavnoNadmetanjeDto>(j));
+              
             }
             catch
             {
