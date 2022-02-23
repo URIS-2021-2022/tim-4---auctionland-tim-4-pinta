@@ -85,7 +85,7 @@ namespace KupacMikroservis.Controllers
 
             foreach (OvlascenoLiceEntity ol in ovlascenaLica)
             {
-                AdresaOvlascenogLicaDto adresa = adresaService.GetAdresaOvlLicaAsync(ol.AdresaID).Result;
+                AdresaOvlascenogLicaDto adresa = adresaService.GetAdresaOvlLicaAsync(ol.AdresaID,token).Result;
                 OvlascenoLiceDto olDto = mapper.Map<OvlascenoLiceDto>(ol);
                 olDto.Adresa = adresa;
                 oLicaDtos.Add(olDto);

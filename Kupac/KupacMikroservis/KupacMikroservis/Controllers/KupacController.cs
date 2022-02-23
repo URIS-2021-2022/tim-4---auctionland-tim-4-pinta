@@ -79,7 +79,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja" && split[1] != "menadzer")
             {
                 return Unauthorized();
-            }
+            } 
 
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje svih kupaca";
@@ -91,9 +91,9 @@ namespace KupacMikroservis.Controllers
 
             List<KupacEntity> kupciFizLica = flica.ConvertAll(x => (KupacEntity)x);
 
-          //  kupci.AddRange(kupciFizLica);
+         
 
-            if ((kupciPrLica == null || kupciPrLica.Count == 0) && (kupciFizLica == null || kupciFizLica.Count == 0))
+            if ((kupciPrLica.Count == 0) && (kupciFizLica.Count == 0))
             {
                 logDTO.Level = "Warn";
                 logger.Log(logDTO);
@@ -104,8 +104,8 @@ namespace KupacMikroservis.Controllers
 
                  foreach(FizickoLiceEntity f in kupciFizLica)
                  {
-                    AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(f.AdresaID).Result;
-                    UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(f.UplataID).Result;
+                    AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(f.AdresaID,token).Result;
+                    UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(f.UplataID,token).Result;
                     PrioritetEntity prioritetKupca = prRepository.GetPrioritetById(f.Prioritet);
                     OvlascenoLiceEntity olKupca = olRepository.GetOvlascenoLiceById(f.OvlascenoLice);
                 
@@ -120,8 +120,8 @@ namespace KupacMikroservis.Controllers
 
             foreach (PravnoLiceEntity p in kupciPrLica)
             {
-                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(p.AdresaID).Result;
-                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(p.UplataID).Result;
+                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(p.AdresaID,token).Result;
+                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(p.UplataID,token).Result;
                 PrioritetEntity prioritetKupca = prRepository.GetPrioritetById(p.Prioritet);
                 OvlascenoLiceEntity olKupca = olRepository.GetOvlascenoLiceById(p.OvlascenoLice);
 
@@ -151,7 +151,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<KupacDto> GetKupac(Guid kupacID)
         {
-         /*   string token = Request.Headers["token"].ToString();
+            string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
             if (res.ToString() != "OK")
             {
@@ -162,7 +162,7 @@ namespace KupacMikroservis.Controllers
             if (split[1] != "administrator" && split[1] != "superuser" && split[1] != "operaternadmetanja" && split[1] != "menadzer")
             {
                 return Unauthorized();
-            } */
+            } 
 
             logDTO.HttpMethod = "GET";
             logDTO.Message = "Vracanje kupca po ID";
@@ -178,8 +178,8 @@ namespace KupacMikroservis.Controllers
             if (fLiceRepository.GetFizickoLiceById(kupacID) is null)
             {
                 PravnoLiceEntity pLice = pLiceRepository.GetPravnoLiceById(kupacID);
-                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(pLice.AdresaID).Result;
-                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(pLice.UplataID).Result;
+                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(pLice.AdresaID,token).Result;
+                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(pLice.UplataID,token).Result;
                 KupacDto kupacDto = mapper.Map<KupacDto>(pLice);
                 kupacDto.Adresa = adresa;
                 kupacDto.Uplata = uplata;
@@ -191,8 +191,8 @@ namespace KupacMikroservis.Controllers
             else
             {
                 FizickoLiceEntity fLice = fLiceRepository.GetFizickoLiceById(kupacID);
-                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(fLice.AdresaID).Result;
-                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(fLice.UplataID).Result;
+                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(fLice.AdresaID,token).Result;
+                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(fLice.UplataID,token).Result;
                 KupacDto kupacDto = mapper.Map<KupacDto>(fLice);
                 kupacDto.Adresa = adresa;
                 kupacDto.Uplata = uplata;
