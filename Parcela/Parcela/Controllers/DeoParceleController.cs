@@ -27,10 +27,10 @@ namespace Parcela.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly IKorisnikSistemaService korisnikSistemaService;
-        private readonly LoggerService loggerService;
+        private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
 
-        public DeoParceleController(IDeoParceleRepository deoParceleRepository, IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, LoggerService loggerService)
+        public DeoParceleController(IDeoParceleRepository deoParceleRepository, IParcelaRepository parcelaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService)
         {
             this.deoParceleRepository = deoParceleRepository;
             this.parcelaRepository = parcelaRepository;

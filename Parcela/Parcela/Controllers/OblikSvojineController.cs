@@ -122,7 +122,7 @@ namespace Parcela.Controllers
             }
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
-            return Ok(mapper.Map<ObradivostDto>(oblikSvojine));
+            return Ok(mapper.Map<OblikSvojineDto>(oblikSvojine));
         }
 
         /// <summary>

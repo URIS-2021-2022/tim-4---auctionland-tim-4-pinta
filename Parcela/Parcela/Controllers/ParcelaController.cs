@@ -44,9 +44,16 @@ namespace Parcela.Controllers
             logDto.NameOfTheService = "Parcela";
         }
 
+
         /// <summary>
         /// Vraca sve parcele
         /// </summary>
+        /// <param name="klasaRepository">DI za klasu</param>
+        /// <param name="kulturaRepository">DI za kulturu</param>
+        /// <param name="oblikSvojineRepository">DI za oblik svojine</param>
+        /// <param name="obradivostRepository">DI za obradivost</param>
+        /// <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+        /// <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
         /// <returns>Lista parcela</returns>
         /// <response code = "200">Vraca listu parcela</response>
         /// <response code="401">Korisnik nije autorizovan</response>
@@ -91,7 +98,7 @@ namespace Parcela.Controllers
                 parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(p.ObradivostID));
                 parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(p.OdvodnjavanjeID));
                 parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(p.ZasticenaZonaID));
-                //parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID, token).Result;
                 parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID, token).Result;
                 parceleDto.Add(parcelaDto);
             }
@@ -100,11 +107,17 @@ namespace Parcela.Controllers
             loggerService.CreateLog(logDto);
             return Ok(parceleDto);
         }
-
+     
         /// <summary>
         /// Vraca jednu parcelu na osnovu ID-ja
         /// </summary>
         /// <param name="parcelaID">ID parcele</param>
+        /// <param name="klasaRepository">DI za klasu</param>
+        /// <param name="kulturaRepository">DI za kulturu</param>
+        /// <param name="oblikSvojineRepository">DI za oblik svojine</param>
+        /// <param name="obradivostRepository">DI za obradivost</param>
+        /// <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+        /// <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
         /// <returns>Trazena parcela</returns>
         /// <response code = "200">Vraca trazenu parcelu</response>
         /// <response code="401">Korisnik nije autorizovan</response>
@@ -146,7 +159,7 @@ namespace Parcela.Controllers
             parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(parcela.ObradivostID));
             parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(parcela.OdvodnjavanjeID));
             parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(parcela.ZasticenaZonaID));
-            parcelaDto.Kupac = kupacService.GetKupacByIdAsync(parcela.KupacID).Result;
+            parcelaDto.Kupac = kupacService.GetKupacByIdAsync(parcela.KupacID, token).Result;
             parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(parcela.KatastarskaOpstinaID, token).Result;
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
@@ -157,6 +170,12 @@ namespace Parcela.Controllers
         /// Kreira novu parcelu
         /// </summary>
         /// <param name="parcela">Model parcele</param>
+        /// <param name="klasaRepository">DI za klasu</param>
+        /// <param name="kulturaRepository">DI za kulturu</param>
+        /// <param name="oblikSvojineRepository">DI za oblik svojine</param>
+        /// <param name="obradivostRepository">DI za obradivost</param>
+        /// <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+        /// <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
         /// <returns>Potvrdu o kreiranoj parceli</returns>
         /// <remarks>
         /// Primer zahteva za kreiranje nove parcele \
@@ -220,7 +239,7 @@ namespace Parcela.Controllers
                 parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(p.ObradivostID));
                 parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(p.OdvodnjavanjeID));
                 parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(p.ZasticenaZonaID));
-                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID).Result;
+                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(p.KupacID, token).Result;
                 parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(p.KatastarskaOpstinaID, token).Result;
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
@@ -294,6 +313,12 @@ namespace Parcela.Controllers
         /// Azurira jednu parcelu
         /// </summary>
         /// <param name="parcela">Model parcele koja se azurira</param>
+        /// <param name="klasaRepository">DI za klasu</param>
+        /// <param name="kulturaRepository">DI za kulturu</param>
+        /// <param name="oblikSvojineRepository">DI za oblik svojine</param>
+        /// <param name="obradivostRepository">DI za obradivost</param>
+        /// <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+        /// <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
         /// <returns>Potvrdu o modifikovanoj parceli</returns>
         /// <remarks>
         /// Primer zahteva za modifikovanje parcele \
@@ -382,7 +407,7 @@ namespace Parcela.Controllers
                 parcelaDto.Obradivost = mapper.Map<ObradivostDto>(obradivostRepository.GetObradivostById(oldParcela.ObradivostID));
                 parcelaDto.Odvodnjavanje = mapper.Map<OdvodnjavanjeDto>(odvodnjavanjeRepository.GetOdvodnjavanjeById(oldParcela.OdvodnjavanjeID));
                 parcelaDto.ZasticenaZona = mapper.Map<ZasticenaZonaDto>(zasticenaZonaRepository.GetZasticenaZonaById(oldParcela.ZasticenaZonaID));
-                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(oldParcela.KupacID).Result;
+                parcelaDto.Kupac = kupacService.GetKupacByIdAsync(oldParcela.KupacID, token).Result;
                 parcelaDto.Opstina = katastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(oldParcela.KatastarskaOpstinaID, token).Result;
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);

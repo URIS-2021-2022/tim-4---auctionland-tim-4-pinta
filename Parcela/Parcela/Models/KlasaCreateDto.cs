@@ -12,9 +12,9 @@ namespace Parcela.Models
     public class KlasaCreateDto
     {
         /// <summary>
-        /// Naziv klase
+        /// Oznaka klase
         /// </summary>
         [Required(ErrorMessage = "Obavezno je uneti oznaku klase")]
-        public string KlasaOznaka { get; set; }
+        public String KlasaOznaka { get; set; }
     }
 }

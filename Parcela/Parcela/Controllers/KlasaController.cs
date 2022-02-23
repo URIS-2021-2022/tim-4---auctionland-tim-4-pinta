@@ -172,7 +172,7 @@ namespace Parcela.Controllers
                 string location = linkGenerator.GetPathByAction("GetKlasa", "Klasa", new { klasaID = k.KlasaID });
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
-                return Created(location, mapper.Map<KlasaDto>(klasa));
+                return Created(location, mapper.Map<KlasaDto>(k));
             }
             catch
             {

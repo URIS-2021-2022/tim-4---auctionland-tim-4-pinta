@@ -32,10 +32,10 @@ namespace AdresaServis.Controllers
         /// <summary>
         /// Konstruktor
         /// </summary>
-        /// <param name="drzavaRepository"></param>
-        /// <param name="linkGenerator"></param>
-        /// <param name="mapper"></param>
-        /// <param name="loggerService"></param>
+        /// <param name="drzavaRepository">DI za drzavu</param>
+        /// <param name="linkGenerator">Link generator</param>
+        /// <param name="mapper">Maper</param>
+        /// <param name="loggerService">DI za logger servis</param>
         public DrzavaController(IDrzavaRepository drzavaRepository, LinkGenerator linkGenerator, IMapper mapper, IKorisnikSistemaService korisnikSistemaService, ILoggerService loggerService)
         {
             this.drzavaRepository = drzavaRepository;

@@ -18,7 +18,7 @@ namespace Parcela.ServiceCals
             this.configuration = configuration;
         }
 
-        public async Task<KupacParceleDto> GetKupacByIdAsync(Guid kupacID)
+        public async Task<KupacParceleDto> GetKupacByIdAsync(Guid kupacID, string token)
         {
             using (HttpClient client = new HttpClient())
             {

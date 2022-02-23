@@ -479,6 +479,12 @@
             <summary>
             Vraca sve parcele
             </summary>
+            <param name="klasaRepository">DI za klasu</param>
+            <param name="kulturaRepository">DI za kulturu</param>
+            <param name="oblikSvojineRepository">DI za oblik svojine</param>
+            <param name="obradivostRepository">DI za obradivost</param>
+            <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+            <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
             <returns>Lista parcela</returns>
             <response code = "200">Vraca listu parcela</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -489,6 +495,12 @@
             Vraca jednu parcelu na osnovu ID-ja
             </summary>
             <param name="parcelaID">ID parcele</param>
+            <param name="klasaRepository">DI za klasu</param>
+            <param name="kulturaRepository">DI za kulturu</param>
+            <param name="oblikSvojineRepository">DI za oblik svojine</param>
+            <param name="obradivostRepository">DI za obradivost</param>
+            <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+            <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
             <returns>Trazena parcela</returns>
             <response code = "200">Vraca trazenu parcelu</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -499,6 +511,12 @@
             Kreira novu parcelu
             </summary>
             <param name="parcela">Model parcele</param>
+            <param name="klasaRepository">DI za klasu</param>
+            <param name="kulturaRepository">DI za kulturu</param>
+            <param name="oblikSvojineRepository">DI za oblik svojine</param>
+            <param name="obradivostRepository">DI za obradivost</param>
+            <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+            <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
             <returns>Potvrdu o kreiranoj parceli</returns>
             <remarks>
             Primer zahteva za kreiranje nove parcele \
@@ -542,6 +560,12 @@
             Azurira jednu parcelu
             </summary>
             <param name="parcela">Model parcele koja se azurira</param>
+            <param name="klasaRepository">DI za klasu</param>
+            <param name="kulturaRepository">DI za kulturu</param>
+            <param name="oblikSvojineRepository">DI za oblik svojine</param>
+            <param name="obradivostRepository">DI za obradivost</param>
+            <param name="odvodnjavanjeRepository">DI za odvodnjavanje</param>
+            <param name="zasticenaZonaRepository">DI za zasticenu zonu</param>
             <returns>Potvrdu o modifikovanoj parceli</returns>
             <remarks>
             Primer zahteva za modifikovanje parcele \
@@ -1088,7 +1112,7 @@
         </member>
         <member name="P:Parcela.Models.KlasaCreateDto.KlasaOznaka">
             <summary>
-            Naziv klase
+            Oznaka klase
             </summary>
         </member>
         <member name="T:Parcela.Models.KlasaDto">
@@ -1853,7 +1877,7 @@
             <param name="katastarskaOpstinaID"></param>
             <returns></returns>
         </member>
-        <member name="M:Parcela.ServiceCals.IKupacService.GetKupacByIdAsync(System.Guid)">
+        <member name="M:Parcela.ServiceCals.IKupacService.GetKupacByIdAsync(System.Guid,System.String)">
             <summary>
             Zahtev za kupca po ID-ju
             </summary>
