@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Entities;
 
 namespace UgovorOZakupuAgregat.Data
@@ -10,12 +8,10 @@ namespace UgovorOZakupuAgregat.Data
     public class TipGarancijeRepository : ITipGarancijeRepository
     {
         private readonly UgovorOZakupuContext context;
-        private readonly IMapper mapper;
 
-        public TipGarancijeRepository(UgovorOZakupuContext context, IMapper mapper)
+        public TipGarancijeRepository(UgovorOZakupuContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -26,8 +22,6 @@ namespace UgovorOZakupuAgregat.Data
         public List<TipGarancije> GetTipovi()
         {
             return (from t in context.TipoviGarancije select t).ToList();
-
-
         }
 
         public TipGarancije GetTipGarancijeById(Guid tipId)
@@ -35,17 +29,17 @@ namespace UgovorOZakupuAgregat.Data
             return context.TipoviGarancije.FirstOrDefault(t => t.TipId == tipId);
         }
 
-        public TipGarancije CreateTipGarancije(TipGarancije tipGarancije)
+        public TipGarancije CreateTipGarancije(TipGarancije tipModel)
         {
-            tipGarancije.TipId = Guid.NewGuid();
-            context.TipoviGarancije.Add(tipGarancije);
-            return tipGarancije;
-
+            tipModel.TipId = Guid.NewGuid();
+            context.TipoviGarancije.Add(tipModel);
+            return tipModel;
         }
 
-        public void UpdateTipGarancije(TipGarancije tip)
+        public void UpdateTipGarancije(TipGarancije tipModel)
         {
-            
+            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
+            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
         }
 
         public void DeleteTipGarancije(Guid tipId)

@@ -11,13 +11,11 @@ namespace JavnoNadmetanjeAgregat.Data
     public class TipJavnogNadmetanjaRepository : ITipJavnogNadmetanjaRepository
     {
         private readonly JavnoNadmetanjeContext context;
-        private readonly IMapper mapper;
-
-        public TipJavnogNadmetanjaRepository(JavnoNadmetanjeContext context, IMapper mapper)
+     
+        public TipJavnogNadmetanjaRepository(JavnoNadmetanjeContext context)
         {
 
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -29,7 +27,6 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             tipJavnogNadmetanja.TipJavnogNadmetanjaID = Guid.NewGuid();
             context.TipoviJavnihNadmetanja.Add(tipJavnogNadmetanja);
-            //TipJavnogNadmetanjaEntity t= GetTipJavnogNadmetanjaById(tipJavnogNadmetanja.TipJavnogNadmetanjaID);
             return tipJavnogNadmetanja;
         }
 
@@ -43,9 +40,9 @@ namespace JavnoNadmetanjeAgregat.Data
             return (from t in context.TipoviJavnihNadmetanja select t).ToList();
         }
 
-        public TipJavnogNadmetanjaEntity GetTipJavnogNadmetanjaById(Guid tipJavnogNadmetanjaID)
+        public TipJavnogNadmetanjaEntity GetTipJavnogNadmetanjaById(Guid TipJavnogNadmetanjaID)
         {
-            return context.TipoviJavnihNadmetanja.FirstOrDefault(t => t.TipJavnogNadmetanjaID == tipJavnogNadmetanjaID);
+            return context.TipoviJavnihNadmetanja.FirstOrDefault(t => t.TipJavnogNadmetanjaID == TipJavnogNadmetanjaID);
         }
 
         public void UpdateTipJavnogNadmetanja(TipJavnogNadmetanjaEntity tipJavnogNadmetanja)

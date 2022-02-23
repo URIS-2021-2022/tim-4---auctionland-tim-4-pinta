@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UgovorOZakupuAgregat.Entities;
 
 namespace UgovorOZakupuAgregat.Data
@@ -10,12 +8,10 @@ namespace UgovorOZakupuAgregat.Data
     public class RokoviDospecaRepository : IRokoviDospecaRepository
     {
         private readonly UgovorOZakupuContext context;
-        private readonly IMapper mapper;
 
-        public RokoviDospecaRepository(UgovorOZakupuContext context, IMapper mapper)
+        public RokoviDospecaRepository(UgovorOZakupuContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -26,8 +22,6 @@ namespace UgovorOZakupuAgregat.Data
         public List<RokoviDospeca> GetRokovi()
         {
             return (from r in context.RokoviDospeca select r).ToList();
-
-
         }
 
         public RokoviDospeca GetRokById(Guid rokId)
@@ -35,17 +29,17 @@ namespace UgovorOZakupuAgregat.Data
             return context.RokoviDospeca.FirstOrDefault(r => r.RokId == rokId);
         }
 
-        public RokoviDospeca CreateRok(RokoviDospeca rok)
+        public RokoviDospeca CreateRok(RokoviDospeca rokModel)
         {
-            rok.RokId = Guid.NewGuid();
-            context.RokoviDospeca.Add(rok);
-            return rok;
-
+            rokModel.RokId = Guid.NewGuid();
+            context.RokoviDospeca.Add(rokModel);
+            return rokModel;
         }
 
-        public void UpdateRok(RokoviDospeca rok)
+        public void UpdateRok(RokoviDospeca rokModel)
         {
-            
+            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
+            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
         }
 
         public void DeleteRok(Guid rokId)

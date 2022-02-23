@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JavnoNadmetanjeAgregat.Migrations
 {
     [DbContext(typeof(JavnoNadmetanjeContext))]
-    [Migration("20220222163759_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220222201731_IntiaCreate")]
+    partial class IntiaCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

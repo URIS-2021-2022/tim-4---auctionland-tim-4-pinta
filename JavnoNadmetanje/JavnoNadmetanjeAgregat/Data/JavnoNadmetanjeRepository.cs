@@ -13,13 +13,13 @@ namespace JavnoNadmetanjeAgregat.Data
     {
         
         private readonly JavnoNadmetanjeContext context;
-        private readonly IMapper mapper;
+       
 
-        public JavnoNadmetanjeRepository(JavnoNadmetanjeContext context, IMapper mapper)
+        public JavnoNadmetanjeRepository(JavnoNadmetanjeContext context)
         {
             
             this.context = context;
-            this.mapper = mapper;
+           
         }
 
         public bool SaveChanges()
@@ -32,7 +32,7 @@ namespace JavnoNadmetanjeAgregat.Data
         {
             javnoNadmetanje.JavnoNadmetanjeID = Guid.NewGuid();
             context.JavnaNadmetanja.Add(javnoNadmetanje);
-            //JavnoNadmetanjeEntity j = GetJavnoNadmetanjeById(javnoNadmetanje.JavnoNadmetanjeID);
+          
             return javnoNadmetanje;
         }
 

@@ -18,6 +18,7 @@ namespace JavnoNadmetanjeAgregat.Profiles
             CreateMap<JavnoNadmetanjeUpdateDto, JavnoNadmetanjeEntity>();
             CreateMap<JavnoNadmetanjeEntity, JavnoNadmetanjeEntity>();
             CreateMap<JavnoNadmetanjeCreationDto, JavnoNadmetanjeEntity>();
+            CreateMap<JavnoNadmetanjeEntity, JavnoNadmetanjeCreationDto>();
 
             
         }
