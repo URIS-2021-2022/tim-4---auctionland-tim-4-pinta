@@ -432,44 +432,74 @@
             DTO za javno nadmetanje
             </summary>
         </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.Datum">
+            <summary>
+            Datum odrzavanja javnog nadmetanja
+            </summary>
+        </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.VremePocetka">
             <summary>
-            Vreme pocetka
+            Vreme pocetka javnog nadmetanja
             </summary>
         </member>
         <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.VremeKraja">
             <summary>
-            Vreme kraja
+            Vreme kraja javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.BrojUcesnika">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.PocetnaCenaPoHektaru">
             <summary>
-            Broj ucesnika na javnom nadmetanju
+            Pocetna cena po hektaru javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.IzlicitiranaCena">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.PeriodZakupa">
             <summary>
-            Izlicitirana cena na javnom nadmetanju
+            Period zakupa javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.AdresaOdrzavanja">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.Izuzeto">
             <summary>
-            Adresa odrzavanja javnog nadmetanja
+            Izuzetos javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.Status">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.TipID">
             <summary>
-            ID statusa javnog nadmetanja
+            Tip javnog nadmetanja
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.Tip">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.StatusID">
             <summary>
-            ID tipa javnog nadmetanja
+            Status javnog nadmetanja ID
             </summary>
         </member>
-        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.SluzbeniList">
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.Krug">
             <summary>
-            ID sluzbenog lista
+            Krug javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.VisinaDopuneDepozita">
+            <summary>
+            Visina dopune depozita javnog nadmetanja
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.KatastarskaOpstinaID">
+            <summary>
+            ID Katastarske opstine
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.KupacID">
+            <summary>
+            ID kupca parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.ParcelaID">
+            <summary>
+            ID parcele
+            </summary>
+        </member>
+        <member name="P:JavnoNadmetanjeAgregat.Models.JavnoNadmetanjeUplateDto.AdresaID">
+            <summary>
+            ID adrese
             </summary>
         </member>
     </members>

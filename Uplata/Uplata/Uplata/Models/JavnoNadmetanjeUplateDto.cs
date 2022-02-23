@@ -14,37 +14,65 @@ namespace JavnoNadmetanjeAgregat.Models
     public class JavnoNadmetanjeUplateDto
     {
         /// <summary>
-        /// Vreme pocetka
+        /// Datum odrzavanja javnog nadmetanja
+        /// </summary>
+        public DateTime Datum { get; set; }
+        /// <summary>
+        /// Vreme pocetka javnog nadmetanja
         /// </summary>
         public DateTime VremePocetka { get; set; }
         /// <summary>
-        /// Vreme kraja
+        /// Vreme kraja javnog nadmetanja
         /// </summary>
         public DateTime VremeKraja { get; set; }
         /// <summary>
-        /// Broj ucesnika na javnom nadmetanju
+        /// Pocetna cena po hektaru javnog nadmetanja
         /// </summary>
-        public int BrojUcesnika { get; set; }
+        public int PocetnaCenaPoHektaru { get; set; }
         /// <summary>
-        /// Izlicitirana cena na javnom nadmetanju
+        /// Period zakupa javnog nadmetanja
         /// </summary>
-        public int IzlicitiranaCena { get; set; }
+        public int PeriodZakupa { get; set; }
         /// <summary>
-        /// Adresa odrzavanja javnog nadmetanja
+        /// Izuzetos javnog nadmetanja
         /// </summary>
-        public string AdresaOdrzavanja { get; set; }
+        public Boolean Izuzeto { get; set; }
         /// <summary>
-        /// ID statusa javnog nadmetanja
+        /// Tip javnog nadmetanja
         /// </summary>
-        public string Status { get; set; }
+        public Guid TipID { get; set; }
 
         /// <summary>
-        /// ID tipa javnog nadmetanja
+        /// Status javnog nadmetanja ID
         /// </summary>
-        public string Tip { get; set; }
+        public Guid StatusID { get; set; }
+
         /// <summary>
-        /// ID sluzbenog lista
+        /// Krug javnog nadmetanja
         /// </summary>
-        public string SluzbeniList { get; set; }
+        public int Krug { get; set; }
+        /// <summary>
+        /// Visina dopune depozita javnog nadmetanja
+        /// </summary>
+        public int VisinaDopuneDepozita { get; set; }
+        /// <summary>
+        /// ID Katastarske opstine
+        /// </summary>
+        public Guid KatastarskaOpstinaID { get; set; }
+        /// <summary>
+        /// ID kupca parcele
+        /// </summary>
+        public Guid KupacID { get; set; }
+ 
+        /// <summary>
+        /// ID parcele
+        /// </summary>
+        public Guid ParcelaID { get; set; }
+ 
+        /// <summary>
+        /// ID adrese
+        /// </summary>
+        public Guid AdresaID { get; set; }
+  
     }
 }

@@ -42,14 +42,14 @@ namespace Uplata.Migrations
                         new
                         {
                             KursID = new Guid("b06a4284-44e2-46af-8d74-b79c8b0c6017"),
-                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 985, DateTimeKind.Local).AddTicks(2604),
+                            Datum = new DateTime(2022, 2, 23, 18, 32, 9, 474, DateTimeKind.Local).AddTicks(3238),
                             Valuta = "EUR",
                             VrednostKursa = 117.8
                         },
                         new
                         {
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
-                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(5097),
+                            Datum = new DateTime(2022, 2, 23, 18, 32, 9, 476, DateTimeKind.Local).AddTicks(6065),
                             Valuta = "GBT",
                             VrednostKursa = 150.5
                         });
@@ -70,7 +70,7 @@ namespace Uplata.Migrations
                     b.Property<string>("Iznos")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("JavnoNadmetanjeID")
+                    b.Property<Guid>("JavnoNadmetanjeID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("KursID")
@@ -93,8 +93,9 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(5328),
+                            Datum = new DateTime(2022, 2, 23, 18, 32, 9, 476, DateTimeKind.Local).AddTicks(6204),
                             Iznos = "200",
+                            JavnoNadmetanjeID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
                             PozivNaBroj = "3121-424324523-444",
                             SvrhaUplate = "ucesce na licitaciji"
@@ -103,8 +104,9 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff"),
                             BrojRacuna = "155-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(6307),
+                            Datum = new DateTime(2022, 2, 23, 18, 32, 9, 476, DateTimeKind.Local).AddTicks(7083),
                             Iznos = "100",
+                            JavnoNadmetanjeID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             KursID = new Guid("b06a4284-44e2-46af-8d74-b79c8b0c6017"),
                             PozivNaBroj = "0242-424324523-444",
                             SvrhaUplate = "ucesce na licitaciji"
@@ -113,8 +115,9 @@ namespace Uplata.Migrations
                         {
                             UplataID = new Guid("1d2ed242-5059-4a1b-aeab-eee99404284f"),
                             BrojRacuna = "115-228523852256500-25",
-                            Datum = new DateTime(2022, 2, 23, 13, 45, 17, 988, DateTimeKind.Local).AddTicks(6345),
+                            Datum = new DateTime(2022, 2, 23, 18, 32, 9, 476, DateTimeKind.Local).AddTicks(7113),
                             Iznos = "50",
+                            JavnoNadmetanjeID = new Guid("3bd80c2a-c790-402f-b214-e3ebbc29d89f"),
                             KursID = new Guid("411c4082-cc5e-4f5f-8946-4086ebca08d0"),
                             PozivNaBroj = "3221-424324523-444",
                             SvrhaUplate = "ucesce na licitaciji"

@@ -19,7 +19,7 @@ namespace Uplata.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<JavnoNadmetanjeUplateDto> GetJavnoNadmetanjeByIdAsync(Guid? javnoNadmetanjeID,string token)
+        public async Task<JavnoNadmetanjeUplateDto> GetJavnoNadmetanjeByIdAsync(Guid javnoNadmetanjeID,string token)
         {
             using (HttpClient client = new HttpClient())
             {

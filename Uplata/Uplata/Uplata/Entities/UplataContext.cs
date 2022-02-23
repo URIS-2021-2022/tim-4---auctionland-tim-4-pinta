@@ -51,6 +51,8 @@ namespace Uplata.Entities
                     PozivNaBroj = "3121-424324523-444",
                     BrojRacuna = "155-228523852256500-25",
                     KursID = Guid.Parse("411C4082-CC5E-4F5F-8946-4086EBCA08D0"),
+                    JavnoNadmetanjeID = Guid.Parse("3BD80C2A-C790-402F-B214-E3EBBC29D89F"),
+
                 });
 
             modelBuilder.Entity<UplataEntity>()
@@ -63,6 +65,8 @@ namespace Uplata.Entities
                     PozivNaBroj = "0242-424324523-444",
                     BrojRacuna = "155-228523852256500-25",
                     KursID = Guid.Parse("B06A4284-44E2-46AF-8D74-B79C8B0C6017"),
+                    JavnoNadmetanjeID = Guid.Parse("3BD80C2A-C790-402F-B214-E3EBBC29D89F"),
+
 
                 });
             modelBuilder.Entity<UplataEntity>()
@@ -75,6 +79,7 @@ namespace Uplata.Entities
                     PozivNaBroj = "3221-424324523-444",
                     BrojRacuna = "115-228523852256500-25",
                     KursID = Guid.Parse("411C4082-CC5E-4F5F-8946-4086EBCA08D0"),
+                    JavnoNadmetanjeID = Guid.Parse("3BD80C2A-C790-402F-B214-E3EBBC29D89F"),
                 });
         }
     }

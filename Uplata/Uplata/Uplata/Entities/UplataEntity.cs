@@ -44,7 +44,7 @@ namespace Uplata.Entities
         /// ID javnog nadmetanja.
         /// </summary>
 
-        public Guid? JavnoNadmetanjeID { get; set; }
+        public Guid JavnoNadmetanjeID { get; set; }
         /// <summary>
         /// Id kursa
         /// </summary>

@@ -9,6 +9,6 @@ namespace Uplata.ServiceCalls
 {
     public interface IJavnoNadmetanjeService
     {
-        Task<JavnoNadmetanjeUplateDto> GetJavnoNadmetanjeByIdAsync(Guid? javnoNadmetanjeID, string token);
+        Task<JavnoNadmetanjeUplateDto> GetJavnoNadmetanjeByIdAsync(Guid javnoNadmetanjeID, string token);
     }
 }

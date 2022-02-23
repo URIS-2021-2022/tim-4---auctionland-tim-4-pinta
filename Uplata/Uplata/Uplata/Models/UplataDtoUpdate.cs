@@ -46,7 +46,7 @@ namespace Uplata.Models
         /// ID javnog nadmetanja.
         /// </summary>
 
-        public Guid? JavnoNadmetanjeID { get; set; }
+        public Guid JavnoNadmetanjeID { get; set; }
 
 
         /// <summary>
