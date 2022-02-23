@@ -133,7 +133,7 @@ namespace KupacMikroservis.Entities
                  Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
                  OvlascenoLice = Guid.Parse("1a411c13-a195-3337-8dbd-22222c3974c0"),
                  AdresaID = Guid.Parse("9A8E31D5-5E7B-46E7-80C6-F22E607EE907"),
-                 UplataID = Guid.Parse("8D452221-F73E-4E35-BA7C-3FDD0D08BE70"),
+                 UplataID = Guid.Parse("5F951CF9-AAF2-45C3-823A-5C8C4C1DEAFF"),
                  MaticniBroj = "455643231",
                  Faks = "654322345"
                  
@@ -159,7 +159,7 @@ namespace KupacMikroservis.Entities
                Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
                OvlascenoLice = Guid.Parse("1a411c13-a195-3337-8dbd-22222c3974c0"),
                AdresaID = Guid.Parse("9A8E31D5-5E7B-46E7-80C6-F22E607EE907"),
-               UplataID = Guid.Parse("8D452221-F73E-4E35-BA7C-3FDD0D08BE70"),
+               UplataID = Guid.Parse("5F951CF9-AAF2-45C3-823A-5C8C4C1DEAFF"),
                MaticniBroj = "455643231",
                Faks = "654322345"
                
@@ -186,7 +186,7 @@ namespace KupacMikroservis.Entities
              Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
              OvlascenoLice = Guid.Parse("1a411c13-a195-3337-8dbd-22222c3974c0"),
              AdresaID = Guid.Parse("9A8E31D5-5E7B-46E7-80C6-F22E607EE907"),
-             UplataID = Guid.Parse("8D452221-F73E-4E35-BA7C-3FDD0D08BE70"),
+             UplataID = Guid.Parse("5F951CF9-AAF2-45C3-823A-5C8C4C1DEAFF"),
              JMBG = "6765432484",
              KontaktOsoba = Guid.Parse("1a411c13-a195-3337-8dbd-44444c3974c0")
             
@@ -212,7 +212,7 @@ namespace KupacMikroservis.Entities
              Prioritet = Guid.Parse("1a411c13-a195-1117-8dbd-67596c3974c0"),
              OvlascenoLice = Guid.Parse("1a411c13-a195-3337-8dbd-22222c3974c0"),
              AdresaID = Guid.Parse("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"),
-             UplataID = Guid.Parse("8D452221-F73E-4E35-BA7C-3FDD0D08BE70"),
+             UplataID = Guid.Parse("5F951CF9-AAF2-45C3-823A-5C8C4C1DEAFF"),
              JMBG = "7654321234",
              KontaktOsoba= Guid.Parse("1a411c13-a195-3337-8dbd-33333c3974c0")
 
