@@ -27,16 +27,14 @@ namespace JavnoNadmetanjeAgregat.Controllers
         private readonly IMapper mapper;
         private readonly ILoggerService loggerService;
         private readonly LogDto logDto;
-        private readonly IGatewayService gatewayService;
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
-        public TipJavnogNadmetanjaController(ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IGatewayService gatewayService, IKorisnikSistemaService korisnikSistemaService)
+        public TipJavnogNadmetanjaController(ITipJavnogNadmetanjaRepository tipJavnogNadmetanjaRepository, LinkGenerator linkGenerator, IMapper mapper, ILoggerService loggerService, IKorisnikSistemaService korisnikSistemaService)
         {
             this.tipJavnogNadmetanjaRepository = tipJavnogNadmetanjaRepository;
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.loggerService = loggerService;
-            this.gatewayService = gatewayService;
             this.korisnikSistemaService = korisnikSistemaService;
             logDto = new LogDto();
             logDto.NameOfTheService = "TipJavnogNadmetanja";
@@ -167,7 +165,6 @@ namespace JavnoNadmetanjeAgregat.Controllers
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<TipJavnogNadmetanjaDto>(t));
-               // return Created("", mapper.Map<TipJavnogNadmetanjaDto>(t));
             }
             catch
             {

@@ -153,7 +153,7 @@ namespace AdresaServis.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<DrzavaDto> CreateDrzava([FromBody] DrzavaDto drzava)
+        public ActionResult<DrzavaDto> CreateDrzava([FromBody] DrzavaCreateDto drzava)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -250,6 +250,14 @@ namespace AdresaServis.Controllers
         /// </summary>
         /// <param name="drzava">Model drzave koja se azurira</param>
         /// <returns>Potvrdu o modifikovanoj drzavi</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje drzave \
+        /// PUT /api/drzave \
+        /// { \
+        /// "drazvaID": "fd5e46de-290f-4844-a004-4a94ae24f654" \
+        /// "nazivDrzave": "Srbija" \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azuriranu drzavu</response>
         /// <response code="400">Drzava koja se azurira nije pronadjena</response>
         /// <response code = "401">Korisnik nije autorizovan</response>

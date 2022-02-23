@@ -10,7 +10,7 @@ namespace KupacMikroservis.ServiceCalls
 {
     public interface IKorisnikSistemaService
     {
-     ///   Task<KorisnikSistemaDTO> GetKorisnikAsync();
+    
         Task<HttpStatusCode> AuthorizeAsync(string token);
     }
 }

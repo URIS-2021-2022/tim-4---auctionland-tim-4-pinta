@@ -26,7 +26,7 @@ namespace KupacMikroservis.Controllers
         private readonly IMapper mapper;
 
         private readonly ILogger logger;
-        private readonly LogDTO logDTO;
+        private readonly LogDto logDTO;
 
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
@@ -37,7 +37,7 @@ namespace KupacMikroservis.Controllers
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.logger = logger;
-            logDTO = new LogDTO();
+            logDTO = new LogDto();
             logDTO.NameOfTheService = "Prioritet";
             this.korisnikSistemaService = korisnikSistemaService;
         }
@@ -54,7 +54,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public ActionResult<List<PrioritetDTO>> GetPrioriteti()
+        public ActionResult<List<PrioritetDto>> GetPrioriteti()
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -81,7 +81,7 @@ namespace KupacMikroservis.Controllers
             }
             logDTO.Level = "Info";
             logger.Log(logDTO);
-            return Ok(mapper.Map<List<PrioritetDTO>>(prioriteti));
+            return Ok(mapper.Map<List<PrioritetDto>>(prioriteti));
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace KupacMikroservis.Controllers
         [HttpGet("{PrioritetId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<PrioritetDTO> GetPrioritet(Guid PrioritetId)
+        public ActionResult<PrioritetDto> GetPrioritet(Guid PrioritetId)
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -121,7 +121,7 @@ namespace KupacMikroservis.Controllers
             }
             logDTO.Level = "Info";
             logger.Log(logDTO);
-            return Ok(mapper.Map<PrioritetDTO>(prioritetModel));
+            return Ok(mapper.Map<PrioritetDto>(prioritetModel));
         }
 
 
@@ -136,7 +136,7 @@ namespace KupacMikroservis.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<PrioritetDTO> CreatePrioritet([FromBody] PrioritetCreateDTO prioritet)   
+        public ActionResult<PrioritetDto> CreatePrioritet([FromBody] PrioritetCreateDto prioritet)   
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -164,7 +164,7 @@ namespace KupacMikroservis.Controllers
 
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Created(location, mapper.Map<PrioritetDTO>(prCreated));
+                return Created(location, mapper.Map<PrioritetDto>(prCreated));
            }
            catch
            {
@@ -242,7 +242,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<PrioritetDTO> UpdatePrioritet(PrioritetUpdateDTO prioritet)
+        public ActionResult<PrioritetDto> UpdatePrioritet(PrioritetUpdateDto prioritet)
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -280,7 +280,7 @@ namespace KupacMikroservis.Controllers
 
                 prioritetRepository.SaveChanges();
 
-                return Ok(mapper.Map<PrioritetDTO>(oldPrioritet));
+                return Ok(mapper.Map<PrioritetDto>(oldPrioritet));
             }
             catch (Exception)
             {

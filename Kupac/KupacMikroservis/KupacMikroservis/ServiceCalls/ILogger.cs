@@ -9,6 +9,6 @@ namespace KupacMikroservis.ServiceCalls
 {
     public interface ILogger
     {
-        void Log(LogDTO log);
+        void Log(LogDto log);
     }
 }

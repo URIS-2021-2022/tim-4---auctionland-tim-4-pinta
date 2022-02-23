@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JavnoNadmetanjeAgregat.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class IntiaCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

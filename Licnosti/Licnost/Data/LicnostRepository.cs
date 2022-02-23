@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Licnost.Entities;
+﻿using Licnost.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +8,10 @@ namespace Licnost.Data
     public class LicnostRepository : ILicnostRepository
     {
         private readonly LicnostContext context;
-        private readonly IMapper mapper;
 
-        public LicnostRepository(LicnostContext context, IMapper mapper)
+        public LicnostRepository(LicnostContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -33,15 +30,17 @@ namespace Licnost.Data
             return context.Licnosti.FirstOrDefault(l => l.LicnostId == licnostId);
         }
 
-        public LicnostEntity CreateLicnost(LicnostEntity licnost)
+        public LicnostEntity CreateLicnost(LicnostEntity licnostModel)
         {
-            licnost.LicnostId = Guid.NewGuid();
-            context.Licnosti.Add(licnost);
-            return licnost;
+            licnostModel.LicnostId = Guid.NewGuid();
+            context.Licnosti.Add(licnostModel);
+            return licnostModel;
         }
 
-        public void UpdateLicnost(LicnostEntity licnost)
+        public void UpdateLicnost(LicnostEntity licnostModel)
         {
+            //Nije potrebna implementacija jer EF core prati entitet koji smo izvukli iz baze
+            //i kada promenimo taj objekat i odradimo SaveChanges sve izmene će biti perzistirane
         }
 
         public void DeleteLicnost(Guid licnostId)

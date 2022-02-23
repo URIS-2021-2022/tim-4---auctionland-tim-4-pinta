@@ -85,8 +85,8 @@ namespace Licitacija.Controllers
             foreach(LicitacijaEntity l in licitacije)
             {
                 LicitacijaDto licitacijaDto = mapper.Map<LicitacijaDto>(l);
-                licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(l.KupacID).Result;
-                licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(l.JavnoNadmetanjeID).Result;
+                licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(l.KupacID, token).Result;
+                licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(l.JavnoNadmetanjeID, token).Result;
                 licitacijeDto.Add(licitacijaDto);
             }
 
@@ -136,8 +136,8 @@ namespace Licitacija.Controllers
             
 
             LicitacijaDto licitacijaDto = mapper.Map<LicitacijaDto>(licitacija);
-            licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(licitacija.JavnoNadmetanjeID).Result;
-            licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(licitacija.KupacID).Result;   
+            licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(licitacija.JavnoNadmetanjeID, token).Result;
+            licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(licitacija.KupacID, token).Result;   
             logDto.Level = "Info";
             loggerService.CreateLog(logDto);
             return Ok(licitacijaDto);
@@ -197,8 +197,8 @@ namespace Licitacija.Controllers
                 string location = linkGenerator.GetPathByAction("GetLicitacija", "Licitacija", new { licitacijaID = l.LicitacijaID });
                 LicitacijaDto licitacijaDto = mapper.Map<LicitacijaDto>(l);
 
-                licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(licitacija.JavnoNadmetanjeID).Result;
-                licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(licitacija.KupacID).Result;
+                licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(licitacija.JavnoNadmetanjeID, token).Result;
+                licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(licitacija.KupacID, token).Result;
 
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
@@ -271,8 +271,8 @@ namespace Licitacija.Controllers
                 licitacijaRepository.SaveChanges();
 
                 LicitacijaDto licitacijaDto = mapper.Map<LicitacijaDto>(oldLicitacija);
-                licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(licitacija.JavnoNadmetanjeID).Result;
-                licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(licitacija.KupacID).Result;
+                licitacijaDto.JavnoNadmetanje = javnoNadmetanjeService.GetJavnoNadmetanjeByIdAsync(licitacija.JavnoNadmetanjeID, token).Result;
+                licitacijaDto.Kupac = kupacService.GetKupacByIdAsync(licitacija.KupacID, token).Result;
 
 
                 logDto.Level = "Info";

@@ -10,6 +10,6 @@ namespace KupacMikroservis.ServiceCalls
 {
     public interface IGateway
     {
-        Task<GatewayDTO> GetUrl(string servis);
+        Task<GatewayDto> GetUrl(string servis);
     }
 }

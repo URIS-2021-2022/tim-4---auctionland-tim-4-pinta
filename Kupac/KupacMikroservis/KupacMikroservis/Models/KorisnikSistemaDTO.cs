@@ -8,7 +8,7 @@ namespace KupacMikroservis.Models
     /// <summary>
     /// DTO za korisnika sistema
     /// </summary>
-    public class KorisnikSistemaDTO
+    public class KorisnikSistemaDto
     {
         /// <summary>
         /// Ime korisnika

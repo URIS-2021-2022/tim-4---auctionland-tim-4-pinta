@@ -146,7 +146,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<OdvodnjavanjeDto> CreateOdvodnjavanje([FromBody] OdvodnjavanjeDto odvodnjavanje)
+        public ActionResult<OdvodnjavanjeDto> CreateOdvodnjavanje([FromBody] OdvodnjavanjeCreateDto odvodnjavanje)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -242,6 +242,14 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="odvodnjavanje">Model odvodnjavanja koje se azurira</param>
         /// <returns>Potvrda o modifikovanom azuriranju</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje odvodnjavanja \
+        /// PUT /api/odvodnjavanja \
+        /// { \
+        /// "odvodnjavanjeID": "32cf50d2-ab1a-45fb-a5de-f6c4fd646775", \
+        /// "odvodnjavanjeNaziv": "Podzemno", \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azurirano odvodnajvanje</response>
         /// <response code="400">Odvodnjavanje koje se azurira nije pronadjeno</response>
         /// <response code="401">Korisnik nije autorizovan</response>

@@ -174,7 +174,7 @@ namespace Licnost.Controllers
                 logDto.Level = "Info";
                 loggerService.CreateLog(logDto);
                 return Created(location, mapper.Map<LicnostDto>(licnostCreate));
-                //return Created("", mapper.Map<LicnostDto>(licnostCreate));
+                
             }
             catch
             {

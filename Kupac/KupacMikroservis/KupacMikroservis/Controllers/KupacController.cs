@@ -34,7 +34,7 @@ namespace KupacMikroservis.Controllers
         private readonly IOvlascenoLiceRepository olRepository;
 
         private readonly ILogger logger;
-        private readonly LogDTO logDTO;
+        private readonly LogDto logDTO;
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
 
@@ -48,7 +48,7 @@ namespace KupacMikroservis.Controllers
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.logger = logger;
-            logDTO = new LogDTO();
+            logDTO = new LogDto();
             logDTO.NameOfTheService = "Kupac";
             this.korisnikSistemaService = korisnikSistemaService;
             this.prRepository = prRepository;
@@ -66,7 +66,7 @@ namespace KupacMikroservis.Controllers
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public ActionResult<List<KupacDTO>> GetKupci()
+        public ActionResult<List<KupacDto>> GetKupci()
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -100,16 +100,16 @@ namespace KupacMikroservis.Controllers
                 return NoContent();
             }
 
-               List<KupacDTO> kupciDtos = new List<KupacDTO>();
+               List<KupacDto> kupciDtos = new List<KupacDto>();
 
                  foreach(FizickoLiceEntity f in kupciFizLica)
                  {
-                    AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(f.AdresaID).Result;
-                    UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(f.UplataID).Result;
+                    AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(f.AdresaID).Result;
+                    UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(f.UplataID).Result;
                     PrioritetEntity prioritetKupca = prRepository.GetPrioritetById(f.Prioritet);
                     OvlascenoLiceEntity olKupca = olRepository.GetOvlascenoLiceById(f.OvlascenoLice);
                 
-                    KupacDTO kupacDto = mapper.Map<KupacDTO>(f);
+                    KupacDto kupacDto = mapper.Map<KupacDto>(f);
                     kupacDto.Adresa = adresa;
                     kupacDto.Uplata = uplata;
                     kupacDto.OvlascenoLiceO = olKupca;
@@ -120,12 +120,12 @@ namespace KupacMikroservis.Controllers
 
             foreach (PravnoLiceEntity p in kupciPrLica)
             {
-                AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(p.AdresaID).Result;
-                UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(p.UplataID).Result;
+                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(p.AdresaID).Result;
+                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(p.UplataID).Result;
                 PrioritetEntity prioritetKupca = prRepository.GetPrioritetById(p.Prioritet);
                 OvlascenoLiceEntity olKupca = olRepository.GetOvlascenoLiceById(p.OvlascenoLice);
 
-                KupacDTO kupacDto = mapper.Map<KupacDTO>(p);
+                KupacDto kupacDto = mapper.Map<KupacDto>(p);
                 kupacDto.Adresa = adresa;
                 kupacDto.Uplata = uplata;
                 kupacDto.OvlascenoLiceO = olKupca;
@@ -149,7 +149,7 @@ namespace KupacMikroservis.Controllers
         [HttpGet("{KupacId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<KupacDTO> GetKupac(Guid kupacID)
+        public ActionResult<KupacDto> GetKupac(Guid kupacID)
         {
          /*   string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -178,9 +178,9 @@ namespace KupacMikroservis.Controllers
             if (fLiceRepository.GetFizickoLiceById(kupacID) is null)
             {
                 PravnoLiceEntity pLice = pLiceRepository.GetPravnoLiceById(kupacID);
-                AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(pLice.AdresaID).Result;
-                UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(pLice.UplataID).Result;
-                KupacDTO kupacDto = mapper.Map<KupacDTO>(pLice);
+                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(pLice.AdresaID).Result;
+                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(pLice.UplataID).Result;
+                KupacDto kupacDto = mapper.Map<KupacDto>(pLice);
                 kupacDto.Adresa = adresa;
                 kupacDto.Uplata = uplata;
 
@@ -191,9 +191,9 @@ namespace KupacMikroservis.Controllers
             else
             {
                 FizickoLiceEntity fLice = fLiceRepository.GetFizickoLiceById(kupacID);
-                AdresaKupcaDTO adresa = adresaService.GetAdresaKupcaAsync(fLice.AdresaID).Result;
-                UplataKupcaDTO uplata = uplataService.GetUplataKupcaAsync(fLice.UplataID).Result;
-                KupacDTO kupacDto = mapper.Map<KupacDTO>(fLice);
+                AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(fLice.AdresaID).Result;
+                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(fLice.UplataID).Result;
+                KupacDto kupacDto = mapper.Map<KupacDto>(fLice);
                 kupacDto.Adresa = adresa;
                 kupacDto.Uplata = uplata;
 
@@ -215,7 +215,7 @@ namespace KupacMikroservis.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KupacDTO> CreateKupac([FromBody] KupacCreateDTO kupac)   
+        public ActionResult<KupacDto> CreateKupac([FromBody] KupacCreateDto kupac)   
         {
 
             string token = Request.Headers["token"].ToString();
@@ -258,7 +258,7 @@ namespace KupacMikroservis.Controllers
 
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Created(location, mapper.Map<KupacDTO>(kpCreated));
+                return Created(location, mapper.Map<KupacDto>(kpCreated));
             }
             catch
             {
@@ -349,7 +349,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KupacDTO> UpdateKupac([FromBody]KupacUpdateDTO kupac)
+        public ActionResult<KupacDto> UpdateKupac([FromBody]KupacUpdateDto kupac)
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -406,7 +406,7 @@ namespace KupacMikroservis.Controllers
                     fLiceRepository.SaveChanges();
                     logDTO.Level = "Info";
                     logger.Log(logDTO);
-                    return Ok(mapper.Map<KupacDTO>(kpEntity));
+                    return Ok(mapper.Map<KupacDto>(kpEntity));
 
                 }
                 else
@@ -443,7 +443,7 @@ namespace KupacMikroservis.Controllers
 
                     logDTO.Level = "Info";
                     logger.Log(logDTO);
-                    return Ok(mapper.Map<KupacDTO>(kupac));
+                    return Ok(mapper.Map<KupacDto>(kupac));
                 }
 
                

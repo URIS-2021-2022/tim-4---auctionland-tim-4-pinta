@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class KupacDTO
+    public class KupacDto
     {
         
      
@@ -45,17 +45,12 @@ namespace KupacMikroservis.Models
 
         public Guid UplataID { get; set; }
 
-        public AdresaKupcaDTO Adresa { get; set; }
+        public AdresaKupcaDto Adresa { get; set; }
 
-        public UplataKupcaDTO Uplata { get; set; }
+        public UplataKupcaDto Uplata { get; set; }
 
 
 
-        //    public string JMBG { get; set; }
-
-        //    public string MaticniBroj { get; set; }
-
-        //   public string Faks { get; set; }
 
 
     }

@@ -8,7 +8,7 @@ namespace KupacMikroservis.ServiceCalls
 {
     public interface IUplataService
     {
-        Task<UplataKupcaDTO> GetUplataKupcaAsync(Guid UplataID);
+        Task<UplataKupcaDto> GetUplataKupcaAsync(Guid UplataID);
         
     }
 }

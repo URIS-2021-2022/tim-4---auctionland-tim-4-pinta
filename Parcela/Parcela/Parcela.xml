@@ -34,7 +34,7 @@
             </summary>
             <param name="deoParcele">Model dela parcele</param>
             <returns>Potvrda o kreiranom delu parcele</returns>
-            /// <remarks>
+            <remarks>
             Primer zahteva za kreiranje novog dela parcele \
             POST /api/deloviParcela \
             { \
@@ -64,6 +64,16 @@
             </summary>
             <param name="deoParcele">Model dela parcele koji se azurira</param>
             <returns>Potvrda o modifikovanom delu parcele</returns>
+            <remarks>
+            Primer zahteva za modifikovanje dela parcele \
+            PUT /api/deloviParcela \
+            { \
+            "deoParceleID": "1c7ea607-8ddb-493a-87fa-4bf5893e965b"
+            "redniBroj": 1, \
+            "povrsinaDelaParcele": 1000, \
+            "parcelaID": "03b0da3e-2604-4a9a-9e80-ad192727a3e9"
+            } 
+            </remarks>
             <response code="200">Vraca azurirani deo parcele</response>
             <response code="400">Deo parcele koji se azurira nije pronadjen</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -99,7 +109,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena klasa nije pronadjena</response>
         </member>
-        <member name="M:Parcela.Controllers.KlasaController.CreateKlasa(Parcela.Models.KlasaDto)">
+        <member name="M:Parcela.Controllers.KlasaController.CreateKlasa(Parcela.Models.KlasaCreateDto)">
             <summary>
             Kreira novu klasu
             </summary>
@@ -133,6 +143,14 @@
             </summary>
             <param name="klasa">model klase koja se azurira</param>
             <returns>Potvrda o modifikovanoj klasi</returns>
+            <remarks>
+            Primer zahteva za modifikovanje klase \
+            PUT /api/klase \
+            { \
+            "klasaID": "829f5f3f-6159-4e15-ab52-d4c78ce944dc", \
+            "klasaOznaka": "I", \
+            } 
+            </remarks>
             <response code="200">Vraca azuriranu klasu</response>
             <response code="400">Klasa koja se azurira nije pronadjena</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -168,7 +186,7 @@
             <response code = "401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena kultura nije pronadjena</response>
         </member>
-        <member name="M:Parcela.Controllers.KulturaController.CreateKultura(Parcela.Models.KulturaDto)">
+        <member name="M:Parcela.Controllers.KulturaController.CreateKultura(Parcela.Models.KulturaCreateDto)">
             <summary>
             Kreira novu kulturu
             </summary>
@@ -202,6 +220,14 @@
             </summary>
             <param name="kultura">Model kulture koja se azurira</param>
             <returns>Potvrda o modifikovanoj kulturi</returns>
+            <remarks>
+            Primer zahteva za modifikovanje kulture \
+            PUT /api/kulture \
+            { \
+            "kulturaID": "149b65ca-47aa-433c-8dbe-cdcf5e74a4ed", \
+            "kulturaNaziv": "Njive", \
+            } 
+            </remarks>
             <response code="200">Vraca azuriranu kulturu</response>
             <response code="400">Kultura koja se azurira nije pronadjena</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -237,7 +263,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazen oblik svojine nije pronadjen</response>
         </member>
-        <member name="M:Parcela.Controllers.OblikSvojineController.CreateOblikSvojine(Parcela.Models.OblikSvojineDto)">
+        <member name="M:Parcela.Controllers.OblikSvojineController.CreateOblikSvojine(Parcela.Models.OblikSvojineCreateDto)">
             <summary>
             Kreira novi oblik svojine
             </summary>
@@ -271,6 +297,14 @@
             </summary>
             <param name="oblikSvojine">Model oblika svojine za azuriranje</param>
             <returns>Potvrda o modifikovanom obliku svojine</returns>
+            <remarks>
+            Primer zahteva za modifikovanje oblika svojine \
+            PUT /api/obliciSvojine \
+            { \
+            "oblikSvojineID": "0051339e-4bf1-4d63-89f9-d5f744016a2b", \
+            "oblikSvoijenNaziv": "Privatna svojina", \
+            } 
+            </remarks>
             <response code="200">Vraca azuriran oblik svojine</response>
             <response code="400">Oblik svojine koji se azurira nije pronadjen</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -306,7 +340,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena obradivost nije pronadjena</response>
         </member>
-        <member name="M:Parcela.Controllers.ObradivostController.CreateObradivost(Parcela.Models.ObradivostDto)">
+        <member name="M:Parcela.Controllers.ObradivostController.CreateObradivost(Parcela.Models.ObradivostCreateDto)">
             <summary>
             Kreira novu obradivost
             </summary>
@@ -340,6 +374,14 @@
             </summary>
             <param name="obradivost">Model obradivosti koja se azurira</param>
             <returns>Potvrda o modifikovanoj obradivosti</returns>
+            <remarks>
+            Primer zahteva za modifikovanje obradivosti \
+            PUT /api/obradivosti \
+            { \
+            "obradivostID": "1fbc26e0-a797-45b8-bfb2-75d6799237ba", \
+            "obradivostNaziv": "Obradivo", \
+            } 
+            </remarks>
             <response code="200">Vraca azuriranu obradivost</response>
             <response code="400">Obradivost koja se azurira nije pronadjena</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -375,7 +417,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazeno odvodnjavanje nije prondjeno</response>
         </member>
-        <member name="M:Parcela.Controllers.OdvodnjavanjeController.CreateOdvodnjavanje(Parcela.Models.OdvodnjavanjeDto)">
+        <member name="M:Parcela.Controllers.OdvodnjavanjeController.CreateOdvodnjavanje(Parcela.Models.OdvodnjavanjeCreateDto)">
             <summary>
             Kreira novo odvodnjavanje
             </summary>
@@ -409,6 +451,14 @@
             </summary>
             <param name="odvodnjavanje">Model odvodnjavanja koje se azurira</param>
             <returns>Potvrda o modifikovanom azuriranju</returns>
+            <remarks>
+            Primer zahteva za modifikovanje odvodnjavanja \
+            PUT /api/odvodnjavanja \
+            { \
+            "odvodnjavanjeID": "32cf50d2-ab1a-45fb-a5de-f6c4fd646775", \
+            "odvodnjavanjeNaziv": "Podzemno", \
+            } 
+            </remarks>
             <response code="200">Vraca azurirano odvodnajvanje</response>
             <response code="400">Odvodnjavanje koje se azurira nije pronadjeno</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -425,7 +475,7 @@
             Sadrzi CRUD operacije za parcele
             </summary>
         </member>
-        <member name="M:Parcela.Controllers.ParcelaController.GetParcele">
+        <member name="M:Parcela.Controllers.ParcelaController.GetParcele(Parcela.Data.IKlasaRepository,Parcela.Data.IKulturaRepository,Parcela.Data.IOblikSvojineRepository,Parcela.Data.IObradivostRepository,Parcela.Data.IOdvodnjavanjeRepository,Parcela.Data.IZasticenaZonaRepository)">
             <summary>
             Vraca sve parcele
             </summary>
@@ -434,7 +484,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Nije pronadjena nijedna parcela</response>
         </member>
-        <member name="M:Parcela.Controllers.ParcelaController.GetParcela(System.Guid)">
+        <member name="M:Parcela.Controllers.ParcelaController.GetParcela(System.Guid,Parcela.Data.IKlasaRepository,Parcela.Data.IKulturaRepository,Parcela.Data.IOblikSvojineRepository,Parcela.Data.IObradivostRepository,Parcela.Data.IOdvodnjavanjeRepository,Parcela.Data.IZasticenaZonaRepository)">
             <summary>
             Vraca jednu parcelu na osnovu ID-ja
             </summary>
@@ -444,7 +494,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena parcela nije pronadjena</response>
         </member>
-        <member name="M:Parcela.Controllers.ParcelaController.CreateParcela(Parcela.Models.ParcelaCreateDto)">
+        <member name="M:Parcela.Controllers.ParcelaController.CreateParcela(Parcela.Models.ParcelaCreateDto,Parcela.Data.IKlasaRepository,Parcela.Data.IKulturaRepository,Parcela.Data.IOblikSvojineRepository,Parcela.Data.IObradivostRepository,Parcela.Data.IOdvodnjavanjeRepository,Parcela.Data.IZasticenaZonaRepository)">
             <summary>
             Kreira novu parcelu
             </summary>
@@ -463,12 +513,13 @@
             "zasticenaZonaStvarnoStanje": 1, \
             "odvodnjavanjeStvarnoStanje": "Podzemno" \
             "kulturaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-            "klasaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-            "obradivostID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-            "zasticenaZonaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-            "odvodnjavanjeID": "a873025a-b4bc-440d-8e65-dc63fb9025d7" \
-            "opstinaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
-            "kupacID": "a873025a-b4bc-440d-8e65-dc63fb9025d7" \
+            "klasaID": "32cf50d2-ab1a-45fb-a5de-f6c4fd646775", \
+            "oblikSvojineID": "1c7ea607-8ddb-493a-87fa-4bf5893e965b", \
+            "obradivostID": "1fbc26e0-a797-45b8-bfb2-75d6799237ba", \
+            "zasticenaZonaID": "0051339e-4bf1-4d63-89f9-d5f744016a2b", \
+            "odvodnjavanjeID": "149b65ca-47aa-433c-8dbe-cdcf5e74a4ed" \
+            "opstinaID": "829f5f3f-6159-4e15-ab52-d4c78ce944dc", \
+            "kupacID": "2a411c13-a195-48f7-8dbc-67596c3974c0" \
             } 
             </remarks>
             <response code = "201">Vraca kreiranu parcelu</response>
@@ -486,12 +537,35 @@
             <response code="404">Nije pronadjena parcela za brisanje</response>
             <response code="500">Doslo je do greske na serveru prilikom brisanja parcele</response>
         </member>
-        <member name="M:Parcela.Controllers.ParcelaController.UpdateParcela(Parcela.Models.ParcelaUpdateDto)">
+        <member name="M:Parcela.Controllers.ParcelaController.UpdateParcela(Parcela.Models.ParcelaUpdateDto,Parcela.Data.IKlasaRepository,Parcela.Data.IKulturaRepository,Parcela.Data.IOblikSvojineRepository,Parcela.Data.IObradivostRepository,Parcela.Data.IOdvodnjavanjeRepository,Parcela.Data.IZasticenaZonaRepository)">
             <summary>
             Azurira jednu parcelu
             </summary>
             <param name="parcela">Model parcele koja se azurira</param>
             <returns>Potvrdu o modifikovanoj parceli</returns>
+            <remarks>
+            Primer zahteva za modifikovanje parcele \
+            PUT /api/parcele \
+            { \
+            "parcelaID": "6a411c13-a195-48f7-8dbd-67596c3974c0", \
+            "povrsina": 3000, \
+            "brojParcele": "333", \
+            "brojListaNepokretnosti": "333", \
+            "kulturaStvarnoStanje": "Njive", \
+            "klasaStvarnoStanje": "II", \
+            "obradivostStvarnoStanje": "Obradivo", \
+            "zasticenaZonaStvarnoStanje": 1, \
+            "odvodnjavanjeStvarnoStanje": "Podzemno" \
+            "kulturaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+            "klasaID": "32cf50d2-ab1a-45fb-a5de-f6c4fd646775", \
+            "oblikSvojineID": "1c7ea607-8ddb-493a-87fa-4bf5893e965b", \
+            "obradivostID": "1fbc26e0-a797-45b8-bfb2-75d6799237ba", \
+            "zasticenaZonaID": "0051339e-4bf1-4d63-89f9-d5f744016a2b", \
+            "odvodnjavanjeID": "149b65ca-47aa-433c-8dbe-cdcf5e74a4ed" \
+            "opstinaID": "829f5f3f-6159-4e15-ab52-d4c78ce944dc", \
+            "kupacID": "2a411c13-a195-48f7-8dbc-67596c3974c0" \
+            } 
+            </remarks>
             <response code="200">Vraca azuriranu parcelu</response>
             <response code="400">Parcela koja se azurira nije pronadjena</response>
             <response code="401">Korisnik nije autorizovan</response>
@@ -527,7 +601,7 @@
             <response code="401">Korisnik nije autorizovan</response>
             <response code = "404">Trazena zasticena zona nije pronadjena</response>
         </member>
-        <member name="M:Parcela.Controllers.ZasticenaZonaController.CreateZasticenaZona(Parcela.Models.ZasticenaZonaDto)">
+        <member name="M:Parcela.Controllers.ZasticenaZonaController.CreateZasticenaZona(Parcela.Models.ZasticenaZonaCreateDto)">
             <summary>
             Kreira novu zasticenu zonu
             </summary>
@@ -561,7 +635,15 @@
             </summary>
             <param name="zasticenaZona">Model zasticene zone koja se azurira</param>
             <returns>Potvrda o modifikovanoj zasticenoj zoni</returns>
-            /// <response code="200">Vraca azuriranu zasticenu zonu</response>
+            <response code="200">Vraca azuriranu zasticenu zonu</response>
+            <remarks>
+            Primer zahteva za modifikovanje zasticene zone \
+            PUT /api/zasticeneZone \
+            { \
+            "zasticenaZonaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+            "zasticenaZonaOznaka": 1, \
+            } 
+            </remarks>
             <response code="400">Zasticena zona koja se azurira nije pronadjena</response>
             <response code="401">Korisnik nije autorizovan</response>
             <response code="500">Doslo je do greske prilikom azuriranja zasticene zone</response>
@@ -999,6 +1081,16 @@
             ID parcele
             </summary>
         </member>
+        <member name="T:Parcela.Models.KlasaCreateDto">
+            <summary>
+            DTO za kreiranje klase
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KlasaCreateDto.KlasaOznaka">
+            <summary>
+            Naziv klase
+            </summary>
+        </member>
         <member name="T:Parcela.Models.KlasaDto">
             <summary>
             DTO za klasu
@@ -1047,6 +1139,16 @@
         <member name="P:Parcela.Models.KorisnikSistemaDto.Lozinka">
             <summary>
              lozinka
+            </summary>
+        </member>
+        <member name="T:Parcela.Models.KulturaCreateDto">
+            <summary>
+            DTO za kreiranje kulture
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.KulturaCreateDto.KulturaNaziv">
+            <summary>
+            Naziv kulture
             </summary>
         </member>
         <member name="T:Parcela.Models.KulturaDto">
@@ -1189,6 +1291,16 @@
             Poruka
             </summary>
         </member>
+        <member name="T:Parcela.Models.OblikSvojineCreateDto">
+            <summary>
+            DTO za kreiranje oblika svojine
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.OblikSvojineCreateDto.OblikSvojineNaziv">
+            <summary>
+            Naziv oblika svojine
+            </summary>
+        </member>
         <member name="T:Parcela.Models.OblikSvojineDto">
             <summary>
             DTO za oblik svojine
@@ -1214,6 +1326,16 @@
             Naziv oblika svojine
             </summary>
         </member>
+        <member name="T:Parcela.Models.ObradivostCreateDto">
+            <summary>
+            DTO za kreiranje obradivosti
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ObradivostCreateDto.ObradivostNaziv">
+            <summary>
+            Naziv tipa obradivosti
+            </summary>
+        </member>
         <member name="T:Parcela.Models.ObradivostDto">
             <summary>
             DTO za obradivost
@@ -1237,6 +1359,16 @@
         <member name="P:Parcela.Models.ObradivostUpdateDto.ObradivostNaziv">
             <summary>
             Naziv tipa obradivosti
+            </summary>
+        </member>
+        <member name="T:Parcela.Models.OdvodnjavanjeCreateDto">
+            <summary>
+            DTO za kreiranje odvodnjavanja
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.OdvodnjavanjeCreateDto.OdvodnjavanjeNaziv">
+            <summary>
+            Naziv tipa odvodnjavanja
             </summary>
         </member>
         <member name="T:Parcela.Models.OdvodnjavanjeDto">
@@ -1599,6 +1731,16 @@
             Poziv na broj uplate
             </summary>
         </member>
+        <member name="T:Parcela.Models.ZasticenaZonaCreateDto">
+            <summary>
+            DTO za kreiranje zasticene zone
+            </summary>
+        </member>
+        <member name="P:Parcela.Models.ZasticenaZonaCreateDto.ZasticenaZonaOznaka">
+            <summary>
+            Oznaka zasticene zone
+            </summary>
+        </member>
         <member name="T:Parcela.Models.ZasticenaZonaDto">
             <summary>
             DTO za zasticenu zonu
@@ -1704,7 +1846,7 @@
             Konstruktor
             </summary>
         </member>
-        <member name="M:Parcela.ServiceCals.IKatastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(System.Guid)">
+        <member name="M:Parcela.ServiceCals.IKatastarskaOpstinaService.GetKatastarskaOpstinaByIdAsync(System.Guid,System.String)">
             <summary>
             Zahtev za katastarskom opstinom po ID-ju
             </summary>

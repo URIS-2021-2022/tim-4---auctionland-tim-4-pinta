@@ -47,11 +47,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <returns>Listu tipova garancije</returns>
         /// <response code="200">Vraća listu tipova garancije</response>
         /// <response code="404">Nije pronađena ni jedan jedini tip garancije</response>
-        [HttpGet]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet]
+        [HttpHead]
         public ActionResult<List<TipGarancijeDto>> GetTipovi()
         {
             string token = Request.Headers["token"].ToString();
@@ -90,12 +90,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <param name="tipId">ID tipa garancije</param>
         /// <returns></returns>
         /// <response code="200">Vraća tražen tip garancije</response>
-        [HttpGet("{tipId}")]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpGet("{tipId}")]
         public ActionResult<TipGarancijeDto> GetTipGarancije(Guid tipId)
         {
             string token = Request.Headers["token"].ToString();
@@ -141,12 +140,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// </remarks>
         ///  <response code="201">Vraća kreiran tip garancije</response>
         /// <response code="500">Došlo je do greške na serveru prilikom kreiranja  tipa garancije</response>
-        [HttpPost]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Consumes("application/json")]
+        [HttpPost]
         public ActionResult<TipGarancijeDto> CreateTipGarancije([FromBody] TipGarancijeDto tipGarancije)
         {
             string token = Request.Headers["token"].ToString();
@@ -192,12 +190,11 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="204">Tip garancije uspešno obrisan</response>
         /// <response code="404">Nije pronađen tip garancije za brisanje</response>
         /// <response code="500">Došlo je do greške na serveru prilikom brisanja tipa garancije</response>
-        [HttpDelete("{tipGarancijeId}")]
-        [HttpHead]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpDelete("{tipGarancijeId}")]
         public IActionResult DeleteTipGarancije(Guid tipGarancijeId)
         {
             string token = Request.Headers["token"].ToString();
@@ -247,13 +244,12 @@ namespace UgovorOZakupuAgregat.Controllers
         /// <response code="200">Vraća ažuriran tip garancije</response>
         /// <response code="400">Tip garancije koji se ažurira nije pronađen</response>
         /// <response code="500">Došlo je do greške na serveru prilikom ažuriranja tipa garancije</response>
-        [HttpPut]
-        [HttpHead]
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [HttpPut]
         public ActionResult<TipGarancijeDto> UpdateTipGarancije(TipGarancijeUpdateDto tipGarancije)
         {
             string token = Request.Headers["token"].ToString();

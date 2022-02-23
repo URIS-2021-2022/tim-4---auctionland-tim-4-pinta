@@ -12,7 +12,7 @@ namespace KupacMikroservis.Profiles
     {
         public FizickoLiceProfile()
         {
-            CreateMap<FizickoLiceEntity, FizickoLiceDTO>();
+            CreateMap<FizickoLiceEntity, FizickoLiceDto>();
            // CreateMap<FizickoLiceEntity, FizickoLiceCreateDTO>();
           //  CreateMap<FizickoLiceEntity, FizickoLiceUpdateDTO>();
 

@@ -145,7 +145,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ZasticenaZonaDto> CreateZasticenaZona([FromBody] ZasticenaZonaDto zasticenaZona)
+        public ActionResult<ZasticenaZonaDto> CreateZasticenaZona([FromBody] ZasticenaZonaCreateDto zasticenaZona)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -241,7 +241,15 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="zasticenaZona">Model zasticene zone koja se azurira</param>
         /// <returns>Potvrda o modifikovanoj zasticenoj zoni</returns>
-        /// /// <response code="200">Vraca azuriranu zasticenu zonu</response>
+        /// <response code="200">Vraca azuriranu zasticenu zonu</response>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje zasticene zone \
+        /// PUT /api/zasticeneZone \
+        /// { \
+        /// "zasticenaZonaID": "a873025a-b4bc-440d-8e65-dc63fb9025d7", \
+        /// "zasticenaZonaOznaka": 1, \
+        /// } 
+        /// </remarks>
         /// <response code="400">Zasticena zona koja se azurira nije pronadjena</response>
         /// <response code="401">Korisnik nije autorizovan</response>
         /// <response code="500">Doslo je do greske prilikom azuriranja zasticene zone</response>

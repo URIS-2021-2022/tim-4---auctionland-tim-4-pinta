@@ -20,9 +20,9 @@ namespace Uplata.Entities
         /// <summary>
         /// Kreiranje modela 
         /// </summary>
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.Entity<KursEntity>()
+            modelBuilder.Entity<KursEntity>()
                .HasData(new
                {
                    KursID = Guid.Parse("B06A4284-44E2-46AF-8D74-B79C8B0C6017"),
@@ -31,7 +31,7 @@ namespace Uplata.Entities
                    Valuta = "EUR",
                });
 
-            builder.Entity<KursEntity>()
+            modelBuilder.Entity<KursEntity>()
                .HasData(new
                {
                    KursID = Guid.Parse("411C4082-CC5E-4F5F-8946-4086EBCA08D0"),
@@ -41,7 +41,7 @@ namespace Uplata.Entities
                });
 
 
-            builder.Entity<UplataEntity>()
+            modelBuilder.Entity<UplataEntity>()
                 .HasData(new
                 {
                     UplataID = Guid.Parse("8D452221-F73E-4E35-BA7C-3FDD0D08BE70"),
@@ -53,7 +53,7 @@ namespace Uplata.Entities
                     KursID = Guid.Parse("411C4082-CC5E-4F5F-8946-4086EBCA08D0"),
                 });
 
-            builder.Entity<UplataEntity>()
+            modelBuilder.Entity<UplataEntity>()
                 .HasData(new
                 {
                     UplataID = Guid.Parse("5F951CF9-AAF2-45C3-823A-5C8C4C1DEAFF"),
@@ -65,7 +65,7 @@ namespace Uplata.Entities
                     KursID = Guid.Parse("B06A4284-44E2-46AF-8D74-B79C8B0C6017"),
 
                 });
-            builder.Entity<UplataEntity>()
+            modelBuilder.Entity<UplataEntity>()
                 .HasData(new
                 {
                     UplataID = Guid.Parse("1D2ED242-5059-4A1B-AEAB-EEE99404284F"),

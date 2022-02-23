@@ -147,7 +147,7 @@ namespace Parcela.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KulturaDto> CreateKultura([FromBody] KulturaDto kultura)
+        public ActionResult<KulturaDto> CreateKultura([FromBody] KulturaCreateDto kultura)
         {
             string token = Request.Headers["token"].ToString();
             string[] split = token.Split('#');
@@ -244,6 +244,14 @@ namespace Parcela.Controllers
         /// </summary>
         /// <param name="kultura">Model kulture koja se azurira</param>
         /// <returns>Potvrda o modifikovanoj kulturi</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje kulture \
+        /// PUT /api/kulture \
+        /// { \
+        /// "kulturaID": "149b65ca-47aa-433c-8dbe-cdcf5e74a4ed", \
+        /// "kulturaNaziv": "Njive", \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azuriranu kulturu</response>
         /// <response code="400">Kultura koja se azurira nije pronadjena</response>
         /// <response code="401">Korisnik nije autorizovan</response>

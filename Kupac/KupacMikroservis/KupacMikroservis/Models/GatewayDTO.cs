@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace KupacMikroservis.Models
 {
-    public class GatewayDTO
+    public class GatewayDto
     {
         public string Url { get; set; }
     }

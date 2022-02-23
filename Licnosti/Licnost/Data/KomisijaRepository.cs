@@ -1,21 +1,17 @@
-﻿using AutoMapper;
-using Licnost.Entities;
+﻿using Licnost.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Licnost.Data
 {
     public class KomisijaRepository : IKomisijaRepository
     {
         private readonly LicnostContext context;
-        private readonly IMapper mapper;
 
-        public KomisijaRepository(LicnostContext context, IMapper mapper)
+        public KomisijaRepository(LicnostContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public bool SaveChanges()
@@ -26,7 +22,6 @@ namespace Licnost.Data
         public List<Komisija> GetKomisije()
         {
             return (from p in context.Komisije select p).ToList();
-
         }
 
         public Komisija GetKomisijaById(Guid komisijaId)
@@ -39,7 +34,6 @@ namespace Licnost.Data
             komisija.KomisijaId = Guid.NewGuid();
             context.Komisije.Add(komisija);
             return komisija;
-          
         }
 
         public void UpdateKomisija(Komisija komisija)
@@ -55,4 +49,3 @@ namespace Licnost.Data
         }
     }
 }
-

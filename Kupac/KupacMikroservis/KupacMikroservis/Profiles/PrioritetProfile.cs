@@ -12,12 +12,12 @@ namespace KupacMikroservis.Profiles
     {
         public PrioritetProfile()
         {
-            CreateMap<PrioritetEntity, PrioritetDTO>();
-            CreateMap<PrioritetDTO, PrioritetEntity>();
-            CreateMap<PrioritetEntity, PrioritetCreateDTO>();
-            CreateMap<PrioritetEntity, PrioritetUpdateDTO>();
-            CreateMap<PrioritetUpdateDTO,PrioritetEntity>();
-            CreateMap<PrioritetCreateDTO,PrioritetEntity>();
+            CreateMap<PrioritetEntity, PrioritetDto>();
+            CreateMap<PrioritetDto, PrioritetEntity>();
+            CreateMap<PrioritetEntity, PrioritetCreateDto>();
+            CreateMap<PrioritetEntity, PrioritetUpdateDto>();
+            CreateMap<PrioritetUpdateDto,PrioritetEntity>();
+            CreateMap<PrioritetCreateDto,PrioritetEntity>();
 
         }
     }

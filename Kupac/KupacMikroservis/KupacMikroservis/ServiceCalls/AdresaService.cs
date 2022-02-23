@@ -18,33 +18,33 @@ namespace KupacMikroservis.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<AdresaKupcaDTO> GetAdresaKupcaAsync(Guid adresaID)
+        public async Task<AdresaKupcaDto> GetAdresaKupcaAsync(Guid AdresaID)
         {
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:AdresaService"];
-                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adrese/{adresaID}");
+                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adrese/{AdresaID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var adresa = JsonConvert.DeserializeObject<AdresaKupcaDTO>(responseContent);
+                var adresa = JsonConvert.DeserializeObject<AdresaKupcaDto>(responseContent);
 
                 return adresa;
             }
         }
 
-        public async Task<AdresaOvlascenogLicaDTO> GetAdresaOvlLicaAsync(Guid adresaID)
+        public async Task<AdresaOvlascenogLicaDto> GetAdresaOvlLicaAsync(Guid AdresaID)
         {
             using (HttpClient client = new HttpClient())
             {
                 var x = configuration["Services:AdresaService"];
-                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adrese/{adresaID}");
+                Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adrese/{AdresaID}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var adresa = JsonConvert.DeserializeObject<AdresaOvlascenogLicaDTO>(responseContent);
+                var adresa = JsonConvert.DeserializeObject<AdresaOvlascenogLicaDto>(responseContent);
 
                 return adresa;
             }

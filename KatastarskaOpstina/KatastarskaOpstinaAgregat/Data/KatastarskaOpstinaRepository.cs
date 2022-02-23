@@ -10,13 +10,13 @@ namespace KatastarskaOpstinaAgregat.Data
     public class KatastarskaOpstinaRepository : IKatastarskaOpstinaRepository
     {
         private readonly KatastarskaOpstinaContext context;
-        private readonly IMapper mapper;
+       
 
-        public KatastarskaOpstinaRepository(KatastarskaOpstinaContext context, IMapper mapper)
+        public KatastarskaOpstinaRepository(KatastarskaOpstinaContext context)
         {
 
             this.context = context;
-            this.mapper = mapper;
+           
         }
 
         public bool SaveChanges()

@@ -25,7 +25,7 @@ namespace KupacMikroservis.Controllers
         private readonly LinkGenerator linkGenerator;
         private readonly IMapper mapper;
         private readonly ILogger logger;
-        private readonly LogDTO logDTO;
+        private readonly LogDto logDTO;
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
 
@@ -36,7 +36,7 @@ namespace KupacMikroservis.Controllers
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.logger = logger;
-            this.logDTO = new LogDTO();
+            this.logDTO = new LogDto();
             logDTO.NameOfTheService = "KontaktOsoba";
             this.korisnikSistemaService = korisnikSistemaService;
         }
@@ -51,7 +51,7 @@ namespace KupacMikroservis.Controllers
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public ActionResult<List<KontaktOsobaDTO>> GetKontaktOsobe()
+        public ActionResult<List<KontaktOsobaDto>> GetKontaktOsobe()
         {
             string token = Request.Headers["token"].ToString();
 
@@ -80,7 +80,7 @@ namespace KupacMikroservis.Controllers
             }
             logDTO.Level = "Info";
             logger.Log(logDTO);
-            return Ok(mapper.Map<List<KontaktOsobaDTO>>(kontaktosobe));
+            return Ok(mapper.Map<List<KontaktOsobaDto>>(kontaktosobe));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace KupacMikroservis.Controllers
         [HttpGet("{KontaktOsobaId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<KontaktOsobaDTO> GetKontaktOsoba(Guid koID)
+        public ActionResult<KontaktOsobaDto> GetKontaktOsoba(Guid koID)
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -120,7 +120,7 @@ namespace KupacMikroservis.Controllers
             }
             logDTO.Level = "Info";
             logger.Log(logDTO);
-            return Ok(mapper.Map<List<KontaktOsobaDTO>>(koModel));
+            return Ok(mapper.Map<List<KontaktOsobaDto>>(koModel));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace KupacMikroservis.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KontaktOsobaDTO> CreateKontaktOsoba([FromBody] KontaktOsobaCreateDTO ko)    //confirmation implementirati
+        public ActionResult<KontaktOsobaDto> CreateKontaktOsoba([FromBody] KontaktOsobaCreateDto ko)    //confirmation implementirati
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -163,7 +163,7 @@ namespace KupacMikroservis.Controllers
 
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Created(location, mapper.Map<KontaktOsobaDTO>(koCreated));
+                return Created(location, mapper.Map<KontaktOsobaDto>(koCreated));
             }
             catch
             {
@@ -239,7 +239,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<KontaktOsobaDTO> UpdateKontaktOsoba(KontaktOsobaUpdateDTO ko)
+        public ActionResult<KontaktOsobaDto> UpdateKontaktOsoba(KontaktOsobaUpdateDto ko)
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -276,7 +276,7 @@ namespace KupacMikroservis.Controllers
                 koRepository.SaveChanges();
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Ok(mapper.Map<KontaktOsobaDTO>(ko));
+                return Ok(mapper.Map<KontaktOsobaDto>(ko));
             }
             catch (Exception)
             {

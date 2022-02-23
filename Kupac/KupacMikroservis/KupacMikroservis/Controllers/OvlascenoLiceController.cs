@@ -28,7 +28,7 @@ namespace KupacMikroservis.Controllers
         public readonly IAdresaService adresaService;
 
         private readonly ILogger logger;
-        private readonly LogDTO logDTO;
+        private readonly LogDto logDTO;
 
         private readonly IKorisnikSistemaService korisnikSistemaService;
 
@@ -40,7 +40,7 @@ namespace KupacMikroservis.Controllers
             this.linkGenerator = linkGenerator;
             this.mapper = mapper;
             this.logger = logger;
-            logDTO = new LogDTO();
+            logDTO = new LogDto();
             logDTO.NameOfTheService = "OvlascenoLice";
             this.korisnikSistemaService = korisnikSistemaService;
         }
@@ -55,7 +55,7 @@ namespace KupacMikroservis.Controllers
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public ActionResult<List<OvlascenoLiceDTO>> GetOvlascenaLica()
+        public ActionResult<List<OvlascenoLiceDto>> GetOvlascenaLica()
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -81,12 +81,12 @@ namespace KupacMikroservis.Controllers
                 return NoContent();
             }
 
-            List<OvlascenoLiceDTO> oLicaDtos = new List<OvlascenoLiceDTO>();
+            List<OvlascenoLiceDto> oLicaDtos = new List<OvlascenoLiceDto>();
 
             foreach (OvlascenoLiceEntity ol in ovlascenaLica)
             {
-                AdresaOvlascenogLicaDTO adresa = adresaService.GetAdresaOvlLicaAsync(ol.AdresaID).Result;
-                OvlascenoLiceDTO olDto = mapper.Map<OvlascenoLiceDTO>(ol);
+                AdresaOvlascenogLicaDto adresa = adresaService.GetAdresaOvlLicaAsync(ol.AdresaID).Result;
+                OvlascenoLiceDto olDto = mapper.Map<OvlascenoLiceDto>(ol);
                 olDto.Adresa = adresa;
                 oLicaDtos.Add(olDto);
             }
@@ -106,7 +106,7 @@ namespace KupacMikroservis.Controllers
         [HttpGet("{OvlascenoLiceId}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<OvlascenoLiceDTO> GetOvlascenoLice(Guid oLiceID)
+        public ActionResult<OvlascenoLiceDto> GetOvlascenoLice(Guid oLiceID)
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -133,7 +133,7 @@ namespace KupacMikroservis.Controllers
             }
             logDTO.Level = "Info";
             logger.Log(logDTO);
-            return Ok(mapper.Map<List<OvlascenoLiceDTO>>(oLiceModel));
+            return Ok(mapper.Map<List<OvlascenoLiceDto>>(oLiceModel));
         }
 
 
@@ -148,7 +148,7 @@ namespace KupacMikroservis.Controllers
         [Consumes("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<OvlascenoLiceDTO> CreateOvlascenoLice([FromBody] OvlascenoLiceCreateDTO oLice)    //confirmation implementirati
+        public ActionResult<OvlascenoLiceDto> CreateOvlascenoLice([FromBody] OvlascenoLiceCreateDto oLice)    //confirmation implementirati
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -176,7 +176,7 @@ namespace KupacMikroservis.Controllers
 
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
-                return Created(location, mapper.Map<OvlascenoLiceDTO>(olCreated));
+                return Created(location, mapper.Map<OvlascenoLiceDto>(olCreated));
             }
             catch
             {
@@ -254,7 +254,7 @@ namespace KupacMikroservis.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<OvlascenoLiceDTO> UpdateOvlascenoLice(OvlascenoLiceUpdateDTO ol)
+        public ActionResult<OvlascenoLiceDto> UpdateOvlascenoLice(OvlascenoLiceUpdateDto ol)
         {
             string token = Request.Headers["token"].ToString();
             HttpStatusCode res = korisnikSistemaService.AuthorizeAsync(token).Result;
@@ -295,7 +295,7 @@ namespace KupacMikroservis.Controllers
                 
                logDTO.Level = "Info";
                logger.Log(logDTO);
-                return Ok(mapper.Map<OvlascenoLiceDTO>(oldOLice));
+                return Ok(mapper.Map<OvlascenoLiceDto>(oldOLice));
             }
             catch (Exception)
             {

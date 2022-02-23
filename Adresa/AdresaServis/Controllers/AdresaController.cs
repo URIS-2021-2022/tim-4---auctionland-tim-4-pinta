@@ -269,6 +269,18 @@ namespace AdresaServis.Controllers
         /// </summary>
         /// <param name="adresa">Model adrese koja se azurira</param>
         /// <returns>Potvrdu o modifikovanoj adresi</returns>
+        /// <remarks>
+        /// Primer zahteva za modifikovanje adrese \
+        /// PUT /api/adrese \
+        /// { \
+        /// "adresaID": "723123b1-3ab1-4741-9437-c8a1d6ad20da", \
+        /// "ulica": "Fruskogorska", \
+        /// "broj": "20", \
+        /// "mesto": "Beograd", \
+        /// "postanskiBroj": "11000", \
+        /// "drzavaID": "fd5e46de-290f-4844-a004-4a94ae24f654" \
+        /// } 
+        /// </remarks>
         /// <response code="200">Vraca azuriranu adresu</response>
         /// <response code="400">Adresa koja se azurira nije pronadjena</response>
         /// <response code = "401">Korisnik nije autorizovan</response>
