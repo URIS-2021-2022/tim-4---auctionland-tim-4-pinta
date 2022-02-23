@@ -8,6 +8,6 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
 {
     public interface IAdresaService
     {
-        Task <AdresaJavnoNadmetanjeDto> GetAdresaByIdAsync(Guid adresaID);
+        Task <AdresaJavnoNadmetanjeDto> GetAdresaByIdAsync(Guid adresaID,string token);
     }
 }

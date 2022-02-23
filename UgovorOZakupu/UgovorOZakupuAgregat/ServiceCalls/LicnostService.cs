@@ -20,7 +20,6 @@ namespace UgovorOZakupuAgregat.ServiceCalls
         {
             using (HttpClient client = new HttpClient())
             {
-                var x = configuration["Services:LicnostService"];
                 Uri url = new Uri($"{ configuration["Services:LicnostService"] }api/licnosti/{licnostId}");
                 client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;

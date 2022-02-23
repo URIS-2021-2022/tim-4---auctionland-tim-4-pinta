@@ -1,10 +1,39 @@
 {
 	"info": {
-		"_postman_id": "2c6c893d-2170-4334-9f4f-dde4be167686",
-		"name": "URIS_Parcela_Agregat",
+		"_postman_id": "73dbf030-3910-456a-97f7-bb5cdb5aea6b",
+		"name": "URIS_Gateway_Parcela_Agregat",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\": \"IT1/2020\",\r\n    \"Password\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5020/korisnik/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5020",
+					"path": [
+						"korisnik",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "GetParcele",
 			"request": {
@@ -17,14 +46,14 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/parcele",
+					"raw": "http://localhost:5020/parcela/parcele",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"parcele"
 					]
 				}
@@ -43,14 +72,14 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/parcele/6a411c13-a195-48f7-8dbd-67596c3974c0",
+					"raw": "http://localhost:5020/parcela/parcele/6a411c13-a195-48f7-8dbd-67596c3974c0",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"parcele",
 						"6a411c13-a195-48f7-8dbd-67596c3974c0"
 					]
@@ -65,7 +94,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -79,14 +108,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/parcele",
+					"raw": "http://localhost:5020/parcela/parcele",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"parcele"
 					]
 				}
@@ -100,7 +129,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -114,14 +143,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/parcele",
+					"raw": "http://localhost:5020/parcela/parcele",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"parcele"
 					]
 				}
@@ -135,19 +164,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/parcele/a913cb6f-9608-474a-88dc-4f38a51315ea",
+					"raw": "http://localhost:5020/parcela/parcele/a913cb6f-9608-474a-88dc-4f38a51315ea",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"parcele",
 						"a913cb6f-9608-474a-88dc-4f38a51315ea"
 					]
@@ -162,19 +191,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/zasticeneZone",
+					"raw": "http://localhost:5020/parcela/zasticeneZone",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"zasticeneZone"
 					]
 				}
@@ -188,19 +217,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/zasticeneZone/a873025a-b4bc-440d-8e65-dc63fb9025d7",
+					"raw": "http://localhost:5020/parcela/zasticeneZone/a873025a-b4bc-440d-8e65-dc63fb9025d7",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"zasticeneZone",
 						"a873025a-b4bc-440d-8e65-dc63fb9025d7"
 					]
@@ -215,7 +244,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -229,14 +258,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/zasticeneZone",
+					"raw": "http://localhost:5020/parcela/zasticeneZone",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"zasticeneZone"
 					]
 				}
@@ -250,7 +279,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -264,14 +293,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/zasticeneZone",
+					"raw": "http://localhost:5020/parcela/zasticeneZone",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"zasticeneZone"
 					]
 				}
@@ -285,19 +314,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/zasticeneZone/28ea362f-4e6c-4e0e-b853-b79c509a6b16",
+					"raw": "http://localhost:5020/parcela/zasticeneZone/28ea362f-4e6c-4e0e-b853-b79c509a6b16",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"zasticeneZone",
 						"28ea362f-4e6c-4e0e-b853-b79c509a6b16"
 					]
@@ -312,19 +341,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/odvodnjavanja",
+					"raw": "http://localhost:5020/parcela/odvodnjavanja",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"odvodnjavanja"
 					]
 				}
@@ -338,19 +367,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/odvodnjavanja/32cf50d2-ab1a-45fb-a5de-f6c4fd646775",
+					"raw": "http://localhost:5020/parcela/odvodnjavanja/32cf50d2-ab1a-45fb-a5de-f6c4fd646775",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"odvodnjavanja",
 						"32cf50d2-ab1a-45fb-a5de-f6c4fd646775"
 					]
@@ -365,7 +394,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -379,14 +408,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/odvodnjavanja",
+					"raw": "http://localhost:5020/parcela/odvodnjavanja",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"odvodnjavanja"
 					]
 				}
@@ -400,7 +429,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -414,14 +443,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/odvodnjavanja",
+					"raw": "http://localhost:5020/parcela/odvodnjavanja",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"odvodnjavanja"
 					]
 				}
@@ -435,19 +464,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/odvodnjavanja/32cf50d2-ab1a-45fb-a5de-f6c4fd646775",
+					"raw": "http://localhost:5020/parcela/odvodnjavanja/32cf50d2-ab1a-45fb-a5de-f6c4fd646775",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"odvodnjavanja",
 						"32cf50d2-ab1a-45fb-a5de-f6c4fd646775"
 					]
@@ -462,19 +491,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/kulture",
+					"raw": "http://localhost:5020/parcela/kulture",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"kulture"
 					]
 				}
@@ -488,19 +517,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/kulture/149b65ca-47aa-433c-8dbe-cdcf5e74a4ed",
+					"raw": "http://localhost:5020/parcela/kulture/149b65ca-47aa-433c-8dbe-cdcf5e74a4ed",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"kulture",
 						"149b65ca-47aa-433c-8dbe-cdcf5e74a4ed"
 					]
@@ -515,7 +544,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -529,14 +558,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/kulture",
+					"raw": "http://localhost:5020/parcela/kulture",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"kulture"
 					]
 				}
@@ -550,7 +579,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -564,14 +593,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/kulture",
+					"raw": "http://localhost:5020/parcela/kulture",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"kulture"
 					]
 				}
@@ -585,19 +614,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/kulture/5f4a3a1e-3406-4991-abd4-0f095b59ac84",
+					"raw": "http://localhost:5020/parcela/kulture/5f4a3a1e-3406-4991-abd4-0f095b59ac84",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"kulture",
 						"5f4a3a1e-3406-4991-abd4-0f095b59ac84"
 					]
@@ -612,19 +641,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/klase",
+					"raw": "http://localhost:5020/parcela/klase",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"klase"
 					]
 				}
@@ -638,19 +667,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/klase/829f5f3f-6159-4e15-ab52-d4c78ce944dc",
+					"raw": "http://localhost:5020/parcela/klase/829f5f3f-6159-4e15-ab52-d4c78ce944dc",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"klase",
 						"829f5f3f-6159-4e15-ab52-d4c78ce944dc"
 					]
@@ -665,7 +694,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -679,14 +708,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/klase",
+					"raw": "http://localhost:5020/parcela/klase",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"klase"
 					]
 				}
@@ -700,7 +729,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -714,14 +743,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/klase",
+					"raw": "http://localhost:5020/parcela/klase",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"klase"
 					]
 				}
@@ -735,19 +764,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/klase/9a011828-2b22-4666-b300-fe98e2c94d9a",
+					"raw": "http://localhost:5020/parcela/klase/9a011828-2b22-4666-b300-fe98e2c94d9a",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"klase",
 						"9a011828-2b22-4666-b300-fe98e2c94d9a"
 					]
@@ -762,19 +791,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/deloviParcela",
+					"raw": "http://localhost:5020/parcela/deloviParcela",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"deloviParcela"
 					]
 				}
@@ -788,19 +817,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/deloviParcela/cae99a88-c6ee-4f4c-a463-419ac8fc1b85",
+					"raw": "http://localhost:5020/parcela/deloviParcela/cae99a88-c6ee-4f4c-a463-419ac8fc1b85",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"deloviParcela",
 						"cae99a88-c6ee-4f4c-a463-419ac8fc1b85"
 					]
@@ -815,7 +844,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -829,13 +858,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/deloviParcela",
+					"raw": "http://localhost:5020/parcela/api/deloviParcela",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
+						"parcela",
 						"api",
 						"deloviParcela"
 					]
@@ -850,7 +880,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -864,13 +894,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/deloviParcela",
+					"raw": "http://localhost:5020/parcela/api/deloviParcela",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
+						"parcela",
 						"api",
 						"deloviParcela"
 					]
@@ -885,19 +916,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/deloviParcela/2884b2b0-302c-4eac-847c-65e4c356132b",
+					"raw": "http://localhost:5020/parcela/deloviParcela/2884b2b0-302c-4eac-847c-65e4c356132b",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"deloviParcela",
 						"2884b2b0-302c-4eac-847c-65e4c356132b"
 					]
@@ -912,19 +943,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/obradivosti",
+					"raw": "http://localhost:5020/parcela/obradivosti",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obradivosti"
 					]
 				}
@@ -938,19 +969,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/obradivosti/1fbc26e0-a797-45b8-bfb2-75d6799237ba",
+					"raw": "http://localhost:5020/parcela/obradivosti/1fbc26e0-a797-45b8-bfb2-75d6799237ba",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obradivosti",
 						"1fbc26e0-a797-45b8-bfb2-75d6799237ba"
 					]
@@ -965,7 +996,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -979,14 +1010,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/obradivosti",
+					"raw": "http://localhost:5020/parcela/obradivosti",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obradivosti"
 					]
 				}
@@ -1000,7 +1031,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -1014,14 +1045,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/obradivosti",
+					"raw": "http://localhost:5020/parcela/obradivosti",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obradivosti"
 					]
 				}
@@ -1035,19 +1066,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/obradivosti/bf45ffef-1166-44fb-a2e1-67824a6561f2",
+					"raw": "http://localhost:5020/parcela/obradivosti/bf45ffef-1166-44fb-a2e1-67824a6561f2",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obradivosti",
 						"bf45ffef-1166-44fb-a2e1-67824a6561f2"
 					]
@@ -1062,19 +1093,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/obliciSvojine",
+					"raw": "http://localhost:5020/parcela/obliciSvojine",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obliciSvojine"
 					]
 				}
@@ -1088,19 +1119,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2Mjg3MjEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.RUo8B4oU93oYO7ndIusgmjTGEMBz14cHN2JXCkOrCJA#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/obliciSvojine/0051339e-4bf1-4d63-89f9-d5f744016a2b",
+					"raw": "http://localhost:5020/parcela/obliciSvojine/0051339e-4bf1-4d63-89f9-d5f744016a2b",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obliciSvojine",
 						"0051339e-4bf1-4d63-89f9-d5f744016a2b"
 					]
@@ -1115,7 +1146,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2Mjg3MjEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.RUo8B4oU93oYO7ndIusgmjTGEMBz14cHN2JXCkOrCJA#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -1129,14 +1160,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/obliciSvojine",
+					"raw": "http://localhost:5020/parcela/obliciSvojine",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obliciSvojine"
 					]
 				}
@@ -1150,7 +1181,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2Mjg3MjEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.RUo8B4oU93oYO7ndIusgmjTGEMBz14cHN2JXCkOrCJA#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzU1MjQsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.4KMMkPvGIqjnskYBsyuV7zWgb2K5bdow5amouDJuosU#administrator",
 						"type": "text"
 					}
 				],
@@ -1164,14 +1195,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44201/api/obliciSvojine",
+					"raw": "http://localhost:5020/parcela/obliciSvojine",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obliciSvojine"
 					]
 				}
@@ -1190,16 +1221,16 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44201/api/obliciSvojine/085f566f-9900-45e4-800a-d679331b8050",
+					"raw": "http://localhost:5020/parcela/obliciSvojine/11474cc8-1ac3-47b5-87f0-c7de7f29f024",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44201",
+					"port": "5020",
 					"path": [
-						"api",
+						"parcela",
 						"obliciSvojine",
-						"085f566f-9900-45e4-800a-d679331b8050"
+						"11474cc8-1ac3-47b5-87f0-c7de7f29f024"
 					]
 				}
 			},

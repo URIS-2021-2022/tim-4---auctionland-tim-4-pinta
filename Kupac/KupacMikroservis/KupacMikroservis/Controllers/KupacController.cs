@@ -183,10 +183,10 @@ namespace KupacMikroservis.Controllers
             {
                 PravnoLiceEntity pLice = pLiceRepository.GetPravnoLiceById(kupacID);
                 AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(pLice.AdresaID,token).Result;
-                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(pLice.UplataID,token).Result;
+                //UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(pLice.UplataID,token).Result;
                 KupacDto kupacDto = mapper.Map<KupacDto>(pLice);
                 kupacDto.Adresa = adresa;
-                kupacDto.Uplata = uplata;
+                //kupacDto.Uplata = uplata;
 
                 logDTO.Level = "Info";
                 logger.Log(logDTO);
@@ -196,10 +196,10 @@ namespace KupacMikroservis.Controllers
             {
                 FizickoLiceEntity fLice = fLiceRepository.GetFizickoLiceById(kupacID);
                 AdresaKupcaDto adresa = adresaService.GetAdresaKupcaAsync(fLice.AdresaID,token).Result;
-                UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(fLice.UplataID,token).Result;
+                //UplataKupcaDto uplata = uplataService.GetUplataKupcaAsync(fLice.UplataID,token).Result;
                 KupacDto kupacDto = mapper.Map<KupacDto>(fLice);
                 kupacDto.Adresa = adresa;
-                kupacDto.Uplata = uplata;
+                //kupacDto.Uplata = uplata;
 
                 logDTO.Level = "Info";
                 logger.Log(logDTO);

@@ -1,10 +1,39 @@
 {
 	"info": {
-		"_postman_id": "2f5c9e78-679d-4950-80e1-6377a297e73a",
-		"name": "URIS_Adresa_Agregat",
+		"_postman_id": "16e588f7-f663-4a59-92e5-3508752b16f6",
+		"name": "URIS_Gateway_Adresa_Agregat",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Username\": \"IT1/2020\",\r\n    \"Password\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5020/korisnik/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5020",
+					"path": [
+						"korisnik",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "GetAdrese",
 			"request": {
@@ -12,19 +41,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44301/api/adrese",
+					"raw": "http://localhost:5020/adresa/adrese",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"adrese"
 					]
 				}
@@ -38,19 +67,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44301/api/adrese/9a8e31d5-5e7b-46e7-80c6-f22e607ee907",
+					"raw": "http://localhost:5020/adresa/adrese/9a8e31d5-5e7b-46e7-80c6-f22e607ee907",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"adrese",
 						"9a8e31d5-5e7b-46e7-80c6-f22e607ee907"
 					]
@@ -65,7 +94,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
@@ -79,14 +108,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44301/api/adrese",
+					"raw": "http://localhost:5020/adresa/adrese",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"adrese"
 					]
 				}
@@ -100,7 +129,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
@@ -114,14 +143,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44301/api/adrese",
+					"raw": "http://localhost:5020/adresa/adrese",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"adrese"
 					]
 				}
@@ -135,21 +164,21 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44301/api/adrese/7729e3dc-0586-4ae5-8a0f-2b22b0e2253e",
+					"raw": "http://localhost:5020/adresa/adrese/105f8603-5d08-4df9-bc22-b24f80f4a215",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"adrese",
-						"7729e3dc-0586-4ae5-8a0f-2b22b0e2253e"
+						"105f8603-5d08-4df9-bc22-b24f80f4a215"
 					]
 				}
 			},
@@ -162,19 +191,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44301/api/drzave",
+					"raw": "http://localhost:5020/adresa/drzave",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"drzave"
 					]
 				}
@@ -188,19 +217,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44301/api/drzave/fd5e46de-290f-4844-a004-4a94ae24f654",
+					"raw": "http://localhost:5020/adresa/drzave/fd5e46de-290f-4844-a004-4a94ae24f654",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"drzave",
 						"fd5e46de-290f-4844-a004-4a94ae24f654"
 					]
@@ -215,7 +244,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
@@ -229,14 +258,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44301/api/drzave",
+					"raw": "http://localhost:5020/adresa/drzave",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"drzave"
 					]
 				}
@@ -250,7 +279,7 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
@@ -264,14 +293,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:44301/api/drzave",
+					"raw": "http://localhost:5020/adresa/drzave",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"drzave"
 					]
 				}
@@ -285,19 +314,19 @@
 				"header": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MjQ5NzEsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.1Jh1hqAWpiWZvJvKEWSzhfn9rJDweWthOg8sK1bL_NQ#administrator",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NDU2MzMwMDAsImlzcyI6IlVSSVMudW5zLmFjLnJzIiwiYXVkIjoiVVJJUy51bnMuYWMucnMifQ.khhS8_Dzbvb_E5Guzlc9rDkRx2cYsKU08DiQhkTMkUM#administrator",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:44301/api/drzave/2b7558a6-f3f4-460d-80e0-26e1c037f455",
+					"raw": "http://localhost:5020/adresa/drzave/2b7558a6-f3f4-460d-80e0-26e1c037f455",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44301",
+					"port": "5020",
 					"path": [
-						"api",
+						"adresa",
 						"drzave",
 						"2b7558a6-f3f4-460d-80e0-26e1c037f455"
 					]
