@@ -4569,3 +4569,55 @@
 2022-02-23 13:52:01.3411 Trace Opening C:\Users\Stefan\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
 2022-02-23 13:53:05.6176 Trace Opening C:\Users\Stefan\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
 2022-02-23 13:56:27.5570 Trace Opening C:\Users\Stefan\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:35:10.3370 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:35:19.3074 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:35:20.7194 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:35:21.9542 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:44:43.0359 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:44:44.6939 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:56:39.6132 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:56:41.3897 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:56:42.1921 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 15:56:43.2449 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:01:04.8507 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:01:06.7265 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:01:08.5456 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:01:09.5928 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:07.4680 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:09.4204 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:09.5933 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:09.8358 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:11.4785 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:11.5873 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:11.6903 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:11.7663 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:46.9294 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:02:47.6984 Trace Opening C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt with allowFileSharedWriting=False
+2022-02-23 16:08:53.2538 Info AppDomain Shutting down. Logger closing...
+2022-02-23 16:08:53.2871 Debug Stopping file watching for path 'C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate' filter 'nlog.config'
+2022-02-23 16:08:53.3176 Trace Flushing all 1 targets...
+2022-02-23 16:08:53.3331 Trace ForEachItemInParallel() 1 items
+2022-02-23 16:08:53.4108 Trace FileTarget(Name=logfile): FlushAsync
+2022-02-23 16:08:53.4453 Trace Continuation invoked: 
+2022-02-23 16:08:53.4453 Trace Parallel task completed. 0 items remaining
+2022-02-23 16:08:53.5465 Debug Flush completed
+2022-02-23 16:08:53.5465 Trace FileTarget(Name=logfile): FlushAsync Done
+2022-02-23 16:08:53.5465 Debug Targets not configured for logger: LoggerAggregate.Controllers.LoggerController
+2022-02-23 16:08:53.5465 Debug Closing logging configuration...
+2022-02-23 16:08:53.5619 Trace Closing File Target[logfile]
+2022-02-23 16:08:53.5619 Debug Closing target 'File Target[logfile]'.
+2022-02-23 16:08:53.5768 Trace FileTarget(Name=logfile): FinalizeFile 'C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt, isArchiving: False'
+2022-02-23 16:08:53.5768 Debug FileAppender Closing Invalidate - C:\Users\PC\source\repos\tim-4---auctionland-tim-4-pinta\Logger\LoggerAggregate\LoggerAggregate\bin\Debug\net5.0\..\..\..\FileLog.txt
+2022-02-23 16:08:53.5934 Debug Closed target 'File Target[logfile]'.
+2022-02-23 16:08:53.5934 Trace Closing '..\..\..\FileLog.txt'
+2022-02-23 16:08:53.6192 Trace Closing Layout Renderer: ${literal}
+2022-02-23 16:08:53.6192 Trace Closing '${longdate} ${level:uppercase=true} ${message}'
+2022-02-23 16:08:53.6236 Trace Closing Layout Renderer: ${longdate}
+2022-02-23 16:08:53.6236 Trace Closing Layout Renderer: ${literal}
+2022-02-23 16:08:53.6236 Trace Closing Layout Renderer: ${uppercase}
+2022-02-23 16:08:53.6236 Trace Closing SimpleLayout=Layout Renderer: ${level}
+2022-02-23 16:08:53.6236 Trace Closing Layout Renderer: ${level}
+2022-02-23 16:08:53.6236 Trace Closing Layout Renderer: ${literal}
+2022-02-23 16:08:53.6236 Trace Closing Layout Renderer: ${message}
+2022-02-23 16:08:53.6236 Debug Finished closing logging configuration.
+2022-02-23 16:08:53.6389 Info Logger has been shut down.

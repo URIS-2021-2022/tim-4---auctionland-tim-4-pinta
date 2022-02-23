@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,18 +12,22 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// Datum odrzavanja javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti datum")]
         public DateTime Datum { get; set; }
         /// <summary>
         /// Vreme pocetka javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti vreme pocetka")]
         public DateTime VremePocetka { get; set; }
         /// <summary>
         /// Vreme kraja javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti vreme kraja")]
         public DateTime VremeKraja { get; set; }
         /// <summary>
         /// Pocetna cena po hektaru javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti pocetnu cenu po hektaru")]
         public int PocetnaCenaPoHektaru { get; set; }
         /// <summary>
         /// Period zakupa javnog nadmetanja
@@ -48,25 +53,18 @@ namespace JavnoNadmetanjeAgregat.Models
         /// Visina dopune depozita javnog nadmetanja
         /// </summary>
         public int VisinaDopuneDepozita { get; set; }
-
         /// <summary>
         /// ID Katastarske opstine
         /// </summary>
         public Guid KatastarskaOpstinaID { get; set; }
-
-  
-
         /// <summary>
         /// ID kupca parcele
         /// </summary>
         public Guid KupacID { get; set; }
-
         /// <summary>
         /// ID parcele
         /// </summary>
         public Guid ParcelaID { get; set; }
-
-
         /// <summary>
         /// ID adrese
         /// </summary>

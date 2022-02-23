@@ -13,6 +13,6 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
         /// </summary>
         /// <param name="kupacID"></param>
         /// <returns></returns>
-        Task<KupacJavnoNadmetanjeDto> GetKupacByIdAsync(Guid kupacID);
+        Task<KupacJavnoNadmetanjeDto> GetKupacByIdAsync(Guid kupacID, string token);
     }
 }

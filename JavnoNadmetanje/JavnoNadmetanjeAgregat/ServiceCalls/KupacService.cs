@@ -18,12 +18,12 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<KupacJavnoNadmetanjeDto> GetKupacByIdAsync(Guid kupacID)
+        public async Task<KupacJavnoNadmetanjeDto> GetKupacByIdAsync(Guid kupacID, string token)
         {
             using (HttpClient client = new HttpClient())
             {
                 Uri url = new Uri($"{ configuration["Services:KupacService"] }api/kupac/{kupacID}");
-
+                client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();

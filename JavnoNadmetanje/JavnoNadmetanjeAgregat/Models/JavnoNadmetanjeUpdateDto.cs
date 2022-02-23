@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,22 +11,27 @@ namespace JavnoNadmetanjeAgregat.Models
         /// <summary>
         /// ID javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti ID")]
         public Guid JavnoNadmetanjeID { get; set; }
         /// <summary>
         /// Datum odrzavanja javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti datum")]
         public DateTime Datum { get; set; }
         /// <summary>
         /// Vreme pocetka javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti vreme pocetka")]
         public DateTime VremePocetka { get; set; }
         /// <summary>
         /// Vreme kraja javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti vreme kraja")]
         public DateTime VremeKraja { get; set; }
         /// <summary>
         /// Pocetna cena po hektaru javnog nadmetanja
         /// </summary>
+        [Required(ErrorMessage = "Obavezno je uneti pocetnu cenu po hektaru")]
         public int PocetnaCenaPoHektaru { get; set; }
         /// <summary>
         /// Period zakupa javnog nadmetanja

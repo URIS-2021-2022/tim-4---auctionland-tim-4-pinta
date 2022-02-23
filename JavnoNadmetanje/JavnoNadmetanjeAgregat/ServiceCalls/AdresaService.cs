@@ -18,13 +18,13 @@ namespace JavnoNadmetanjeAgregat.ServiceCalls
             this.configuration = configuration;
         }
 
-        public async Task<AdresaJavnoNadmetanjeDto> GetAdresaByIdAsync(Guid adresaID)
+        public async Task<AdresaJavnoNadmetanjeDto> GetAdresaByIdAsync(Guid adresaID , string token)
         {
             using (HttpClient client = new HttpClient())
             {
                 
                 Uri url = new Uri($"{ configuration["Services:AdresaService"] }api/adrese/{adresaID}");
-
+                client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
