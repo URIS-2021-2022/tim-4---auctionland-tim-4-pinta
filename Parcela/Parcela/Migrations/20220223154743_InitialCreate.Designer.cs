@@ -10,7 +10,7 @@ using Parcela.Entities;
 namespace Parcela.Migrations
 {
     [DbContext(typeof(ParcelaContext))]
-    [Migration("20220223132611_InitialCreate")]
+    [Migration("20220223154743_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

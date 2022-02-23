@@ -9,11 +9,11 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
+      "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "dev"
-      }
+      },
+      "applicationUrl": "http://localhost:5020"
     },
     "Gateway2": {
       "commandName": "Project",

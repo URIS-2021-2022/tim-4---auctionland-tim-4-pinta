@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace KupacMikroservis.Migrations
 {
-    public partial class Create : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -109,8 +109,8 @@ namespace KupacMikroservis.Migrations
                 columns: new[] { "KupacId", "AdresaID", "BrojRacuna", "BrojTelefona1", "BrojTelefona2", "DatumPocetkaZabrane", "DatumPrestankaZabrane", "DuzinaTrajanjaZabraneUGodinama", "Email", "ImaZabranu", "IsFizickoLice", "JMBG", "KontaktOsoba", "Naziv", "OvlascenoLice", "Prioritet", "UplataID" },
                 values: new object[,]
                 {
-                    { new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "2532431234534", "062665511", "061553311", null, null, 0, "pera@gmail.com", false, true, "6765432484", new Guid("1a411c13-a195-3337-8dbd-44444c3974c0"), "Pera Peric", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70") },
-                    { new Guid("2a411c13-a195-48f7-8dbd-67596c3974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "253425254534", "062665521", "061553331", null, null, 0, "jova@gmail.com", false, true, "7654321234", new Guid("1a411c13-a195-3337-8dbd-33333c3974c0"), "Jova Jovic", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70") }
+                    { new Guid("1a411c13-a195-48f7-8dbd-67596c3974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "2532431234534", "062665511", "061553311", null, null, 0, "pera@gmail.com", false, true, "6765432484", new Guid("1a411c13-a195-3337-8dbd-44444c3974c0"), "Pera Peric", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff") },
+                    { new Guid("2a411c13-a195-48f7-8dbd-67596c3974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "253425254534", "062665521", "061553331", null, null, 0, "jova@gmail.com", false, true, "7654321234", new Guid("1a411c13-a195-3337-8dbd-33333c3974c0"), "Jova Jovic", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff") }
                 });
 
             migrationBuilder.InsertData(
@@ -136,8 +136,8 @@ namespace KupacMikroservis.Migrations
                 columns: new[] { "KupacId", "AdresaID", "BrojRacuna", "BrojTelefona1", "BrojTelefona2", "DatumPocetkaZabrane", "DatumPrestankaZabrane", "DuzinaTrajanjaZabraneUGodinama", "Email", "Faks", "ImaZabranu", "IsFizickoLice", "MaticniBroj", "Naziv", "OvlascenoLice", "Prioritet", "UplataID" },
                 values: new object[,]
                 {
-                    { new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "2536565534", "062665231", "0615573331", null, null, 0, "ivaa@gmail.com", "654322345", false, false, "455643231", "NS DOO", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70") },
-                    { new Guid("2a421c13-a195-46f7-8dbd-67596c4974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "253456533534", "062635321", "0615535651", null, null, 0, "mikaa@gmail.com", "654322345", false, false, "455643231", "SN AD", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("8d452221-f73e-4e35-ba7c-3fdd0d08be70") }
+                    { new Guid("2a411c13-a195-48f7-8dbc-67596c3974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "2536565534", "062665231", "0615573331", null, null, 0, "ivaa@gmail.com", "654322345", false, false, "455643231", "NS DOO", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff") },
+                    { new Guid("2a421c13-a195-46f7-8dbd-67596c4974c0"), new Guid("9a8e31d5-5e7b-46e7-80c6-f22e607ee907"), "253456533534", "062635321", "0615535651", null, null, 0, "mikaa@gmail.com", "654322345", false, false, "455643231", "SN AD", new Guid("1a411c13-a195-3337-8dbd-22222c3974c0"), new Guid("1a411c13-a195-1117-8dbd-67596c3974c0"), new Guid("5f951cf9-aaf2-45c3-823a-5c8c4c1deaff") }
                 });
 
             migrationBuilder.InsertData(

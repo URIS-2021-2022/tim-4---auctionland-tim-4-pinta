@@ -24,6 +24,7 @@ namespace Parcela.ServiceCals
             {
                 Uri url = new Uri($"{ configuration["Services:KupacService"] }api/kupac/{kupacID}");
 
+                client.DefaultRequestHeaders.Add("token", token);
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
                 var responseContent = await response.Content.ReadAsStringAsync();
